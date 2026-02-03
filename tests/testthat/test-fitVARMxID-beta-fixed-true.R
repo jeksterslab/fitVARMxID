@@ -1,0 +1,120 @@
+## ---- test-fitVARMxID-beta-fixed-true
+lapply(
+  X = 1,
+  FUN = function(i,
+                 text) {
+    message(text)
+    k <- 3
+    idx <- seq_len(k)
+    statenames <- paste0("eta", idx)
+    beta <- fitVARMxID:::.FitVARMxIDBeta(
+      k = k,
+      statenames = statenames,
+      beta_fixed = TRUE,
+      beta_free = diag(
+        x = TRUE,
+        nrow = k,
+        ncol = k
+      ),
+      beta_values = matrix(
+        data = 1,
+        nrow = k,
+        ncol = k
+      ),
+      beta_lbound = matrix(
+        data = -1,
+        nrow = k,
+        ncol = k
+      ),
+      beta_ubound = matrix(
+        data = +1,
+        nrow = k,
+        ncol = k
+      ),
+      name = "beta",
+      ct = FALSE
+    )
+    beta_name <- beta[[1]]@name
+    beta_values <- beta[[1]]@values
+    beta_labels <- beta[[1]]@labels
+    beta_free <- beta[[1]]@free
+    beta_lbound <- beta[[1]]@lbound
+    beta_ubound <- beta[[1]]@ubound
+    testthat::test_that(
+      paste(text, "class"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          class(beta[[1]]) == "FullMatrix"
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "name"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          beta_name == "beta"
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "values"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            beta_values == matrix(
+              data = 1,
+              nrow = k,
+              ncol = k
+            )
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "labels"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            is.na(beta_labels)
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "free"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(!beta_free)
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "lbound"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            is.na(beta_lbound)
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "ubound"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            is.na(beta_ubound)
+          )
+        )
+      }
+    )
+  },
+  text = "test-fitVARMxID-beta-fixed-true"
+)

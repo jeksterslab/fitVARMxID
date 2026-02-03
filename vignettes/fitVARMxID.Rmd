@@ -1,0 +1,60 @@
+---
+title: "fitVARMxID: Fit the Discrete-Time Vector Autoregressive Model for Multiple Individuals"
+author: "Ivan Jacob Agaloos Pesigan"
+output: rmarkdown::html_vignette
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @RCoreTeam-2025
+  @Neale-Hunter-Pritikin-etal-2015
+  @Hunter-2017
+vignette: >
+  %\VignetteIndexEntry{fitVARMxID: Fit the Discrete-Time Vector Autoregressive Model for Multiple Individuals}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+#| include = FALSE
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/vignettes-"
+)
+```
+
+<!-- badges: start -->
+[![Make Project](https://github.com/jeksterslab/fitVARMxID/actions/workflows/make.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/make.yml)
+[![R-CMD-check-standard](https://github.com/jeksterslab/fitVARMxID/actions/workflows/check-standard.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/check-standard.yml)
+[![R Package Test Coverage](https://github.com/jeksterslab/fitVARMxID/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/test-coverage.yml)
+[![Lint R Package](https://github.com/jeksterslab/fitVARMxID/actions/workflows/lint.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/lint.yml)
+[![Package Website (GitHub Pages)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/pkgdown-gh-pages.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/pkgdown-gh-pages.yml)
+[![Compile LaTeX](https://github.com/jeksterslab/fitVARMxID/actions/workflows/latex.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/latex.yml)
+[![Shell Check](https://github.com/jeksterslab/fitVARMxID/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/shellcheck.yml)
+[![pages-build-deployment](https://github.com/jeksterslab/fitVARMxID/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/pages/pages-build-deployment)
+[![codecov](https://codecov.io/gh/jeksterslab/fitVARMxID/branch/main/graph/badge.svg?token=KVLUET3DJ6)](https://codecov.io/gh/jeksterslab/fitVARMxID)
+<!-- badges: end -->
+
+## Description
+
+Fit the discrete-time vector autoregressive model for multiple individuals using the `OpenMx` package.
+
+## Installation
+
+You can install the released version of
+`fitVARMxID`
+from
+[GitHub](https://github.com/jeksterslab/fitVARMxID) with:
+
+```r
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("jeksterslab/fitVARMxID")
+```
+
+## More Information
+
+See
+[GitHub Pages](https://jeksterslab.github.io/fitVARMxID)
+for package documentation.
+
+## References
