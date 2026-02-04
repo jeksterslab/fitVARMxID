@@ -10,7 +10,8 @@ The measurement model is given by
   \boldsymbol{\eta}_{i, t}
 \end{equation}
 ```
-where $`\mathbf{y}_{i, t}`$, and $`\boldsymbol{\eta}_{i, t}`$.
+where $`\mathbf{y}_{i, t}`$, and $`\boldsymbol{\eta}_{i, t}`$ are random
+variables.
 
 The dynamic structure is given by
 ``` math

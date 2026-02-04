@@ -635,11 +635,22 @@ with argument <code>details = TRUE</code> for each <code>id</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The measurement model is given by
+
+<div class="section">
+<h3 id="measurement-model">Measurement Model<a class="anchor" aria-label="anchor" href="#measurement-model"></a></h3>
+
+
+<p>By default, the measurement model is given by
 $$
   \mathbf{y}_{i, t}
   =
-  \boldsymbol{\nu}
+  \boldsymbol{\eta}_{i, t} .
+$$
+However, the full measurement model can be parameterized as follows
+$$
+  \mathbf{y}_{i, t}
+  =
+  \boldsymbol{\nu}_{i}
   +
   \boldsymbol{\Lambda}
   \boldsymbol{\eta}_{i, t}
@@ -653,7 +664,7 @@ $$
   \mathcal{N}
   \left(
   \mathbf{0},
-  \boldsymbol{\Theta}
+  \boldsymbol{\Theta}_{i}
   \right)
 $$
 where
@@ -663,10 +674,10 @@ and
 \(\boldsymbol{\varepsilon}_{i, t}\)
 are random variables
 and
-\(\boldsymbol{\nu}\),
+\(\boldsymbol{\nu}_{i}\),
 \(\boldsymbol{\Lambda}\),
 and
-\(\boldsymbol{\Theta}\)
+\(\boldsymbol{\Theta}_{i}\)
 are model parameters.
 \(\mathbf{y}_{i, t}\)
 represents a vector of observed random variables,
@@ -676,24 +687,30 @@ and
 \(\boldsymbol{\varepsilon}_{i, t}\)
 a vector of random measurement errors,
 at time \(t\) and individual \(i\).
-\(\boldsymbol{\nu}\),
+\(\boldsymbol{\nu}_{i}\),
 denotes a vector of intercepts (fixed to a null vector by default),
 \(\boldsymbol{\Lambda}\)
 a matrix of factor loadings,
 and
-\(\boldsymbol{\Theta}\)
+\(\boldsymbol{\Theta}_{i}\)
 the covariance matrix of
 \(\boldsymbol{\varepsilon}\).
 In this model,
 \(\boldsymbol{\Lambda}\) is an identity matrix and
-\(\boldsymbol{\Theta}\) is a diagonal matrix.</p>
+\(\boldsymbol{\Theta}_{i}\) is a diagonal matrix.</p>
+</div>
+
+<div class="section">
+<h3 id="discrete-time-dynamic-structure">Discrete-Time Dynamic Structure<a class="anchor" aria-label="anchor" href="#discrete-time-dynamic-structure"></a></h3>
+
+
 <p>The dynamic structure is given by
 $$
   \boldsymbol{\eta}_{i, t}
   =
-  \boldsymbol{\alpha}
+  \boldsymbol{\alpha}_{i}
   +
-  \boldsymbol{\beta}
+  \boldsymbol{\beta}_{i}
   \boldsymbol{\eta}_{i, t - 1}
   +
   \boldsymbol{\zeta}_{i, t},
@@ -705,7 +722,7 @@ $$
   \mathcal{N}
   \left(
   \mathbf{0},
-  \boldsymbol{\Psi}
+  \boldsymbol{\Psi}_{i}
   \right)
 $$
 where
@@ -715,10 +732,10 @@ and
 \(\boldsymbol{\zeta}_{i, t}\)
 are random variables,
 and
-\(\boldsymbol{\alpha}\),
-\(\boldsymbol{\beta}\),
+\(\boldsymbol{\alpha}_{i}\),
+\(\boldsymbol{\beta}_{i}\),
 and
-\(\boldsymbol{\Psi}\)
+\(\boldsymbol{\Psi}_{i}\)
 are model parameters.
 Here,
 \(\boldsymbol{\eta}_{i, t}\)
@@ -731,33 +748,39 @@ and
 \(\boldsymbol{\zeta}_{i, t}\)
 represents a vector of dynamic noise
 at time \(t\) and individual \(i\).
-\(\boldsymbol{\alpha}\)
+\(\boldsymbol{\alpha}_{i}\)
 denotes a vector of intercepts,
-\(\boldsymbol{\beta}\)
+\(\boldsymbol{\beta}_{i}\)
 a matrix of autoregression
 and cross regression coefficients,
 and
-\(\boldsymbol{\Psi}\)
+\(\boldsymbol{\Psi}_{i}\)
 the covariance matrix of
 \(\boldsymbol{\zeta}_{i, t}\).</p>
 <p>If <code>center = TRUE</code>, the dynamic structure is parameterized as follows
 $$
   \boldsymbol{\eta}_{i, t}
   =
-  \boldsymbol{\mu}_{\boldsymbol{\eta}}
+  \boldsymbol{\mu}_{i}
   +
-  \boldsymbol{\beta}
+  \boldsymbol{\beta}_{i}
   \left(
     \boldsymbol{\eta}_{i, t - 1}
     -
-    \boldsymbol{\mu}_{\boldsymbol{\eta}}
+    \boldsymbol{\mu}_{i}
   \right)
   +
   \boldsymbol{\zeta}_{i, t}
 $$
-where \(\boldsymbol{\mu}_{\boldsymbol{\eta}}\)
+where \(\boldsymbol{\mu}_{i}\)
 is equilibrium level of the latent state
 toward which the system is pulled over time.</p>
+</div>
+
+<div class="section">
+<h3 id="continuous-time-dynamic-structure">Continuous-Time Dynamic Structure<a class="anchor" aria-label="anchor" href="#continuous-time-dynamic-structure"></a></h3>
+
+
 <p>The continuous-time parameterization, when <code>ct = TRUE</code>,
 for the dynamic structure is given by
 $$
@@ -765,14 +788,14 @@ $$
   \boldsymbol{\eta}_{i, t}
   =
   \left(
-  \boldsymbol{\alpha}
+  \boldsymbol{\alpha}_{i}
   +
-  \boldsymbol{\beta}
+  \boldsymbol{\beta}_{i}
   \boldsymbol{\eta}_{i, t - 1}
   \right)
   \mathrm{d} t
   +
-  \boldsymbol{\Psi}^{\frac{1}{2}}
+  \boldsymbol{\Psi}_{i}^{\frac{1}{2}}
   \mathrm{d}
   \mathbf{W}_{i, t}
 $$
@@ -784,18 +807,20 @@ $$
   \mathrm{d}
   \boldsymbol{\eta}_{i, t}
   =
-  \boldsymbol{\beta}
+  \boldsymbol{\beta}_{i}
   \left(
     \boldsymbol{\eta}_{i, t - 1}
     -
-    \boldsymbol{\mu}_{\boldsymbol{\eta}}
+    \boldsymbol{\mu}_{i}
   \right)
   \mathrm{d} t
   +
-  \boldsymbol{\Psi}^{\frac{1}{2}}
+  \boldsymbol{\Psi}_{i}^{\frac{1}{2}}
   \mathrm{d}
   \mathbf{W}_{i, t}
 $$</p>
+</div>
+
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

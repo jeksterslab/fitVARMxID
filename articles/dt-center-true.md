@@ -10,7 +10,8 @@ The measurement model is given by
   \boldsymbol{\eta}_{i, t}
 \end{equation}
 ```
-where $`\mathbf{y}_{i, t}`$, and $`\boldsymbol{\eta}_{i, t}`$.
+where $`\mathbf{y}_{i, t}`$, and $`\boldsymbol{\eta}_{i, t}`$ are random
+variables.
 
 The dynamic structure is given by
 ``` math
@@ -114,12 +115,11 @@ Let the initial condition $`\boldsymbol{\eta}_{0}`$ be given by
 \end{equation}
 ```
 
-Let the set-point vector $`\boldsymbol{\mu}_{\boldsymbol{\eta}}`$ be
-given by
+Let the set-point vector $`\boldsymbol{\mu}`$ be given by
 
 ``` math
 \begin{equation}
-\boldsymbol{\mu}_{\boldsymbol{\eta}}
+\boldsymbol{\mu}
 =
 \left(
 \begin{array}{c}
@@ -277,8 +277,8 @@ beta_values <- beta
 
 ### Set-Point (`mu`)
 
-The set-point vector $`\boldsymbol{\mu}_{\boldsymbol{\eta}}`$ is
-initialized with starting values.
+The set-point vector $`\boldsymbol{\mu}`$ is initialized with starting
+values.
 
 ``` r
 

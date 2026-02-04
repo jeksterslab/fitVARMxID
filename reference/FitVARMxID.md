@@ -522,60 +522,71 @@ elements:
 
 ## Details
 
-The measurement model is given by \$\$ \mathbf{y}\_{i, t} =
-\boldsymbol{\nu} + \boldsymbol{\Lambda} \boldsymbol{\eta}\_{i, t} +
+### Measurement Model
+
+By default, the measurement model is given by \$\$ \mathbf{y}\_{i, t} =
+\boldsymbol{\eta}\_{i, t} . \$\$ However, the full measurement model can
+be parameterized as follows \$\$ \mathbf{y}\_{i, t} =
+\boldsymbol{\nu}\_{i} + \boldsymbol{\Lambda} \boldsymbol{\eta}\_{i, t} +
 \boldsymbol{\varepsilon}\_{i, t}, \quad \mathrm{with} \quad
 \boldsymbol{\varepsilon}\_{i, t} \sim \mathcal{N} \left( \mathbf{0},
-\boldsymbol{\Theta} \right) \$\$ where \\\mathbf{y}\_{i, t}\\,
+\boldsymbol{\Theta}\_{i} \right) \$\$ where \\\mathbf{y}\_{i, t}\\,
 \\\boldsymbol{\eta}\_{i, t}\\, and \\\boldsymbol{\varepsilon}\_{i, t}\\
-are random variables and \\\boldsymbol{\nu}\\, \\\boldsymbol{\Lambda}\\,
-and \\\boldsymbol{\Theta}\\ are model parameters. \\\mathbf{y}\_{i, t}\\
-represents a vector of observed random variables,
-\\\boldsymbol{\eta}\_{i, t}\\ a vector of latent random variables, and
-\\\boldsymbol{\varepsilon}\_{i, t}\\ a vector of random measurement
-errors, at time \\t\\ and individual \\i\\. \\\boldsymbol{\nu}\\,
-denotes a vector of intercepts (fixed to a null vector by default),
-\\\boldsymbol{\Lambda}\\ a matrix of factor loadings, and
-\\\boldsymbol{\Theta}\\ the covariance matrix of
+are random variables and \\\boldsymbol{\nu}\_{i}\\,
+\\\boldsymbol{\Lambda}\\, and \\\boldsymbol{\Theta}\_{i}\\ are model
+parameters. \\\mathbf{y}\_{i, t}\\ represents a vector of observed
+random variables, \\\boldsymbol{\eta}\_{i, t}\\ a vector of latent
+random variables, and \\\boldsymbol{\varepsilon}\_{i, t}\\ a vector of
+random measurement errors, at time \\t\\ and individual \\i\\.
+\\\boldsymbol{\nu}\_{i}\\, denotes a vector of intercepts (fixed to a
+null vector by default), \\\boldsymbol{\Lambda}\\ a matrix of factor
+loadings, and \\\boldsymbol{\Theta}\_{i}\\ the covariance matrix of
 \\\boldsymbol{\varepsilon}\\. In this model, \\\boldsymbol{\Lambda}\\ is
-an identity matrix and \\\boldsymbol{\Theta}\\ is a diagonal matrix.
+an identity matrix and \\\boldsymbol{\Theta}\_{i}\\ is a diagonal
+matrix.
+
+### Discrete-Time Dynamic Structure
 
 The dynamic structure is given by \$\$ \boldsymbol{\eta}\_{i, t} =
-\boldsymbol{\alpha} + \boldsymbol{\beta} \boldsymbol{\eta}\_{i, t - 1} +
-\boldsymbol{\zeta}\_{i, t}, \quad \mathrm{with} \quad
-\boldsymbol{\zeta}\_{i, t} \sim \mathcal{N} \left( \mathbf{0},
-\boldsymbol{\Psi} \right) \$\$ where \\\boldsymbol{\eta}\_{i, t}\\,
-\\\boldsymbol{\eta}\_{i, t - 1}\\, and \\\boldsymbol{\zeta}\_{i, t}\\
-are random variables, and \\\boldsymbol{\alpha}\\,
-\\\boldsymbol{\beta}\\, and \\\boldsymbol{\Psi}\\ are model parameters.
-Here, \\\boldsymbol{\eta}\_{i, t}\\ is a vector of latent variables at
-time \\t\\ and individual \\i\\, \\\boldsymbol{\eta}\_{i, t - 1}\\
-represents a vector of latent variables at time \\t - 1\\ and individual
-\\i\\, and \\\boldsymbol{\zeta}\_{i, t}\\ represents a vector of dynamic
-noise at time \\t\\ and individual \\i\\. \\\boldsymbol{\alpha}\\
-denotes a vector of intercepts, \\\boldsymbol{\beta}\\ a matrix of
+\boldsymbol{\alpha}\_{i} + \boldsymbol{\beta}\_{i}
+\boldsymbol{\eta}\_{i, t - 1} + \boldsymbol{\zeta}\_{i, t}, \quad
+\mathrm{with} \quad \boldsymbol{\zeta}\_{i, t} \sim \mathcal{N} \left(
+\mathbf{0}, \boldsymbol{\Psi}\_{i} \right) \$\$ where
+\\\boldsymbol{\eta}\_{i, t}\\, \\\boldsymbol{\eta}\_{i, t - 1}\\, and
+\\\boldsymbol{\zeta}\_{i, t}\\ are random variables, and
+\\\boldsymbol{\alpha}\_{i}\\, \\\boldsymbol{\beta}\_{i}\\, and
+\\\boldsymbol{\Psi}\_{i}\\ are model parameters. Here,
+\\\boldsymbol{\eta}\_{i, t}\\ is a vector of latent variables at time
+\\t\\ and individual \\i\\, \\\boldsymbol{\eta}\_{i, t - 1}\\ represents
+a vector of latent variables at time \\t - 1\\ and individual \\i\\, and
+\\\boldsymbol{\zeta}\_{i, t}\\ represents a vector of dynamic noise at
+time \\t\\ and individual \\i\\. \\\boldsymbol{\alpha}\_{i}\\ denotes a
+vector of intercepts, \\\boldsymbol{\beta}\_{i}\\ a matrix of
 autoregression and cross regression coefficients, and
-\\\boldsymbol{\Psi}\\ the covariance matrix of \\\boldsymbol{\zeta}\_{i,
-t}\\.
+\\\boldsymbol{\Psi}\_{i}\\ the covariance matrix of
+\\\boldsymbol{\zeta}\_{i, t}\\.
 
 If `center = TRUE`, the dynamic structure is parameterized as follows
-\$\$ \boldsymbol{\eta}\_{i, t} = \boldsymbol{\mu}\_{\boldsymbol{\eta}} +
-\boldsymbol{\beta} \left( \boldsymbol{\eta}\_{i, t - 1} -
-\boldsymbol{\mu}\_{\boldsymbol{\eta}} \right) + \boldsymbol{\zeta}\_{i,
-t} \$\$ where \\\boldsymbol{\mu}\_{\boldsymbol{\eta}}\\ is equilibrium
-level of the latent state toward which the system is pulled over time.
+\$\$ \boldsymbol{\eta}\_{i, t} = \boldsymbol{\mu}\_{i} +
+\boldsymbol{\beta}\_{i} \left( \boldsymbol{\eta}\_{i, t - 1} -
+\boldsymbol{\mu}\_{i} \right) + \boldsymbol{\zeta}\_{i, t} \$\$ where
+\\\boldsymbol{\mu}\_{i}\\ is equilibrium level of the latent state
+toward which the system is pulled over time.
+
+### Continuous-Time Dynamic Structure
 
 The continuous-time parameterization, when `ct = TRUE`, for the dynamic
 structure is given by \$\$ \mathrm{d} \boldsymbol{\eta}\_{i, t} = \left(
-\boldsymbol{\alpha} + \boldsymbol{\beta} \boldsymbol{\eta}\_{i, t - 1}
-\right) \mathrm{d} t + \boldsymbol{\Psi}^{\frac{1}{2}} \mathrm{d}
-\mathbf{W}\_{i, t} \$\$ note that \\\mathrm{d}\boldsymbol{W}\\ is a
-Wiener process or Brownian motion, which represents random fluctuations.
+\boldsymbol{\alpha}\_{i} + \boldsymbol{\beta}\_{i}
+\boldsymbol{\eta}\_{i, t - 1} \right) \mathrm{d} t +
+\boldsymbol{\Psi}\_{i}^{\frac{1}{2}} \mathrm{d} \mathbf{W}\_{i, t} \$\$
+note that \\\mathrm{d}\boldsymbol{W}\\ is a Wiener process or Brownian
+motion, which represents random fluctuations.
 
 If `center = TRUE`, the dynamic structure is parameterized as follows
-\$\$ \mathrm{d} \boldsymbol{\eta}\_{i, t} = \boldsymbol{\beta} \left(
-\boldsymbol{\eta}\_{i, t - 1} - \boldsymbol{\mu}\_{\boldsymbol{\eta}}
-\right) \mathrm{d} t + \boldsymbol{\Psi}^{\frac{1}{2}} \mathrm{d}
+\$\$ \mathrm{d} \boldsymbol{\eta}\_{i, t} = \boldsymbol{\beta}\_{i}
+\left( \boldsymbol{\eta}\_{i, t - 1} - \boldsymbol{\mu}\_{i} \right)
+\mathrm{d} t + \boldsymbol{\Psi}\_{i}^{\frac{1}{2}} \mathrm{d}
 \mathbf{W}\_{i, t} \$\$
 
 ## References

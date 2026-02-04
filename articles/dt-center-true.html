@@ -60,7 +60,7 @@
                         <h4 data-toc-skip class="author">Ivan Jacob
 Agaloos Pesigan</h4>
             
-            <h4 data-toc-skip class="date">2026-02-03</h4>
+            <h4 data-toc-skip class="date">2026-02-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jeksterslab/fitVARMxID/blob/main/vignettes/dt-center-true.Rmd"><code>vignettes/dt-center-true.Rmd</code></a></small>
       <div class="d-none name"><code>dt-center-true.Rmd</code></div>
@@ -79,7 +79,8 @@ Agaloos Pesigan</h4>
 \end{equation}</annotation></semantics></math> where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐲</mi><mrow><mi>i</mi><mo>,</mo><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">\mathbf{y}_{i, t}</annotation></semantics></math>,
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝛈</mi><mrow><mi>i</mi><mo>,</mo><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">\boldsymbol{\eta}_{i, t}</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝛈</mi><mrow><mi>i</mi><mo>,</mo><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">\boldsymbol{\eta}_{i, t}</annotation></semantics></math>
+are random variables.</p>
 <p>The dynamic structure is given by
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝛈</mi><mrow><mi>i</mi><mo>,</mo><mi>t</mi></mrow></msub><mo>=</mo><mi>𝛍</mi><mo>+</mo><mi>𝛃</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝛈</mi><mrow><mi>i</mi><mo>,</mo><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><mi>𝛍</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>𝛇</mi><mrow><mi>i</mi><mo>,</mo><mi>t</mi></mrow></msub><mo>∼</mo><mi>𝒩</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><mi>𝚿</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{equation}
   \boldsymbol{\eta}_{i, t}
@@ -194,10 +195,10 @@ be given by</p>
 \right) .
 \end{equation}</annotation></semantics></math></p>
 <p>Let the set-point vector
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝛍</mi><mi>𝛈</mi></msub><annotation encoding="application/x-tex">\boldsymbol{\mu}_{\boldsymbol{\eta}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝛍</mi><annotation encoding="application/x-tex">\boldsymbol{\mu}</annotation></semantics></math>
 be given by</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝛍</mi><mi>𝛈</mi></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>3.0493535</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>6.1543804</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>4.8859127</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}
-\boldsymbol{\mu}_{\boldsymbol{\eta}}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝛍</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>3.0493535</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>6.1543804</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>4.8859127</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{equation}
+\boldsymbol{\mu}
 =
 \left(
 \begin{array}{c}
@@ -351,7 +352,7 @@ with the true values used in simulation.</p>
 <h3 id="set-point-mu">Set-Point (<code>mu</code>)<a class="anchor" aria-label="anchor" href="#set-point-mu"></a>
 </h3>
 <p>The set-point vector
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝛍</mi><mi>𝛈</mi></msub><annotation encoding="application/x-tex">\boldsymbol{\mu}_{\boldsymbol{\eta}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝛍</mi><annotation encoding="application/x-tex">\boldsymbol{\mu}</annotation></semantics></math>
 is initialized with starting values.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu_values</span> <span class="op">&lt;-</span> <span class="va">mu</span></span></code></pre></div>
