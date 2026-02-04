@@ -120,7 +120,8 @@
           mu_ubound = mu_ubound,
           name_mu = "mu",
           name_alpha = "alpha",
-          name_beta = "beta"
+          name_beta = "beta",
+          ct = ct
         )
       }
     )
