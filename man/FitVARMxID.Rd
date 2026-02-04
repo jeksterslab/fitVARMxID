@@ -429,7 +429,7 @@ for each unit ID.
 \details{
 \subsection{Measurement Model}{
 
-By default the measurement model is given by
+By default, the measurement model is given by
 \deqn{
   \mathbf{y}_{i, t}
   =
