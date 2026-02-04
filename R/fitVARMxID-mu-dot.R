@@ -8,7 +8,8 @@
                           mu_ubound,
                           name_mu,
                           name_alpha,
-                          name_beta) {
+                          name_beta,
+                          ct) {
   # B
   # latent variables on covariates
   if (mu_fixed) {
@@ -45,27 +46,52 @@
       name = name_mu
     )
   }
-  c(
-    mu,
-    OpenMx::mxAlgebraFromString(
-      algString = paste0(
-        name_mu,
-        " - ",
-        name_beta,
-        " %*% ",
-        name_mu
+  if (ct) {
+    out <- c(
+      mu,
+      OpenMx::mxAlgebraFromString(
+        algString = paste0(
+          " - ",
+          name_beta,
+          " %*% ",
+          name_mu
+        ),
+        name = name_alpha
       ),
-      name = name_alpha
-    ),
-    OpenMx::mxAlgebraFromString(
-      algString = paste0(
-        name_mu,
-        " - ",
-        name_beta,
-        " %*% ",
-        name_mu
-      ),
-      name = "B"
+      OpenMx::mxAlgebraFromString(
+        algString = paste0(
+          " - ",
+          name_beta,
+          " %*% ",
+          name_mu
+        ),
+        name = "B"
+      )
     )
-  )
+  } else {
+    out <- c(
+      mu,
+      OpenMx::mxAlgebraFromString(
+        algString = paste0(
+          name_mu,
+          " - ",
+          name_beta,
+          " %*% ",
+          name_mu
+        ),
+        name = name_alpha
+      ),
+      OpenMx::mxAlgebraFromString(
+        algString = paste0(
+          name_mu,
+          " - ",
+          name_beta,
+          " %*% ",
+          name_mu
+        ),
+        name = "B"
+      )
+    )
+  }
+  out
 }

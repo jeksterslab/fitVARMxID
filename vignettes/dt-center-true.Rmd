@@ -1,7 +1,7 @@
 ---
 title: "Discrete-Time Vector Autoregressive Model (center = TRUE)"
 author: "Ivan Jacob Agaloos Pesigan"
-date: "2026-02-03"
+date: "2026-02-04"
 bibliography: "vignettes.bib"
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 nocite: |
@@ -35,7 +35,7 @@ The measurement model is given by
 \end{equation}
 where
 $\mathbf{y}_{i, t}$, and
-$\boldsymbol{\eta}_{i, t}$.
+$\boldsymbol{\eta}_{i, t}$ are random variables.
 
 The dynamic structure is given by
 \begin{equation}
@@ -150,10 +150,10 @@ be given by
 \right) .
 \end{equation}
 
-Let the set-point vector $\boldsymbol{\mu}_{\boldsymbol{\eta}}$ be given by
+Let the set-point vector $\boldsymbol{\mu}$ be given by
 
 \begin{equation}
-\boldsymbol{\mu}_{\boldsymbol{\eta}}
+\boldsymbol{\mu}
 =
 \left(
 \begin{array}{c}
@@ -306,7 +306,7 @@ beta_values <- beta
 
 ### Set-Point (`mu`)
 
-The set-point vector $\boldsymbol{\mu}_{\boldsymbol{\eta}}$ is initialized with starting values.
+The set-point vector $\boldsymbol{\mu}$ is initialized with starting values.
 
 
 ``` r

@@ -18,7 +18,8 @@ lapply(
       mu_ubound = NULL,
       name_mu = "mu",
       name_alpha = "alpha",
-      name_beta = "beta"
+      name_beta = "beta",
+      ct = FALSE
     )
     mu_name <- mu[[1]]@name
     mu_values <- mu[[1]]@values

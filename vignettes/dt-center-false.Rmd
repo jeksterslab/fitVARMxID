@@ -1,7 +1,7 @@
 ---
 title: "Discrete-Time Vector Autoregressive Model (center = FALSE)"
 author: "Ivan Jacob Agaloos Pesigan"
-date: "2026-02-03"
+date: "2026-02-04"
 bibliography: "vignettes.bib"
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 nocite: |
@@ -33,7 +33,7 @@ The measurement model is given by
 \end{equation}
 where
 $\mathbf{y}_{i, t}$, and
-$\boldsymbol{\eta}_{i, t}$.
+$\boldsymbol{\eta}_{i, t}$ are random variables.
 
 The dynamic structure is given by
 \begin{equation}

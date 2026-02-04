@@ -4,11 +4,19 @@
 #' the first-order discrete-time vector autoregressive model
 #' for each unit ID.
 #'
-#' @details The measurement model is given by
+#' @details
+#' ## Measurement Model
+#' By default the measurement model is given by
 #' \deqn{
 #'   \mathbf{y}_{i, t}
 #'   =
-#'   \boldsymbol{\nu}
+#'   \boldsymbol{\eta}_{i, t} .
+#' }
+#' However, the full measurement model can be parameterized as follows
+#' \deqn{
+#'   \mathbf{y}_{i, t}
+#'   =
+#'   \boldsymbol{\nu}_{i}
 #'   +
 #'   \boldsymbol{\Lambda}
 #'   \boldsymbol{\eta}_{i, t}
@@ -22,7 +30,7 @@
 #'   \mathcal{N}
 #'   \left(
 #'   \mathbf{0},
-#'   \boldsymbol{\Theta}
+#'   \boldsymbol{\Theta}_{i}
 #'   \right)
 #' }
 #' where
@@ -32,10 +40,10 @@
 #' \eqn{\boldsymbol{\varepsilon}_{i, t}}
 #' are random variables
 #' and
-#' \eqn{\boldsymbol{\nu}},
+#' \eqn{\boldsymbol{\nu}_{i}},
 #' \eqn{\boldsymbol{\Lambda}},
 #' and
-#' \eqn{\boldsymbol{\Theta}}
+#' \eqn{\boldsymbol{\Theta}_{i}}
 #' are model parameters.
 #' \eqn{\mathbf{y}_{i, t}}
 #' represents a vector of observed random variables,
@@ -45,25 +53,26 @@
 #' \eqn{\boldsymbol{\varepsilon}_{i, t}}
 #' a vector of random measurement errors,
 #' at time \eqn{t} and individual \eqn{i}.
-#' \eqn{\boldsymbol{\nu}},
+#' \eqn{\boldsymbol{\nu}_{i}},
 #' denotes a vector of intercepts (fixed to a null vector by default),
 #' \eqn{\boldsymbol{\Lambda}}
 #' a matrix of factor loadings,
 #' and
-#' \eqn{\boldsymbol{\Theta}}
+#' \eqn{\boldsymbol{\Theta}_{i}}
 #' the covariance matrix of
 #' \eqn{\boldsymbol{\varepsilon}}.
 #' In this model,
 #' \eqn{\boldsymbol{\Lambda}} is an identity matrix and
-#' \eqn{\boldsymbol{\Theta}} is a diagonal matrix.
+#' \eqn{\boldsymbol{\Theta}_{i}} is a diagonal matrix.
 #'
+#' ## Discrete-Time Dynamic Structure
 #' The dynamic structure is given by
 #' \deqn{
 #'   \boldsymbol{\eta}_{i, t}
 #'   =
-#'   \boldsymbol{\alpha}
+#'   \boldsymbol{\alpha}_{i}
 #'   +
-#'   \boldsymbol{\beta}
+#'   \boldsymbol{\beta}_{i}
 #'   \boldsymbol{\eta}_{i, t - 1}
 #'   +
 #'   \boldsymbol{\zeta}_{i, t},
@@ -75,7 +84,7 @@
 #'   \mathcal{N}
 #'   \left(
 #'   \mathbf{0},
-#'   \boldsymbol{\Psi}
+#'   \boldsymbol{\Psi}_{i}
 #'   \right)
 #' }
 #' where
@@ -85,10 +94,10 @@
 #' \eqn{\boldsymbol{\zeta}_{i, t}}
 #' are random variables,
 #' and
-#' \eqn{\boldsymbol{\alpha}},
-#' \eqn{\boldsymbol{\beta}},
+#' \eqn{\boldsymbol{\alpha}_{i}},
+#' \eqn{\boldsymbol{\beta}_{i}},
 #' and
-#' \eqn{\boldsymbol{\Psi}}
+#' \eqn{\boldsymbol{\Psi}_{i}}
 #' are model parameters.
 #' Here,
 #' \eqn{\boldsymbol{\eta}_{i, t}}
@@ -101,13 +110,13 @@
 #' \eqn{\boldsymbol{\zeta}_{i, t}}
 #' represents a vector of dynamic noise
 #' at time \eqn{t} and individual \eqn{i}.
-#' \eqn{\boldsymbol{\alpha}}
+#' \eqn{\boldsymbol{\alpha}_{i}}
 #' denotes a vector of intercepts,
-#' \eqn{\boldsymbol{\beta}}
+#' \eqn{\boldsymbol{\beta}_{i}}
 #' a matrix of autoregression
 #' and cross regression coefficients,
 #' and
-#' \eqn{\boldsymbol{\Psi}}
+#' \eqn{\boldsymbol{\Psi}_{i}}
 #' the covariance matrix of
 #' \eqn{\boldsymbol{\zeta}_{i, t}}.
 #'
@@ -115,21 +124,22 @@
 #' \deqn{
 #'   \boldsymbol{\eta}_{i, t}
 #'   =
-#'   \boldsymbol{\mu}_{\boldsymbol{\eta}}
+#'   \boldsymbol{\mu}_{i}
 #'   +
-#'   \boldsymbol{\beta}
+#'   \boldsymbol{\beta}_{i}
 #'   \left(
 #'     \boldsymbol{\eta}_{i, t - 1}
 #'     -
-#'     \boldsymbol{\mu}_{\boldsymbol{\eta}}
+#'     \boldsymbol{\mu}_{i}
 #'   \right)
 #'   +
 #'   \boldsymbol{\zeta}_{i, t}
 #' }
-#' where \eqn{\boldsymbol{\mu}_{\boldsymbol{\eta}}}
+#' where \eqn{\boldsymbol{\mu}_{i}}
 #' is equilibrium level of the latent state
 #' toward which the system is pulled over time.
 #'
+#' ## Continuous-Time Dynamic Structure
 #' The continuous-time parameterization, when `ct = TRUE`,
 #' for the dynamic structure is given by
 #' \deqn{
@@ -137,14 +147,14 @@
 #'   \boldsymbol{\eta}_{i, t}
 #'   =
 #'   \left(
-#'   \boldsymbol{\alpha}
+#'   \boldsymbol{\alpha}_{i}
 #'   +
-#'   \boldsymbol{\beta}
+#'   \boldsymbol{\beta}_{i}
 #'   \boldsymbol{\eta}_{i, t - 1}
 #'   \right)
 #'   \mathrm{d} t
 #'   +
-#'   \boldsymbol{\Psi}^{\frac{1}{2}}
+#'   \boldsymbol{\Psi}_{i}^{\frac{1}{2}}
 #'   \mathrm{d}
 #'   \mathbf{W}_{i, t}
 #' }
@@ -157,15 +167,15 @@
 #'   \mathrm{d}
 #'   \boldsymbol{\eta}_{i, t}
 #'   =
-#'   \boldsymbol{\beta}
+#'   \boldsymbol{\beta}_{i}
 #'   \left(
 #'     \boldsymbol{\eta}_{i, t - 1}
 #'     -
-#'     \boldsymbol{\mu}_{\boldsymbol{\eta}}
+#'     \boldsymbol{\mu}_{i}
 #'   \right)
 #'   \mathrm{d} t
 #'   +
-#'   \boldsymbol{\Psi}^{\frac{1}{2}}
+#'   \boldsymbol{\Psi}_{i}^{\frac{1}{2}}
 #'   \mathrm{d}
 #'   \mathbf{W}_{i, t}
 #' }

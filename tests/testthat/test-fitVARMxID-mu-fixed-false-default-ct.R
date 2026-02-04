@@ -1,4 +1,4 @@
-## ---- test-fitVARMxID-mu-fixed-false
+## ---- test-fitVARMxID-mu-fixed-false-default-ct
 lapply(
   X = 1,
   FUN = function(i,
@@ -12,14 +12,14 @@ lapply(
       statenames = statenames,
       center = FALSE,
       mu_fixed = FALSE,
-      mu_free = rep(x = TRUE, times = k),
-      mu_values = rep(x = 1, times = k),
-      mu_lbound = rep(x = -1, times = k),
-      mu_ubound = rep(x = +1, times = k),
+      mu_free = NULL,
+      mu_values = NULL,
+      mu_lbound = NULL,
+      mu_ubound = NULL,
       name_mu = "mu",
       name_alpha = "alpha",
       name_beta = "beta",
-      ct = FALSE
+      ct = TRUE
     )
     mu_name <- mu$mu@name
     mu_values <- mu$mu@values
@@ -63,7 +63,7 @@ lapply(
         testthat::skip_on_cran()
         testthat::expect_true(
           all(
-            c(mu_values) == 1
+            c(mu_values) == 0
           )
         )
         testthat::expect_true(
@@ -107,13 +107,7 @@ lapply(
         testthat::skip_on_cran()
         testthat::expect_true(
           all(
-            c(mu_lbound) == c(
-              matrix(
-                data = -1,
-                nrow = k,
-                ncol = 1
-              )
-            )
+            is.na(mu_lbound)
           )
         )
         testthat::expect_true(
@@ -129,13 +123,7 @@ lapply(
         testthat::skip_on_cran()
         testthat::expect_true(
           all(
-            c(mu_ubound) == c(
-              matrix(
-                data = 1,
-                nrow = k,
-                ncol = 1
-              )
-            )
+            is.na(mu_ubound)
           )
         )
         testthat::expect_true(
@@ -146,5 +134,5 @@ lapply(
       }
     )
   },
-  text = "test-fitVARMxID-mu-fixed-false"
+  text = "test-fitVARMxID-mu-fixed-false-default-ct"
 )
