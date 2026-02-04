@@ -1,0 +1,88 @@
+# fitVARMxID
+
+Ivan Jacob Agaloos Pesigan 2026-02-03
+
+## Description
+
+Fit the discrete-time vector autoregressive model for multiple
+individuals using the `OpenMx` package.
+
+## Installation
+
+You can install the released version of `fitVARMxID` from
+[GitHub](https://github.com/jeksterslab/fitVARMxID) with:
+
+``` r
+
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("jeksterslab/fitVARMxID")
+```
+
+## More Information
+
+See [GitHub Pages](https://jeksterslab.github.io/fitVARMxID) for package
+documentation.
+
+## References
+
+Hunter, M. D. (2017). State space modeling in an open source, modular,
+structural equation modeling environment. *Structural Equation Modeling:
+A Multidisciplinary Journal*, *25*(2), 307–324.
+<https://doi.org/10.1080/10705511.2017.1369354>
+
+Neale, M. C., Hunter, M. D., Pritikin, J. N., Zahery, M., Brick, T. R.,
+Kirkpatrick, R. M., Estabrook, R., Bates, T. C., Maes, H. H., & Boker,
+S. M. (2015). OpenMx 2.0: Extended structural equation and statistical
+modeling. *Psychometrika*, *81*(2), 535–549.
+<https://doi.org/10.1007/s11336-014-9435-8>
+
+R Core Team. (2025). *R: A language and environment for statistical
+computing*. R Foundation for Statistical Computing.
+<https://www.R-project.org/>
+
+# Package index
+
+## Functions
+
+- [`FitVARMxID()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md)
+  : Fit the First-Order Discrete-Time Vector Autoregressive Model by ID
+- [`LDL()`](https://github.com/jeksterslab/fitVARMxID/reference/LDL.md)
+  : LDL' Decomposition of a Symmetric Positive-Definite Matrix
+- [`Softplus()`](https://github.com/jeksterslab/fitVARMxID/reference/Softplus.md)
+  [`InvSoftplus()`](https://github.com/jeksterslab/fitVARMxID/reference/Softplus.md)
+  : Softplus and Inverse Softplus Transformations
+
+## Methods
+
+- [`coef(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/coef.varmxid.md)
+  : Parameter Estimates
+
+- [`converged()`](https://github.com/jeksterslab/fitVARMxID/reference/converged.md)
+  : Check Model Convergence
+
+- [`print(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/print.varmxid.md)
+  :
+
+  Print Method for Object of Class `varmxid`
+
+- [`summary(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/summary.varmxid.md)
+  :
+
+  Summary Method for Object of Class `varmxid`
+
+- [`vcov(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/vcov.varmxid.md)
+  : Sampling Covariance Matrix of the Parameter Estimates
+
+# Articles
+
+### Examples with Fixed Parameters
+
+- [Discrete-Time Vector Autoregressive Model (center =
+  TRUE)](https://github.com/jeksterslab/fitVARMxID/articles/dt-center-true.md):
+- [Discrete-Time Vector Autoregressive Model (center =
+  FALSE)](https://github.com/jeksterslab/fitVARMxID/articles/dt-center-false.md):
+
+### Session Information
+
+- [fitVARMxID:
+  Session](https://github.com/jeksterslab/fitVARMxID/articles/session.md):
