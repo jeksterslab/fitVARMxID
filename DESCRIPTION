@@ -1,0 +1,27 @@
+Package: fitVARMxID
+Title: Fit the Vector Autoregressive Model for Multiple Individuals
+Version: 1.0.0
+Authors@R: 
+    person(given = "Ivan Jacob Agaloos",
+           family = "Pesigan",
+           role = c("aut", "cre", "cph"),
+           email = "r.jeksterslab@gmail.com",
+           comment = c(ORCID = "0000-0003-4818-8420"))
+Description: Fit the vector autoregressive model for multiple individuals
+    using the 'OpenMx' package (Hunter, 2017 <doi:10.1080/10705511.2017.1369354>).
+URL: https://github.com/jeksterslab/fitVARMxID,
+        https://jeksterslab.github.io/fitVARMxID/
+BugReports: https://github.com/jeksterslab/fitVARMxID/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
+Depends: R (>= 4.1.0), OpenMx (>= 2.22.10)
+Imports: stats, methods, Matrix
+Suggests: knitr, rmarkdown, testthat, simStateSpace (>= 1.2.14)
+RoxygenNote: 7.3.3.9000
+NeedsCompilation: no
+Packaged: 2026-02-04 00:11:48 UTC; root
+Author: Ivan Jacob Agaloos Pesigan [aut, cre, cph] (ORCID:
+    <https://orcid.org/0000-0003-4818-8420>)
+Maintainer: Ivan Jacob Agaloos Pesigan <r.jeksterslab@gmail.com>
