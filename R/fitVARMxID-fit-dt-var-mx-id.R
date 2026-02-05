@@ -1,7 +1,7 @@
-#' Fit the First-Order Discrete-Time Vector Autoregressive Model by ID
+#' Fit the First-Order Vector Autoregressive Model by ID
 #'
 #' The function fits
-#' the first-order discrete-time vector autoregressive model
+#' the first-order vector autoregressive model
 #' for each unit ID.
 #'
 #' @details
