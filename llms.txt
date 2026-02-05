@@ -1,11 +1,11 @@
 # fitVARMxID
 
-Ivan Jacob Agaloos Pesigan 2026-02-04
+Ivan Jacob Agaloos Pesigan 2026-02-05
 
 ## Description
 
-Fit the discrete-time vector autoregressive model for multiple
-individuals using the `OpenMx` package.
+Fit the vector autoregressive model for multiple individuals using the
+`OpenMx` package.
 
 ## Installation
 
@@ -45,7 +45,7 @@ computing*. R Foundation for Statistical Computing.
 ## Functions
 
 - [`FitVARMxID()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md)
-  : Fit the First-Order Discrete-Time Vector Autoregressive Model by ID
+  : Fit the First-Order Vector Autoregressive Model by ID
 - [`LDL()`](https://github.com/jeksterslab/fitVARMxID/reference/LDL.md)
   : LDL' Decomposition of a Symmetric Positive-Definite Matrix
 - [`Softplus()`](https://github.com/jeksterslab/fitVARMxID/reference/Softplus.md)

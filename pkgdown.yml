@@ -1,4 +1,4 @@
-pandoc: 3.8.3
+pandoc: '3.9'
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
@@ -6,7 +6,7 @@ articles:
   dt-center-true: dt-center-true.html
   fitVARMxID: fitVARMxID.html
   session: session.html
-last_built: 2026-02-04T03:07Z
+last_built: 2026-02-05T06:19Z
 urls:
   reference: https://github.com/jeksterslab/fitVARMxID/reference
   article: https://github.com/jeksterslab/fitVARMxID/articles

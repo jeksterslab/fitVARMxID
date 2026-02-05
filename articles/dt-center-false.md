@@ -297,9 +297,9 @@ decomposition expresses a covariance matrix $`\Sigma`$ as
 where:
 
 - $`\mathbf{L}`$ is a strictly lower-triangular matrix of free
-  parameters (`l_mat_strict`),  
-- $`\mathbf{I}`$ is the identity matrix,  
-- $`\mathbf{d}_{uc}`$ is an unconstrained vector,  
+  parameters (`l_mat_strict`),\
+- $`\mathbf{I}`$ is the identity matrix,\
+- $`\mathbf{d}_{uc}`$ is an unconstrained vector,\
 - $`\mathrm{Softplus} \left(\mathbf{d}_{uc} \right) = \log \left(1 + \exp \left( \mathbf{d}_{uc} \right) \right)`$
   ensures strictly positive diagonal entries.
 
@@ -309,8 +309,8 @@ function extracts this decomposition from a positive definite covariance
 matrix. It returns:
 
 - `d_uc`: unconstrained diagonal parameters, equal to
-  `InvSoftplus(d_vec)`,  
-- `d_vec`: diagonal entries, equal to `Softplus(d_uc)`,  
+  `InvSoftplus(d_vec)`,\
+- `d_vec`: diagonal entries, equal to `Softplus(d_uc)`,\
 - `l_mat_strict`: the strictly lower-triangular factor.
 
 ``` r

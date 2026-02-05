@@ -1,4 +1,4 @@
-# fitVARMxID: Fit the Discrete-Time Vector Autoregressive Model for Multiple Individuals
+# fitVARMxID: Fit the Vector Autoregressive Model for Multiple Individuals
 
 [![Make
 Project](https://github.com/jeksterslab/fitVARMxID/actions/workflows/make.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/make.yml)
@@ -18,8 +18,8 @@ Check](https://github.com/jeksterslab/fitVARMxID/actions/workflows/shellcheck.ym
 
 ## Description
 
-Fit the discrete-time vector autoregressive model for multiple
-individuals using the `OpenMx` package.
+Fit the vector autoregressive model for multiple individuals using the
+`OpenMx` package.
 
 ## Installation
 

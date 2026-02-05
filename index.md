@@ -1,11 +1,11 @@
 # fitVARMxID
 
-Ivan Jacob Agaloos Pesigan 2026-02-04
+Ivan Jacob Agaloos Pesigan 2026-02-05
 
 ## Description
 
-Fit the discrete-time vector autoregressive model for multiple
-individuals using the `OpenMx` package.
+Fit the vector autoregressive model for multiple individuals using the
+`OpenMx` package.
 
 ## Installation
 
