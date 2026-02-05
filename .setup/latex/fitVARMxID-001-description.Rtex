@@ -65,7 +65,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{fitVARMxID: Fit the Discrete-Time Vector Autoregressive Model}
+\title{fitVARMxID: Fit the Vector Autoregressive Model}
 \author{Ivan Jacob Agaloos Pesigan}
 \date{}
 
@@ -75,7 +75,7 @@
 
 \section*{Description}
 
-Fit the discrete-time vector autoregressive model using the \texttt{OpenMx} package.
+Fit the vector autoregressive model using the \texttt{OpenMx} package.
 
 \section*{Installation}
 
