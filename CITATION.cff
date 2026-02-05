@@ -8,7 +8,7 @@ message: 'To cite package "fitVARMxID" in publications use:'
 type: software
 license: MIT
 title: 'fitVARMxID: Fit the Vector Autoregressive Model for Multiple Individuals'
-version: 1.0.0
+version: 1.0.1
 abstract: Fit the vector autoregressive model for multiple individuals using the 'OpenMx'
   package (Hunter, 2017 <https://doi.org/10.1080/10705511.2017.1369354>).
 authors:
@@ -25,7 +25,7 @@ preferred-citation:
     email: jeksterslab@gmail.com
     orcid: https://orcid.org/0000-0003-4818-8420
   year: '2026'
-  notes: R package version 1.0.0
+  notes: R package version 1.0.1
 repository-code: https://github.com/jeksterslab/fitVARMxID
 url: https://jeksterslab.github.io/fitVARMxID/
 contact:
