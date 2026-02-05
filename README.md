@@ -1,7 +1,7 @@
 fitVARMxID
 ================
 Ivan Jacob Agaloos Pesigan
-2026-02-04
+2026-02-05
 
 <!-- README.md is generated from .setup/readme/README.Rmd. Please edit that file -->
 
@@ -26,8 +26,8 @@ Check](https://github.com/jeksterslab/fitVARMxID/actions/workflows/shellcheck.ym
 
 ## Description
 
-Fit the discrete-time vector autoregressive model for multiple
-individuals using the `OpenMx` package.
+Fit the vector autoregressive model for multiple individuals using the
+`OpenMx` package.
 
 ## Installation
 
