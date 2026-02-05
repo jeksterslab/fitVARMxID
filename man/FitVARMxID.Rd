@@ -2,7 +2,7 @@
 % Please edit documentation in R/fitVARMxID-fit-dt-var-mx-id.R
 \name{FitVARMxID}
 \alias{FitVARMxID}
-\title{Fit the First-Order Discrete-Time Vector Autoregressive Model by ID}
+\title{Fit the First-Order Vector Autoregressive Model by ID}
 \usage{
 FitVARMxID(
   data,
@@ -423,7 +423,7 @@ with argument \code{details = TRUE} for each \code{id}.}
 }
 \description{
 The function fits
-the first-order discrete-time vector autoregressive model
+the first-order vector autoregressive model
 for each unit ID.
 }
 \details{
