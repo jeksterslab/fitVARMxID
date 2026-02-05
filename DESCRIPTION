@@ -1,6 +1,6 @@
 Package: fitVARMxID
 Title: Fit the Vector Autoregressive Model for Multiple Individuals
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     person(given = "Ivan Jacob Agaloos",
            family = "Pesigan",
@@ -15,7 +15,6 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-VignetteBuilder: knitr
 Depends:
     R (>= 4.1.0),
     OpenMx (>= 2.22.10)
