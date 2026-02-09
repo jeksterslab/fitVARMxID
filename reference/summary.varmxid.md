@@ -100,6 +100,11 @@ summary(
 
   further arguments.
 
+## Value
+
+Returns means or raw estimates depending the the value of the argument
+`means`.
+
 ## Author
 
 Ivan Jacob Agaloos Pesigan

@@ -100,6 +100,11 @@ print(
 
   further arguments.
 
+## Value
+
+Prints means or raw estimates depending the the value of the argument
+`means`.
+
 ## Author
 
 Ivan Jacob Agaloos Pesigan

@@ -33,7 +33,7 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] fitVARMxID_1.0.0          OpenMx_2.22.10           
+#> [1] fitVARMxID_1.0.2          OpenMx_2.22.10           
 #> [3] simStateSpace_1.2.14.9000
 #> 
 #> loaded via a namespace (and not attached):
@@ -51,7 +51,13 @@ sessionInfo()
 
 installed.packages()[, c("Package", "Version")]
 #>                   Package             Version      
-#> fitVARMxID        "fitVARMxID"        "1.0.0"      
+#> base64enc         "base64enc"         "0.1-6"      
+#> bibtex            "bibtex"            "0.5.2"      
+#> fitVARMxID        "fitVARMxID"        "1.0.2"      
+#> lubridate         "lubridate"         "1.9.5"      
+#> pkgload           "pkgload"           "1.5.0"      
+#> rProject          "rProject"          "0.0.23"     
+#> tinytex           "tinytex"           "0.58.3"     
 #> abind             "abind"             "1.4-8"      
 #> Amelia            "Amelia"            "1.8.3"      
 #> arm               "arm"               "1.14-4"     
@@ -235,6 +241,7 @@ installed.packages()[, c("Package", "Version")]
 #> matrixStats       "matrixStats"       "1.5.0"      
 #> mclust            "mclust"            "6.1.2"      
 #> memoise           "memoise"           "2.0.1"      
+#> metaDyn           "metaDyn"           "0.0.0.9004" 
 #> metaSEM           "metaSEM"           "1.5.0"      
 #> metaVAR           "metaVAR"           "0.0.0.9004" 
 #> mice              "mice"              "3.19.0"     
@@ -471,10 +478,10 @@ installed.packages()[, c("Package", "Version")]
     #> Socket(s):                               1
     #> Stepping:                                0
     #> Frequency boost:                         enabled
-    #> CPU(s) scaling MHz:                      79%
+    #> CPU(s) scaling MHz:                      67%
     #> CPU max MHz:                             5060.9761
     #> CPU min MHz:                             1219.5129
-    #> BogoMIPS:                                4990.60
+    #> BogoMIPS:                                4990.77
     #> Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good amd_lbr_v2 nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba perfmon_v2 ibrs ibpb stibp ibrs_enhanced vmmcall fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk avx_vnni avx512_bf16 clzero irperf xsaveerptr rdpru wbnoinvd cppc arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload vgif x2avic v_spec_ctrl vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid bus_lock_detect movdiri movdir64b overflow_recov succor smca fsrm avx512_vp2intersect flush_l1d amd_lbr_pmc_freeze
     #> Virtualization:                          AMD-V
     #> L1d cache:                               768 KiB (16 instances)
@@ -504,6 +511,6 @@ installed.packages()[, c("Package", "Version")]
 ## Memory
 
     #>                total        used        free      shared  buff/cache   available
-    #> Mem:            44Gi       3.6Gi        37Gi        46Mi       3.5Gi        40Gi
+    #> Mem:            44Gi       3.4Gi        38Gi        14Mi       3.3Gi        41Gi
     #> Swap:           22Gi          0B        22Gi
-    #> Total:          66Gi       3.6Gi        60Gi
+    #> Total:          66Gi       3.4Gi        60Gi
