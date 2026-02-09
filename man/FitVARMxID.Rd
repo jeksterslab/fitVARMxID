@@ -611,7 +611,7 @@ If \code{center = TRUE}, the dynamic structure is parameterized as follows
 \examples{
 \donttest{
 if (requireNamespace("simStateSpace")) {
-  # Generate data using the simStateSpace package------------------------------
+  # Generate data using the simStateSpace package-------------------------
   set.seed(42)
   k <- 2
   n <- 5
@@ -663,7 +663,7 @@ if (requireNamespace("simStateSpace")) {
   )
   data <- as.data.frame(sim)
 
-  # Fit the model--------------------------------------------------------------
+  # Fit the model---------------------------------------------------------
   # center = TRUE
   library(fitVARMxID)
   fit <- FitVARMxID(
@@ -678,7 +678,7 @@ if (requireNamespace("simStateSpace")) {
   vcov(fit)
   converged(fit)
 
-  # Fit the model--------------------------------------------------------------
+  # Fit the model---------------------------------------------------------
   # center = FALSE
   library(fitVARMxID)
   fit <- FitVARMxID(
