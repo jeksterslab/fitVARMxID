@@ -8,6 +8,8 @@
 #' @param digits Integer indicating the number of decimal places to display.
 #' @param ... further arguments.
 #' @inheritParams coef.varmxid
+#' @return Prints means or raw estimates
+#'   depending the the value of the argument `means`.
 #'
 #' @method print varmxid
 #' @keywords methods
@@ -58,6 +60,8 @@ print.varmxid <- function(x,
 #' @param digits Integer indicating the number of decimal places to display.
 #' @param ... further arguments.
 #' @inheritParams coef.varmxid
+#' @return Returns means or raw estimates
+#'   depending the the value of the argument `means`.
 #'
 #' @method summary varmxid
 #' @keywords methods
@@ -563,6 +567,26 @@ converged.varmxid <- function(object,
                    hess_tol,
                    vanishing_theta,
                    theta_tol) {
+      class <- inherits(i, "MxModel")
+      if (!class) {
+        # nolint start
+        return(FALSE)
+        # nolint end
+      }
+      coef <- tryCatch(
+        {
+          coef(i$output)
+          TRUE
+        },
+        error = function(e) {
+          FALSE
+        }
+      )
+      if (!coef) {
+        # nolint start
+        return(FALSE)
+        # nolint end
+      }
       code <- tryCatch(
         {
           !(
@@ -575,15 +599,32 @@ converged.varmxid <- function(object,
           FALSE
         }
       )
-      good_grad <- .MxHelperIsGoodFit(
-        x = i,
-        tol = grad_tol
+      if (!code) {
+        # nolint start
+        return(FALSE)
+        # nolint end
+      }
+      good_fit <- tryCatch(
+        {
+          good_grad <- .MxHelperIsGoodFit(
+            x = i,
+            tol = grad_tol
+          )
+          pd_hessian <- .MxHelperHasPdHessian(
+            x = i,
+            tol = hess_tol
+          )
+          good_grad && pd_hessian
+        },
+        error = function(e) {
+          FALSE
+        }
       )
-      pd_hessian <- .MxHelperHasPdHessian(
-        x = i,
-        tol = hess_tol
-      )
-      good_fit <- good_grad && pd_hessian
+      if (!good_fit) {
+        # nolint start
+        return(FALSE)
+        # nolint end
+      }
       theta_ok <- TRUE
       if (vanishing_theta) {
         parnames <- names(
