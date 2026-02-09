@@ -853,7 +853,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"simStateSpace"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="co"># Generate data using the simStateSpace package------------------------------</span></span></span>
+<span class="r-in"><span>  <span class="co"># Generate data using the simStateSpace package-------------------------</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">5</span></span></span>
@@ -905,7 +905,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># Fit the model--------------------------------------------------------------</span></span></span>
+<span class="r-in"><span>  <span class="co"># Fit the model---------------------------------------------------------</span></span></span>
 <span class="r-in"><span>  <span class="co"># center = TRUE</span></span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jeksterslab/fitVARMxID">fitVARMxID</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">FitVARMxID</span><span class="op">(</span></span></span>
@@ -920,7 +920,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="converged.html">converged</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># Fit the model--------------------------------------------------------------</span></span></span>
+<span class="r-in"><span>  <span class="co"># Fit the model---------------------------------------------------------</span></span></span>
 <span class="r-in"><span>  <span class="co"># center = FALSE</span></span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jeksterslab/fitVARMxID">fitVARMxID</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">FitVARMxID</span><span class="op">(</span></span></span>
@@ -1017,7 +1017,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  Lowest minimum so far:  361.811050824503</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  OpenMx status code 6 not in list of acceptable status codes, (0,0)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  Not all eigenvalues of the Hessian are positive: 24954555.3445604, 4809422.45256989, 4083.10411693719, 984.948866693679, 668.522553177851, 87.3155699365163, 35.4704846050821, 0.0278031363912394, -9.13078062753628e-06</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  Not all eigenvalues of the Hessian are positive: 24954555.3445604, 4809422.45256989, 4083.10411693607, 984.948866694424, 668.522553177986, 87.3155699365162, 35.4704846050868, 0.0278031363911162, -9.13078052881145e-06</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Beginning fit attempt 1 of at maximum 10 extra tries</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running VAR_ID3 with 9 parameters</span>

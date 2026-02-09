@@ -617,7 +617,7 @@ Ivan Jacob Agaloos Pesigan
 ``` r
 # \donttest{
 if (requireNamespace("simStateSpace")) {
-  # Generate data using the simStateSpace package------------------------------
+  # Generate data using the simStateSpace package-------------------------
   set.seed(42)
   k <- 2
   n <- 5
@@ -669,7 +669,7 @@ if (requireNamespace("simStateSpace")) {
   )
   data <- as.data.frame(sim)
 
-  # Fit the model--------------------------------------------------------------
+  # Fit the model---------------------------------------------------------
   # center = TRUE
   library(fitVARMxID)
   fit <- FitVARMxID(
@@ -684,7 +684,7 @@ if (requireNamespace("simStateSpace")) {
   vcov(fit)
   converged(fit)
 
-  # Fit the model--------------------------------------------------------------
+  # Fit the model---------------------------------------------------------
   # center = FALSE
   library(fitVARMxID)
   fit <- FitVARMxID(
@@ -781,7 +781,7 @@ if (requireNamespace("simStateSpace")) {
 #> 
 #>  Lowest minimum so far:  361.811050824503
 #>  OpenMx status code 6 not in list of acceptable status codes, (0,0)
-#>  Not all eigenvalues of the Hessian are positive: 24954555.3445604, 4809422.45256989, 4083.10411693719, 984.948866693679, 668.522553177851, 87.3155699365163, 35.4704846050821, 0.0278031363912394, -9.13078062753628e-06
+#>  Not all eigenvalues of the Hessian are positive: 24954555.3445604, 4809422.45256989, 4083.10411693607, 984.948866694424, 668.522553177986, 87.3155699365162, 35.4704846050868, 0.0278031363911162, -9.13078052881145e-06
 #> 
 #> Beginning fit attempt 1 of at maximum 10 extra tries
 #> Running VAR_ID3 with 9 parameters
