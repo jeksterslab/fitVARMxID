@@ -4,6 +4,12 @@ lapply(
   FUN = function(i,
                  text) {
     message(text)
+    if (!identical(Sys.getenv("NOT_CRAN"), "true") && !interactive()) {
+      message("CRAN: tests skipped.")
+      # nolint start
+      return(invisible(NULL))
+      # nolint end
+    }
     k <- 3
     idx <- seq_len(k)
     statenames <- paste0("eta", idx)

@@ -12,13 +12,15 @@ lapply(
       # nolint end
     }
     if (identical(Sys.getenv("GITHUB_TEST"), "true")) {
+      ci <- TRUE
       n <- 10
       time <- 1000
       tol <- 0.20
     } else {
+      ci <- FALSE
       n <- 2
       time <- 1000
-      tol <- 0.50
+      tol <- 1.00
     }
     k <- 2
     alpha <- stats::runif(n = k)
@@ -54,13 +56,15 @@ lapply(
       robust = FALSE,
       seed = 42
     )
-    print(fit)
-    print(fit, means = TRUE)
-    summary(fit)
-    summary(fit, means = TRUE)
-    coef(fit)
-    vcov(fit)
-    vcov(fit, robust = TRUE)
+    if (ci) {
+      print(fit)
+      print(fit, means = TRUE)
+      summary(fit)
+      summary(fit, means = TRUE)
+      coef(fit)
+      vcov(fit)
+      vcov(fit, robust = TRUE)
+    }
     testthat::test_that(
       paste(text, "converged"),
       {

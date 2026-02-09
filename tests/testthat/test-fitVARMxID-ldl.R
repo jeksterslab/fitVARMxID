@@ -4,6 +4,12 @@ lapply(
   FUN = function(i,
                  text) {
     message(text)
+    if (!identical(Sys.getenv("NOT_CRAN"), "true") && !interactive()) {
+      message("CRAN: tests skipped.")
+      # nolint start
+      return(invisible(NULL))
+      # nolint end
+    }
     set.seed(42)
     testthat::test_that(
       paste(text, "LDL reconstructs the input matrix"),

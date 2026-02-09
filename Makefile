@@ -133,3 +133,8 @@ auto: clone
 	@git add --all
 	@git commit -m "Automated build."
 	@git push origin main
+
+autotest: clone
+	@git add --all
+	@git commit -m "Automated build."
+	@git push origin testing

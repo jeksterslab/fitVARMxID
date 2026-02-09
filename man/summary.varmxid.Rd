@@ -89,6 +89,10 @@ if \code{converged} and \code{theta_tol} are \code{TRUE}.}
 
 \item{...}{further arguments.}
 }
+\value{
+Returns means or raw estimates
+depending the the value of the argument \code{means}.
+}
 \description{
 Summary Method for Object of Class \code{varmxid}
 }
