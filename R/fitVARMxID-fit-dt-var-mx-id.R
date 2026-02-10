@@ -446,7 +446,7 @@
 #'   set.seed(42)
 #'   k <- 2
 #'   n <- 5
-#'   time <- 100
+#'   time <- 1000
 #'   alpha <- rep(x = 5, times = k)
 #'   beta <- matrix(
 #'     data = c(.5, .0, .2, .5),
