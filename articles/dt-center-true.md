@@ -262,28 +262,6 @@ library(fitVARMxID)
 ```
 
 The `FitVARMxID` function fits a DT-VAR model on each individual $`i`$.
-To set up the estimation, we first provide **starting values** for each
-parameter matrix.
-
-### Autoregressive Parameters (`beta`)
-
-We initialize the autoregressive coefficient matrix
-$`\boldsymbol{\beta}`$ with the true values used in simulation.
-
-``` r
-
-beta_values <- beta
-```
-
-### Set-Point (`mu`)
-
-The set-point vector $`\boldsymbol{\mu}`$ is initialized with starting
-values.
-
-``` r
-
-mu_values <- mu
-```
 
 ### LDL’-parameterized covariance matrices
 
@@ -335,53 +313,6 @@ sigma_reconstructed
 #> [2,]  0.5  1.0
 ```
 
-#### Process Noise Covariance Matrix (`psi`)
-
-Starting values for the process noise covariance matrix
-$`\boldsymbol{\Psi}`$ are given below, with corresponding LDL’
-parameters.
-
-``` r
-
-psi_values <- psi
-ldl_psi_values <- LDL(psi_values)
-psi_d_values <- ldl_psi_values$d_uc
-psi_l_values <- ldl_psi_values$l_mat_strict
-```
-
-``` r
-
-psi_d_values
-#> [1] -2.252168 -2.252168 -2.252168
-```
-
-``` r
-
-psi_l_values
-#>      [,1] [,2] [,3]
-#> [1,]    0    0    0
-#> [2,]    0    0    0
-#> [3,]    0    0    0
-```
-
-### Initial mean vector (`mu_0`) and covariance matrix (`sigma_0`)
-
-The initial mean vector $`\boldsymbol{\mu_0}`$ and covariance matrix
-$`\boldsymbol{\Sigma_0}`$ are fixed using `mu0` and `sigma0`.
-
-``` r
-
-mu0_values <- mu0
-```
-
-``` r
-
-sigma0_values <- sigma0
-ldl <- LDL(sigma0)
-sigma0_d_values <- ldl$d_uc
-sigma0_l_values <- ldl$l_mat_strict
-```
-
 ### `FitVARMxID`
 
 ``` r
@@ -391,13 +322,9 @@ fit <- FitVARMxID(
   observed = c("y1", "y2", "y3"),
   id = "id",
   center = TRUE,
-  mu_values = mu_values,
-  beta_values = beta_values,
-  psi_d_values = psi_d_values,
-  psi_l_values = psi_l_values,
-  mu0_values = mu0_values,
-  sigma0_d_values = sigma0_d_values,
-  sigma0_l_values = sigma0_l_values,
+  tries_explore = 1000,
+  tries_local = 100,
+  max_attempts = 100,
   ncores = parallel::detectCores()
 )
 ```
@@ -409,18 +336,16 @@ fit <- FitVARMxID(
 summary(fit, means = TRUE)
 #> Call:
 #> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
-#>     center = TRUE, mu_values = mu_values, beta_values = beta_values, 
-#>     psi_d_values = psi_d_values, psi_l_values = psi_l_values, 
-#>     mu0_values = mu0_values, sigma0_d_values = sigma0_d_values, 
-#>     sigma0_l_values = sigma0_l_values, ncores = parallel::detectCores())
+#>     center = TRUE, tries_explore = 1000, tries_local = 100, max_attempts = 100, 
+#>     ncores = parallel::detectCores())
 #> 
 #> Means of the estimated paramaters per individual.
 #>  beta_1_1  beta_2_1  beta_3_1  beta_1_2  beta_2_2  beta_3_2  beta_1_3  beta_2_3 
-#>    0.7000    0.4990   -0.0990   -0.0021    0.5997    0.4039   -0.0050   -0.0021 
+#>    0.6992    0.4982   -0.1002   -0.0017    0.5998    0.4043   -0.0060   -0.0039 
 #>  beta_3_3    mu_1_1    mu_2_1    mu_3_1 psi_l_2_1 psi_l_3_1 psi_l_3_2 psi_d_1_1 
-#>    0.4982    3.0552    6.1627    4.8946    0.0046   -0.0026    0.0048   -2.2562 
+#>    0.4945    3.0558    6.1646    4.8975    0.0054   -0.0013    0.0081   -2.2559 
 #> psi_d_2_1 psi_d_3_1 
-#>   -2.2643   -2.2609
+#>   -2.2626   -2.2553
 ```
 
 ## References
