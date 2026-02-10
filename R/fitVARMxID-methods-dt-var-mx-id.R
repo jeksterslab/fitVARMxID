@@ -594,7 +594,6 @@ converged.varmxid <- function(object,
               is.null(i$output$status) ||
               i$output$status$code != 0L
           )
-
         },
         error = function(e) {
           FALSE
