@@ -86,13 +86,13 @@ lapply(
     theta_l_values <- theta$theta_l@values
     theta_l_vec_values <- theta$theta_l_vec@values
     theta_l_labels <- theta$theta_l@labels
-    theta_l_vec_labels <- theta$theta_l_vec@labels    
+    theta_l_vec_labels <- theta$theta_l_vec@labels
     theta_l_free <- theta$theta_l@free
     theta_l_vec_free <- theta$theta_l_vec@free
     theta_l_lbound <- theta$theta_l@lbound
     theta_l_vec_lbound <- theta$theta_l_vec@lbound
     theta_l_ubound <- theta$theta_l@ubound
-    theta_l_vec_ubound <- theta$theta_l_vec@ubound 
+    theta_l_vec_ubound <- theta$theta_l_vec@ubound
     testthat::test_that(
       paste(text, "class"),
       {
