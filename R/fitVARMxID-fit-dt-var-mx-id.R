@@ -798,9 +798,16 @@ FitVARMxID <- function(data,
     clean = clean
   )
   if (robust) {
-    sandwich <- .Robust(
-      fit = output,
-      ncores = ncores
+    sandwich <- tryCatch(
+      {
+        .Robust(
+          fit = output,
+          ncores = ncores
+        )
+      },
+      error = function(e) {
+        NULL
+      }
     )
   } else {
     sandwich <- NULL
