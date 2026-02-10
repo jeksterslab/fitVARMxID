@@ -459,14 +459,6 @@
 #'     ncol = k
 #'   )
 #'   psi_l <- t(chol(psi))
-#'   nu <- rep(x = 0, times = k)
-#'   lambda <- diag(k)
-#'   theta <- matrix(
-#'     data = c(exp(-2), 0, 0, exp(-2.8)),
-#'     nrow = k,
-#'     ncol = k
-#'   )
-#'   theta_l <- t(chol(theta))
 #'   mu0 <- c(solve(diag(k) - beta) %*% alpha)
 #'   sigma0 <- matrix(
 #'     data = c(
@@ -476,7 +468,7 @@
 #'     ncol = k
 #'   )
 #'   sigma0_l <- t(chol(sigma0))
-#'   sim <- simStateSpace::SimSSMIVary(
+#'   sim <- simStateSpace::SimSSMVARIVary(
 #'     n = n,
 #'     time,
 #'     mu0 = list(mu0),
@@ -487,10 +479,7 @@
 #'       beta = beta,
 #'       vcov_beta_vec_l = t(chol(0.1 * diag(k * k)))
 #'     ),
-#'     psi_l = list(psi_l),
-#'     nu = list(nu),
-#'     lambda = list(lambda),
-#'     theta_l = list(theta_l)
+#'     psi_l = list(psi_l)
 #'   )
 #'   data <- as.data.frame(sim)
 #'
