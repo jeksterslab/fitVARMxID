@@ -385,6 +385,20 @@ vcov.varmxid <- function(object,
                          robust = FALSE,
                          ...) {
   fit <- object$output
+  if (converged) {
+    fit <- fit[
+      which(
+        converged.varmxid(
+          object = object,
+          grad_tol = grad_tol,
+          hess_tol = hess_tol,
+          vanishing_theta = vanishing_theta,
+          theta_tol = theta_tol,
+          prop = FALSE
+        )
+      )
+    ]
+  }
   if (robust) {
     if (is.null(object$robust)) {
       fit <- lapply(
@@ -417,20 +431,6 @@ vcov.varmxid <- function(object,
         sandwich = object$robust
       )
     }
-  }
-  if (converged) {
-    fit <- fit[
-      which(
-        converged.varmxid(
-          object = object,
-          grad_tol = grad_tol,
-          hess_tol = hess_tol,
-          vanishing_theta = vanishing_theta,
-          theta_tol = theta_tol,
-          prop = FALSE
-        )
-      )
-    ]
   }
   parnames <- names(
     coef(fit[[1]])
@@ -594,6 +594,7 @@ converged.varmxid <- function(object,
               is.null(i$output$status) ||
               i$output$status$code != 0L
           )
+
         },
         error = function(e) {
           FALSE
