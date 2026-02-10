@@ -53,6 +53,7 @@ installed.packages()[, c("Package", "Version")]
 #>                   Package             Version      
 #> base64enc         "base64enc"         "0.1-6"      
 #> bibtex            "bibtex"            "0.5.2"      
+#> devtools          "devtools"          "2.4.6.9000" 
 #> fitVARMxID        "fitVARMxID"        "1.0.2"      
 #> lubridate         "lubridate"         "1.9.5"      
 #> pkgload           "pkgload"           "1.5.0"      
@@ -478,7 +479,7 @@ installed.packages()[, c("Package", "Version")]
     #> Socket(s):                               1
     #> Stepping:                                0
     #> Frequency boost:                         enabled
-    #> CPU(s) scaling MHz:                      67%
+    #> CPU(s) scaling MHz:                      68%
     #> CPU max MHz:                             5060.9761
     #> CPU min MHz:                             1219.5129
     #> BogoMIPS:                                4990.77
@@ -511,6 +512,6 @@ installed.packages()[, c("Package", "Version")]
 ## Memory
 
     #>                total        used        free      shared  buff/cache   available
-    #> Mem:            44Gi       3.4Gi        38Gi        14Mi       3.3Gi        41Gi
+    #> Mem:            44Gi       4.5Gi        36Gi        46Mi       4.0Gi        39Gi
     #> Swap:           22Gi          0B        22Gi
-    #> Total:          66Gi       3.4Gi        60Gi
+    #> Total:          66Gi       4.5Gi        59Gi
