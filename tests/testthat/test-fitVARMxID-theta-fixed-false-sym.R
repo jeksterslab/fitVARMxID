@@ -81,7 +81,6 @@ lapply(
     theta_d_ubound <- theta$theta_d@ubound
     theta_d_vec_ubound <- theta$theta_d_vec@ubound
     theta_vec_ubound <- theta$theta_vec@ubound
-
     theta_l_name <- theta$theta_l@name
     theta_l_vec_name <- theta$theta_l_vec@name
     theta_l_values <- theta$theta_l@values
@@ -94,13 +93,15 @@ lapply(
     theta_l_vec_lbound <- theta$theta_l_vec@lbound
     theta_l_ubound <- theta$theta_l@ubound
     theta_l_vec_ubound <- theta$theta_l_vec@ubound 
-    
     testthat::test_that(
       paste(text, "class"),
       {
         testthat::skip_on_cran()
         testthat::expect_true(
           class(theta$theta_d) == "FullMatrix"
+        )
+        testthat::expect_true(
+          class(theta$theta_l) == "SdiagMatrix"
         )
         testthat::expect_true(
           class(theta$theta) == "MxAlgebra"
@@ -126,6 +127,18 @@ lapply(
         testthat::expect_true(
           identical(
             c(theta_d_vec_values),
+            rep(x = 0, times = k)
+          )
+        )
+        testthat::expect_true(
+          identical(
+            c(theta_l_values),
+            c(0, 1, 1, 0, 0, 1, 0, 0, 0)
+          )
+        )
+        testthat::expect_true(
+          identical(
+            c(theta_l_vec_values),
             rep(x = 0, times = k)
           )
         )
@@ -223,8 +236,20 @@ lapply(
         )
         testthat::expect_true(
           identical(
-            c(theta_vec_free),
+            c(theta_l_free),
+            c(FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)
+          )
+        )
+        testthat::expect_true(
+          identical(
+            c(theta_l_vec_free),
             rep(x = FALSE, times = k)
+          )
+        )
+        testthat::expect_true(
+          identical(
+            c(theta_vec_free),
+            rep(x = FALSE, times = 0.5 * (k * (k + 1)))
           )
         )
       }
@@ -247,8 +272,20 @@ lapply(
         )
         testthat::expect_true(
           identical(
-            c(theta_vec_lbound),
+            c(theta_l_lbound),
+            c(NA, -1, -1, NA, NA, -1, NA, NA, NA)
+          )
+        )
+        testthat::expect_true(
+          identical(
+            c(theta_l_vec_lbound),
             rep(x = NA_real_, times = k)
+          )
+        )
+        testthat::expect_true(
+          identical(
+            c(theta_vec_lbound),
+            rep(x = NA_real_, times = 0.5 * (k * (k + 1)))
           )
         )
       }
@@ -271,8 +308,20 @@ lapply(
         )
         testthat::expect_true(
           identical(
-            c(theta_vec_ubound),
+            c(theta_l_ubound),
+            c(NA, 1, 1, NA, NA, 1, NA, NA, NA)
+          )
+        )
+        testthat::expect_true(
+          identical(
+            c(theta_l_vec_ubound),
             rep(x = NA_real_, times = k)
+          )
+        )
+        testthat::expect_true(
+          identical(
+            c(theta_vec_ubound),
+            rep(x = NA_real_, times = 0.5 * (k * (k + 1)))
           )
         )
       }
