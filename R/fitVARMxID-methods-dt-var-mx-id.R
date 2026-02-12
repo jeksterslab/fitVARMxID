@@ -87,9 +87,8 @@ summary.varmxid <- function(object,
                             ...) {
   out <- do.call(
     what = "rbind",
-    args = lapply(
-      X = object$output,
-      FUN = coef,
+    args = coef.varmxid(
+      object = object,
       mu = mu,
       alpha = alpha,
       beta = beta,
@@ -101,7 +100,8 @@ summary.varmxid <- function(object,
       grad_tol = grad_tol,
       hess_tol = hess_tol,
       vanishing_theta = vanishing_theta,
-      theta_tol = theta_tol
+      theta_tol = theta_tol,
+      ...
     )
   )
   if (means) {
