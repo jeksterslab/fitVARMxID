@@ -2564,16 +2564,16 @@ if (requireNamespace("simStateSpace")) {
 #>     center = TRUE)
 #> 
 #> Estimated paramaters per individual.
-#>                        beta_1_1 beta_2_1 beta_1_2 beta_2_2  mu_1_1  mu_2_1
-#> FitVARMxID_VAR_ID2.Rds   0.6201  -0.2158   0.5226   0.9111 22.3235  6.4428
-#> FitVARMxID_VAR_ID3.Rds   0.6103   0.5153   0.1193   0.5064 19.9399 31.2708
-#> FitVARMxID_VAR_ID4.Rds   0.4461   0.2318   0.0842   0.7181 10.0602 20.7479
-#> FitVARMxID_VAR_ID5.Rds   0.5544   0.4399   0.2248   0.6034 36.6332 53.7516
-#>                        psi_l_2_1 psi_d_1_1 psi_d_2_1
-#> FitVARMxID_VAR_ID2.Rds    1.1970   -4.0814   -4.1078
-#> FitVARMxID_VAR_ID3.Rds    1.0696   -3.9362   -3.9497
-#> FitVARMxID_VAR_ID4.Rds    1.1747   -3.9213   -4.1013
-#> FitVARMxID_VAR_ID5.Rds    0.8671   -3.8357   -3.8233
+#>                        mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2]
+#> FitVARMxID_VAR_ID2.Rds 22.3235  6.4428    0.6201   -0.2158    0.5226    0.9111
+#> FitVARMxID_VAR_ID3.Rds 19.9399 31.2708    0.6103    0.5153    0.1193    0.5064
+#> FitVARMxID_VAR_ID4.Rds 10.0602 20.7479    0.4461    0.2318    0.0842    0.7181
+#> FitVARMxID_VAR_ID5.Rds 36.6332 53.7516    0.5544    0.4399    0.2248    0.6034
+#>                        psi[1,1] psi[2,1] psi[2,2]
+#> FitVARMxID_VAR_ID2.Rds   0.0167   0.0200   0.0403
+#> FitVARMxID_VAR_ID3.Rds   0.0193   0.0207   0.0412
+#> FitVARMxID_VAR_ID4.Rds   0.0196   0.0230   0.0435
+#> FitVARMxID_VAR_ID5.Rds   0.0214   0.0185   0.0377
 #> Running VAR_ID1 with 9 parameters
 #> 
 #> Beginning initial fit attempt
@@ -4381,16 +4381,16 @@ if (requireNamespace("simStateSpace")) {
 #>     center = FALSE)
 #> 
 #> Estimated paramaters per individual.
-#>                        beta_1_1 beta_2_1 beta_1_2 beta_2_2 alpha_1_1 alpha_2_1
-#> FitVARMxID_VAR_ID2.Rds   0.6201  -0.2158   0.5226   0.9111    5.1142    5.3905
-#> FitVARMxID_VAR_ID3.Rds  -0.1068   0.2826   0.4307   0.5963    8.5964    6.9870
-#> FitVARMxID_VAR_ID4.Rds   0.4461   0.2318   0.0842   0.7181    3.8253    3.5166
-#> FitVARMxID_VAR_ID5.Rds   0.5544   0.4399   0.2248   0.6034    4.2397    5.2021
-#>                        psi_l_2_1 psi_d_1_1 psi_d_2_1
-#> FitVARMxID_VAR_ID2.Rds    1.1970   -4.0814   -4.1078
-#> FitVARMxID_VAR_ID3.Rds    1.0221   -3.7053   -4.0132
-#> FitVARMxID_VAR_ID4.Rds    1.1747   -3.9213   -4.1013
-#> FitVARMxID_VAR_ID5.Rds    0.8671   -3.8357   -3.8233
+#>                        alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2]
+#> FitVARMxID_VAR_ID2.Rds     5.1142     5.3905    0.6201   -0.2158    0.5226
+#> FitVARMxID_VAR_ID3.Rds     8.5964     6.9870   -0.1068    0.2826    0.4307
+#> FitVARMxID_VAR_ID4.Rds     3.8253     3.5166    0.4461    0.2318    0.0842
+#> FitVARMxID_VAR_ID5.Rds     4.2397     5.2021    0.5544    0.4399    0.2248
+#>                        beta[2,2] psi[1,1] psi[2,1] psi[2,2]
+#> FitVARMxID_VAR_ID2.Rds    0.9111   0.0167   0.0200   0.0403
+#> FitVARMxID_VAR_ID3.Rds    0.5963   0.0243   0.0248   0.0433
+#> FitVARMxID_VAR_ID4.Rds    0.7181   0.0196   0.0230   0.0435
+#> FitVARMxID_VAR_ID5.Rds    0.6034   0.0214   0.0185   0.0377
 #>     1     2     3     4     5 
 #> FALSE  TRUE  TRUE  TRUE  TRUE 
 # }

@@ -333,12 +333,12 @@ summary(fit, means = TRUE)
 #>     center = FALSE, ncores = parallel::detectCores())
 #> 
 #> Means of the estimated paramaters per individual.
-#>  beta_1_1  beta_2_1  beta_3_1  beta_1_2  beta_2_2  beta_3_2  beta_1_3  beta_2_3 
-#>    0.6992    0.4982   -0.1002   -0.0017    0.5998    0.4043   -0.0060   -0.0039 
-#>  beta_3_3 alpha_1_1 alpha_2_1 alpha_3_1 psi_l_2_1 psi_l_3_1 psi_l_3_2 psi_d_1_1 
-#>    0.4945    0.9593    0.9637    0.2899    0.0054   -0.0013    0.0081   -2.2559 
-#> psi_d_2_1 psi_d_3_1 
-#>   -2.2626   -2.2553
+#> alpha[1,1] alpha[2,1] alpha[3,1]  beta[1,1]  beta[2,1]  beta[3,1]  beta[1,2] 
+#>     0.9593     0.9637     0.2899     0.6992     0.4982    -0.1002    -0.0017 
+#>  beta[2,2]  beta[3,2]  beta[1,3]  beta[2,3]  beta[3,3]   psi[1,1]   psi[2,1] 
+#>     0.5998     0.4043    -0.0060    -0.0039     0.4945     0.0997     0.0005 
+#>   psi[3,1]   psi[2,2]   psi[3,2]   psi[3,3] 
+#>    -0.0001     0.0992     0.0008     0.1000
 ```
 
 ## References
