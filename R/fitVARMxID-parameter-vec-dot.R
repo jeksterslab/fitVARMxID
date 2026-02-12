@@ -1,0 +1,170 @@
+.FitVARMxParameterVec <- function(alpha,
+                                  beta,
+                                  nu,
+                                  psi,
+                                  theta) {
+  if (!is.null(alpha$mu_vec)) {
+    mu_vec <- "mu_vec"
+    mu_vec_labels <- c(
+      alpha$mu_vec$labels
+    )
+  } else {
+    mu_vec <- NA
+    mu_vec_labels <- NA
+  }
+  if (!is.null(alpha$alpha_vec)) {
+    alpha_vec <- "alpha_vec"
+    alpha_vec_labels <- c(
+      alpha$alpha_vec$labels
+    )
+  } else {
+    alpha_vec <- NA
+    alpha_vec_labels <- NA
+  }
+  if (!is.null(beta$beta_vec)) {
+    beta_vec <- "beta_vec"
+    beta_vec_labels <- c(
+      beta$beta_vec$labels
+    )
+  } else {
+    beta_vec <- NA
+    beta_vec_labels <- NA
+  }
+  if (!is.null(nu$nu_vec)) {
+    nu_vec <- "nu_vec"
+    nu_vec_labels <- c(
+      nu$nu_vec$labels
+    )
+  } else {
+    nu_vec <- NA
+    nu_vec_labels <- NA
+  }
+  if (!is.null(psi$psi_vec)) {
+    psi_vec <- "psi_vec"
+    psi_log_diag_vec <- "psi_log_diag_vec"
+    psi_softplus_diag_vec <- "psi_softplus_diag_vec"
+    psi_vec_labels <- c(
+      psi$psi_vec$labels
+    )
+  } else {
+    psi_vec <- NA
+    psi_vec_labels <- NA
+    psi_log_diag_vec <- NA
+    psi_softplus_diag_vec <- NA
+  }
+  if (!is.null(theta$theta_vec)) {
+    theta_vec <- "theta_vec"
+    theta_log_diag_vec <- "theta_log_diag_vec"
+    theta_softplus_diag_vec <- "theta_softplus_diag_vec"
+    theta_vec_labels <- c(
+      theta$theta_vec$labels
+    )
+  } else {
+    theta_vec <- NA
+    theta_vec_labels <- NA
+    theta_log_diag_vec <- NA
+    theta_softplus_diag_vec <- NA
+  }
+  parameter_vec <- c(
+    mu_vec,
+    alpha_vec,
+    beta_vec,
+    psi_vec,
+    nu_vec,
+    theta_vec
+  )
+  parameter_vec <- parameter_vec[
+    stats::complete.cases(
+      parameter_vec
+    )
+  ]
+  parameter_vec <- paste0(
+    parameter_vec,
+    collapse = ","
+  )
+  parameter_log_diag_vec <- c(
+    mu_vec,
+    alpha_vec,
+    beta_vec,
+    psi_log_diag_vec,
+    nu_vec,
+    theta_log_diag_vec
+  )
+  parameter_log_diag_vec <- parameter_log_diag_vec[
+    stats::complete.cases(
+      parameter_log_diag_vec
+    )
+  ]
+  parameter_log_diag_vec <- paste0(
+    parameter_log_diag_vec,
+    collapse = ","
+  )
+  parameter_softplus_diag_vec <- c(
+    mu_vec,
+    alpha_vec,
+    beta_vec,
+    psi_softplus_diag_vec,
+    nu_vec,
+    theta_softplus_diag_vec
+  )
+  parameter_softplus_diag_vec <- parameter_softplus_diag_vec[
+    stats::complete.cases(
+      parameter_softplus_diag_vec
+    )
+  ]
+  parameter_softplus_diag_vec <- paste0(
+    parameter_softplus_diag_vec,
+    collapse = ","
+  )
+  parameter_vec_labels <- c(
+    mu_vec_labels,
+    alpha_vec_labels,
+    beta_vec_labels,
+    psi_vec_labels,
+    nu_vec_labels,
+    theta_vec_labels
+  )
+  parameter_vec_labels <- parameter_vec_labels[
+    stats::complete.cases(
+      parameter_vec_labels
+    )
+  ]
+  list(
+    OpenMx::mxAlgebraFromString(
+      algString = paste0(
+        "rbind(",
+        parameter_vec,
+        ")"
+      ),
+      name = "parameter_vec",
+      dimnames = list(
+        parameter_vec_labels,
+        "parameter_vec"
+      )
+    ),
+    OpenMx::mxAlgebraFromString(
+      algString = paste0(
+        "rbind(",
+        parameter_log_diag_vec,
+        ")"
+      ),
+      name = "parameter_log_diag_vec",
+      dimnames = list(
+        parameter_vec_labels,
+        "parameter_log_diag_vec"
+      )
+    ),
+    OpenMx::mxAlgebraFromString(
+      algString = paste0(
+        "rbind(",
+        parameter_softplus_diag_vec,
+        ")"
+      ),
+      name = "parameter_softplus_diag_vec",
+      dimnames = list(
+        parameter_vec_labels,
+        "parameter_softplus_diag_vec"
+      )
+    )
+  )
+}

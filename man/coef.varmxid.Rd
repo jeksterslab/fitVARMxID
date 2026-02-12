@@ -12,6 +12,7 @@
   nu = TRUE,
   psi = TRUE,
   theta = TRUE,
+  diag_cov = "var",
   converged = TRUE,
   grad_tol = 0.01,
   hess_tol = 1e-08,
@@ -58,6 +59,17 @@ If \code{theta = TRUE},
 include estimates of the \code{theta} matrix, if available.
 If \code{theta = FALSE},
 exclude estimates of the \code{theta} matrix.}
+
+\item{diag_cov}{Character string.
+If \code{diag_cov = "var"},
+the diagonal elements of \code{psi} and \code{theta}
+are the variances in the original metric.
+If \code{diag_cov = "logvar"},
+the diagonal elements of \code{psi} and \code{theta}
+are the log of the variances.
+If \code{diag_cov = "softplusvar"},
+the diagonal elements of \code{psi} and \code{theta}
+are the softplus of the variances.}
 
 \item{converged}{Logical.
 Only include converged cases.}

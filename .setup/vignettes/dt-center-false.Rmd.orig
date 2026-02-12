@@ -376,9 +376,6 @@ fit <- FitVARMxID(
   observed = c("y1", "y2", "y3"),
   id = "id",
   center = FALSE,
-  tries_explore = 1000,
-  tries_local = 100,
-  max_attempts = 100,
   ncores = parallel::detectCores()
 )
 ```
