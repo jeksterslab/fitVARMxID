@@ -14,6 +14,7 @@ coef(
   nu = TRUE,
   psi = TRUE,
   theta = TRUE,
+  diag_cov = "var",
   converged = TRUE,
   grad_tol = 0.01,
   hess_tol = 1e-08,
@@ -60,6 +61,14 @@ coef(
   Logical. If `theta = TRUE`, include estimates of the `theta` matrix,
   if available. If `theta = FALSE`, exclude estimates of the `theta`
   matrix.
+
+- diag_cov:
+
+  Character string. If `diag_cov = "var"`, the diagonal elements of
+  `psi` and `theta` are the variances in the original metric. If
+  `diag_cov = "logvar"`, the diagonal elements of `psi` and `theta` are
+  the log of the variances. If `diag_cov = "softplusvar"`, the diagonal
+  elements of `psi` and `theta` are the softplus of the variances.
 
 - converged:
 

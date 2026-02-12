@@ -60,7 +60,7 @@
                         <h4 data-toc-skip class="author">Ivan Jacob
 Agaloos Pesigan</h4>
             
-            <h4 data-toc-skip class="date">2026-02-11</h4>
+            <h4 data-toc-skip class="date">2026-02-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jeksterslab/fitVARMxID/blob/main/vignettes/dt-center-false.Rmd"><code>vignettes/dt-center-false.Rmd</code></a></small>
       <div class="d-none name"><code>dt-center-false.Rmd</code></div>
@@ -406,9 +406,6 @@ factor.</li>
 <span>  observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span><span class="op">)</span>,</span>
 <span>  id <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  tries_explore <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  tries_local <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  max_attempts <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  ncores <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
@@ -418,8 +415,7 @@ factor.</li>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span>, means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", </span></span>
-<span><span class="co">#&gt;     center = FALSE, tries_explore = 1000, tries_local = 100, </span></span>
-<span><span class="co">#&gt;     max_attempts = 100, ncores = parallel::detectCores())</span></span>
+<span><span class="co">#&gt;     center = FALSE, ncores = parallel::detectCores())</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Means of the estimated paramaters per individual.</span></span>
 <span><span class="co">#&gt;  beta_1_1  beta_2_1  beta_3_1  beta_1_2  beta_2_2  beta_3_2  beta_1_3  beta_2_3 </span></span>

@@ -50,6 +50,7 @@
 <span>  nu <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  psi <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  theta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  diag_cov <span class="op">=</span> <span class="st">"var"</span>,</span>
 <span>  converged <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  grad_tol <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>  hess_tol <span class="op">=</span> <span class="fl">1e-08</span>,</span>
@@ -113,6 +114,19 @@ If <code>theta = TRUE</code>,
 include estimates of the <code>theta</code> matrix, if available.
 If <code>theta = FALSE</code>,
 exclude estimates of the <code>theta</code> matrix.</p></dd>
+
+
+<dt id="arg-diag-cov">diag_cov<a class="anchor" aria-label="anchor" href="#arg-diag-cov"></a></dt>
+<dd><p>Character string.
+If <code>diag_cov = "var"</code>,
+the diagonal elements of <code>psi</code> and <code>theta</code>
+are the variances in the original metric.
+If <code>diag_cov = "logvar"</code>,
+the diagonal elements of <code>psi</code> and <code>theta</code>
+are the log of the variances.
+If <code>diag_cov = "softplusvar"</code>,
+the diagonal elements of <code>psi</code> and <code>theta</code>
+are the softplus of the variances.</p></dd>
 
 
 <dt id="arg-converged">converged<a class="anchor" aria-label="anchor" href="#arg-converged"></a></dt>

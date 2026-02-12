@@ -319,9 +319,6 @@ fit <- FitVARMxID(
   observed = c("y1", "y2", "y3"),
   id = "id",
   center = FALSE,
-  tries_explore = 1000,
-  tries_local = 100,
-  max_attempts = 100,
   ncores = parallel::detectCores()
 )
 ```
@@ -333,8 +330,7 @@ fit <- FitVARMxID(
 summary(fit, means = TRUE)
 #> Call:
 #> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
-#>     center = FALSE, tries_explore = 1000, tries_local = 100, 
-#>     max_attempts = 100, ncores = parallel::detectCores())
+#>     center = FALSE, ncores = parallel::detectCores())
 #> 
 #> Means of the estimated paramaters per individual.
 #>  beta_1_1  beta_2_1  beta_3_1  beta_1_2  beta_2_2  beta_3_2  beta_1_3  beta_2_3 

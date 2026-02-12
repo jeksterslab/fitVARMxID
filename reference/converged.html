@@ -60,7 +60,7 @@
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>An object of class <code>varmxid</code>.</p></dd>
+<dd><p>A fit object.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -69,23 +69,27 @@
 
 <dt id="arg-grad-tol">grad_tol<a class="anchor" aria-label="anchor" href="#arg-grad-tol"></a></dt>
 <dd><p>Numeric scalar.
-Tolerance for the maximum absolute gradient.</p></dd>
+Tolerance for the maximum absolute gradient
+if <code>converged = TRUE</code>.</p></dd>
 
 
 <dt id="arg-hess-tol">hess_tol<a class="anchor" aria-label="anchor" href="#arg-hess-tol"></a></dt>
 <dd><p>Numeric scalar.
 Tolerance for Hessian eigenvalues;
-eigenvalues must be strictly greater than this value.</p></dd>
+eigenvalues must be strictly greater than this value
+if <code>converged = TRUE</code>.</p></dd>
 
 
 <dt id="arg-vanishing-theta">vanishing_theta<a class="anchor" aria-label="anchor" href="#arg-vanishing-theta"></a></dt>
 <dd><p>Logical.
-Test for measurement error variance going to zero.</p></dd>
+Test for measurement error variance going to zero
+if <code>converged = TRUE</code>.</p></dd>
 
 
 <dt id="arg-theta-tol">theta_tol<a class="anchor" aria-label="anchor" href="#arg-theta-tol"></a></dt>
 <dd><p>Numeric.
-Tolerance for vanishing theta test.</p></dd>
+Tolerance for vanishing theta test
+if <code>converged</code> and <code>theta_tol</code> are <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-prop">prop<a class="anchor" aria-label="anchor" href="#arg-prop"></a></dt>

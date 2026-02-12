@@ -23,7 +23,7 @@ converged(
 
 - object:
 
-  An object of class `varmxid`.
+  A fit object.
 
 - ...:
 
@@ -31,20 +31,23 @@ converged(
 
 - grad_tol:
 
-  Numeric scalar. Tolerance for the maximum absolute gradient.
+  Numeric scalar. Tolerance for the maximum absolute gradient if
+  `converged = TRUE`.
 
 - hess_tol:
 
   Numeric scalar. Tolerance for Hessian eigenvalues; eigenvalues must be
-  strictly greater than this value.
+  strictly greater than this value if `converged = TRUE`.
 
 - vanishing_theta:
 
-  Logical. Test for measurement error variance going to zero.
+  Logical. Test for measurement error variance going to zero if
+  `converged = TRUE`.
 
 - theta_tol:
 
-  Numeric. Tolerance for vanishing theta test.
+  Numeric. Tolerance for vanishing theta test if `converged` and
+  `theta_tol` are `TRUE`.
 
 - prop:
 
