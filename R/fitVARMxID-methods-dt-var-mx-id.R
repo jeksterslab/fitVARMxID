@@ -23,6 +23,7 @@ print.varmxid <- function(x,
                           nu = TRUE,
                           psi = TRUE,
                           theta = TRUE,
+                          diag_cov = "var",
                           converged = TRUE,
                           grad_tol = 1e-2,
                           hess_tol = 1e-8,
@@ -40,6 +41,7 @@ print.varmxid <- function(x,
       nu = nu,
       psi = psi,
       theta = theta,
+      diag_cov = diag_cov,
       converged = converged,
       grad_tol = grad_tol,
       hess_tol = hess_tol,
@@ -75,6 +77,7 @@ summary.varmxid <- function(object,
                             nu = TRUE,
                             psi = TRUE,
                             theta = TRUE,
+                            diag_cov = "var",
                             converged = TRUE,
                             grad_tol = 1e-2,
                             hess_tol = 1e-8,
@@ -93,6 +96,7 @@ summary.varmxid <- function(object,
       nu = nu,
       psi = psi,
       theta = theta,
+      diag_cov = diag_cov,
       converged = converged,
       grad_tol = grad_tol,
       hess_tol = hess_tol,
@@ -119,6 +123,7 @@ summary.varmxid <- function(object,
   attr(out, "nu") <- nu
   attr(out, "psi") <- psi
   attr(out, "theta") <- theta
+  attr(out, "diag_cov") <- diag_cov
   attr(out, "converged") <- converged
   attr(out, "grad_tol") <- grad_tol
   attr(out, "hess_tol") <- hess_tol
@@ -207,6 +212,16 @@ print.summary.varmxid <- function(x,
 #' @param theta_tol Numeric.
 #'   Tolerance for vanishing theta test
 #'   if `converged` and `theta_tol` are `TRUE`.
+#' @param diag_cov Character string.
+#'   If `diag_cov = "var"`,
+#'   the diagonal elements of `psi` and `theta`
+#'   are the variances in the original metric.
+#'   If `diag_cov = "logvar"`,
+#'   the diagonal elements of `psi` and `theta`
+#'   are the log of the variances.
+#'   If `diag_cov = "softplusvar"`,
+#'   the diagonal elements of `psi` and `theta`
+#'   are the softplus of the variances.
 #' @param ... additional arguments.
 #' @return Returns a list of vectors of parameter estimates.
 #'
@@ -221,6 +236,7 @@ coef.varmxid <- function(object,
                          nu = TRUE,
                          psi = TRUE,
                          theta = TRUE,
+                         diag_cov = "var",
                          converged = TRUE,
                          grad_tol = 1e-2,
                          hess_tol = 1e-8,
@@ -242,15 +258,20 @@ coef.varmxid <- function(object,
       )
     ]
   }
-  parnames <- names(
-    coef(fit[[1]])
+  coefs <- OpenMx::mxEvalByName(
+    name = "parameter_vec",
+    model = fit[[1]],
+    compute = TRUE
+  )
+  parnames <- rownames(
+    coefs
   )
   idx <- integer(0)
   if (mu) {
     idx <- c(
       idx,
       grep(
-        pattern = "^mu_",
+        pattern = "^mu",
         x = parnames
       )
     )
@@ -259,7 +280,7 @@ coef.varmxid <- function(object,
     idx <- c(
       idx,
       grep(
-        pattern = "^alpha_",
+        pattern = "^alpha",
         x = parnames
       )
     )
@@ -268,16 +289,7 @@ coef.varmxid <- function(object,
     idx <- c(
       idx,
       grep(
-        pattern = "^beta_",
-        x = parnames
-      )
-    )
-  }
-  if (nu) {
-    idx <- c(
-      idx,
-      grep(
-        pattern = "^nu_",
+        pattern = "^beta",
         x = parnames
       )
     )
@@ -286,7 +298,16 @@ coef.varmxid <- function(object,
     idx <- c(
       idx,
       grep(
-        pattern = "^psi_",
+        pattern = "^psi",
+        x = parnames
+      )
+    )
+  }
+  if (nu) {
+    idx <- c(
+      idx,
+      grep(
+        pattern = "^nu",
         x = parnames
       )
     )
@@ -295,18 +316,39 @@ coef.varmxid <- function(object,
     idx <- c(
       idx,
       grep(
-        pattern = "^theta_",
+        pattern = "^theta",
         x = parnames
       )
     )
   }
   lapply(
     X = fit,
-    FUN = function(x,
-                   idx) {
-      coef(x)[idx]
-    },
-    idx = idx
+    FUN = function(i) {
+      if (diag_cov[1] == "var") {
+        out <- OpenMx::mxEvalByName(
+          name = "parameter_vec",
+          model = i,
+          compute = TRUE
+        )
+      }
+      if (diag_cov[1] == "logvar") {
+        out <- OpenMx::mxEvalByName(
+          name = "parameter_log_diag_vec",
+          model = i,
+          compute = TRUE
+        )
+      }
+      if (diag_cov[1] == "softplusvar") {
+        out <- OpenMx::mxEvalByName(
+          name = "parameter_softplus_diag_vec",
+          model = i,
+          compute = TRUE
+        )
+      }
+      out <- c(out[idx])
+      names(out) <- parnames[idx]
+      out
+    }
   )
 }
 
@@ -314,39 +356,6 @@ coef.varmxid <- function(object,
 #'
 #' @author Ivan Jacob Agaloos Pesigan
 #'
-#' @param object Object of class `varmxid`.
-#' @param mu Logical.
-#'   If `mu = TRUE`,
-#'   include estimates of the `mu` vector, if available.
-#'   If `mu = FALSE`,
-#'   exclude estimates of the `mu` vector.
-#' @param alpha Logical.
-#'   If `alpha = TRUE`,
-#'   include estimates of the `alpha` vector, if available.
-#'   If `alpha = FALSE`,
-#'   exclude estimates of the `alpha` vector.
-#' @param beta Logical.
-#'   If `beta = TRUE`,
-#'   include estimates of the `beta` matrix, if available.
-#'   If `beta = FALSE`,
-#'   exclude estimates of the `beta` matrix.
-#' @param nu Logical.
-#'   If `nu = TRUE`,
-#'   include estimates of the `nu` vector, if available.
-#'   If `nu = FALSE`,
-#'   exclude estimates of the `nu` vector.
-#' @param psi Logical.
-#'   If `psi = TRUE`,
-#'   include estimates of the `psi` matrix, if available.
-#'   If `psi = FALSE`,
-#'   exclude estimates of the `psi` matrix.
-#' @param theta Logical.
-#'   If `theta = TRUE`,
-#'   include estimates of the `theta` matrix, if available.
-#'   If `theta = FALSE`,
-#'   exclude estimates of the `theta` matrix.
-#' @param converged Logical.
-#'   Only include converged cases.
 #' @param grad_tol Numeric scalar.
 #'   Tolerance for the maximum absolute gradient
 #'   if `converged = TRUE`.
@@ -363,6 +372,7 @@ coef.varmxid <- function(object,
 #' @param robust Logical.
 #'   If `TRUE`, use robust (sandwich) sampling variance-covariance matrix.
 #'   If `FALSE`, use normal theory sampling variance-covariance matrix.
+#' @inheritParams coef.varmxid
 #' @param ... additional arguments.
 #' @return Returns a list of sampling variance-covariance matrices.
 #'
@@ -377,6 +387,7 @@ vcov.varmxid <- function(object,
                          nu = TRUE,
                          psi = TRUE,
                          theta = TRUE,
+                         diag_cov = "var",
                          converged = TRUE,
                          grad_tol = 1e-2,
                          hess_tol = 1e-8,
@@ -432,15 +443,20 @@ vcov.varmxid <- function(object,
       )
     }
   }
-  parnames <- names(
-    coef(fit[[1]])
+  coefs <- OpenMx::mxEvalByName(
+    name = "parameter_vec",
+    model = fit[[1]],
+    compute = TRUE
+  )
+  parnames <- rownames(
+    coefs
   )
   idx <- integer(0)
   if (mu) {
     idx <- c(
       idx,
       grep(
-        pattern = "^mu_",
+        pattern = "^mu",
         x = parnames
       )
     )
@@ -449,7 +465,7 @@ vcov.varmxid <- function(object,
     idx <- c(
       idx,
       grep(
-        pattern = "^alpha_",
+        pattern = "^alpha",
         x = parnames
       )
     )
@@ -458,16 +474,7 @@ vcov.varmxid <- function(object,
     idx <- c(
       idx,
       grep(
-        pattern = "^beta_",
-        x = parnames
-      )
-    )
-  }
-  if (nu) {
-    idx <- c(
-      idx,
-      grep(
-        pattern = "^nu_",
+        pattern = "^beta",
         x = parnames
       )
     )
@@ -476,7 +483,16 @@ vcov.varmxid <- function(object,
     idx <- c(
       idx,
       grep(
-        pattern = "^psi_",
+        pattern = "^psi",
+        x = parnames
+      )
+    )
+  }
+  if (nu) {
+    idx <- c(
+      idx,
+      grep(
+        pattern = "^nu",
         x = parnames
       )
     )
@@ -485,18 +501,43 @@ vcov.varmxid <- function(object,
     idx <- c(
       idx,
       grep(
-        pattern = "^theta_",
+        pattern = "^theta",
         x = parnames
       )
     )
   }
   lapply(
     X = fit,
-    FUN = function(x,
-                   idx) {
-      vcov(x)[idx, idx, drop = FALSE]
-    },
-    idx = idx
+    FUN = function(i) {
+      if (diag_cov[1] == "var") {
+        out <- OpenMx::mxSE(
+          x = "parameter_vec",
+          model = i,
+          details = TRUE,
+          silent = TRUE
+        )$Cov
+      }
+      if (diag_cov[1] == "logvar") {
+        out <- OpenMx::mxSE(
+          x = "parameter_log_diag_vec",
+          model = i,
+          details = TRUE,
+          silent = TRUE
+        )$Cov
+      }
+      if (diag_cov[1] == "softplusvar") {
+        out <- OpenMx::mxSE(
+          x = "parameter_softplus_diag_vec",
+          model = i,
+          details = TRUE,
+          silent = TRUE
+        )$Cov
+      }
+      out
+      out <- out[idx, idx]
+      colnames(out) <- rownames(out) <- parnames[idx]
+      out
+    }
   )
 }
 
@@ -530,20 +571,11 @@ converged <- function(object,
 }
 
 #' @rdname converged
-#' @param object An object of class `varmxid`.
-#' @param grad_tol Numeric scalar.
-#'   Tolerance for the maximum absolute gradient.
-#' @param hess_tol Numeric scalar.
-#'   Tolerance for Hessian eigenvalues;
-#'   eigenvalues must be strictly greater than this value.
-#' @param vanishing_theta Logical.
-#'   Test for measurement error variance going to zero.
-#' @param theta_tol Numeric.
-#'   Tolerance for vanishing theta test.
 #' @param prop Logical.
 #'   If `prop = FALSE`, a named logical vector indicating,
 #'   for each individual fit, whether the convergence criteria are met.
 #'   If `prop = TRUE`, the proportion of cases that converged.
+#' @inheritParams coef.varmxid
 #'
 #' @return For the `varmxid` method:
 #'   If `prop = FALSE`, a named logical vector indicating,

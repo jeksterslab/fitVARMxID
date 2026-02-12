@@ -68,6 +68,13 @@
     sigma0,
     covariate,
     expectation,
+    .FitVARMxParameterVec(
+      alpha = alpha,
+      beta = beta,
+      nu = nu,
+      psi = psi,
+      theta = theta
+    ),
     OpenMx::mxFitFunctionML(),
     OpenMx::mxData(
       observed = data,
