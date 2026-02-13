@@ -204,11 +204,7 @@
   )
   sigma_log_diag <- OpenMx::mxAlgebraFromString(
     algString = paste0(
-      name,
-      " - ",
-      "vec2diag(diag2vec(",
-      name,
-      "))",
+      sdiag_name,
       " + ",
       "vec2diag(log(diag2vec(",
       name,
@@ -233,11 +229,7 @@
   )
   sigma_softplus_diag <- OpenMx::mxAlgebraFromString(
     algString = paste0(
-      name,
-      " - ",
-      "vec2diag(diag2vec(",
-      name,
-      "))",
+      sdiag_name,
       " + ",
       "vec2diag(",
       column_name,

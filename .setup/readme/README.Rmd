@@ -46,8 +46,8 @@ from
 [GitHub](https://github.com/jeksterslab/fitVARMxID) with:
 
 ```r
-if (!require("remotes")) install.packages("remotes")
-remotes::install_github("jeksterslab/fitVARMxID")
+if (!require("pak")) install.packages("pak")
+pak::pak("jeksterslab/fitVARMxID")
 ```
 
 ## More Information

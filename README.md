@@ -1,7 +1,7 @@
 fitVARMxID
 ================
 Ivan Jacob Agaloos Pesigan
-2026-02-12
+2026-02-13
 
 <!-- README.md is generated from .setup/readme/README.Rmd. Please edit that file -->
 
@@ -35,8 +35,8 @@ You can install the released version of `fitVARMxID` from
 [GitHub](https://github.com/jeksterslab/fitVARMxID) with:
 
 ``` r
-if (!require("remotes")) install.packages("remotes")
-remotes::install_github("jeksterslab/fitVARMxID")
+if (!require("pak")) install.packages("pak")
+pak::pak("jeksterslab/fitVARMxID")
 ```
 
 ## More Information

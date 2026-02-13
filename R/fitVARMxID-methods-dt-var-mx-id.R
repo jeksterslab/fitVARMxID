@@ -214,14 +214,18 @@ print.summary.varmxid <- function(x,
 #'   if `converged` and `theta_tol` are `TRUE`.
 #' @param diag_cov Character string.
 #'   If `diag_cov = "var"`,
-#'   the diagonal elements of `psi` and `theta`
-#'   are the variances in the original metric.
+#'   `psi` and `theta`
+#'   are in the original metric variance/covariance metric.
 #'   If `diag_cov = "logvar"`,
 #'   the diagonal elements of `psi` and `theta`
-#'   are the log of the variances.
+#'   are the log of the variances
+#'   and the off-diagonal elements are the elements in `L`
+#'   in the `LDL'` decomposition.
 #'   If `diag_cov = "softplusvar"`,
 #'   the diagonal elements of `psi` and `theta`
-#'   are the softplus of the variances.
+#'   are the softplus of the variances
+#'   and the off-diagonal elements are the elements in `L`
+#'   in the `LDL'` decomposition.
 #' @param ... additional arguments.
 #' @return Returns a list of vectors of parameter estimates.
 #'
