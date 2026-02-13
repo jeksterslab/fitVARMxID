@@ -27,6 +27,8 @@ articles:
   contents:
   - dt-center-true
   - dt-center-false
+  - ct-center-true
+  - ct-center-false
 - title: Session Information
   contents:
   - session
