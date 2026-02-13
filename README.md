@@ -36,7 +36,7 @@ You can install the released version of `fitVARMxID` from
 
 ``` r
 if (!require("pak")) install.packages("pak")
-pak::pak("jeksterslab/fitVARMxID")
+pak::pkg_install("jeksterslab/fitVARMxID")
 ```
 
 ## More Information
