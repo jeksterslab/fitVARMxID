@@ -14,7 +14,7 @@ coef(
   nu = TRUE,
   psi = TRUE,
   theta = TRUE,
-  diag_cov = "var",
+  var_metric = "var",
   converged = TRUE,
   grad_tol = 0.01,
   hess_tol = 1e-08,
@@ -62,16 +62,16 @@ coef(
   if available. If `theta = FALSE`, exclude estimates of the `theta`
   matrix.
 
-- diag_cov:
+- var_metric:
 
-  Character string. If `diag_cov = "var"`, `psi` and `theta` are in the
-  original metric variance/covariance metric. If `diag_cov = "logvar"`,
+  Character string. If `var_metric = "var"`, `psi` and `theta` are in
+  the original variance/covariance metric. If `var_metric = "logvar"`,
   the diagonal elements of `psi` and `theta` are the log of the
-  variances and the off-diagonal elements are the elements in `L` in the
-  `LDL'` decomposition. If `diag_cov = "softplusvar"`, the diagonal
-  elements of `psi` and `theta` are the softplus of the variances and
-  the off-diagonal elements are the elements in `L` in the `LDL'`
-  decomposition.
+  variances and the off-diagonal elements correspond to strict `L` in
+  the `LDL'` decomposition. If `var_metric = "softplusvar"`, the
+  diagonal elements of `psi` and `theta` are the softplus of the
+  variances and the off-diagonal elements correspond to strict `L` in
+  the `LDL'` decomposition.
 
 - converged:
 

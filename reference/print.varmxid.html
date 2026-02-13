@@ -51,7 +51,7 @@
 <span>  nu <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  psi <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  theta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  diag_cov <span class="op">=</span> <span class="st">"var"</span>,</span>
+<span>  var_metric <span class="op">=</span> <span class="st">"var"</span>,</span>
 <span>  converged <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  grad_tol <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>  hess_tol <span class="op">=</span> <span class="fl">1e-08</span>,</span>
@@ -124,20 +124,20 @@ If <code>theta = FALSE</code>,
 exclude estimates of the <code>theta</code> matrix.</p></dd>
 
 
-<dt id="arg-diag-cov">diag_cov<a class="anchor" aria-label="anchor" href="#arg-diag-cov"></a></dt>
+<dt id="arg-var-metric">var_metric<a class="anchor" aria-label="anchor" href="#arg-var-metric"></a></dt>
 <dd><p>Character string.
-If <code>diag_cov = "var"</code>,
+If <code>var_metric = "var"</code>,
 <code>psi</code> and <code>theta</code>
-are in the original metric variance/covariance metric.
-If <code>diag_cov = "logvar"</code>,
+are in the original variance/covariance metric.
+If <code>var_metric = "logvar"</code>,
 the diagonal elements of <code>psi</code> and <code>theta</code>
 are the log of the variances
-and the off-diagonal elements are the elements in <code>L</code>
+and the off-diagonal elements correspond to strict <code>L</code>
 in the <code>LDL'</code> decomposition.
-If <code>diag_cov = "softplusvar"</code>,
+If <code>var_metric = "softplusvar"</code>,
 the diagonal elements of <code>psi</code> and <code>theta</code>
 are the softplus of the variances
-and the off-diagonal elements are the elements in <code>L</code>
+and the off-diagonal elements correspond to strict <code>L</code>
 in the <code>LDL'</code> decomposition.</p></dd>
 
 

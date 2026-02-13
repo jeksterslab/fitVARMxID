@@ -54,13 +54,13 @@ FitVARMxID(
   theta_l_lbound = NULL,
   theta_l_ubound = NULL,
   mu0_fixed = TRUE,
-  mu0_func = FALSE,
+  mu0_func = TRUE,
   mu0_free = NULL,
   mu0_values = NULL,
   mu0_lbound = NULL,
   mu0_ubound = NULL,
   sigma0_fixed = TRUE,
-  sigma0_func = FALSE,
+  sigma0_func = TRUE,
   sigma0_diag = FALSE,
   sigma0_d_free = NULL,
   sigma0_d_values = NULL,
@@ -338,8 +338,9 @@ FitVARMxID(
 
 - mu0_func:
 
-  Logical. If `TRUE` and `mu0_fixed = TRUE`, `mu0` is fixed to \\ (I -
-  \beta)^{-1} \alpha \\.
+  Logical. If `TRUE`, `mu0_fixed = TRUE`, and `ct = FALSE`, `mu0` is
+  fixed to \\ (I - \beta)^{-1} \alpha \\. If `TRUE`, `mu0_fixed = TRUE`,
+  and `ct = TRUE`, `mu0` is fixed to \\ (- \beta)^{-1} \alpha \\.
 
 - mu0_free:
 
@@ -755,40 +756,100 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning initial fit attempt
 #> Running VAR_ID2 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -2412.27227104358
+#>  Lowest minimum so far:  -2006.50904680926
 #> 
 #> Solution found
 #> 
 #> 
-#>  Solution found!  Final fit=-2412.2723 (started at 544587.56)  (1 attempt(s): 1 valid, 0 errors)
+#>  Solution found!  Final fit=-2006.509 (started at 544587.56)  (1 attempt(s): 1 valid, 0 errors)
 #>  Start values from best fit:
-#> 0.620074268919494,-0.215812965583322,0.522618447539905,0.911098012118242,22.3235319142262,6.44280853770005,1.19698857682367,-4.08140088275763,-4.10775831997315
+#> 0.613925644822838,-0.3117107125795,0.696664956255988,1.26918077358693,22.2886090468087,6.42900614863227,1.38463841691188,-3.78524418887331,-3.88839537989792
 #> Running VAR_ID3 with 9 parameters
 #> 
 #> Beginning initial fit attempt
 #> Running VAR_ID3 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1864.07643036623
+#>  Lowest minimum so far:  3138.3415236955
+#>  Eigenvalues of Hessian could not be calculated
 #> 
-#> Solution found
+#> Beginning fit attempt 1 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Lowest minimum so far:  3138.34152236505
+#>  Eigenvalues of Hessian could not be calculated
+#> 
+#> Beginning fit attempt 2 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#>  Eigenvalues of Hessian could not be calculated
+#> 
+#> Beginning fit attempt 3 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 4 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -416.712887435151
+#>  Eigenvalues of Hessian could not be calculated
+#> 
+#> Beginning fit attempt 5 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -423.922869281029
+#>  Eigenvalues of Hessian could not be calculated
+#> 
+#> Beginning fit attempt 6 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -428.875357755292
+#>  Eigenvalues of Hessian could not be calculated
+#> 
+#> Beginning fit attempt 7 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 8 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 9 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 10 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Retry limit reached
 #> 
 #> 
-#>  Solution found!  Final fit=-1864.0764 (started at 1373137.1)  (1 attempt(s): 1 valid, 0 errors)
+#>  Retry limit reached; Best fit=-428.87536 (started at 1373137.1)  (11 attempt(s): 6 valid, 5 errors)
 #>  Start values from best fit:
-#> 0.610278854227184,0.515349334343147,0.119326116556396,0.506356845604149,19.9398959113981,31.2707613149341,1.06961704714457,-3.93618160310031,-3.94971531654583
+#> 0.40919405169369,0.239407549968517,0.235734144675435,0.904458106652633,27.875214905445,51.1628950383248,1.11395165668254,-3.9538700275063,-2.08849375810961
 #> Running VAR_ID4 with 9 parameters
 #> 
 #> Beginning initial fit attempt
 #> Running VAR_ID4 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1962.50197716298
+#>  Lowest minimum so far:  -324.126503646958
+#>  Eigenvalues of Hessian could not be calculated
+#> 
+#> Beginning fit attempt 1 of at maximum 10 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -679.185455317157
 #> 
 #> Solution found
 #> 
 #> 
-#>  Solution found!  Final fit=-1962.502 (started at 533983.66)  (1 attempt(s): 1 valid, 0 errors)
+#>  Solution found!  Final fit=-679.18546 (started at 533983.66)  (2 attempt(s): 2 valid, 0 errors)
 #>  Start values from best fit:
-#> 0.446057189020492,0.231807537524003,0.0842219008975501,0.71810882411156,10.0601732853265,20.7478819930085,1.17470280328962,-3.92130396024405,-4.10129302632546
+#> 1.06914315179884,-0.0389155279329557,0.151543683356584,0.920804424127448,13.519507668085,19.1463323302148,0.502250715574917,-3.0282839938684,-3.29803857160099
 #> Running VAR_ID5 with 9 parameters
 #> 
 #> Beginning initial fit attempt
@@ -1005,650 +1066,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 30 of at maximum 100 extra tries
 #> Running VAR_ID1 with 9 parameters
 #> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 31 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 32 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 33 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 34 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 35 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 36 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Lowest minimum so far:  -2536.76955347736
-#> 
-#> Beginning fit attempt 37 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 38 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 39 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 40 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 41 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 42 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 43 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 44 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 45 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 46 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 47 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 48 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 49 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 50 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 51 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 52 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 53 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 54 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 55 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 56 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 57 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 58 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 59 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 60 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 61 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 62 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 63 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 64 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 65 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 66 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 67 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 68 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 69 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 70 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 71 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 72 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 73 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 74 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 75 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 76 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 77 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 78 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 79 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 80 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 81 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 82 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 83 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 84 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 85 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 86 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 87 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 88 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 89 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 90 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 91 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 92 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 93 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 94 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 95 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 96 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 97 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 98 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 99 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 100 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Retry limit reached
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at Inf)  (101 attempt(s): 1 valid, 100 errors)
-#>  Start values from best fit:
-#> 0.340229411172906,0.365806760640884,0.889232253535389,0.443281608644606,177.133911078649,125.763736719585,1.22685745734974,-4.18240289797719,-4.10536979302766
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Lowest minimum so far:  -2536.76955347738
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
-#> Running VAR_ID1 with 9 parameters
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
-#> Running VAR_ID1 with 9 parameters
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
-#> Running VAR_ID1 with 9 parameters
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
-#> Running VAR_ID1 with 9 parameters
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
-#> Running VAR_ID1 with 9 parameters
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
-#> Running VAR_ID1 with 9 parameters
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
-#> Running VAR_ID1 with 9 parameters
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
-#> Running VAR_ID1 with 9 parameters
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Solution found
-#> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
-#> Running VAR_ID1 with 9 parameters
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running VAR_ID1 with 9 parameters
-#> 
-#> Beginning fit attempt 1 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 2 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 3 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 4 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 5 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 6 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 7 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 8 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 9 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 10 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 11 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 12 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 13 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 14 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 15 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 16 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 17 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 18 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 19 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 20 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 21 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 22 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 23 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 24 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 25 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 26 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 27 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 28 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 29 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 30 of at maximum 100 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
+#>  Lowest minimum so far:  2088.06846350718
 #> 
 #> Beginning fit attempt 31 of at maximum 100 extra tries
 #> Running VAR_ID1 with 9 parameters
@@ -2005,27 +1423,1778 @@ if (requireNamespace("simStateSpace")) {
 #> Solution found
 #> Final run, for Hessian and/or standard errors and/or confidence intervals
 #> Running VAR_ID1 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
 #> 
 #> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (101 attempt(s): 1 valid, 100 errors)
+#>  Solution found!  Final fit=2088.0685 (started at Inf)  (101 attempt(s): 1 valid, 100 errors)
 #>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
+#> 0.492629232460229,1.04631829942934,0.723737672524558,-0.492666972522939,108.438082619778,77.6030454446797,0.722600954892901,-0.608351296281494,-2.41982305872174
 #> Running VAR_ID1 with 9 parameters
 #> 
 #> Beginning initial fit attempt
 #> Running VAR_ID1 with 9 parameters
 #> 
+#>  Lowest minimum so far:  410.666054146401
+#> 
 #> Solution found
 #> Final run, for Hessian and/or standard errors and/or confidence intervals
 #> Running VAR_ID1 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
 #> 
 #> 
-#>  Solution found!  Final fit=-2536.7696 (started at -2536.7696)  (1 attempt(s): 1 valid, 0 errors)
+#>  Solution found!  Final fit=410.66605 (started at 2088.0685)  (1 attempt(s): 1 valid, 0 errors)
 #>  Start values from best fit:
-#> 0.34022941110167,0.365806760723365,0.889232253472541,0.443281608705303,177.133911078698,125.763736719516,1.22685745734954,-4.18240289798546,-4.10536979303234
+#> 0.603678321522442,0.638863364325392,0.552588544055802,0.109223887996742,353.965532614869,252.587251140754,1.4163997221531,-1.04639919073713,-4.06783915181608
 #> Running VAR_ID1 with 9 parameters
-#> Warning while fitting model: Hessian still not positive-definite after retries; returning last fit.
+#> Warning while fitting model: In model 'VAR_ID1' Optimizer returned a non-zero status code 5. The Hessian at the solution does not appear to be convex. See ?mxCheckIdentification for possible diagnosis (Mx status RED).
 #> Check /__w/fitVARMxID/fitVARMxID/pkgdown/reference/FitVARMxID_VAR_ID1.Rds
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -490.439244856799
+#> 
+#> Beginning fit attempt 1 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 2 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 3 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 4 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 5 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 6 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 7 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 8 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 9 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 10 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 11 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 12 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 13 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 14 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 15 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 16 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 17 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 18 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 19 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 20 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 21 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 22 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 23 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 24 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 25 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 26 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt worse than current best:  4560.14823422602 vs -490.439244856799
+#> 
+#> Beginning fit attempt 27 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 28 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 29 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 30 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 31 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 32 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 33 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 34 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 35 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 36 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 37 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 38 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 39 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 40 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 41 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 42 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 43 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 44 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 45 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 46 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 47 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 48 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 49 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 50 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 51 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 52 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 53 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 54 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 55 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 56 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 57 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 58 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 59 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 60 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 61 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 62 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 63 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 64 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 65 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 66 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 67 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt worse than current best:  -399.864673246382 vs -490.439244856799
+#> 
+#> Beginning fit attempt 68 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 69 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 70 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 71 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 72 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 73 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 74 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 75 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 76 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 77 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 78 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 79 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 80 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 81 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 82 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 83 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 84 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 85 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 86 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 87 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 88 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 89 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 90 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 91 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 92 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 93 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 94 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 95 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 96 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 97 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 98 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 99 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 100 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Retry limit reached
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -428.87536)  (101 attempt(s): 3 valid, 98 errors)
+#>  Start values from best fit:
+#> 0.819589885390902,-0.627717073651347,0.0279087799749296,1.09251574307257,19.3954855468257,27.6135657390951,0.216306941142164,-3.7176790017195,-2.40143217149311
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -490.439244857326
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -490.43924)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.819589881281391,-0.627717075219871,0.0279087527710399,1.09251574102933,19.3954855433819,27.6135657396072,0.216306944620236,-3.71767900067079,-2.4014321646359
+#> Running VAR_ID3 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -490.43924)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.819589881281391,-0.627717075219871,0.0279087527710399,1.09251574102933,19.3954855433819,27.6135657396072,0.216306944620236,-3.71767900067079,-2.4014321646359
+#> Running VAR_ID3 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -490.43924)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.819589881281391,-0.627717075219871,0.0279087527710399,1.09251574102933,19.3954855433819,27.6135657396072,0.216306944620236,-3.71767900067079,-2.4014321646359
+#> Running VAR_ID3 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -490.43924)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.819589881281391,-0.627717075219871,0.0279087527710399,1.09251574102933,19.3954855433819,27.6135657396072,0.216306944620236,-3.71767900067079,-2.4014321646359
+#> Running VAR_ID3 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -490.43924)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.819589881281391,-0.627717075219871,0.0279087527710399,1.09251574102933,19.3954855433819,27.6135657396072,0.216306944620236,-3.71767900067079,-2.4014321646359
+#> Running VAR_ID3 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -490.43924)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.819589881281391,-0.627717075219871,0.0279087527710399,1.09251574102933,19.3954855433819,27.6135657396072,0.216306944620236,-3.71767900067079,-2.4014321646359
+#> Running VAR_ID3 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -490.43924)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.819589881281391,-0.627717075219871,0.0279087527710399,1.09251574102933,19.3954855433819,27.6135657396072,0.216306944620236,-3.71767900067079,-2.4014321646359
+#> Running VAR_ID3 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -490.43924)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.819589881281391,-0.627717075219871,0.0279087527710399,1.09251574102933,19.3954855433819,27.6135657396072,0.216306944620236,-3.71767900067079,-2.4014321646359
+#> Running VAR_ID3 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-490.43924 (started at -490.43924)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.819589881281391,-0.627717075219871,0.0279087527710399,1.09251574102933,19.3954855433819,27.6135657396072,0.216306944620236,-3.71767900067079,-2.4014321646359
+#> Running VAR_ID3 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 1 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 2 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 3 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 4 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 5 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 6 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 7 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 8 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 9 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 10 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 11 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 12 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 13 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 14 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 15 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 16 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 17 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 18 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 19 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 20 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 21 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 22 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 23 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 24 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 25 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 26 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 27 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 28 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 29 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 30 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 31 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 32 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 33 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 34 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 35 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 36 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 37 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 38 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 39 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 40 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 41 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 42 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 43 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 44 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 45 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 46 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 47 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 48 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 49 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 50 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 51 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 52 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 53 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 54 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt worse than current best:  156822.932063768 vs -490.439244857326
+#> 
+#> Beginning fit attempt 55 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 56 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 57 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt worse than current best:  -39.2647973648326 vs -490.439244857326
+#> 
+#> Beginning fit attempt 58 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 59 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 60 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 61 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 62 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 63 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 64 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 65 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 66 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 67 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 68 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 69 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 70 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 71 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 72 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 73 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 74 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 75 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 76 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 77 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 78 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 79 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 80 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 81 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 82 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 83 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 84 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 85 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 86 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 87 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 88 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 89 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 90 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 91 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 92 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 93 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 94 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 95 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 96 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 97 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 98 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 99 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 100 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Retry limit reached
+#> 
+#> 
+#>  All fit attempts resulted in errors - check starting values or model specification
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 1 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 2 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 3 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 4 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 5 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 6 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 7 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 8 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 9 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 10 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Retry limit reached
+#> 
+#> 
+#>  All fit attempts resulted in errors - check starting values or model specification
+#> Running VAR_ID3 with 9 parameters
+#> Warning while fitting model: In model 'VAR_ID3' Optimizer returned a non-zero status code 10. Starting values are not feasible. Consider mxTryHard()
+#> Check /__w/fitVARMxID/fitVARMxID/pkgdown/reference/FitVARMxID_VAR_ID3.Rds
+#> Running VAR_ID4 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID4 with 9 parameters
+#> 
+#> Beginning fit attempt 1 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 2 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 3 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 4 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 5 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 6 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 7 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 8 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 9 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 10 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 11 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt worse than current best:  -635.801174355365 vs -679.185455317157
+#> 
+#> Beginning fit attempt 12 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 13 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 14 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 15 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 16 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 17 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 18 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 19 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 20 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 21 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 22 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 23 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 24 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 25 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 26 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 27 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 28 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 29 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 30 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 31 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 32 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 33 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 34 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 35 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 36 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 37 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 38 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 39 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 40 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 41 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 42 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 43 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 44 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 45 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 46 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 47 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 48 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 49 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#> Beginning fit attempt 50 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 51 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 52 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 53 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 54 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 55 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 56 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 57 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 58 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 59 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 60 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 61 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 62 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 63 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 64 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 65 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 66 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 67 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 68 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 69 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 70 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 71 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 72 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 73 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 74 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 75 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 76 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 77 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 78 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 79 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt worse than current best:  -679.185313696298 vs -679.185455317157
+#> 
+#> Beginning fit attempt 80 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 81 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 82 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 83 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 84 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 85 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 86 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 87 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 88 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 89 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -679.185455317966
+#> 
+#> Beginning fit attempt 90 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 91 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 92 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 93 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 94 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 95 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 96 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 97 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 98 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 99 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 100 of at maximum 100 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Retry limit reached
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID4 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-679.18546 (started at -679.18546)  (101 attempt(s): 5 valid, 96 errors)
+#>  Start values from best fit:
+#> 1.0691430115605,-0.0389153511242097,0.151543861262467,0.920804714844384,13.5194020098795,19.1463865174707,0.502251219522781,-3.02828421038879,-3.29803897908265
+#> Running VAR_ID4 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID4 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID4 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-679.18546 (started at -679.18546)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 1.0691430115605,-0.0389153511242097,0.151543861262467,0.920804714844384,13.5194020098795,19.1463865174707,0.502251219522781,-3.02828421038879,-3.29803897908265
+#> Running VAR_ID4 with 9 parameters
 #> Running VAR_ID5 with 9 parameters
 #> 
 #> Beginning initial fit attempt
@@ -2076,7 +3245,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 9 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Fit attempt generated errors
+#>  Lowest minimum so far:  -26.2178540124633
 #> 
 #> Beginning fit attempt 10 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
@@ -2126,7 +3295,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 19 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1633.44383925309
+#>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 20 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
@@ -2406,7 +3575,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 75 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Fit attempt worse than current best:  -910.359714823937 vs -1633.44383925309
+#>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 76 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
@@ -2538,42 +3707,42 @@ if (requireNamespace("simStateSpace")) {
 #> Solution found
 #> Final run, for Hessian and/or standard errors and/or confidence intervals
 #> Running VAR_ID5 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
 #> 
 #> 
-#>  Solution found!  Final fit=-1633.4438 (started at Inf)  (101 attempt(s): 2 valid, 99 errors)
+#>  Solution found!  Final fit=-26.217854 (started at Inf)  (101 attempt(s): 1 valid, 100 errors)
 #>  Start values from best fit:
-#> 0.554446067074671,0.439929029041169,0.224781802455226,0.603396178283021,36.633157672398,53.7515561442374,0.867118282328554,-3.83574407495542,-3.82326871716632
+#> 0.556538699436443,0.835928196290113,0.270052250813355,0.490930379157918,64.6999287617251,99.8366972879436,2.2890199055189,-3.27072322803567,-2.39324140201176
 #> Running VAR_ID5 with 9 parameters
 #> 
 #> Beginning initial fit attempt
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1633.44383925309
+#>  Lowest minimum so far:  -29.627670307727
 #> 
 #> Solution found
 #> Final run, for Hessian and/or standard errors and/or confidence intervals
 #> Running VAR_ID5 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
 #> 
 #> 
-#>  Solution found!  Final fit=-1633.4438 (started at -1633.4438)  (1 attempt(s): 1 valid, 0 errors)
+#>  Solution found!  Final fit=-29.62767 (started at -26.217854)  (1 attempt(s): 1 valid, 0 errors)
 #>  Start values from best fit:
-#> 0.55444606662308,0.439929028890293,0.224781802200375,0.603396177802861,36.6331576725007,53.7515561441901,0.867118282338788,-3.83574407497051,-3.82326871717661
+#> 0.554140071085522,0.833501949493939,0.270049928495044,0.495134035172941,64.5865787663836,99.9061850271711,2.24111084402289,-3.24417645284363,-2.40057820471322
 #> Running VAR_ID5 with 9 parameters
+#> Warning while fitting model: In model 'VAR_ID5' Optimizer returned a non-zero status code 5. The Hessian at the solution does not appear to be convex. See ?mxCheckIdentification for possible diagnosis (Mx status RED).
+#> Check /__w/fitVARMxID/fitVARMxID/pkgdown/reference/FitVARMxID_VAR_ID5.Rds
 #> Call:
 #> FitVARMxID(data = data, observed = paste0("y", seq_len(k)), id = "id", 
 #>     center = TRUE)
 #> 
 #> Estimated paramaters per individual.
 #>                        mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2]
-#> FitVARMxID_VAR_ID2.Rds 22.3235  6.4428    0.6201   -0.2158    0.5226    0.9111
-#> FitVARMxID_VAR_ID3.Rds 19.9399 31.2708    0.6103    0.5153    0.1193    0.5064
-#> FitVARMxID_VAR_ID4.Rds 10.0602 20.7479    0.4461    0.2318    0.0842    0.7181
-#> FitVARMxID_VAR_ID5.Rds 36.6332 53.7516    0.5544    0.4399    0.2248    0.6034
+#> FitVARMxID_VAR_ID2.Rds 22.2886  6.4290    0.6139   -0.3117    0.6967    1.2692
+#> FitVARMxID_VAR_ID4.Rds 13.5194 19.1464    1.0691   -0.0389    0.1515    0.9208
 #>                        psi[1,1] psi[2,1] psi[2,2]
-#> FitVARMxID_VAR_ID2.Rds   0.0167   0.0200   0.0403
-#> FitVARMxID_VAR_ID3.Rds   0.0193   0.0207   0.0412
-#> FitVARMxID_VAR_ID4.Rds   0.0196   0.0230   0.0435
-#> FitVARMxID_VAR_ID5.Rds   0.0214   0.0185   0.0377
+#> FitVARMxID_VAR_ID2.Rds   0.0224   0.0311   0.0633
+#> FitVARMxID_VAR_ID4.Rds   0.0473   0.0237   0.0482
 #> Running VAR_ID1 with 9 parameters
 #> 
 #> Beginning initial fit attempt
@@ -2640,40 +3809,101 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning initial fit attempt
 #> Running VAR_ID2 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -2412.27227104414
+#>  Lowest minimum so far:  -2006.50904680916
 #> 
 #> Solution found
 #> 
 #> 
-#>  Solution found!  Final fit=-2412.2723 (started at 544587.56)  (1 attempt(s): 1 valid, 0 errors)
+#>  Solution found!  Final fit=-2006.509 (started at 544587.56)  (1 attempt(s): 1 valid, 0 errors)
 #>  Start values from best fit:
-#> 0.620074281151794,-0.215813032239188,0.522618448913017,0.911098114182475,5.11415332036669,5.39048693058326,1.19698865380734,-4.08140042636775,-4.10775766990732
+#> 0.613925653421851,-0.31171069927635,0.696664910533061,1.26918073903987,4.12619720344027,5.2170333235646,1.38463832921955,-3.78524426852718,-3.8883951687138
 #> Running VAR_ID3 with 9 parameters
 #> 
 #> Beginning initial fit attempt
 #> Running VAR_ID3 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1893.48056639459
+#>  Lowest minimum so far:  -58.474635334402
+#>  OpenMx status code 6 not in list of acceptable status codes, (0,0)
 #> 
-#> Solution found
+#> Beginning fit attempt 1 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -220.626727959147
+#>  OpenMx status code 6 not in list of acceptable status codes, (0,0)
+#>  Not all eigenvalues of the Hessian are positive: 94218843.2474381, 37654931.4040492, 409725.317319899, 234587.363719308, 152239.286966861, 22021.9410658739, 12883.1965386577, 514.499638833692, -20472.2423237415
+#> 
+#> Beginning fit attempt 2 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#>  OpenMx status code 6 not in list of acceptable status codes, (0,0)
+#>  Not all eigenvalues of the Hessian are positive: 94218843.2474381, 37654931.4040492, 409725.317319899, 234587.363719308, 152239.286966861, 22021.9410658739, 12883.1965386577, 514.499638833692, -20472.2423237415
+#> 
+#> Beginning fit attempt 3 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 4 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt worse than current best:  312.389920824989 vs -220.626727959147
+#> 
+#> Beginning fit attempt 5 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 6 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 7 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 8 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 9 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 10 of at maximum 10 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Retry limit reached
 #> 
 #> 
-#>  Solution found!  Final fit=-1893.4806 (started at 1373137.1)  (1 attempt(s): 1 valid, 0 errors)
+#>  Retry limit reached; Best fit=-220.62673 (started at 1373137.1)  (11 attempt(s): 4 valid, 7 errors)
+#> 
+#>  Uncertain solution found - consider parameter validity, try again, increase extraTries, change inits, change model, or check data!
 #>  Start values from best fit:
-#> -0.106801793582359,0.282617210336089,0.430742211868131,0.596297797946715,8.59642657361654,6.98697473030669,1.02207148881871,-3.70527766646054,-4.01318728969505
+#> 1.51276736371576,0.779949323856165,-0.343302136398418,0.478320455351682,0.508749073040253,0.770165942018559,0.316317997587402,-2.77691879539552,-3.08268146828559
 #> Running VAR_ID4 with 9 parameters
 #> 
 #> Beginning initial fit attempt
 #> Running VAR_ID4 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1962.50197716264
+#>  Lowest minimum so far:  822.457182096013
+#>  Eigenvalues of Hessian could not be calculated
+#> 
+#> Beginning fit attempt 1 of at maximum 10 extra tries
+#> Running VAR_ID4 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -679.185455309818
 #> 
 #> Solution found
 #> 
 #> 
-#>  Solution found!  Final fit=-1962.502 (started at 533983.66)  (1 attempt(s): 1 valid, 0 errors)
+#>  Solution found!  Final fit=-679.18546 (started at 533983.66)  (2 attempt(s): 2 valid, 0 errors)
 #>  Start values from best fit:
-#> 0.446057001670138,0.231807542071991,0.0842219275343362,0.718108833585532,3.82533594126441,3.51662058378707,1.17470290580735,-3.92130423270644,-4.10129273517829
+#> 1.06914298789861,-0.0389152980118336,0.15154393429609,0.920804793177589,-3.83629081478566,2.04241362107811,0.502251385577738,-3.028284248967,-3.29803906510228
 #> Running VAR_ID5 with 9 parameters
 #> 
 #> Beginning initial fit attempt
@@ -2995,7 +4225,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 51 of at maximum 100 extra tries
 #> Running VAR_ID1 with 9 parameters
 #> 
-#>  Fit attempt generated errors
+#>  Lowest minimum so far:  91.2243616397737
 #> 
 #> Beginning fit attempt 52 of at maximum 100 extra tries
 #> Running VAR_ID1 with 9 parameters
@@ -3200,7 +4430,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 92 of at maximum 100 extra tries
 #> Running VAR_ID1 with 9 parameters
 #> 
-#>  Fit attempt generated errors
+#>  Fit attempt worse than current best:  3807.52675034381 vs 91.2243616397737
 #> 
 #> Beginning fit attempt 93 of at maximum 100 extra tries
 #> Running VAR_ID1 with 9 parameters
@@ -3244,576 +4474,538 @@ if (requireNamespace("simStateSpace")) {
 #> 
 #> Retry limit reached
 #> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID1 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
 #> 
-#>  All fit attempts resulted in errors - check starting values or model specification
+#> 
+#>  Solution found!  Final fit=91.224362 (started at Inf)  (101 attempt(s): 2 valid, 99 errors)
+#>  Start values from best fit:
+#> 0.800338563165953,-0.168694662383004,0.235844177612992,1.19926126533611,5.69873573561694,4.77413738649633,1.44902830561005,-2.54718749406633,-2.71319366490177
 #> Running VAR_ID1 with 9 parameters
 #> 
 #> Beginning initial fit attempt
 #> Running VAR_ID1 with 9 parameters
 #> 
-#>  Fit attempt generated errors
+#>  Lowest minimum so far:  -920.029825552849
 #> 
-#> Beginning fit attempt 1 of at maximum 10 extra tries
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
 #> Running VAR_ID1 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
 #> 
-#>  Fit attempt generated errors
 #> 
-#> Beginning fit attempt 2 of at maximum 10 extra tries
+#>  Solution found!  Final fit=-920.02983 (started at 91.224362)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.80109540080201,-0.168211060284876,0.234966975084596,1.19867138191401,5.68882975844854,4.7946065712877,0.272500375031593,-3.65736732862463,-2.91976770098969
 #> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 3 of at maximum 10 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 4 of at maximum 10 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 5 of at maximum 10 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 6 of at maximum 10 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 7 of at maximum 10 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 8 of at maximum 10 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 9 of at maximum 10 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Beginning fit attempt 10 of at maximum 10 extra tries
-#> Running VAR_ID1 with 9 parameters
-#> 
-#>  Fit attempt generated errors
-#> 
-#> Retry limit reached
-#> 
-#> 
-#>  All fit attempts resulted in errors - check starting values or model specification
-#> Running VAR_ID1 with 9 parameters
-#> Warning while fitting model: In model 'VAR_ID1' Optimizer returned a non-zero status code 10. Starting values are not feasible. Consider mxTryHard()
+#> Warning while fitting model: In model 'VAR_ID1' Optimizer returned a non-zero status code 5. The Hessian at the solution does not appear to be convex. See ?mxCheckIdentification for possible diagnosis (Mx status RED).
 #> Check /__w/fitVARMxID/fitVARMxID/pkgdown/reference/FitVARMxID_VAR_ID1.Rds
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #> Beginning initial fit attempt
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1962.50197716269
+#>  Lowest minimum so far:  -2006.50904680919
 #> 
 #> Beginning fit attempt 1 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1962.50197716271
+#>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 2 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 3 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 4 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 5 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 6 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 7 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 8 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 9 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 10 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
-#>  Fit attempt worse than current best:  658054.101046351 vs -1962.50197716271
+#>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 11 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 12 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 13 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 14 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 15 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 16 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 17 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 18 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 19 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 20 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 21 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 22 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 23 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 24 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 25 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1962.50197716302
+#>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 26 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 27 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 28 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 29 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 30 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 31 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 32 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 33 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 34 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 35 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 36 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 37 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 38 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 39 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 40 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 41 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 42 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 43 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 44 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 45 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 46 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 47 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 48 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 49 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 50 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 51 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 52 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 53 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 54 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 55 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 56 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
-#>  Fit attempt generated errors
+#>  Lowest minimum so far:  -2006.50904680927
 #> 
 #> Beginning fit attempt 57 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 58 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 59 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 60 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 61 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 62 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 63 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 64 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 65 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 66 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 67 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 68 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 69 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 70 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 71 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 72 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1962.50197716302
+#>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 73 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 74 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 75 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 76 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 77 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 78 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 79 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 80 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 81 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 82 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 83 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 84 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 85 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
-#>  Fit attempt worse than current best:  -1831.69100665306 vs -1962.50197716302
+#>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 86 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 87 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 88 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 89 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 90 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 91 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 92 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 93 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 94 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 95 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 96 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 97 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 98 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 99 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 100 of at maximum 100 extra tries
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #>  Fit attempt generated errors
 #> 
@@ -3821,28 +5013,593 @@ if (requireNamespace("simStateSpace")) {
 #> 
 #> Solution found
 #> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #> 
-#>  Solution found!  Final fit=-1962.502 (started at -1962.502)  (101 attempt(s): 6 valid, 95 errors)
+#>  Solution found!  Final fit=-2006.509 (started at -2006.509)  (101 attempt(s): 2 valid, 99 errors)
 #>  Start values from best fit:
-#> 0.446057193676994,0.231807622672952,0.084221881325581,0.718108797644812,3.825334959189,3.51662053664096,1.17470275814734,-3.92130374574109,-4.10129309395901
-#> Running VAR_ID4 with 9 parameters
+#> 0.613925651852878,-0.311710707839771,0.696664924821736,1.26918076425858,4.12619711454645,5.21703330203295,1.38463837373816,-3.78524420607875,-3.88839529045126
+#> Running VAR_ID2 with 9 parameters
 #> 
 #> Beginning initial fit attempt
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1962.50197716302
+#>  Lowest minimum so far:  -2006.50904680928
 #> 
 #> Solution found
 #> Final run, for Hessian and/or standard errors and/or confidence intervals
-#> Running VAR_ID4 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
 #> 
 #> 
-#>  Solution found!  Final fit=-1962.502 (started at -1962.502)  (1 attempt(s): 1 valid, 0 errors)
+#>  Solution found!  Final fit=-2006.509 (started at -2006.509)  (1 attempt(s): 1 valid, 0 errors)
 #>  Start values from best fit:
-#> 0.446057193678706,0.231807622672627,0.0842218813291737,0.718108797644212,3.82533495918917,3.51662053664093,1.17470275814735,-3.9213037457411,-4.10129309395901
-#> Running VAR_ID4 with 9 parameters
+#> 0.61392565193048,-0.311710707866778,0.696664924845818,1.26918076425124,4.12619711454981,5.21703330203179,1.38463837373838,-3.78524420607897,-3.88839529045118
+#> Running VAR_ID2 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID2 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -2006.50904680928
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID2 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-2006.509 (started at -2006.509)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.613925651930729,-0.311710707866836,0.696664924845883,1.26918076425125,4.12619711454981,5.21703330203179,1.38463837373837,-3.78524420607897,-3.88839529045118
+#> Running VAR_ID2 with 9 parameters
+#> Running VAR_ID2 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID2 with 9 parameters
+#> 
+#>  Lowest minimum so far:  -2006.50904680929
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID2 with 9 parameters
+#> 
+#> 
+#>  Solution found!  Final fit=-2006.509 (started at -2006.509)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 0.613925652254256,-0.3117107073862,0.696664925019837,1.26918076441086,4.12619711455892,5.21703330205559,1.384638373749,-3.78524420608989,-3.88839529044694
+#> Running VAR_ID2 with 9 parameters
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning fit attempt 1 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 2 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 3 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 4 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 5 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 6 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 7 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 8 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 9 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 10 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 11 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 12 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 13 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 14 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 15 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 16 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 17 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 18 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 19 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 20 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 21 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 22 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 23 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 24 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 25 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 26 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 27 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 28 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 29 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 30 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 31 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 32 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 33 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 34 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 35 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 36 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 37 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 38 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 39 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 40 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 41 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 42 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 43 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 44 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 45 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 46 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 47 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 48 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 49 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 50 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 51 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 52 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 53 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 54 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 55 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 56 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 57 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 58 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 59 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 60 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 61 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 62 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 63 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 64 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 65 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 66 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 67 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 68 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 69 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 70 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 71 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 72 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 73 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 74 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 75 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 76 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 77 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 78 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 79 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 80 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 81 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 82 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 83 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 84 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 85 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 86 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 87 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 88 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 89 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 90 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 91 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 92 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 93 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 94 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 95 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 96 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 97 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 98 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 99 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Beginning fit attempt 100 of at maximum 100 extra tries
+#> Running VAR_ID3 with 9 parameters
+#> 
+#>  Fit attempt generated errors
+#> 
+#> Retry limit reached
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
+#> 
+#> 
+#>  Solution found!  Final fit=-220.62673 (started at -220.62673)  (101 attempt(s): 1 valid, 100 errors)
+#>  Start values from best fit:
+#> 1.51276736371576,0.779949323856165,-0.343302136398418,0.478320455351682,0.508749073040253,0.770165942018559,0.316317997587402,-2.77691879539552,-3.08268146828559
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Beginning initial fit attempt
+#> Running VAR_ID3 with 9 parameters
+#> 
+#> Solution found
+#> Final run, for Hessian and/or standard errors and/or confidence intervals
+#> Running VAR_ID3 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
+#> 
+#> 
+#>  Solution found!  Final fit=-220.62673 (started at -220.62673)  (1 attempt(s): 1 valid, 0 errors)
+#>  Start values from best fit:
+#> 1.51276736371576,0.779949323856165,-0.343302136398418,0.478320455351682,0.508749073040253,0.770165942018559,0.316317997587402,-2.77691879539552,-3.08268146828559
+#> Running VAR_ID3 with 9 parameters
+#> Warning while fitting model: In model 'VAR_ID3' Optimizer returned a non-zero status code 6. The model does not satisfy the first-order optimality conditions to the required accuracy, and no improved point for the merit function could be found during the final linesearch (Mx status RED)
+#> Check /__w/fitVARMxID/fitVARMxID/pkgdown/reference/FitVARMxID_VAR_ID3.Rds
 #> Running VAR_ID5 with 9 parameters
 #> 
 #> Beginning initial fit attempt
@@ -3853,7 +5610,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 1 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1633.44383925309
+#>  Fit attempt generated errors
 #> 
 #> Beginning fit attempt 2 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
@@ -3898,7 +5655,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 10 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Fit attempt generated errors
+#>  Lowest minimum so far:  -27.7967597568974
 #> 
 #> Beginning fit attempt 11 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
@@ -4158,7 +5915,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 62 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Fit attempt generated errors
+#>  Lowest minimum so far:  -507.573316636614
 #> 
 #> Beginning fit attempt 63 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
@@ -4238,7 +5995,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 78 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Fit attempt generated errors
+#>  Lowest minimum so far:  -507.573517049737
 #> 
 #> Beginning fit attempt 79 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
@@ -4323,7 +6080,7 @@ if (requireNamespace("simStateSpace")) {
 #> Beginning fit attempt 95 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Fit attempt generated errors
+#>  Fit attempt worse than current best:  -348.768292398626 vs -507.573517049737
 #> 
 #> Beginning fit attempt 96 of at maximum 100 extra tries
 #> Running VAR_ID5 with 9 parameters
@@ -4355,43 +6112,43 @@ if (requireNamespace("simStateSpace")) {
 #> Solution found
 #> Final run, for Hessian and/or standard errors and/or confidence intervals
 #> Running VAR_ID5 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
 #> 
 #> 
-#>  Solution found!  Final fit=-1633.4438 (started at Inf)  (101 attempt(s): 1 valid, 100 errors)
+#>  Solution found!  Final fit=-507.57352 (started at Inf)  (101 attempt(s): 4 valid, 97 errors)
 #>  Start values from best fit:
-#> 0.554446057780967,0.439929026792656,0.22478180630506,0.603396179666407,4.23967593278172,5.20208311118206,0.867118278706454,-3.83574407221231,-3.82326872026396
+#> 0.38934024092681,-0.738593617620785,0.324368356567475,1.39165644425097,4.93478561947719,5.99724214299126,0.408643983764102,-3.99759738315589,-2.12944452684209
 #> Running VAR_ID5 with 9 parameters
 #> 
 #> Beginning initial fit attempt
 #> Running VAR_ID5 with 9 parameters
 #> 
-#>  Lowest minimum so far:  -1633.44383925309
+#>  Lowest minimum so far:  -507.573517224647
 #> 
 #> Solution found
 #> Final run, for Hessian and/or standard errors and/or confidence intervals
 #> Running VAR_ID5 with 9 parameters
+#>  Warning messages generated from final run for Hessian/SEs/CIs
 #> 
 #> 
-#>  Solution found!  Final fit=-1633.4438 (started at -1633.4438)  (1 attempt(s): 1 valid, 0 errors)
+#>  Solution found!  Final fit=-507.57352 (started at -507.57352)  (1 attempt(s): 1 valid, 0 errors)
 #>  Start values from best fit:
-#> 0.554446057791479,0.439929026791809,0.224781806320592,0.603396179665083,4.23967593278194,5.20208311118206,0.867118278706468,-3.83574407221232,-3.82326872026395
+#> 0.38934024092681,-0.738593617620785,0.324368356567475,1.39165644425097,4.93478561947719,5.99724214299126,0.408643983764102,-3.99759738315589,-2.12944452684209
 #> Running VAR_ID5 with 9 parameters
+#> Warning while fitting model: In model 'VAR_ID5' Optimizer returned a non-zero status code 6. The model does not satisfy the first-order optimality conditions to the required accuracy, and no improved point for the merit function could be found during the final linesearch (Mx status RED)
+#> Check /__w/fitVARMxID/fitVARMxID/pkgdown/reference/FitVARMxID_VAR_ID5.Rds
 #> Call:
 #> FitVARMxID(data = data, observed = paste0("y", seq_len(k)), id = "id", 
 #>     center = FALSE)
 #> 
 #> Estimated paramaters per individual.
 #>                        alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2]
-#> FitVARMxID_VAR_ID2.Rds     5.1142     5.3905    0.6201   -0.2158    0.5226
-#> FitVARMxID_VAR_ID3.Rds     8.5964     6.9870   -0.1068    0.2826    0.4307
-#> FitVARMxID_VAR_ID4.Rds     3.8253     3.5166    0.4461    0.2318    0.0842
-#> FitVARMxID_VAR_ID5.Rds     4.2397     5.2021    0.5544    0.4399    0.2248
+#> FitVARMxID_VAR_ID2.Rds     4.1262     5.2170    0.6139   -0.3117    0.6967
+#> FitVARMxID_VAR_ID4.Rds    -3.8363     2.0424    1.0691   -0.0389    0.1515
 #>                        beta[2,2] psi[1,1] psi[2,1] psi[2,2]
-#> FitVARMxID_VAR_ID2.Rds    0.9111   0.0167   0.0200   0.0403
-#> FitVARMxID_VAR_ID3.Rds    0.5963   0.0243   0.0248   0.0433
-#> FitVARMxID_VAR_ID4.Rds    0.7181   0.0196   0.0230   0.0435
-#> FitVARMxID_VAR_ID5.Rds    0.6034   0.0214   0.0185   0.0377
+#> FitVARMxID_VAR_ID2.Rds    1.2692   0.0224   0.0311   0.0633
+#> FitVARMxID_VAR_ID4.Rds    0.9208   0.0473   0.0237   0.0482
 #>     1     2     3     4     5 
-#> FALSE  TRUE  TRUE  TRUE  TRUE 
+#> FALSE  TRUE FALSE  TRUE FALSE 
 # }
 ```
