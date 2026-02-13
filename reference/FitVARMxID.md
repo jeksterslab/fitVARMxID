@@ -518,7 +518,7 @@ elements:
 
   A list of output from
   [`OpenMx::imxRobustSE()`](https://rdrr.io/pkg/OpenMx/man/imxRobustSE.html)
-  with argument `details = TRUE` for each `id`.
+  with argument `details = TRUE` for each `id` if `robust = TRUE`.
 
 ## Details
 

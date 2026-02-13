@@ -28,8 +28,8 @@ You can install the released version of `fitVARMxID` from
 
 ``` r
 
-if (!require("remotes")) install.packages("remotes")
-remotes::install_github("jeksterslab/fitVARMxID")
+if (!require("pak")) install.packages("pak")
+pak::pak("jeksterslab/fitVARMxID")
 ```
 
 ## More Information

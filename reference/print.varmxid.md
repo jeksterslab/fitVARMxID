@@ -71,11 +71,14 @@ print(
 
 - diag_cov:
 
-  Character string. If `diag_cov = "var"`, the diagonal elements of
-  `psi` and `theta` are the variances in the original metric. If
-  `diag_cov = "logvar"`, the diagonal elements of `psi` and `theta` are
-  the log of the variances. If `diag_cov = "softplusvar"`, the diagonal
-  elements of `psi` and `theta` are the softplus of the variances.
+  Character string. If `diag_cov = "var"`, `psi` and `theta` are in the
+  original metric variance/covariance metric. If `diag_cov = "logvar"`,
+  the diagonal elements of `psi` and `theta` are the log of the
+  variances and the off-diagonal elements are the elements in `L` in the
+  `LDL'` decomposition. If `diag_cov = "softplusvar"`, the diagonal
+  elements of `psi` and `theta` are the softplus of the variances and
+  the off-diagonal elements are the elements in `L` in the `LDL'`
+  decomposition.
 
 - converged:
 

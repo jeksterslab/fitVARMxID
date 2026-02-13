@@ -127,14 +127,18 @@ exclude estimates of the <code>theta</code> matrix.</p></dd>
 <dt id="arg-diag-cov">diag_cov<a class="anchor" aria-label="anchor" href="#arg-diag-cov"></a></dt>
 <dd><p>Character string.
 If <code>diag_cov = "var"</code>,
-the diagonal elements of <code>psi</code> and <code>theta</code>
-are the variances in the original metric.
+<code>psi</code> and <code>theta</code>
+are in the original metric variance/covariance metric.
 If <code>diag_cov = "logvar"</code>,
 the diagonal elements of <code>psi</code> and <code>theta</code>
-are the log of the variances.
+are the log of the variances
+and the off-diagonal elements are the elements in <code>L</code>
+in the <code>LDL'</code> decomposition.
 If <code>diag_cov = "softplusvar"</code>,
 the diagonal elements of <code>psi</code> and <code>theta</code>
-are the softplus of the variances.</p></dd>
+are the softplus of the variances
+and the off-diagonal elements are the elements in <code>L</code>
+in the <code>LDL'</code> decomposition.</p></dd>
 
 
 <dt id="arg-converged">converged<a class="anchor" aria-label="anchor" href="#arg-converged"></a></dt>

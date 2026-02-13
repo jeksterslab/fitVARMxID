@@ -4,7 +4,7 @@
 
 ### Patch
 
-- Minor edits to documentation.
+- Addressed CRAN issues.
 
 ## fitVARMxID 1.0.1
 
