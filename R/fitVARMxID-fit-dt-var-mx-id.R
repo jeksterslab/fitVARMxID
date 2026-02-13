@@ -436,7 +436,8 @@
 #'     \item{fun}{Function used ("FitVARMxID").}
 #'     \item{output}{A list of fitted OpenMx models.}
 #'     \item{robust}{A list of output from [OpenMx::imxRobustSE()]
-#'         with argument `details = TRUE` for each `id`.}
+#'         with argument `details = TRUE` for each `id`
+#'         if `robust = TRUE`.}
 #'   }
 #'
 #' @examples

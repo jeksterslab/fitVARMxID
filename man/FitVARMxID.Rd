@@ -418,7 +418,8 @@ a list with the following elements:
 \item{fun}{Function used ("FitVARMxID").}
 \item{output}{A list of fitted OpenMx models.}
 \item{robust}{A list of output from \code{\link[OpenMx:imxRobustSE]{OpenMx::imxRobustSE()}}
-with argument \code{details = TRUE} for each \code{id}.}
+with argument \code{details = TRUE} for each \code{id}
+if \code{robust = TRUE}.}
 }
 }
 \description{

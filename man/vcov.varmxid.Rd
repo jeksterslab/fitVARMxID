@@ -63,14 +63,18 @@ exclude estimates of the \code{theta} matrix.}
 
 \item{diag_cov}{Character string.
 If \code{diag_cov = "var"},
-the diagonal elements of \code{psi} and \code{theta}
-are the variances in the original metric.
+\code{psi} and \code{theta}
+are in the original metric variance/covariance metric.
 If \code{diag_cov = "logvar"},
 the diagonal elements of \code{psi} and \code{theta}
-are the log of the variances.
+are the log of the variances
+and the off-diagonal elements are the elements in \code{L}
+in the \verb{LDL'} decomposition.
 If \code{diag_cov = "softplusvar"},
 the diagonal elements of \code{psi} and \code{theta}
-are the softplus of the variances.}
+are the softplus of the variances
+and the off-diagonal elements are the elements in \code{L}
+in the \verb{LDL'} decomposition.}
 
 \item{converged}{Logical.
 Only include converged cases.}
