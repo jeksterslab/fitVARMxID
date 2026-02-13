@@ -260,58 +260,6 @@ library(fitVARMxID)
 
 The `FitVARMxID` function fits a DT-VAR model on each individual $`i`$.
 
-### LDL’-parameterized covariance matrices
-
-Covariances such as `psi` and `theta` are estimated using the LDL’
-decomposition of a positive definite covariance matrix. The
-decomposition expresses a covariance matrix $`\Sigma`$ as
-
-``` math
-\begin{equation}
-  \boldsymbol{\Sigma} = \left( \mathbf{L} + \mathbf{I} \right) \mathrm{diag} \left( \mathrm{Softplus} \left( \mathbf{d}_{uc} \right) \right) \left( \mathbf{L} + \mathbf{I} \right)^{\prime},
-\end{equation}
-```
-
-where:
-
-- $`\mathbf{L}`$ is a strictly lower-triangular matrix of free
-  parameters (`l_mat_strict`),\
-- $`\mathbf{I}`$ is the identity matrix,\
-- $`\mathbf{d}_{uc}`$ is an unconstrained vector,\
-- $`\mathrm{Softplus} \left(\mathbf{d}_{uc} \right) = \log \left(1 + \exp \left( \mathbf{d}_{uc} \right) \right)`$
-  ensures strictly positive diagonal entries.
-
-The
-[`LDL()`](https://github.com/jeksterslab/fitVARMxID/reference/LDL.md)
-function extracts this decomposition from a positive definite covariance
-matrix. It returns:
-
-- `d_uc`: unconstrained diagonal parameters, equal to
-  `InvSoftplus(d_vec)`,\
-- `d_vec`: diagonal entries, equal to `Softplus(d_uc)`,\
-- `l_mat_strict`: the strictly lower-triangular factor.
-
-``` r
-
-sigma <- matrix(
-  data = c(1.0, 0.5, 0.5, 1.0),
-  nrow = 2,
-  ncol = 2
-)
-
-ldl_sigma <- LDL(sigma)
-d_uc <- ldl_sigma$d_uc
-l_mat_strict <- ldl_sigma$l_mat_strict
-I <- diag(2)
-sigma_reconstructed <- (l_mat_strict + I) %*% diag(log1p(exp(d_uc)), 2) %*% t(l_mat_strict + I)
-sigma_reconstructed
-#>      [,1] [,2]
-#> [1,]  1.0  0.5
-#> [2,]  0.5  1.0
-```
-
-### `FitVARMxID`
-
 ``` r
 
 fit <- FitVARMxID(

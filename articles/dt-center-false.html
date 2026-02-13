@@ -334,73 +334,7 @@ Initial Condition)<a class="anchor" aria-label="anchor" href="#visualizing-the-d
 <p>The <code>FitVARMxID</code> function fits a DT-VAR model on each
 individual
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>.</p>
-<div class="section level3">
-<h3 id="ldl-parameterized-covariance-matrices">LDL’-parameterized covariance matrices<a class="anchor" aria-label="anchor" href="#ldl-parameterized-covariance-matrices"></a>
-</h3>
-<p>Covariances such as <code>psi</code> and <code>theta</code> are
-estimated using the LDL’ decomposition of a positive definite covariance
-matrix. The decomposition expresses a covariance matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>
-as</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">𝚺</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi mathvariant="bold-italic">𝑳</mi><mo>+</mo><mi mathvariant="bold-italic">𝑰</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">g</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">s</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝒅</mi><mrow><mi>u</mi><mi>c</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi mathvariant="bold-italic">𝑳</mi><mo>+</mo><mi mathvariant="bold-italic">𝑰</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>′</mi></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation}
-  \boldsymbol{\Sigma} = \left( \mathbf{L} + \mathbf{I} \right) \mathrm{diag} \left( \mathrm{Softplus} \left( \mathbf{d}_{uc} \right) \right) \left( \mathbf{L} + \mathbf{I} \right)^{\prime},
-\end{equation}</annotation></semantics></math></p>
-<p>where:</p>
-<ul>
-<li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑳</mi><annotation encoding="application/x-tex">\mathbf{L}</annotation></semantics></math>
-is a strictly lower-triangular matrix of free parameters
-(<code>l_mat_strict</code>),<br>
-</li>
-<li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑰</mi><annotation encoding="application/x-tex">\mathbf{I}</annotation></semantics></math>
-is the identity matrix,<br>
-</li>
-<li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="bold-italic">𝒅</mi><mrow><mi>u</mi><mi>c</mi></mrow></msub><annotation encoding="application/x-tex">\mathbf{d}_{uc}</annotation></semantics></math>
-is an unconstrained vector,<br>
-</li>
-<li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">s</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝒅</mi><mrow><mi>u</mi><mi>c</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi mathvariant="normal">exp</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝒅</mi><mrow><mi>u</mi><mi>c</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathrm{Softplus} \left(\mathbf{d}_{uc} \right) = \log \left(1 + \exp \left( \mathbf{d}_{uc} \right) \right)</annotation></semantics></math>
-ensures strictly positive diagonal entries.</li>
-</ul>
-<p>The <code><a href="../reference/LDL.html">LDL()</a></code> function extracts this decomposition from a
-positive definite covariance matrix. It returns:</p>
-<ul>
-<li>
-<code>d_uc</code>: unconstrained diagonal parameters, equal to
-<code>InvSoftplus(d_vec)</code>,<br>
-</li>
-<li>
-<code>d_vec</code>: diagonal entries, equal to
-<code>Softplus(d_uc)</code>,<br>
-</li>
-<li>
-<code>l_mat_strict</code>: the strictly lower-triangular
-factor.</li>
-</ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">1.0</span><span class="op">)</span>,</span>
-<span>  nrow <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  ncol <span class="op">=</span> <span class="fl">2</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ldl_sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/LDL.html">LDL</a></span><span class="op">(</span><span class="va">sigma</span><span class="op">)</span></span>
-<span><span class="va">d_uc</span> <span class="op">&lt;-</span> <span class="va">ldl_sigma</span><span class="op">$</span><span class="va">d_uc</span></span>
-<span><span class="va">l_mat_strict</span> <span class="op">&lt;-</span> <span class="va">ldl_sigma</span><span class="op">$</span><span class="va">l_mat_strict</span></span>
-<span><span class="va">I</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">sigma_reconstructed</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">l_mat_strict</span> <span class="op">+</span> <span class="va">I</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">d_uc</span><span class="op">)</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">l_mat_strict</span> <span class="op">+</span> <span class="va">I</span><span class="op">)</span></span>
-<span><span class="va">sigma_reconstructed</span></span>
-<span><span class="co">#&gt;      [,1] [,2]</span></span>
-<span><span class="co">#&gt; [1,]  1.0  0.5</span></span>
-<span><span class="co">#&gt; [2,]  0.5  1.0</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="fitvarmxid">
-<code>FitVARMxID</code><a class="anchor" aria-label="anchor" href="#fitvarmxid"></a>
-</h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FitVARMxID.html">FitVARMxID</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">data</span>,</span>
 <span>  observed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span><span class="op">)</span>,</span>
@@ -411,7 +345,7 @@ factor.</li>
 <div class="section level4">
 <h4 id="parameter-estimates">Parameter estimates<a class="anchor" aria-label="anchor" href="#parameter-estimates"></a>
 </h4>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span>, means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", </span></span>
@@ -424,7 +358,6 @@ factor.</li>
 <span><span class="co">#&gt;     0.5998     0.4043    -0.0060    -0.0039     0.4945     0.0997     0.0005 </span></span>
 <span><span class="co">#&gt;   psi[3,1]   psi[2,2]   psi[3,2]   psi[3,3] </span></span>
 <span><span class="co">#&gt;    -0.0001     0.0992     0.0008     0.1000</span></span></code></pre></div>
-</div>
 </div>
 </div>
 <div class="section level2 unnumbered">
