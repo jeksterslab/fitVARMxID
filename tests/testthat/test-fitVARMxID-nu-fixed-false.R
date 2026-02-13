@@ -20,8 +20,7 @@ lapply(
       nu_free = rep(x = TRUE, times = k),
       nu_values = rep(x = 1, times = k),
       nu_lbound = rep(x = -1, times = k),
-      nu_ubound = rep(x = +1, times = k),
-      name = "nu"
+      nu_ubound = rep(x = +1, times = k)
     )
     nu_name <- nu$nu@name
     nu_values <- nu$nu@values

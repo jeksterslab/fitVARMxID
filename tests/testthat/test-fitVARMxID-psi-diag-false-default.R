@@ -24,8 +24,7 @@ lapply(
       psi_l_free = NULL,
       psi_l_values = NULL,
       psi_l_lbound = NULL,
-      psi_l_ubound = NULL,
-      name = "psi"
+      psi_l_ubound = NULL
     )
     psi_l_name <- psi$psi_l@name
     psi_l_vec_name <- psi$psi_l_vec@name

@@ -11,9 +11,7 @@
                               sigma0_l_values,
                               sigma0_l_lbound,
                               sigma0_l_ubound,
-                              name,
-                              name_beta,
-                              name_psi) {
+                              ct) {
   # P0
   # Initial condition covariance matrix
   if (sigma0_fixed) {
@@ -21,9 +19,7 @@
       sigma0 <- .FitVARMxIDSigma0Func(
         k = k,
         statenames = statenames,
-        name = name,
-        name_beta = name_beta,
-        name_psi = name_psi
+        ct = ct
       )
     } else {
       sigma0 <- .FitVARMxIDSigma0Fixed(
@@ -31,8 +27,7 @@
         statenames = statenames,
         sigma0_diag = sigma0_diag,
         sigma0_d_values = sigma0_d_values,
-        sigma0_l_values = sigma0_l_values,
-        name = name
+        sigma0_l_values = sigma0_l_values
       )
     }
   } else {
@@ -43,8 +38,7 @@
         sigma0_d_free = sigma0_d_free,
         sigma0_d_values = sigma0_d_values,
         sigma0_d_lbound = sigma0_d_lbound,
-        sigma0_d_ubound = sigma0_d_ubound,
-        name = name
+        sigma0_d_ubound = sigma0_d_ubound
       )
     } else {
       sigma0 <- .FitVARMxIDSigma0Sym(
@@ -57,16 +51,18 @@
         sigma0_l_free = sigma0_l_free,
         sigma0_l_values = sigma0_l_values,
         sigma0_l_lbound = sigma0_l_lbound,
-        sigma0_l_ubound = sigma0_l_ubound,
-        name = name
+        sigma0_l_ubound = sigma0_l_ubound
       )
     }
   }
-  c(
-    sigma0,
-    OpenMx::mxAlgebraFromString(
-      algString = name,
+  p0_mat <- list(
+    p0_mat = OpenMx::mxAlgebraFromString(
+      algString = "sigma0",
       name = "P0"
     )
+  )
+  c(
+    sigma0,
+    p0_mat
   )
 }

@@ -38,8 +38,7 @@ lapply(
         nrow = k,
         ncol = 1
       ),
-      theta_d_equal = FALSE,
-      name = "theta"
+      theta_d_equal = FALSE
     )
     theta_d_name <- theta$theta_d@name
     theta_d_vec_name <- theta$theta_d_vec@name

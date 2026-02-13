@@ -1,4 +1,4 @@
-## ---- test-fitVARMxID-alpha-fixed-true-default
+## ---- test-fitVARMxID-alpha-fixed-false-default-ct
 lapply(
   X = 1,
   FUN = function(i,
@@ -17,25 +17,34 @@ lapply(
       k = k,
       statenames = statenames,
       center = FALSE,
-      alpha_fixed = TRUE,
+      alpha_fixed = FALSE,
       alpha_free = NULL,
       alpha_values = NULL,
       alpha_lbound = NULL,
       alpha_ubound = NULL,
-      ct = FALSE
+      ct = TRUE
     )
-    alpha_name <- alpha[[1]]@name
-    alpha_values <- alpha[[1]]@values
-    alpha_labels <- alpha[[1]]@labels
-    alpha_free <- alpha[[1]]@free
-    alpha_lbound <- alpha[[1]]@lbound
-    alpha_ubound <- alpha[[1]]@ubound
+    alpha_name <- alpha$alpha@name
+    alpha_values <- alpha$alpha@values
+    alpha_labels <- alpha$alpha@labels
+    alpha_free <- alpha$alpha@free
+    alpha_lbound <- alpha$alpha@lbound
+    alpha_ubound <- alpha$alpha@ubound
+    alpha_vec_name <- alpha$alpha_vec@name
+    alpha_vec_values <- alpha$alpha_vec@values
+    alpha_vec_labels <- alpha$alpha_vec@labels
+    alpha_vec_free <- alpha$alpha_vec@free
+    alpha_vec_lbound <- alpha$alpha_vec@lbound
+    alpha_vec_ubound <- alpha$alpha_vec@ubound
     testthat::test_that(
       paste(text, "class"),
       {
         testthat::skip_on_cran()
         testthat::expect_true(
-          class(alpha[[1]]) == "ZeroMatrix"
+          class(alpha$alpha) == "FullMatrix"
+        )
+        testthat::expect_true(
+          class(alpha$alpha_vec) == "FullMatrix"
         )
       }
     )
@@ -45,6 +54,9 @@ lapply(
         testthat::skip_on_cran()
         testthat::expect_true(
           alpha_name == "alpha"
+        )
+        testthat::expect_true(
+          alpha_vec_name == "alpha_vec"
         )
       }
     )
@@ -57,6 +69,11 @@ lapply(
             c(alpha_values) == 0
           )
         )
+        testthat::expect_true(
+          all(
+            c(alpha_vec_values) == 0
+          )
+        )
       }
     )
     testthat::test_that(
@@ -65,7 +82,12 @@ lapply(
         testthat::skip_on_cran()
         testthat::expect_true(
           all(
-            is.na(alpha_labels)
+            c(alpha_labels) == paste0("alpha_", idx, "_1")
+          )
+        )
+        testthat::expect_true(
+          all(
+            c(alpha_vec_labels) == paste0("alpha[", idx, ",1]")
           )
         )
       }
@@ -75,7 +97,10 @@ lapply(
       {
         testthat::skip_on_cran()
         testthat::expect_true(
-          !all(alpha_free)
+          all(alpha_free)
+        )
+        testthat::expect_true(
+          all(!alpha_vec_free)
         )
       }
     )
@@ -86,6 +111,11 @@ lapply(
         testthat::expect_true(
           all(
             is.na(alpha_lbound)
+          )
+        )
+        testthat::expect_true(
+          all(
+            is.na(alpha_vec_lbound)
           )
         )
       }
@@ -99,8 +129,13 @@ lapply(
             is.na(alpha_ubound)
           )
         )
+        testthat::expect_true(
+          all(
+            is.na(alpha_vec_ubound)
+          )
+        )
       }
     )
   },
-  text = "test-fitVARMxID-alpha-fixed-true-default"
+  text = "test-fitVARMxID-alpha-fixed-false-default-ct"
 )

@@ -5,15 +5,13 @@
                             beta_values,
                             beta_lbound,
                             beta_ubound,
-                            name,
                             ct) {
   # A
   # auto regression and cross regression coefficients
   if (beta_fixed) {
     beta <- .FitVARMxBetaFixed(
       k = k,
-      beta_values = beta_values,
-      name = name
+      beta_values = beta_values
     )
   } else {
     beta_values <- tryCatch(
@@ -69,14 +67,21 @@
       vec = TRUE,
       row = statenames,
       col = statenames,
-      name = name
+      name = "beta"
     )
   }
+  a_mat <- list(
+    a_mat = OpenMx::mxAlgebraFromString(
+      algString = "beta",
+      name = "A",
+      dimnames = list(
+        statenames,
+        statenames
+      )
+    )
+  )
   c(
     beta,
-    OpenMx::mxAlgebraFromString(
-      algString = name,
-      name = "A"
-    )
+    a_mat
   )
 }

@@ -336,8 +336,10 @@
 #'   If `TRUE`, the initial mean vector `mu0` is fixed.
 #'   If `FALSE`, `mu0` is estimated.
 #' @param mu0_func Logical.
-#'   If `TRUE` and `mu0_fixed = TRUE`, `mu0` is fixed to
+#'   If `TRUE`, `mu0_fixed = TRUE`, and `ct = FALSE`, `mu0` is fixed to
 #'   \eqn{ (I - \beta)^{-1} \alpha }.
+#'   If `TRUE`, `mu0_fixed = TRUE`, and `ct = TRUE`, `mu0` is fixed to
+#'   \eqn{ (- \beta)^{-1} \alpha }.
 #' @param mu0_free Logical vector indicating which elements of `mu0`
 #'   are freely estimated.
 #' @param mu0_values Numeric vector of values for `mu0`.
@@ -584,13 +586,13 @@ FitVARMxID <- function(data,
                        theta_l_lbound = NULL,
                        theta_l_ubound = NULL,
                        mu0_fixed = TRUE,
-                       mu0_func = FALSE,
+                       mu0_func = TRUE,
                        mu0_free = NULL,
                        mu0_values = NULL,
                        mu0_lbound = NULL,
                        mu0_ubound = NULL,
                        sigma0_fixed = TRUE,
-                       sigma0_func = FALSE,
+                       sigma0_func = TRUE,
                        sigma0_diag = FALSE,
                        sigma0_d_free = NULL,
                        sigma0_d_values = NULL,

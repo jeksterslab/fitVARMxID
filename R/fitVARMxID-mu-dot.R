@@ -6,17 +6,13 @@
                           mu_values,
                           mu_lbound,
                           mu_ubound,
-                          name_mu,
-                          name_alpha,
-                          name_beta,
                           ct) {
   # B
   # latent variables on covariates
   if (mu_fixed) {
     mu <- .FitVARMxIDMuFixed(
       k = k,
-      mu_values = mu_values,
-      name = name_mu
+      mu_values = mu_values
     )
   } else {
     mu_values <- tryCatch(
@@ -43,55 +39,54 @@
       vec = TRUE,
       row = statenames,
       col = 1,
-      name = name_mu
+      name = "mu"
     )
   }
+  alpha_iden <- list(
+    alpha_iden = OpenMx::mxMatrix(
+      type = "Iden",
+      nrow = k,
+      ncol = k,
+      name = "alpha_iden"
+    )
+  )
+  b_mat <- list(
+    b_mat = OpenMx::mxAlgebraFromString(
+      algString = "alpha",
+      name = "B",
+      dimnames = list(
+        statenames,
+        "B"
+      )
+    )
+  )
   if (ct) {
-    out <- c(
-      mu,
-      OpenMx::mxAlgebraFromString(
-        algString = paste0(
-          " - ",
-          name_beta,
-          " %*% ",
-          name_mu
-        ),
-        name = name_alpha
-      ),
-      OpenMx::mxAlgebraFromString(
-        algString = paste0(
-          " - ",
-          name_beta,
-          " %*% ",
-          name_mu
-        ),
-        name = "B"
+    alpha <- list(
+      alpha = OpenMx::mxAlgebraFromString(
+        algString = "-beta %*% mu",
+        name = "alpha",
+        dimnames = list(
+          statenames,
+          "alpha"
+        )
       )
     )
   } else {
-    out <- c(
-      mu,
-      OpenMx::mxAlgebraFromString(
-        algString = paste0(
-          name_mu,
-          " - ",
-          name_beta,
-          " %*% ",
-          name_mu
-        ),
-        name = name_alpha
-      ),
-      OpenMx::mxAlgebraFromString(
-        algString = paste0(
-          name_mu,
-          " - ",
-          name_beta,
-          " %*% ",
-          name_mu
-        ),
-        name = "B"
+    alpha <- list(
+      alpha = OpenMx::mxAlgebraFromString(
+        algString = "mu - beta %*% mu",
+        name = "alpha",
+        dimnames = list(
+          statenames,
+          "alpha"
+        )
       )
     )
   }
-  out
+  c(
+    alpha,
+    alpha_iden,
+    mu,
+    b_mat
+  )
 }

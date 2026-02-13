@@ -4,14 +4,15 @@
                                ct,
                                time,
                                beta,
-                               alpha,
+                               mean_str,
                                lambda,
                                nu,
                                psi,
                                theta,
                                mu0,
                                sigma0,
-                               covariate) {
+                               covariate,
+                               sigma) {
   if (ct) {
     time <- OpenMx::mxMatrix(
       "Full",
@@ -51,6 +52,15 @@
       dimnames = observed
     )
   }
+  parameter_vec <- .FitVARMxParameterVec(
+    mean_str = mean_str,
+    beta = beta,
+    nu = nu,
+    psi = psi,
+    theta = theta,
+    mu0 = mu0,
+    sigma0 = sigma0
+  )
   OpenMx::mxModel(
     model = paste0(
       "VAR",
@@ -59,7 +69,7 @@
       id
     ),
     beta,
-    alpha,
+    mean_str,
     lambda,
     nu,
     psi,
@@ -67,14 +77,9 @@
     mu0,
     sigma0,
     covariate,
+    sigma,
+    parameter_vec,
     expectation,
-    .FitVARMxParameterVec(
-      alpha = alpha,
-      beta = beta,
-      nu = nu,
-      psi = psi,
-      theta = theta
-    ),
     OpenMx::mxFitFunctionML(),
     OpenMx::mxData(
       observed = data,

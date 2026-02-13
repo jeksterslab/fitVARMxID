@@ -1,4 +1,4 @@
-## ---- test-fitVARMxID-sigma0-func-true
+## ---- test-fitVARMxID-sigma0-func-true-ct
 lapply(
   X = 1,
   FUN = function(i,
@@ -27,7 +27,7 @@ lapply(
       sigma0_l_values = NULL,
       sigma0_l_lbound = NULL,
       sigma0_l_ubound = NULL,
-      ct = FALSE
+      ct = TRUE
     )
     sigma0_name <- sigma0$sigma0@name
     testthat::test_that(
@@ -49,5 +49,5 @@ lapply(
       }
     )
   },
-  text = "test-fitVARMxID-sigma0-func-true"
+  text = "test-fitVARMxID-sigma0-func-true-ct"
 )

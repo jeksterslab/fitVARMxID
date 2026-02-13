@@ -2,25 +2,22 @@
                                    statenames,
                                    sigma0_diag,
                                    sigma0_d_values,
-                                   sigma0_l_values,
-                                   name) {
+                                   sigma0_l_values) {
   # P0
   # Initial condition covariance matrix
   if (sigma0_diag) {
-    out <- .FitVARMxIDSigma0FixedDiag(
+    sigma0 <- .FitVARMxIDSigma0FixedDiag(
       k = k,
       statenames = statenames,
-      sigma0_d_values = sigma0_d_values,
-      name = name
+      sigma0_d_values = sigma0_d_values
     )
   } else {
-    out <- .FitVARMxIDSigma0FixedSym(
+    sigma0 <- .FitVARMxIDSigma0FixedSym(
       k = k,
       statenames = statenames,
       sigma0_d_values = sigma0_d_values,
-      sigma0_l_values = sigma0_l_values,
-      name = name
+      sigma0_l_values = sigma0_l_values
     )
   }
-  out
+  sigma0
 }

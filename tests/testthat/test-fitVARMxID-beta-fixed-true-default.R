@@ -21,21 +21,20 @@ lapply(
       beta_values = NULL,
       beta_lbound = NULL,
       beta_ubound = NULL,
-      name = "beta",
       ct = FALSE
     )
-    beta_name <- beta[[1]]@name
-    beta_values <- beta[[1]]@values
-    beta_labels <- beta[[1]]@labels
-    beta_free <- beta[[1]]@free
-    beta_lbound <- beta[[1]]@lbound
-    beta_ubound <- beta[[1]]@ubound
+    beta_name <- beta$beta@name
+    beta_values <- beta$beta@values
+    beta_labels <- beta$beta@labels
+    beta_free <- beta$beta@free
+    beta_lbound <- beta$beta@lbound
+    beta_ubound <- beta$beta@ubound
     testthat::test_that(
       paste(text, "class"),
       {
         testthat::skip_on_cran()
         testthat::expect_true(
-          class(beta[[1]]) == "ZeroMatrix"
+          class(beta$beta) == "ZeroMatrix"
         )
       }
     )

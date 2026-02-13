@@ -22,23 +22,20 @@ lapply(
       mu_values = NULL,
       mu_lbound = NULL,
       mu_ubound = NULL,
-      name_mu = "mu",
-      name_alpha = "alpha",
-      name_beta = "beta",
       ct = FALSE
     )
-    mu_name <- mu[[1]]@name
-    mu_values <- mu[[1]]@values
-    mu_labels <- mu[[1]]@labels
-    mu_free <- mu[[1]]@free
-    mu_lbound <- mu[[1]]@lbound
-    mu_ubound <- mu[[1]]@ubound
+    mu_name <- mu$mu@name
+    mu_values <- mu$mu@values
+    mu_labels <- mu$mu@labels
+    mu_free <- mu$mu@free
+    mu_lbound <- mu$mu@lbound
+    mu_ubound <- mu$mu@ubound
     testthat::test_that(
       paste(text, "class"),
       {
         testthat::skip_on_cran()
         testthat::expect_true(
-          class(mu[[1]]) == "ZeroMatrix"
+          class(mu$mu) == "ZeroMatrix"
         )
       }
     )

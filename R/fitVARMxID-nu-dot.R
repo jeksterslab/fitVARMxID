@@ -4,15 +4,13 @@
                           nu_free,
                           nu_values,
                           nu_lbound,
-                          nu_ubound,
-                          name) {
+                          nu_ubound) {
   # D
   # observed variables on covariates
   if (nu_fixed) {
     nu <- .FitVARMxIDNuFixed(
       k = k,
-      nu_values = nu_values,
-      name = name
+      nu_values = nu_values
     )
   } else {
     nu_values <- tryCatch(
@@ -39,14 +37,21 @@
       vec = TRUE,
       row = observed,
       col = 1,
-      name = name
+      name = "nu"
     )
   }
+  d_mat <- list(
+    d_mat = OpenMx::mxAlgebraFromString(
+      algString = "nu",
+      name = "D",
+      dimnames = list(
+        observed,
+        "D"
+      )
+    )
+  )
   c(
     nu,
-    OpenMx::mxAlgebraFromString(
-      algString = name,
-      name = "D"
-    )
+    d_mat
   )
 }

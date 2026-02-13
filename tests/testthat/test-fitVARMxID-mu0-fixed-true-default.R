@@ -22,23 +22,20 @@ lapply(
       mu0_values = NULL,
       mu0_lbound = NULL,
       mu0_ubound = NULL,
-      name = "mu0",
-      name_beta = "beta",
-      name_alpha = "alpha",
-      center = FALSE
+      ct = FALSE
     )
-    mu0_name <- mu0[[1]]@name
-    mu0_values <- mu0[[1]]@values
-    mu0_labels <- mu0[[1]]@labels
-    mu0_free <- mu0[[1]]@free
-    mu0_lbound <- mu0[[1]]@lbound
-    mu0_ubound <- mu0[[1]]@ubound
+    mu0_name <- mu0$mu0@name
+    mu0_values <- mu0$mu0@values
+    mu0_labels <- mu0$mu0@labels
+    mu0_free <- mu0$mu0@free
+    mu0_lbound <- mu0$mu0@lbound
+    mu0_ubound <- mu0$mu0@ubound
     testthat::test_that(
       paste(text, "class"),
       {
         testthat::skip_on_cran()
         testthat::expect_true(
-          class(mu0[[1]]) == "FullMatrix"
+          class(mu0$mu0) == "FullMatrix"
         )
       }
     )

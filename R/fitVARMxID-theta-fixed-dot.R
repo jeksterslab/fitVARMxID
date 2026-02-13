@@ -2,48 +2,53 @@
                                   observed,
                                   theta_diag,
                                   theta_d_values,
-                                  theta_l_values,
-                                  name) {
+                                  theta_l_values) {
   # R
   # measurement error
   if (theta_diag) {
     if (is.null(theta_d_values)) {
-      out <- OpenMx::mxMatrix(
-        type = "Zero",
-        nrow = k,
-        ncol = k,
-        dimnames = list(
-          observed,
-          observed
-        ),
-        name = name
+      theta <- list(
+        theta = OpenMx::mxMatrix(
+          type = "Zero",
+          nrow = k,
+          ncol = k,
+          dimnames = list(
+            observed,
+            observed
+          ),
+          name = "theta"
+        )
       )
     } else {
-      out <- OpenMx::mxMatrix(
-        type = "Diag",
-        nrow = k,
-        ncol = k,
-        free = FALSE,
-        values = Softplus(theta_d_values),
-        byrow = FALSE,
-        dimnames = list(
-          observed,
-          observed
-        ),
-        name = name
+      theta <- list(
+        theta = OpenMx::mxMatrix(
+          type = "Diag",
+          nrow = k,
+          ncol = k,
+          free = FALSE,
+          values = Softplus(theta_d_values),
+          byrow = FALSE,
+          dimnames = list(
+            observed,
+            observed
+          ),
+          name = "theta"
+        )
       )
     }
   } else {
     if (is.null(theta_d_values) || is.null(theta_l_values)) {
-      out <- OpenMx::mxMatrix(
-        type = "Zero",
-        nrow = k,
-        ncol = k,
-        dimnames = list(
-          observed,
-          observed
-        ),
-        name = name
+      theta <- list(
+        theta = OpenMx::mxMatrix(
+          type = "Zero",
+          nrow = k,
+          ncol = k,
+          dimnames = list(
+            observed,
+            observed
+          ),
+          name = "theta"
+        )
       )
     } else {
       if (!is.null(theta_d_values)) {
@@ -64,20 +69,22 @@
       diag(d_mat) <- d
       ldl <- (l + iden) %*% d_mat %*% t(l + iden)
       ldl <- 0.5 * (ldl + t(ldl))
-      out <- OpenMx::mxMatrix(
-        type = "Sym",
-        nrow = k,
-        ncol = k,
-        free = FALSE,
-        values = ldl,
-        byrow = FALSE,
-        dimnames = list(
-          observed,
-          observed
-        ),
-        name = name
+      theta <- list(
+        theta = OpenMx::mxMatrix(
+          type = "Sym",
+          nrow = k,
+          ncol = k,
+          free = FALSE,
+          values = ldl,
+          byrow = FALSE,
+          dimnames = list(
+            observed,
+            observed
+          ),
+          name = "theta"
+        )
       )
     }
   }
-  out
+  theta
 }

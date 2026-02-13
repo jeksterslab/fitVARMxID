@@ -3,8 +3,8 @@
                               statenames) {
   # C
   # measurement model factor loadings
-  c(
-    OpenMx::mxMatrix(
+  lambda <- list(
+    lambda = OpenMx::mxMatrix(
       type = "Diag",
       nrow = k,
       ncol = k,
@@ -19,8 +19,10 @@
         statenames
       ),
       name = "lambda"
-    ),
-    OpenMx::mxAlgebraFromString(
+    )
+  )
+  c_mat <- list(
+    c_mat = OpenMx::mxAlgebraFromString(
       algString = "lambda",
       dimnames = list(
         observed,
@@ -28,5 +30,9 @@
       ),
       name = "C"
     )
+  )
+  c(
+    lambda,
+    c_mat
   )
 }

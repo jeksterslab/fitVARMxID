@@ -6,14 +6,13 @@
                              alpha_values,
                              alpha_lbound,
                              alpha_ubound,
-                             name) {
+                             ct) {
   # B
   # latent variables on covariates
   if (alpha_fixed) {
     alpha <- .FitVARMxIDAlphaFixed(
       k = k,
-      alpha_values = alpha_values,
-      name = name
+      alpha_values = alpha_values
     )
   } else {
     alpha_values <- tryCatch(
@@ -44,14 +43,54 @@
       vec = TRUE,
       row = statenames,
       col = 1,
-      name = name
+      name = "alpha"
+    )
+  }
+  alpha_iden <- list(
+    alpha_iden = OpenMx::mxMatrix(
+      type = "Iden",
+      nrow = k,
+      ncol = k,
+      name = "alpha_iden"
+    )
+  )
+  b_mat <- list(
+    b_mat = OpenMx::mxAlgebraFromString(
+      algString = "alpha",
+      name = "B",
+      dimnames = list(
+        statenames,
+        "B"
+      )
+    )
+  )
+  if (ct) {
+    mu <- list(
+      mu = OpenMx::mxAlgebraFromString(
+        algString = "solve(-beta) %*% alpha",
+        name = "mu",
+        dimnames = list(
+          statenames,
+          "mu"
+        )
+      )
+    )
+  } else {
+    mu <- list(
+      mu = OpenMx::mxAlgebraFromString(
+        algString = "solve(alpha_iden - beta) %*% alpha",
+        name = "mu",
+        dimnames = list(
+          statenames,
+          "mu"
+        )
+      )
     )
   }
   c(
     alpha,
-    OpenMx::mxAlgebraFromString(
-      algString = name,
-      name = "B"
-    )
+    alpha_iden,
+    mu,
+    b_mat
   )
 }

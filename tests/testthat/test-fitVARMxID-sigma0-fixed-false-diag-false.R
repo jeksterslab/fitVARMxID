@@ -58,9 +58,7 @@ lapply(
         nrow = k,
         ncol = k
       ),
-      name = "sigma0",
-      name_beta = "beta",
-      name_psi = "psi"
+      ct = FALSE
     )
     sigma0_l_name <- sigma0$sigma0_l@name
     sigma0_l_vec_name <- sigma0$sigma0_l_vec@name

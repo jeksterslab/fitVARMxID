@@ -1,21 +1,45 @@
-.FitVARMxParameterVec <- function(alpha,
+.FitVARMxParameterVec <- function(mean_str,
                                   beta,
                                   nu,
                                   psi,
-                                  theta) {
-  if (!is.null(alpha$mu_vec)) {
+                                  theta,
+                                  mu0,
+                                  sigma0) {
+  if (!is.null(mu0$mu0_vec)) {
+    mu0_vec <- "mu0_vec"
+    mu0_vec_labels <- c(
+      mu0$mu0_vec$labels
+    )
+  } else {
+    mu0_vec <- NA
+    mu0_vec_labels <- NA
+  }
+  if (!is.null(sigma0$sigma0_vec)) {
+    sigma0_vec <- "sigma0_vec"
+    sigma0_log_diag_vec <- "sigma0_log_diag_vec"
+    sigma0_softplus_diag_vec <- "sigma0_softplus_diag_vec"
+    sigma0_vec_labels <- c(
+      sigma0$sigma0_vec$labels
+    )
+  } else {
+    sigma0_vec <- NA
+    sigma0_vec_labels <- NA
+    sigma0_log_diag_vec <- NA
+    sigma0_softplus_diag_vec <- NA
+  }
+  if (!is.null(mean_str$mu_vec)) {
     mu_vec <- "mu_vec"
     mu_vec_labels <- c(
-      alpha$mu_vec$labels
+      mean_str$mu_vec$labels
     )
   } else {
     mu_vec <- NA
     mu_vec_labels <- NA
   }
-  if (!is.null(alpha$alpha_vec)) {
+  if (!is.null(mean_str$alpha_vec)) {
     alpha_vec <- "alpha_vec"
     alpha_vec_labels <- c(
-      alpha$alpha_vec$labels
+      mean_str$alpha_vec$labels
     )
   } else {
     alpha_vec <- NA
