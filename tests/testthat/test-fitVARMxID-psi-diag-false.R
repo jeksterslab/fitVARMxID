@@ -56,8 +56,7 @@ lapply(
         data = +1,
         nrow = k,
         ncol = k
-      ),
-      name = "psi"
+      )
     )
     psi_l_name <- psi$psi_l@name
     psi_l_vec_name <- psi$psi_l_vec@name

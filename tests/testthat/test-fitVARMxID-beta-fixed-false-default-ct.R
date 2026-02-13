@@ -21,7 +21,6 @@ lapply(
       beta_values = NULL,
       beta_lbound = NULL,
       beta_ubound = NULL,
-      name = "beta",
       ct = TRUE
     )
     beta_name <- beta$beta@name

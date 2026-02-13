@@ -58,8 +58,7 @@ lapply(
         data = +1,
         nrow = k,
         ncol = k
-      ),
-      name = "theta"
+      )
     )
     theta_d_name <- theta$theta_d@name
     theta_d_vec_name <- theta$theta_d_vec@name

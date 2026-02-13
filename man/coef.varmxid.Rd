@@ -12,7 +12,7 @@
   nu = TRUE,
   psi = TRUE,
   theta = TRUE,
-  diag_cov = "var",
+  var_metric = "var",
   converged = TRUE,
   grad_tol = 0.01,
   hess_tol = 1e-08,
@@ -60,19 +60,19 @@ include estimates of the \code{theta} matrix, if available.
 If \code{theta = FALSE},
 exclude estimates of the \code{theta} matrix.}
 
-\item{diag_cov}{Character string.
-If \code{diag_cov = "var"},
+\item{var_metric}{Character string.
+If \code{var_metric = "var"},
 \code{psi} and \code{theta}
-are in the original metric variance/covariance metric.
-If \code{diag_cov = "logvar"},
+are in the original variance/covariance metric.
+If \code{var_metric = "logvar"},
 the diagonal elements of \code{psi} and \code{theta}
 are the log of the variances
-and the off-diagonal elements are the elements in \code{L}
+and the off-diagonal elements correspond to strict \code{L}
 in the \verb{LDL'} decomposition.
-If \code{diag_cov = "softplusvar"},
+If \code{var_metric = "softplusvar"},
 the diagonal elements of \code{psi} and \code{theta}
 are the softplus of the variances
-and the off-diagonal elements are the elements in \code{L}
+and the off-diagonal elements correspond to strict \code{L}
 in the \verb{LDL'} decomposition.}
 
 \item{converged}{Logical.

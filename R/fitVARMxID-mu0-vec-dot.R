@@ -3,8 +3,7 @@
                               mu0_free,
                               mu0_values,
                               mu0_lbound,
-                              mu0_ubound,
-                              name) {
+                              mu0_ubound) {
   # x0
   # initial condition
   # mean
@@ -32,6 +31,6 @@
     vec = TRUE,
     row = statenames,
     col = 1,
-    name = name
+    name = "mu0"
   )
 }

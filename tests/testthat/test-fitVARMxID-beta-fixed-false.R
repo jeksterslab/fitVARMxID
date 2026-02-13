@@ -37,7 +37,6 @@ lapply(
         nrow = k,
         ncol = k
       ),
-      name = "beta",
       ct = FALSE
     )
     beta_name <- beta$beta@name

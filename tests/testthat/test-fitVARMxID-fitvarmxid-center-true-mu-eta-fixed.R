@@ -63,8 +63,14 @@ lapply(
       print(fit, means = TRUE)
       summary(fit)
       summary(fit, means = TRUE)
+      summary(fit, var_metric = "logvar")
+      summary(fit, var_metric = "softplusvar")
       coef(fit)
+      coef(fit, var_metric = "logvar")
+      coef(fit, var_metric = "softplusvar")
       vcov(fit)
+      vcov(fit, var_metric = "logvar")
+      vcov(fit, var_metric = "softplusvar")
       vcov(fit, robust = TRUE)
     }
     testthat::test_that(

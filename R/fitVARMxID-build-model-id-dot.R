@@ -93,7 +93,6 @@
         beta_values = beta_values,
         beta_lbound = beta_lbound,
         beta_ubound = beta_ubound,
-        name = "beta",
         ct = ct
       )
     }
@@ -107,7 +106,7 @@
     if (!is.list(mu_values)) {
       mu_values <- list(mu_values)
     }
-    alpha <- lapply(
+    mean_str <- lapply(
       X = rep(x = mu_values, length.out = n),
       FUN = function(mu_values) {
         .FitVARMxIDMu(
@@ -118,9 +117,6 @@
           mu_values = mu_values,
           mu_lbound = mu_lbound,
           mu_ubound = mu_ubound,
-          name_mu = "mu",
-          name_alpha = "alpha",
-          name_beta = "beta",
           ct = ct
         )
       }
@@ -134,7 +130,7 @@
     if (!is.list(alpha_values)) {
       alpha_values <- list(alpha_values)
     }
-    alpha <- lapply(
+    mean_str <- lapply(
       X = rep(x = alpha_values, length.out = n),
       FUN = function(alpha_values) {
         .FitVARMxIDAlpha(
@@ -145,7 +141,7 @@
           alpha_values = alpha_values,
           alpha_lbound = alpha_lbound,
           alpha_ubound = alpha_ubound,
-          name = "alpha"
+          ct = ct
         )
       }
     )
@@ -173,8 +169,7 @@
         nu_free = nu_free,
         nu_values = nu_values,
         nu_lbound = nu_lbound,
-        nu_ubound = nu_ubound,
-        name = "nu"
+        nu_ubound = nu_ubound
       )
     }
   )
@@ -200,8 +195,7 @@
         psi_l_free = psi_l_free,
         psi_l_values = psi_l_values,
         psi_l_lbound = psi_l_lbound,
-        psi_l_ubound = psi_l_ubound,
-        name = "psi"
+        psi_l_ubound = psi_l_ubound
       )
     },
     SIMPLIFY = FALSE
@@ -225,8 +219,7 @@
         theta_l_free = theta_l_free,
         theta_l_values = theta_l_values,
         theta_l_lbound = theta_l_lbound,
-        theta_l_ubound = theta_l_ubound,
-        name = "theta"
+        theta_l_ubound = theta_l_ubound
       )
     }
   )
@@ -245,10 +238,7 @@
         mu0_values = mu0_values,
         mu0_lbound = mu0_lbound,
         mu0_ubound = mu0_ubound,
-        name = "mu0",
-        name_beta = "beta",
-        name_alpha = "alpha",
-        center = center
+        ct = ct
       )
     }
   )
@@ -277,9 +267,7 @@
         sigma0_l_values = sigma0_l_values,
         sigma0_l_lbound = sigma0_l_lbound,
         sigma0_l_ubound = sigma0_l_ubound,
-        name = "sigma0",
-        name_beta = "beta",
-        name_psi = "psi"
+        ct = ct
       )
     },
     SIMPLIFY = FALSE
@@ -290,6 +278,16 @@
       .FitVARMxIDX()
     }
   )
+  sigma <- lapply(
+    X = seq_len(n),
+    FUN = function(i) {
+      .FitVARMxIDSigma(
+        k = k,
+        statenames = statenames,
+        ct = ct
+      )
+    }
+  )
   matrices <- lapply(
     X = seq_len(n),
     FUN = function(i) {
@@ -297,14 +295,15 @@
         id = ids[i],
         data = data[[i]],
         beta = beta[[i]],
-        alpha = alpha[[i]],
+        mean_str = mean_str[[i]],
         lambda = lambda[[i]],
         nu = nu[[i]],
         psi = psi[[i]],
         theta = theta[[i]],
         mu0 = mu0[[i]],
         sigma0 = sigma0[[i]],
-        covariate = covariate[[i]]
+        covariate = covariate[[i]],
+        sigma = sigma[[i]]
       )
     }
   )
@@ -319,14 +318,15 @@
         ct = ct,
         time = time,
         beta = mat$beta,
-        alpha = mat$alpha,
+        mean_str = mat$mean_str,
         lambda = mat$lambda,
         nu = mat$nu,
         psi = mat$psi,
         theta = mat$theta,
         mu0 = mat$mu0,
         sigma0 = mat$sigma0,
-        covariate = mat$covariate
+        covariate = mat$covariate,
+        sigma = mat$sigma
       )
       fn <- file.path(
         path,

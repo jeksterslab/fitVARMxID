@@ -10,8 +10,7 @@
                              theta_l_free,
                              theta_l_values,
                              theta_l_lbound,
-                             theta_l_ubound,
-                             name) {
+                             theta_l_ubound) {
   # R
   # measurement error
   if (theta_fixed) {
@@ -20,8 +19,7 @@
       observed = observed,
       theta_diag = theta_diag,
       theta_d_values = theta_d_values,
-      theta_l_values = theta_l_values,
-      name = name
+      theta_l_values = theta_l_values
     )
   } else {
     if (theta_diag) {
@@ -32,8 +30,7 @@
         theta_d_values = theta_d_values,
         theta_d_lbound = theta_d_lbound,
         theta_d_ubound = theta_d_ubound,
-        theta_d_equal = theta_d_equal,
-        name = name
+        theta_d_equal = theta_d_equal
       )
     } else {
       theta <- .FitVARMxIDThetaSym(
@@ -47,16 +44,18 @@
         theta_l_free = theta_l_free,
         theta_l_values = theta_l_values,
         theta_l_lbound = theta_l_lbound,
-        theta_l_ubound = theta_l_ubound,
-        name = name
+        theta_l_ubound = theta_l_ubound
       )
     }
   }
-  c(
-    theta,
-    OpenMx::mxAlgebraFromString(
-      algString = name,
+  r_mat <- list(
+    r_mat = OpenMx::mxAlgebraFromString(
+      algString = "theta",
       name = "R"
     )
+  )
+  c(
+    theta,
+    r_mat
   )
 }

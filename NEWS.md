@@ -2,7 +2,7 @@
 
 ## Patch
 
-* Addressed CRAN issues.
+* CRAN resubmission.
 
 # fitVARMxID 1.0.1
 

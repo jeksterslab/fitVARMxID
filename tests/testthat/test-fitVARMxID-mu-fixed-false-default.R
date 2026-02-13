@@ -22,9 +22,6 @@ lapply(
       mu_values = NULL,
       mu_lbound = NULL,
       mu_ubound = NULL,
-      name_mu = "mu",
-      name_alpha = "alpha",
-      name_beta = "beta",
       ct = FALSE
     )
     mu_name <- mu$mu@name

@@ -22,9 +22,6 @@ lapply(
       mu_values = rep(x = 1, times = k),
       mu_lbound = rep(x = -1, times = k),
       mu_ubound = rep(x = +1, times = k),
-      name_mu = "mu",
-      name_alpha = "alpha",
-      name_beta = "beta",
       ct = FALSE
     )
     mu_name <- mu$mu@name

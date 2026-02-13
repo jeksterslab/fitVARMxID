@@ -1,7 +1,6 @@
 .FitVARMxIDMu0Fixed <- function(k,
                                 statenames,
-                                mu0_values,
-                                name) {
+                                mu0_values) {
   # mu0_values will be the fixed value
   # x0
   # initial condition
@@ -32,20 +31,22 @@
       stop("Warning in `mu0_values`: ", w$message)
     }
   )
-  OpenMx::mxMatrix(
-    type = "Full",
-    nrow = k,
-    ncol = 1,
-    free = FALSE,
-    values = mu0_values,
-    labels = NA,
-    lbound = NA,
-    ubound = NA,
-    byrow = FALSE,
-    dimnames = list(
-      statenames,
-      name
-    ),
-    name = name
+  list(
+    mu0 = OpenMx::mxMatrix(
+      type = "Full",
+      nrow = k,
+      ncol = 1,
+      free = FALSE,
+      values = mu0_values,
+      labels = NA,
+      lbound = NA,
+      ubound = NA,
+      byrow = FALSE,
+      dimnames = list(
+        statenames,
+        "mu0"
+      ),
+      name = "mu0"
+    )
   )
 }

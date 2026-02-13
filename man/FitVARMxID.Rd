@@ -52,13 +52,13 @@ FitVARMxID(
   theta_l_lbound = NULL,
   theta_l_ubound = NULL,
   mu0_fixed = TRUE,
-  mu0_func = FALSE,
+  mu0_func = TRUE,
   mu0_free = NULL,
   mu0_values = NULL,
   mu0_lbound = NULL,
   mu0_ubound = NULL,
   sigma0_fixed = TRUE,
-  sigma0_func = FALSE,
+  sigma0_func = TRUE,
   sigma0_diag = FALSE,
   sigma0_d_free = NULL,
   sigma0_d_values = NULL,
@@ -287,8 +287,10 @@ If \code{TRUE}, the initial mean vector \code{mu0} is fixed.
 If \code{FALSE}, \code{mu0} is estimated.}
 
 \item{mu0_func}{Logical.
-If \code{TRUE} and \code{mu0_fixed = TRUE}, \code{mu0} is fixed to
-\eqn{ (I - \beta)^{-1} \alpha }.}
+If \code{TRUE}, \code{mu0_fixed = TRUE}, and \code{ct = FALSE}, \code{mu0} is fixed to
+\eqn{ (I - \beta)^{-1} \alpha }.
+If \code{TRUE}, \code{mu0_fixed = TRUE}, and \code{ct = TRUE}, \code{mu0} is fixed to
+\eqn{ (- \beta)^{-1} \alpha }.}
 
 \item{mu0_free}{Logical vector indicating which elements of \code{mu0}
 are freely estimated.}

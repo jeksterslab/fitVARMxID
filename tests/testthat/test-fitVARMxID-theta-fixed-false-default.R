@@ -22,8 +22,7 @@ lapply(
       theta_d_values = NULL,
       theta_d_lbound = NULL,
       theta_d_ubound = NULL,
-      theta_d_equal = FALSE,
-      name = "theta"
+      theta_d_equal = FALSE
     )
     theta_d_name <- theta$theta_d@name
     theta_d_vec_name <- theta$theta_d_vec@name

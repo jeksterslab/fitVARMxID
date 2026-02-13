@@ -6,10 +6,7 @@
                            mu0_values,
                            mu0_lbound,
                            mu0_ubound,
-                           name,
-                           name_beta,
-                           name_alpha,
-                           center) {
+                           ct) {
   # x0
   # initial condition
   # mean
@@ -18,17 +15,13 @@
       mu0 <- .FitVARMxIDMu0Func(
         k = k,
         statenames = statenames,
-        name = name,
-        name_beta = name_beta,
-        name_alpha = name_alpha,
-        center = center
+        ct = ct
       )
     } else {
       mu0 <- .FitVARMxIDMu0Fixed(
         k = k,
         statenames = statenames,
-        mu0_values = mu0_values,
-        name = name
+        mu0_values = mu0_values
       )
     }
   } else {
@@ -38,15 +31,21 @@
       mu0_free = mu0_free,
       mu0_values = mu0_values,
       mu0_lbound = mu0_lbound,
-      mu0_ubound = mu0_ubound,
-      name = name
+      mu0_ubound = mu0_ubound
     )
   }
+  x0_mat <- list(
+    OpenMx::mxAlgebraFromString(
+      algString = "mu0",
+      name = "x0",
+      dimnames = list(
+        statenames,
+        "x0"
+      )
+    )
+  )
   c(
     mu0,
-    OpenMx::mxAlgebraFromString(
-      algString = name,
-      name = "x0"
-    )
+    x0_mat
   )
 }

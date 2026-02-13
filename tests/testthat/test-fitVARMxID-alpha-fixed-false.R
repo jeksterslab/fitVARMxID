@@ -22,7 +22,7 @@ lapply(
       alpha_values = rep(x = 1, times = k),
       alpha_lbound = rep(x = -1, times = k),
       alpha_ubound = rep(x = +1, times = k),
-      name = "alpha"
+      ct = FALSE
     )
     alpha_name <- alpha$alpha@name
     alpha_values <- alpha$alpha@values

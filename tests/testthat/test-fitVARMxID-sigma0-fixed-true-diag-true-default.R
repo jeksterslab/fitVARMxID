@@ -27,9 +27,7 @@ lapply(
       sigma0_l_values = NULL,
       sigma0_l_lbound = NULL,
       sigma0_l_ubound = NULL,
-      name = "sigma0",
-      name_beta = "beta",
-      name_psi = "psi"
+      ct = FALSE
     )
     sigma0_d_name <- sigma0$sigma0_d@name
     sigma0_name <- sigma0$sigma0@name

@@ -20,8 +20,7 @@ lapply(
       nu_free = NULL,
       nu_values = NULL,
       nu_lbound = NULL,
-      nu_ubound = NULL,
-      name = "nu"
+      nu_ubound = NULL
     )
     nu_name <- nu$nu@name
     nu_values <- nu$nu@values

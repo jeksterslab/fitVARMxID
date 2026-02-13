@@ -23,7 +23,7 @@ print.varmxid <- function(x,
                           nu = TRUE,
                           psi = TRUE,
                           theta = TRUE,
-                          diag_cov = "var",
+                          var_metric = "var",
                           converged = TRUE,
                           grad_tol = 1e-2,
                           hess_tol = 1e-8,
@@ -41,7 +41,7 @@ print.varmxid <- function(x,
       nu = nu,
       psi = psi,
       theta = theta,
-      diag_cov = diag_cov,
+      var_metric = var_metric,
       converged = converged,
       grad_tol = grad_tol,
       hess_tol = hess_tol,
@@ -77,7 +77,7 @@ summary.varmxid <- function(object,
                             nu = TRUE,
                             psi = TRUE,
                             theta = TRUE,
-                            diag_cov = "var",
+                            var_metric = "var",
                             converged = TRUE,
                             grad_tol = 1e-2,
                             hess_tol = 1e-8,
@@ -95,7 +95,7 @@ summary.varmxid <- function(object,
       nu = nu,
       psi = psi,
       theta = theta,
-      diag_cov = diag_cov,
+      var_metric = var_metric,
       converged = converged,
       grad_tol = grad_tol,
       hess_tol = hess_tol,
@@ -123,7 +123,7 @@ summary.varmxid <- function(object,
   attr(out, "nu") <- nu
   attr(out, "psi") <- psi
   attr(out, "theta") <- theta
-  attr(out, "diag_cov") <- diag_cov
+  attr(out, "var_metric") <- var_metric
   attr(out, "converged") <- converged
   attr(out, "grad_tol") <- grad_tol
   attr(out, "hess_tol") <- hess_tol
@@ -212,19 +212,19 @@ print.summary.varmxid <- function(x,
 #' @param theta_tol Numeric.
 #'   Tolerance for vanishing theta test
 #'   if `converged` and `theta_tol` are `TRUE`.
-#' @param diag_cov Character string.
-#'   If `diag_cov = "var"`,
+#' @param var_metric Character string.
+#'   If `var_metric = "var"`,
 #'   `psi` and `theta`
-#'   are in the original metric variance/covariance metric.
-#'   If `diag_cov = "logvar"`,
+#'   are in the original variance/covariance metric.
+#'   If `var_metric = "logvar"`,
 #'   the diagonal elements of `psi` and `theta`
 #'   are the log of the variances
-#'   and the off-diagonal elements are the elements in `L`
+#'   and the off-diagonal elements correspond to strict `L`
 #'   in the `LDL'` decomposition.
-#'   If `diag_cov = "softplusvar"`,
+#'   If `var_metric = "softplusvar"`,
 #'   the diagonal elements of `psi` and `theta`
 #'   are the softplus of the variances
-#'   and the off-diagonal elements are the elements in `L`
+#'   and the off-diagonal elements correspond to strict `L`
 #'   in the `LDL'` decomposition.
 #' @param ... additional arguments.
 #' @return Returns a list of vectors of parameter estimates.
@@ -240,7 +240,7 @@ coef.varmxid <- function(object,
                          nu = TRUE,
                          psi = TRUE,
                          theta = TRUE,
-                         diag_cov = "var",
+                         var_metric = "var",
                          converged = TRUE,
                          grad_tol = 1e-2,
                          hess_tol = 1e-8,
@@ -328,21 +328,21 @@ coef.varmxid <- function(object,
   lapply(
     X = fit,
     FUN = function(i) {
-      if (diag_cov[1] == "var") {
+      if (var_metric[1] == "var") {
         out <- OpenMx::mxEvalByName(
           name = "parameter_vec",
           model = i,
           compute = TRUE
         )
       }
-      if (diag_cov[1] == "logvar") {
+      if (var_metric[1] == "logvar") {
         out <- OpenMx::mxEvalByName(
           name = "parameter_log_diag_vec",
           model = i,
           compute = TRUE
         )
       }
-      if (diag_cov[1] == "softplusvar") {
+      if (var_metric[1] == "softplusvar") {
         out <- OpenMx::mxEvalByName(
           name = "parameter_softplus_diag_vec",
           model = i,
@@ -391,7 +391,7 @@ vcov.varmxid <- function(object,
                          nu = TRUE,
                          psi = TRUE,
                          theta = TRUE,
-                         diag_cov = "var",
+                         var_metric = "var",
                          converged = TRUE,
                          grad_tol = 1e-2,
                          hess_tol = 1e-8,
@@ -513,7 +513,7 @@ vcov.varmxid <- function(object,
   lapply(
     X = fit,
     FUN = function(i) {
-      if (diag_cov[1] == "var") {
+      if (var_metric[1] == "var") {
         out <- OpenMx::mxSE(
           x = "parameter_vec",
           model = i,
@@ -521,7 +521,7 @@ vcov.varmxid <- function(object,
           silent = TRUE
         )$Cov
       }
-      if (diag_cov[1] == "logvar") {
+      if (var_metric[1] == "logvar") {
         out <- OpenMx::mxSE(
           x = "parameter_log_diag_vec",
           model = i,
@@ -529,7 +529,7 @@ vcov.varmxid <- function(object,
           silent = TRUE
         )$Cov
       }
-      if (diag_cov[1] == "softplusvar") {
+      if (var_metric[1] == "softplusvar") {
         out <- OpenMx::mxSE(
           x = "parameter_softplus_diag_vec",
           model = i,

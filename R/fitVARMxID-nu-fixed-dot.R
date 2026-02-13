@@ -1,25 +1,28 @@
 .FitVARMxIDNuFixed <- function(k,
-                               nu_values,
-                               name) {
+                               nu_values) {
   # D
   # observed variables on covariates
   if (is.null(nu_values)) {
-    out <- OpenMx::mxMatrix(
-      type = "Zero",
-      nrow = k,
-      ncol = 1,
-      name = name
+    nu <- list(
+      nu = OpenMx::mxMatrix(
+        type = "Zero",
+        nrow = k,
+        ncol = 1,
+        name = "nu"
+      )
     )
   } else {
-    out <- OpenMx::mxMatrix(
-      type = "Full",
-      nrow = k,
-      ncol = 1,
-      free = FALSE,
-      values = nu_values,
-      byrow = FALSE,
-      name = name
+    nu <- list(
+      nu = OpenMx::mxMatrix(
+        type = "Full",
+        nrow = k,
+        ncol = 1,
+        free = FALSE,
+        values = nu_values,
+        byrow = FALSE,
+        name = "nu"
+      )
     )
   }
-  out
+  nu
 }
