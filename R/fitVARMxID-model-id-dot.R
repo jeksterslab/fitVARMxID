@@ -13,7 +13,22 @@
                                sigma0,
                                covariate,
                                sigma) {
+  parameter_vec <- .FitVARMxParameterVec(
+    mean_str = mean_str,
+    beta = beta,
+    nu = nu,
+    psi = psi,
+    theta = theta,
+    mu0 = mu0,
+    sigma0 = sigma0
+  )
   if (ct) {
+    model <- paste0(
+      "CTVAR",
+      "_",
+      "ID",
+      id
+    )
     time <- OpenMx::mxMatrix(
       "Full",
       nrow = 1,
@@ -35,10 +50,23 @@
       x0 = "x0",
       P0 = "P0",
       u = "covariate",
-      t = time,
+      t = "time",
       dimnames = observed
     )
   } else {
+    model <- paste0(
+      "DTVAR",
+      "_",
+      "ID",
+      id
+    )
+    time <- OpenMx::mxMatrix(
+      "Full",
+      nrow = 1,
+      ncol = 1,
+      free = FALSE,
+      name = "time"
+    )
     expectation <- OpenMx::mxExpectationStateSpace(
       A = "A",
       B = "B",
@@ -52,22 +80,8 @@
       dimnames = observed
     )
   }
-  parameter_vec <- .FitVARMxParameterVec(
-    mean_str = mean_str,
-    beta = beta,
-    nu = nu,
-    psi = psi,
-    theta = theta,
-    mu0 = mu0,
-    sigma0 = sigma0
-  )
   OpenMx::mxModel(
-    model = paste0(
-      "VAR",
-      "_",
-      "ID",
-      id
-    ),
+    model = model,
     beta,
     mean_str,
     lambda,
@@ -80,6 +94,7 @@
     sigma,
     parameter_vec,
     expectation,
+    time,
     OpenMx::mxFitFunctionML(),
     OpenMx::mxData(
       observed = data,
