@@ -41,9 +41,9 @@ $`\boldsymbol{\eta}_{i, t}`$ is a vector of latent variables at time
 $`t`$ and individual $`i`$, and $`\boldsymbol{\eta}_{i, t - 1}`$
 represents a vector of latent variables at time $`t - 1`$ and individual
 $`i`$. $`\boldsymbol{\alpha}`$ denotes a vector of intercepts,
-$`\boldsymbol{\beta}`$ a matrix of autoregression and cross regression
-coefficients, and $`\boldsymbol{\Psi}`$ the covariance matrix of the
-random fluctuations.
+$`\boldsymbol{\beta}`$ a matrix of auto and cross effect coefficients,
+and $`\boldsymbol{\Psi}`$ the covariance matrix of the random
+fluctuations.
 
 ## Data Generation
 
