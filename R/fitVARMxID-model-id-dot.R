@@ -30,7 +30,7 @@
       id
     )
     time <- OpenMx::mxMatrix(
-      "Full",
+      type = "Full",
       nrow = 1,
       ncol = 1,
       free = FALSE,
@@ -61,7 +61,7 @@
       id
     )
     time <- OpenMx::mxMatrix(
-      "Full",
+      type = "Full",
       nrow = 1,
       ncol = 1,
       free = FALSE,

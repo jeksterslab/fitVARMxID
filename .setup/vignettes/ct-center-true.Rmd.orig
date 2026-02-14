@@ -138,8 +138,8 @@ at time $t - 1$ and individual $i$.
 $\boldsymbol{\mu}$
 denotes a vector of set-points,
 $\boldsymbol{\beta}$
-a matrix of autoregression
-and cross regression coefficients,
+a matrix of auto
+and cross effect coefficients,
 and
 $\boldsymbol{\Psi}$
 the covariance matrix of the random fluctuations.

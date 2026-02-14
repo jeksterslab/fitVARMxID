@@ -10,6 +10,13 @@
       times = k
     )
   }
+  if (is.null(sigma0_l_values)) {
+    sigma0_l_values <- matrix(
+      data = 0,
+      nrow = k,
+      ncol = k
+    )
+  }
   .MxHelperSigmaFromLDLMxMatrix(
     p = k,
     name = "sigma0",
@@ -24,7 +31,7 @@
     d_cols = "sigma0_d",
     d_equal = FALSE,
     l_free = matrix(data = FALSE, nrow = k, ncol = k),
-    l_values = matrix(data = 0, nrow = k, ncol = k),
+    l_values = sigma0_l_values,
     l_lbound = rep(x = NA, times = k),
     l_ubound = rep(x = NA, times = k),
     l_rows = statenames,

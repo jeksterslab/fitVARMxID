@@ -42,7 +42,7 @@
   }
   sigma_mat <- list(
     sigma_mat = OpenMx::mxMatrix(
-      "Full",
+      type = "Full",
       nrow = k,
       ncol = k,
       labels = paste0(

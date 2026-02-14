@@ -24,14 +24,14 @@ lapply(
       theta_d_ubound = NULL,
       theta_d_equal = FALSE
     )
-    theta_name <- theta[[1]]@name
-    theta_values <- theta[[1]]@values
+    theta_name <- theta$theta@name
+    theta_values <- theta$theta@values
     testthat::test_that(
       paste(text, "class"),
       {
         testthat::skip_on_cran()
         testthat::expect_true(
-          class(theta[[1]]) == "ZeroMatrix"
+          class(theta$theta) == "ZeroMatrix"
         )
       }
     )
