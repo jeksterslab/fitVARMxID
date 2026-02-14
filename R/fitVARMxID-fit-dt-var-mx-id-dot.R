@@ -1,8 +1,8 @@
 .FitVARMxID <- function(data,
                         observed,
                         id,
-                        ct,
                         time,
+                        ct,
                         center,
                         mu_fixed,
                         mu_free,
@@ -89,8 +89,8 @@
     data = data,
     observed = observed,
     id = id,
-    ct = ct,
     time = time,
+    ct = ct,
     center = center,
     mu_fixed = mu_fixed,
     mu_free = mu_free,
@@ -276,5 +276,5 @@
   if (clean) {
     unlink(model)
   }
-  fit
+  fit  
 }
