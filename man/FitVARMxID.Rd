@@ -8,8 +8,8 @@ FitVARMxID(
   data,
   observed,
   id,
-  ct = FALSE,
   time = NULL,
+  ct = FALSE,
   center = TRUE,
   mu_fixed = FALSE,
   mu_free = NULL,
@@ -69,8 +69,8 @@ FitVARMxID(
   sigma0_l_lbound = NULL,
   sigma0_l_ubound = NULL,
   robust = FALSE,
-  tries_explore = 100,
-  tries_local = 10,
+  tries_explore = 1000,
+  tries_local = 100,
   max_attempts = 10,
   grad_tol = 0.01,
   hess_tol = 1e-08,
@@ -100,13 +100,13 @@ of the names of the observed variables in the data.}
 \item{id}{Character string.
 A character string of the name of the ID variable in the data.}
 
-\item{ct}{Logical.
-If TRUE, fit a continuous-time vector autoregressive model.
-If FALSE, fit a discrete-time vector autoregressive model.}
-
 \item{time}{Character string.
 A character string of the name of the TIME variable in the data.
 Used when \code{ct = TRUE}.}
+
+\item{ct}{Logical.
+If TRUE, fit a continuous-time vector autoregressive model.
+If FALSE, fit a discrete-time vector autoregressive model.}
 
 \item{center}{Logical.
 If TRUE, use the mean-centered (mean-reverting) state equation.

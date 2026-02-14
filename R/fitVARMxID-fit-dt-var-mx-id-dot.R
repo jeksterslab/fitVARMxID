@@ -276,5 +276,5 @@
   if (clean) {
     unlink(model)
   }
-  fit  
+  fit
 }
