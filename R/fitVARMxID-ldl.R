@@ -6,76 +6,67 @@
 #' where \eqn{L} is unit lower-triangular (ones on the diagonal)
 #' and \eqn{D} is diagonal.
 #'
-#' @param x Numeric matrix. Must be symmetric positive-definite.
+#' @param x Numeric matrix.
+#'   Must be symmetric positive-definite.
+#' @param epsilon Numeric.
+#'   Small positive value used to replace zero diagonal entries.
+#' @param s_l Matrix.
+#'   Strictly lower-triangular part of \eqn{L}.
+#' @param uc_d Vector.
+#'   Unconstrained vector with \eqn{log1p(exp(uc\_d)) = d}.
 #'
 #' @details
-#' This function returns both the unit lower-triangular factor \eqn{L}
+#' `LDL()` returns both the unit lower-triangular factor \eqn{L}
 #' and the diagonal factor \eqn{D}.
 #' The strictly lower-triangular part of \eqn{L} is also provided
 #' for convenience. The function additionally computes an unconstrained
-#' vector `d_uc` such that `softplus(d_uc) = d_vec`, using
+#' vector `uc_d` such that `softplus(uc_d) = d`, using
 #' \eqn{\mathrm{softplus}^{-1}(y) = \log(\exp(y) - 1)} for stable
 #' back-transformation.
+#' `InvLDL()` returns a symmetric positive definite matrix
+#' from the strictly lower-triangular part of \eqn{L}
+#' and the unconstrained vector `uc_d`.
 #'
-#' @returns A list with components:
-#' \item{l_mat_unit}{Unit lower-triangular matrix \eqn{L}.}
-#' \item{l_mat_strict}{Strictly lower-triangular part of \eqn{L}.}
-#' \item{d_mat}{Diagonal matrix \eqn{D}.}
-#' \item{d_vec}{Vector of diagonal entries of \eqn{D}.}
-#' \item{d_uc}{Unconstrained vector with
-#'   \eqn{\mathrm{softplus}(d\_uc) = d\_vec}.}
-#' \item{x}{Original input matrix.}
-#' \item{y}{Reconstructed matrix \eqn{L D L^\top}.}
-#' \item{diff}{Difference `x - y`.}
+#' @return
+#' - `LDL()`: a list with components:
+#'    - `l`: a unit lower-triangular matrix \eqn{L}
+#'    - `s_l`: a strictly lower-triangular part of \eqn{L}
+#'    - `d`: a vector of diagonal entries of \eqn{D}
+#'    - `uc_d`: unconstrained vector with
+#'       \eqn{\mathrm{softplus}(uc\_d) = d}
+#'    - `x`: input matrix
+#' - `InvLDL()`: a symmetric positive definite matrix
 #'
 #' @examples
 #' set.seed(123)
-#' A <- matrix(rnorm(16), 4, 4)
-#' S <- crossprod(A) + diag(1e-6, 4) # SPD
-#' out <- LDL(S)
-#' max(abs(out$diff))
+#' x <- crossprod(matrix(rnorm(16), 4, 4)) + diag(1e-6, 4)
+#' ldl <- LDL(x = x)
+#' ldl
+#' inv_ldl <- InvLDL(s_l = ldl$s_l, uc_d = ldl$uc_d)
+#' inv_ldl
+#' max(abs(x - inv_ldl))
 #'
 #' @family VAR Functions
 #' @keywords fitVARMxID misc
+#' @name LDL
+NULL
+
+#' @rdname LDL
 #' @export
-LDL <- function(x) {
-  k <- nrow(x)
-  l_mat_unit <- diag(1, k)
-  d_vec <- numeric(k)
-  for (i in seq_len(k)) {
-    # compute d_mat[i]
-    if (i == 1) {
-      d_vec[i] <- x[i, i]
-    } else {
-      s <- 0.0
-      for (p in seq_len(i - 1)) {
-        s <- s + l_mat_unit[i, p] * l_mat_unit[i, p] * d_vec[p]
-      }
-      d_vec[i] <- x[i, i] - s
-    }
-    if (i < k) {
-      for (j in (i + 1):k) {
-        s <- 0.0
-        if (i > 1) {
-          for (p in seq_len(i - 1)) {
-            s <- s + l_mat_unit[j, p] * l_mat_unit[i, p] * d_vec[p]
-          }
-        }
-        l_mat_unit[j, i] <- (x[j, i] - s) / d_vec[i]
-      }
-    }
-  }
-  d_mat <- diag(d_vec)
-  l_mat_strict <- l_mat_unit - diag(1, k)
-  out <- list(
-    l_mat_unit = l_mat_unit,
-    l_mat_strict = l_mat_strict,
-    d_mat = d_mat,
-    d_vec = d_vec,
-    d_uc = log(expm1(d_vec)),
+LDL <- function(x,
+                epsilon = 1e-10) {
+  .MxHelperLDL(
     x = x,
-    y = l_mat_unit %*% d_mat %*% t(l_mat_unit)
+    epsilon = epsilon
   )
-  out$diff <- out$x - out$y
-  out
+}
+
+#' @rdname LDL
+#' @export
+InvLDL <- function(s_l,
+                   uc_d) {
+  .MxHelperInvLDL(
+    s_l = s_l,
+    uc_d = uc_d
+  )
 }

@@ -10,14 +10,14 @@
         name = "sigma_iden"
       )
     )
-    sigma_vector <- list(
-      sigma_vector = OpenMx::mxAlgebraFromString(
+    sigma_column <- list(
+      sigma_column = OpenMx::mxAlgebraFromString(
         algString = paste0(
           "solve(beta %x% sigma_iden + sigma_iden %x% beta)",
           " %*% ",
           "-cvectorize(psi)"
         ),
-        name = "sigma_vector"
+        name = "sigma_column"
       )
     )
   } else {
@@ -29,14 +29,14 @@
         name = "sigma_iden"
       )
     )
-    sigma_vector <- list(
-      sigma_vector = OpenMx::mxAlgebraFromString(
+    sigma_column <- list(
+      sigma_column = OpenMx::mxAlgebraFromString(
         algString = paste0(
           "solve(sigma_iden - beta %x% beta)",
           " %*% ",
           "cvectorize(psi)"
         ),
-        name = "sigma_vector"
+        name = "sigma_column"
       )
     )
   }
@@ -46,7 +46,7 @@
       nrow = k,
       ncol = k,
       labels = paste0(
-        "sigma_vector[",
+        "sigma_column[",
         1:(k * k),
         ",",
         1,
@@ -74,7 +74,7 @@
   c(
     sigma,
     sigma_iden,
-    sigma_vector,
+    sigma_column,
     sigma_mat
   )
 }

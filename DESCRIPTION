@@ -20,10 +20,10 @@ Depends:
     OpenMx (>= 2.22.10)
 Imports:
     stats,
-    methods
+    methods,
+    simStateSpace (>= 1.2.14)
 Suggests:
     knitr,
     rmarkdown,
-    testthat,
-    simStateSpace (>= 1.2.14)
+    testthat
 RoxygenNote: 7.3.3.9000

@@ -6,6 +6,7 @@
       nrow = p,
       ncol = p
     )
+    diag(val) <- 0.001
   } else {
     if (is.vector(val)) {
       val <- matrix(

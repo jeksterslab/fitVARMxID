@@ -22,6 +22,11 @@ lapply(
       time <- 1000
       tol <- 1.00
     }
+    Sys.setenv(
+      OMP_NUM_THREADS = "1",
+      MKL_NUM_THREADS = "1",
+      OPENBLAS_NUM_THREADS = "1"
+    )
     k <- 2
     alpha <- stats::runif(n = k)
     beta <- 0.90 * diag(k)

@@ -12,15 +12,15 @@ lapply(
     }
     set.seed(42)
     testthat::test_that(
-      paste(text, "d_uc softplus-transforms back to d_vec"),
+      paste(text, "uc_d softplus-transforms back to d"),
       {
         testthat::skip_on_cran()
         A <- matrix(rnorm(9), 3, 3)
         X <- crossprod(A) + diag(1e-6, 3)
         out <- LDL(X)
         testthat::expect_equal(
-          Softplus(out$d_uc),
-          out$d_vec,
+          Softplus(out$uc_d),
+          out$d,
           tolerance = 1e-10
         )
       }

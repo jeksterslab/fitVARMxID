@@ -1,6 +1,5 @@
 .FitVARMxIDAlpha <- function(k,
                              statenames,
-                             center,
                              alpha_fixed,
                              alpha_free,
                              alpha_values,
@@ -9,41 +8,37 @@
                              ct) {
   # B
   # latent variables on covariates
+  m <- k
+  n <- 1
+  free_val <- alpha_free
+  values <- alpha_values
+  lbound_val <- alpha_lbound
+  ubound_val <- alpha_ubound
+  vec <- TRUE
+  row <- statenames
+  col <- "alpha"
+  name <- "alpha"
   if (alpha_fixed) {
-    alpha <- .FitVARMxIDAlphaFixed(
-      k = k,
-      alpha_values = alpha_values
+    alpha <- .MxHelperFullFixed(
+      m = m,
+      n = n,
+      values = values,
+      row = row,
+      col = col,
+      name = name
     )
   } else {
-    alpha_values <- tryCatch(
-      {
-        .MxHelperDTVARAlphaValues(
-          p = k,
-          val = alpha_values
-        )
-      },
-      error = function(e) {
-        # nocov start
-        stop("Error in `alpha_values`: ", e$message)
-        # nocov end
-      },
-      warning = function(w) {
-        # nocov start
-        stop("Warning in `alpha_values`: ", w$message)
-        # nocov end
-      }
-    )
     alpha <- .MxHelperFullMxMatrix(
-      m = k,
-      n = 1,
-      free_val = alpha_free,
-      values = alpha_values,
-      lbound_val = alpha_lbound,
-      ubound_val = alpha_ubound,
-      vec = TRUE,
-      row = statenames,
-      col = 1,
-      name = "alpha"
+      m = m,
+      n = n,
+      free_val = free_val,
+      values = values,
+      lbound_val = lbound_val,
+      ubound_val = ubound_val,
+      vec = vec,
+      row = row,
+      col = col,
+      name = name
     )
   }
   alpha_iden <- list(

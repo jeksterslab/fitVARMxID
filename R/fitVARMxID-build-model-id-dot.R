@@ -20,10 +20,12 @@
                                     beta_lbound,
                                     beta_ubound,
                                     psi_diag,
+                                    psi_fixed,
                                     psi_d_free,
                                     psi_d_values,
                                     psi_d_lbound,
                                     psi_d_ubound,
+                                    psi_d_equal,
                                     psi_l_free,
                                     psi_l_values,
                                     psi_l_lbound,
@@ -57,6 +59,7 @@
                                     sigma0_d_values,
                                     sigma0_d_lbound,
                                     sigma0_d_ubound,
+                                    sigma0_d_equal,
                                     sigma0_l_free,
                                     sigma0_l_values,
                                     sigma0_l_lbound,
@@ -100,7 +103,7 @@
   if (center) {
     if (!mu_fixed && !nu_fixed) {
       stop(
-        "`mu` and `nu` cannot be modeled at the same time at the moment."
+        "\n`mu` and `nu` cannot be modeled at the same time at the moment."
       )
     }
     if (!is.list(mu_values)) {
@@ -124,7 +127,7 @@
   } else {
     if (!alpha_fixed && !nu_fixed) {
       stop(
-        "`alpha` and `nu` cannot be modeled at the same time at the moment."
+        "\n`alpha` and `nu` cannot be modeled at the same time at the moment."
       )
     }
     if (!is.list(alpha_values)) {
@@ -188,10 +191,12 @@
         k = k,
         statenames = statenames,
         psi_diag = psi_diag,
+        psi_fixed = psi_fixed,
         psi_d_free = psi_d_free,
         psi_d_values = psi_d_values,
         psi_d_lbound = psi_d_lbound,
         psi_d_ubound = psi_d_ubound,
+        psi_d_equal = psi_d_equal,
         psi_l_free = psi_l_free,
         psi_l_values = psi_l_values,
         psi_l_lbound = psi_l_lbound,
@@ -256,13 +261,14 @@
       .FitVARMxIDSigma0(
         k = k,
         statenames = statenames,
+        sigma0_diag = sigma0_diag,
         sigma0_fixed = sigma0_fixed,
         sigma0_func = sigma0_func,
-        sigma0_diag = sigma0_diag,
         sigma0_d_free = sigma0_d_free,
         sigma0_d_values = sigma0_d_values,
         sigma0_d_lbound = sigma0_d_lbound,
         sigma0_d_ubound = sigma0_d_ubound,
+        sigma0_d_equal = sigma0_d_equal,
         sigma0_l_free = sigma0_l_free,
         sigma0_l_values = sigma0_l_values,
         sigma0_l_lbound = sigma0_l_lbound,
