@@ -32,9 +32,11 @@
     # ---- 1) Wide exploration (no Hessian) ----
     if (!silent) {
       if (interactive()) {
+        # nocov start
         cat(
           "\nStarting initial wide exploration...\n"
         )
+        # nocov end
       }
     }
     fit <- OpenMx::mxTryHardWideSearch(
@@ -53,9 +55,11 @@
     )
     if (!silent) {
       if (interactive()) {
+        # nocov start
         cat(
           "\nStarting Hessian computation...\n"
         )
+        # nocov end
       }
     }
     attempt <- 1L
