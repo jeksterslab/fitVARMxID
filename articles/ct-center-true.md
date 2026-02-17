@@ -196,7 +196,7 @@ theta
 
 ### Using the `SimSSMLinSDEFixed` Function from the `simStateSpace` Package to Simulate Data
 
-> \[!Note\] The `SimSSMLinSDEFixed` function uses a different set of
+> \[!NOTE\] The `SimSSMLinSDEFixed` function uses a different set of
 > parameter names. See
 > [`help(SimSSMLinSDEFixed)`](https://github.com/jeksterslab/simStateSpace/reference/SimSSMLinSDEFixed.html)
 > for more details.
@@ -278,6 +278,8 @@ summary(fit, means = TRUE)
 #> Call:
 #> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
 #>     time = "time", ct = TRUE, center = TRUE, ncores = parallel::detectCores())
+#> 
+#> Convergence: 100.0%
 #> 
 #> Means of the estimated paramaters per individual.
 #>   mu[1,1]   mu[2,1]   mu[3,1] beta[1,1] beta[2,1] beta[3,1] beta[1,2] beta[2,2] 

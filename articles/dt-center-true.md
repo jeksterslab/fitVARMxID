@@ -283,6 +283,8 @@ summary(fit, means = TRUE)
 #> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
 #>     center = TRUE, ncores = parallel::detectCores())
 #> 
+#> Convergence: 100.0%
+#> 
 #> Means of the estimated paramaters per individual.
 #>   mu[1,1]   mu[2,1]   mu[3,1] beta[1,1] beta[2,1] beta[3,1] beta[1,2] beta[2,2] 
 #>    3.0548    6.1622    4.8943    0.7001    0.4990   -0.0991   -0.0022    0.5998 

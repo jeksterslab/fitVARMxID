@@ -145,13 +145,11 @@ FitVARMxID(
 
 - mu_lbound:
 
-  Numeric vector of lower bounds for `mu`. If `NULL`, no lower bounds
-  are set. Ignored if `mu_fixed = TRUE`.
+  Numeric vector of lower bounds for `mu`. Ignored if `mu_fixed = TRUE`.
 
 - mu_ubound:
 
-  Numeric vector of upper bounds for `mu`. If `NULL`, no upper bounds
-  are set. Ignored if `mu_fixed = TRUE`.
+  Numeric vector of upper bounds for `mu`. Ignored if `mu_fixed = TRUE`.
 
 - alpha_fixed:
 
@@ -172,13 +170,13 @@ FitVARMxID(
 
 - alpha_lbound:
 
-  Numeric vector of lower bounds for `alpha`. If `NULL`, no lower bounds
-  are set. Ignored if `alpha_fixed = TRUE`.
+  Numeric vector of lower bounds for `alpha`. Ignored if
+  `alpha_fixed = TRUE`.
 
 - alpha_ubound:
 
-  Numeric vector of upper bounds for `alpha`. If `NULL`, no upper bounds
-  are set. Ignored if `alpha_fixed = TRUE`.
+  Numeric vector of upper bounds for `alpha`. Ignored if
+  `alpha_fixed = TRUE`.
 
 - beta_fixed:
 
@@ -232,13 +230,11 @@ FitVARMxID(
 
 - psi_d_lbound:
 
-  Numeric vector with lower bounds for `psi_d`. If `NULL`, no lower
-  bounds are set.
+  Numeric vector with lower bounds for `psi_d`.
 
 - psi_d_ubound:
 
-  Numeric vector with upper bounds for `psi_d`. If `NULL`, no upper
-  bounds are set.
+  Numeric vector with upper bounds for `psi_d`.
 
 - psi_d_equal:
 
@@ -255,17 +251,15 @@ FitVARMxID(
 - psi_l_values:
 
   Numeric matrix of starting values for the strictly-lower-triangular
-  elements of `psi_l`. If `NULL`, defaults to a null matrix.
+  elements of `psi_l`.
 
 - psi_l_lbound:
 
-  Numeric matrix with lower bounds for `psi_l`. If `NULL`, no lower
-  bounds are set.
+  Numeric matrix with lower bounds for `psi_l`.
 
 - psi_l_ubound:
 
-  Numeric matrix with upper bounds for `psi_l`. If `NULL`, no upper
-  bounds are set.
+  Numeric matrix with upper bounds for `psi_l`.
 
 - nu_fixed:
 
@@ -285,13 +279,11 @@ FitVARMxID(
 
 - nu_lbound:
 
-  Numeric vector of lower bounds for `nu`. If `NULL`, no lower bounds
-  are set. Ignored if `nu_fixed = TRUE`.
+  Numeric vector of lower bounds for `nu`. Ignored if `nu_fixed = TRUE`.
 
 - nu_ubound:
 
-  Numeric vector of upper bounds for `nu`. If `NULL`, no upper bounds
-  are set. Ignored if `nu_fixed = TRUE`.
+  Numeric vector of upper bounds for `nu`. Ignored if `nu_fixed = TRUE`.
 
 - theta_diag:
 
@@ -318,13 +310,11 @@ FitVARMxID(
 
 - theta_d_lbound:
 
-  Numeric vector with lower bounds for `theta_d`. If `NULL`, no lower
-  bounds are set.
+  Numeric vector with lower bounds for `theta_d`.
 
 - theta_d_ubound:
 
-  Numeric vector with upper bounds for `theta_d`. If `NULL`, no upper
-  bounds are set.
+  Numeric vector with upper bounds for `theta_d`.
 
 - theta_d_equal:
 
@@ -341,17 +331,15 @@ FitVARMxID(
 - theta_l_values:
 
   Numeric matrix of starting values for the strictly-lower-triangular
-  elements of `theta_l`. If `NULL`, defaults to a null matrix.
+  elements of `theta_l`.
 
 - theta_l_lbound:
 
-  Numeric matrix with lower bounds for `theta_l`. If `NULL`, no lower
-  bounds are set.
+  Numeric matrix with lower bounds for `theta_l`.
 
 - theta_l_ubound:
 
-  Numeric matrix with upper bounds for `theta_l`. If `NULL`, no upper
-  bounds are set.
+  Numeric matrix with upper bounds for `theta_l`.
 
 - mu0_fixed:
 
@@ -380,13 +368,13 @@ FitVARMxID(
 
 - mu0_lbound:
 
-  Numeric vector of lower bounds for `mu0`. If `NULL`, no lower bounds
-  are set. Ignored if `mu0_fixed = TRUE`.
+  Numeric vector of lower bounds for `mu0`. Ignored if
+  `mu0_fixed = TRUE`.
 
 - mu0_ubound:
 
-  Numeric vector of upper bounds for `mu0`. If `NULL`, no upper bounds
-  are set. Ignored if `mu0_fixed = TRUE`.
+  Numeric vector of upper bounds for `mu0`. Ignored if
+  `mu0_fixed = TRUE`.
 
 - sigma0_fixed:
 
@@ -419,13 +407,11 @@ FitVARMxID(
 
 - sigma0_d_lbound:
 
-  Numeric vector with lower bounds for `sigma0_d`. If `NULL`, no lower
-  bounds are set.
+  Numeric vector with lower bounds for `sigma0_d`.
 
 - sigma0_d_ubound:
 
-  Numeric vector with upper bounds for `sigma0_d`. If `NULL`, no upper
-  bounds are set.
+  Numeric vector with upper bounds for `sigma0_d`.
 
 - sigma0_d_equal:
 
@@ -442,17 +428,15 @@ FitVARMxID(
 - sigma0_l_values:
 
   Numeric matrix of starting values for the strictly-lower-triangular
-  elements of `sigma0_l`. If `NULL`, defaults to a null matrix.
+  elements of `sigma0_l`.
 
 - sigma0_l_lbound:
 
-  Numeric matrix with lower bounds for `sigma0_l`. If `NULL`, no lower
-  bounds are set.
+  Numeric matrix with lower bounds for `sigma0_l`.
 
 - sigma0_l_ubound:
 
-  Numeric matrix with upper bounds for `sigma0_l`. If `NULL`, no upper
-  bounds are set.
+  Numeric matrix with upper bounds for `sigma0_l`.
 
 - robust:
 
@@ -1977,6 +1961,8 @@ if (requireNamespace("simStateSpace")) {
 #> Call:
 #> FitVARMxID(data = data, observed = paste0("y", seq_len(k)), id = "id", 
 #>     center = TRUE)
+#> 
+#> Convergence: 60.0%
 #> 
 #> Estimated paramaters per individual.
 #>                          mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2]
@@ -5073,6 +5059,8 @@ if (requireNamespace("simStateSpace")) {
 #> Call:
 #> FitVARMxID(data = data, observed = paste0("y", seq_len(k)), id = "id", 
 #>     center = FALSE)
+#> 
+#> Convergence: 20.0%
 #> 
 #> Estimated paramaters per individual.
 #>                          alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2]

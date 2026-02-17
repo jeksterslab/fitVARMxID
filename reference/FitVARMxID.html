@@ -201,13 +201,11 @@ If <code>NULL</code>, defaults to a vector of zeros.</p></dd>
 
 <dt id="arg-mu-lbound">mu_lbound<a class="anchor" aria-label="anchor" href="#arg-mu-lbound"></a></dt>
 <dd><p>Numeric vector of lower bounds for <code>mu</code>.
-If <code>NULL</code>, no lower bounds are set.
 Ignored if <code>mu_fixed = TRUE</code>.</p></dd>
 
 
 <dt id="arg-mu-ubound">mu_ubound<a class="anchor" aria-label="anchor" href="#arg-mu-ubound"></a></dt>
 <dd><p>Numeric vector of upper bounds for <code>mu</code>.
-If <code>NULL</code>, no upper bounds are set.
 Ignored if <code>mu_fixed = TRUE</code>.</p></dd>
 
 
@@ -235,13 +233,11 @@ If <code>NULL</code>, defaults to a vector of zeros.</p></dd>
 
 <dt id="arg-alpha-lbound">alpha_lbound<a class="anchor" aria-label="anchor" href="#arg-alpha-lbound"></a></dt>
 <dd><p>Numeric vector of lower bounds for <code>alpha</code>.
-If <code>NULL</code>, no lower bounds are set.
 Ignored if <code>alpha_fixed = TRUE</code>.</p></dd>
 
 
 <dt id="arg-alpha-ubound">alpha_ubound<a class="anchor" aria-label="anchor" href="#arg-alpha-ubound"></a></dt>
 <dd><p>Numeric vector of upper bounds for <code>alpha</code>.
-If <code>NULL</code>, no upper bounds are set.
 Ignored if <code>alpha_fixed = TRUE</code>.</p></dd>
 
 
@@ -311,14 +307,12 @@ If <code>psi_fixed = FALSE</code>, these are starting values.</p></dd>
 
 <dt id="arg-psi-d-lbound">psi_d_lbound<a class="anchor" aria-label="anchor" href="#arg-psi-d-lbound"></a></dt>
 <dd><p>Numeric vector
-with lower bounds for <code>psi_d</code>.
-If <code>NULL</code>, no lower bounds are set.</p></dd>
+with lower bounds for <code>psi_d</code>.</p></dd>
 
 
 <dt id="arg-psi-d-ubound">psi_d_ubound<a class="anchor" aria-label="anchor" href="#arg-psi-d-ubound"></a></dt>
 <dd><p>Numeric vector
-with upper bounds for <code>psi_d</code>.
-If <code>NULL</code>, no upper bounds are set.</p></dd>
+with upper bounds for <code>psi_d</code>.</p></dd>
 
 
 <dt id="arg-psi-d-equal">psi_d_equal<a class="anchor" aria-label="anchor" href="#arg-psi-d-equal"></a></dt>
@@ -337,20 +331,18 @@ Ignored if <code>psi_diag = TRUE</code>.</p></dd>
 
 <dt id="arg-psi-l-values">psi_l_values<a class="anchor" aria-label="anchor" href="#arg-psi-l-values"></a></dt>
 <dd><p>Numeric matrix
-of starting values for the strictly-lower-triangular elements of <code>psi_l</code>.
-If <code>NULL</code>, defaults to a null matrix.</p></dd>
+of starting values
+for the strictly-lower-triangular elements of <code>psi_l</code>.</p></dd>
 
 
 <dt id="arg-psi-l-lbound">psi_l_lbound<a class="anchor" aria-label="anchor" href="#arg-psi-l-lbound"></a></dt>
 <dd><p>Numeric matrix
-with lower bounds for <code>psi_l</code>.
-If <code>NULL</code>, no lower bounds are set.</p></dd>
+with lower bounds for <code>psi_l</code>.</p></dd>
 
 
 <dt id="arg-psi-l-ubound">psi_l_ubound<a class="anchor" aria-label="anchor" href="#arg-psi-l-ubound"></a></dt>
 <dd><p>Numeric matrix
-with upper bounds for <code>psi_l</code>.
-If <code>NULL</code>, no upper bounds are set.</p></dd>
+with upper bounds for <code>psi_l</code>.</p></dd>
 
 
 <dt id="arg-nu-fixed">nu_fixed<a class="anchor" aria-label="anchor" href="#arg-nu-fixed"></a></dt>
@@ -377,13 +369,11 @@ If <code>NULL</code>, defaults to a vector of zeros.</p></dd>
 
 <dt id="arg-nu-lbound">nu_lbound<a class="anchor" aria-label="anchor" href="#arg-nu-lbound"></a></dt>
 <dd><p>Numeric vector of lower bounds for <code>nu</code>.
-If <code>NULL</code>, no lower bounds are set.
 Ignored if <code>nu_fixed = TRUE</code>.</p></dd>
 
 
 <dt id="arg-nu-ubound">nu_ubound<a class="anchor" aria-label="anchor" href="#arg-nu-ubound"></a></dt>
 <dd><p>Numeric vector of upper bounds for <code>nu</code>.
-If <code>NULL</code>, no upper bounds are set.
 Ignored if <code>nu_fixed = TRUE</code>.</p></dd>
 
 
@@ -416,14 +406,12 @@ If <code>theta_fixed = FALSE</code>, these are starting values.</p></dd>
 
 <dt id="arg-theta-d-lbound">theta_d_lbound<a class="anchor" aria-label="anchor" href="#arg-theta-d-lbound"></a></dt>
 <dd><p>Numeric vector
-with lower bounds for <code>theta_d</code>.
-If <code>NULL</code>, no lower bounds are set.</p></dd>
+with lower bounds for <code>theta_d</code>.</p></dd>
 
 
 <dt id="arg-theta-d-ubound">theta_d_ubound<a class="anchor" aria-label="anchor" href="#arg-theta-d-ubound"></a></dt>
 <dd><p>Numeric vector
-with upper bounds for <code>theta_d</code>.
-If <code>NULL</code>, no upper bounds are set.</p></dd>
+with upper bounds for <code>theta_d</code>.</p></dd>
 
 
 <dt id="arg-theta-d-equal">theta_d_equal<a class="anchor" aria-label="anchor" href="#arg-theta-d-equal"></a></dt>
@@ -442,20 +430,18 @@ Ignored if <code>theta_diag = TRUE</code>.</p></dd>
 
 <dt id="arg-theta-l-values">theta_l_values<a class="anchor" aria-label="anchor" href="#arg-theta-l-values"></a></dt>
 <dd><p>Numeric matrix
-of starting values for the strictly-lower-triangular elements of <code>theta_l</code>.
-If <code>NULL</code>, defaults to a null matrix.</p></dd>
+of starting values
+for the strictly-lower-triangular elements of <code>theta_l</code>.</p></dd>
 
 
 <dt id="arg-theta-l-lbound">theta_l_lbound<a class="anchor" aria-label="anchor" href="#arg-theta-l-lbound"></a></dt>
 <dd><p>Numeric matrix
-with lower bounds for <code>theta_l</code>.
-If <code>NULL</code>, no lower bounds are set.</p></dd>
+with lower bounds for <code>theta_l</code>.</p></dd>
 
 
 <dt id="arg-theta-l-ubound">theta_l_ubound<a class="anchor" aria-label="anchor" href="#arg-theta-l-ubound"></a></dt>
 <dd><p>Numeric matrix
-with upper bounds for <code>theta_l</code>.
-If <code>NULL</code>, no upper bounds are set.</p></dd>
+with upper bounds for <code>theta_l</code>.</p></dd>
 
 
 <dt id="arg-mu-fixed">mu0_fixed<a class="anchor" aria-label="anchor" href="#arg-mu-fixed"></a></dt>
@@ -490,13 +476,11 @@ Ignored if <code>mu0_fixed = TRUE</code> and <code>mu0_func = TRUE</code>.</p></
 
 <dt id="arg-mu-lbound">mu0_lbound<a class="anchor" aria-label="anchor" href="#arg-mu-lbound"></a></dt>
 <dd><p>Numeric vector of lower bounds for <code>mu0</code>.
-If <code>NULL</code>, no lower bounds are set.
 Ignored if <code>mu0_fixed = TRUE</code>.</p></dd>
 
 
 <dt id="arg-mu-ubound">mu0_ubound<a class="anchor" aria-label="anchor" href="#arg-mu-ubound"></a></dt>
 <dd><p>Numeric vector of upper bounds for <code>mu0</code>.
-If <code>NULL</code>, no upper bounds are set.
 Ignored if <code>mu0_fixed = TRUE</code>.</p></dd>
 
 
@@ -537,14 +521,12 @@ If <code>sigma0_fixed = FALSE</code>, these are starting values.</p></dd>
 
 <dt id="arg-sigma-d-lbound">sigma0_d_lbound<a class="anchor" aria-label="anchor" href="#arg-sigma-d-lbound"></a></dt>
 <dd><p>Numeric vector
-with lower bounds for <code>sigma0_d</code>.
-If <code>NULL</code>, no lower bounds are set.</p></dd>
+with lower bounds for <code>sigma0_d</code>.</p></dd>
 
 
 <dt id="arg-sigma-d-ubound">sigma0_d_ubound<a class="anchor" aria-label="anchor" href="#arg-sigma-d-ubound"></a></dt>
 <dd><p>Numeric vector
-with upper bounds for <code>sigma0_d</code>.
-If <code>NULL</code>, no upper bounds are set.</p></dd>
+with upper bounds for <code>sigma0_d</code>.</p></dd>
 
 
 <dt id="arg-sigma-d-equal">sigma0_d_equal<a class="anchor" aria-label="anchor" href="#arg-sigma-d-equal"></a></dt>
@@ -564,20 +546,17 @@ Ignored if <code>sigma0_diag = TRUE</code>.</p></dd>
 <dt id="arg-sigma-l-values">sigma0_l_values<a class="anchor" aria-label="anchor" href="#arg-sigma-l-values"></a></dt>
 <dd><p>Numeric matrix
 of starting values
-for the strictly-lower-triangular elements of <code>sigma0_l</code>.
-If <code>NULL</code>, defaults to a null matrix.</p></dd>
+for the strictly-lower-triangular elements of <code>sigma0_l</code>.</p></dd>
 
 
 <dt id="arg-sigma-l-lbound">sigma0_l_lbound<a class="anchor" aria-label="anchor" href="#arg-sigma-l-lbound"></a></dt>
 <dd><p>Numeric matrix
-with lower bounds for <code>sigma0_l</code>.
-If <code>NULL</code>, no lower bounds are set.</p></dd>
+with lower bounds for <code>sigma0_l</code>.</p></dd>
 
 
 <dt id="arg-sigma-l-ubound">sigma0_l_ubound<a class="anchor" aria-label="anchor" href="#arg-sigma-l-ubound"></a></dt>
 <dd><p>Numeric matrix
-with upper bounds for <code>sigma0_l</code>.
-If <code>NULL</code>, no upper bounds are set.</p></dd>
+with upper bounds for <code>sigma0_l</code>.</p></dd>
 
 
 <dt id="arg-robust">robust<a class="anchor" aria-label="anchor" href="#arg-robust"></a></dt>
@@ -2232,6 +2211,8 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FitVARMxID(data = data, observed = paste0("y", seq_len(k)), id = "id", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     center = TRUE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Convergence: 60.0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated paramaters per individual.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2]</span>
@@ -5328,6 +5309,8 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FitVARMxID(data = data, observed = paste0("y", seq_len(k)), id = "id", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     center = FALSE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Convergence: 20.0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated paramaters per individual.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2]</span>
