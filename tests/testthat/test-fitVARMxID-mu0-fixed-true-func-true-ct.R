@@ -42,7 +42,6 @@ lapply(
               mu0
             ) == c(
               "mu0",
-              "mu0_iden",
               "x0_mat"
             )
           )
@@ -85,50 +84,6 @@ lapply(
         testthat::expect_true(
           is.null(
             obj$ubound
-          )
-        )
-      }
-    )
-    testthat::test_that(
-      paste(text, "mu0_iden"),
-      {
-        testthat::skip_on_cran()
-        obj <- mu0$mu0_iden
-        testthat::expect_true(
-          class(
-            obj
-          ) == "IdenMatrix"
-        )
-        testthat::expect_true(
-          obj$name == "mu0_iden"
-        )
-        testthat::expect_true(
-          all(
-            obj$values == diag(k)
-          )
-        )
-        testthat::expect_true(
-          all(
-            is.na(
-              obj$labels
-            )
-          )
-        )
-        testthat::expect_true(
-          all(!obj$free)
-        )
-        testthat::expect_true(
-          all(
-            is.na(
-              obj$lbound
-            )
-          )
-        )
-        testthat::expect_true(
-          all(
-            is.na(
-              obj$ubound
-            )
           )
         )
       }

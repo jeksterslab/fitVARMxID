@@ -1,7 +1,7 @@
 ---
 title: "Continuous-Time Vector Autoregressive Model (center = TRUE)"
 author: "Ivan Jacob Agaloos Pesigan"
-date: "2026-02-16"
+date: "2026-02-17"
 bibliography: "vignettes.bib"
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 nocite: |
@@ -221,7 +221,7 @@ theta
 
 ### Using the `SimSSMLinSDEFixed` Function from the `simStateSpace` Package to Simulate Data
 
-> [!Note]
+> [!NOTE]
 > The `SimSSMLinSDEFixed` function uses a different set of parameter names.
 > See `help(SimSSMLinSDEFixed)` for more details.
 
@@ -304,6 +304,8 @@ summary(fit, means = TRUE)
 #> Call:
 #> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
 #>     time = "time", ct = TRUE, center = TRUE, ncores = parallel::detectCores())
+#> 
+#> Convergence: 100.0%
 #> 
 #> Means of the estimated paramaters per individual.
 #>   mu[1,1]   mu[2,1]   mu[3,1] beta[1,1] beta[2,1] beta[3,1] beta[1,2] beta[2,2] 

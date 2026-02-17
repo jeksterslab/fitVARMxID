@@ -263,28 +263,20 @@
 #'   If `NULL`, defaults to a vector of zeros.
 #'   Ignored if `mu0_fixed = TRUE` and `mu0_func = TRUE`.
 #' @param mu_lbound Numeric vector of lower bounds for `mu`.
-#'   If `NULL`, no lower bounds are set.
 #'   Ignored if `mu_fixed = TRUE`.
 #' @param alpha_lbound Numeric vector of lower bounds for `alpha`.
-#'   If `NULL`, no lower bounds are set.
 #'   Ignored if `alpha_fixed = TRUE`.
 #' @param nu_lbound Numeric vector of lower bounds for `nu`.
-#'   If `NULL`, no lower bounds are set.
 #'   Ignored if `nu_fixed = TRUE`.
 #' @param mu0_lbound Numeric vector of lower bounds for `mu0`.
-#'   If `NULL`, no lower bounds are set.
 #'   Ignored if `mu0_fixed = TRUE`.
 #' @param mu_ubound Numeric vector of upper bounds for `mu`.
-#'   If `NULL`, no upper bounds are set.
 #'   Ignored if `mu_fixed = TRUE`.
 #' @param alpha_ubound Numeric vector of upper bounds for `alpha`.
-#'   If `NULL`, no upper bounds are set.
 #'   Ignored if `alpha_fixed = TRUE`.
 #' @param nu_ubound Numeric vector of upper bounds for `nu`.
-#'   If `NULL`, no upper bounds are set.
 #'   Ignored if `nu_fixed = TRUE`.
 #' @param mu0_ubound Numeric vector of upper bounds for `mu0`.
-#'   If `NULL`, no upper bounds are set.
 #'   Ignored if `mu0_fixed = TRUE`.
 #' @param beta_fixed Logical.
 #'   If `TRUE`, the dynamic model coefficient matrix `beta` is fixed.
@@ -372,50 +364,37 @@
 #'   If `sigma0_fixed = FALSE`, these are starting values.
 #' @param psi_d_lbound Numeric vector
 #'   with lower bounds for `psi_d`.
-#'   If `NULL`, no lower bounds are set.
 #' @param theta_d_lbound Numeric vector
 #'   with lower bounds for `theta_d`.
-#'   If `NULL`, no lower bounds are set.
 #' @param sigma0_d_lbound Numeric vector
 #'   with lower bounds for `sigma0_d`.
-#'   If `NULL`, no lower bounds are set.
 #' @param psi_d_ubound Numeric vector
 #'   with upper bounds for `psi_d`.
-#'   If `NULL`, no upper bounds are set.
 #' @param theta_d_ubound Numeric vector
 #'   with upper bounds for `theta_d`.
-#'   If `NULL`, no upper bounds are set.
 #' @param sigma0_d_ubound Numeric vector
 #'   with upper bounds for `sigma0_d`.
-#'   If `NULL`, no upper bounds are set.
 #' @param psi_l_values Numeric matrix
-#'   of starting values for the strictly-lower-triangular elements of `psi_l`.
-#'   If `NULL`, defaults to a null matrix.
+#'   of starting values
+#'   for the strictly-lower-triangular elements of `psi_l`.
 #' @param theta_l_values Numeric matrix
-#'   of starting values for the strictly-lower-triangular elements of `theta_l`.
-#'   If `NULL`, defaults to a null matrix.
+#'   of starting values
+#'   for the strictly-lower-triangular elements of `theta_l`.
 #' @param sigma0_l_values Numeric matrix
 #'   of starting values
 #'   for the strictly-lower-triangular elements of `sigma0_l`.
-#'   If `NULL`, defaults to a null matrix.
 #' @param psi_l_lbound Numeric matrix
 #'   with lower bounds for `psi_l`.
-#'   If `NULL`, no lower bounds are set.
 #' @param theta_l_lbound Numeric matrix
 #'   with lower bounds for `theta_l`.
-#'   If `NULL`, no lower bounds are set.
 #' @param sigma0_l_lbound Numeric matrix
 #'   with lower bounds for `sigma0_l`.
-#'   If `NULL`, no lower bounds are set.
 #' @param psi_l_ubound Numeric matrix
 #'   with upper bounds for `psi_l`.
-#'   If `NULL`, no upper bounds are set.
 #' @param theta_l_ubound Numeric matrix
 #'   with upper bounds for `theta_l`.
-#'   If `NULL`, no upper bounds are set.
 #' @param sigma0_l_ubound Numeric matrix
 #'   with upper bounds for `sigma0_l`.
-#'   If `NULL`, no upper bounds are set.
 #' @param psi_d_equal Logical.
 #'   When `TRUE`, all free diagonal elements of `psi_d` are constrained
 #'   to be equal and estimated as a single shared parameter.

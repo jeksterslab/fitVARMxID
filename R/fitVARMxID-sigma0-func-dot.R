@@ -5,18 +5,10 @@
   # Initial condition covariance matrix
   # sigma0_values will be implied by the algebra
   if (ct) {
-    sigma0_iden_func <- list(
-      sigma0_iden_func = OpenMx::mxMatrix(
-        type = "Iden",
-        nrow = k,
-        ncol = k,
-        name = "sigma0_iden_func"
-      )
-    )
     sigma0_column <- list(
       sigma0_column = OpenMx::mxAlgebraFromString(
         algString = paste0(
-          "solve(beta %x% sigma0_iden_func + sigma0_iden_func %x% beta)",
+          "solve(beta %x% iden_k + iden_k %x% beta)",
           " %*% ",
           "-cvectorize(psi)"
         ),
@@ -24,18 +16,10 @@
       )
     )
   } else {
-    sigma0_iden_func <- list(
-      sigma0_iden_func = OpenMx::mxMatrix(
-        type = "Iden",
-        nrow = k * k,
-        ncol = k * k,
-        name = "sigma0_iden_func"
-      )
-    )
     sigma0_column <- list(
       sigma0_column = OpenMx::mxAlgebraFromString(
         algString = paste0(
-          "solve(sigma0_iden_func - beta %x% beta)",
+          "solve(iden_k_sqr - beta %x% beta)",
           " %*% ",
           "cvectorize(psi)"
         ),
@@ -76,7 +60,6 @@
   )
   c(
     sigma0,
-    sigma0_iden_func,
     sigma0_column,
     sigma0_mat
   )

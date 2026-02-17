@@ -275,7 +275,7 @@ plot(sim, type = "l")
 
 ### Using the `SimSSMLinSDEFixed` Function from the `simStateSpace` Package to Simulate Data
 
-> [!Note]
+> [!NOTE]
 > The `SimSSMLinSDEFixed` function uses a different set of parameter names.
 > See `help(SimSSMLinSDEFixed)` for more details.
 
