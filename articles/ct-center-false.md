@@ -193,7 +193,7 @@ theta
 
 ### Using the `SimSSMLinSDEFixed` Function from the `simStateSpace` Package to Simulate Data
 
-> \[!Note\] The `SimSSMLinSDEFixed` function uses a different set of
+> \[!NOTE\] The `SimSSMLinSDEFixed` function uses a different set of
 > parameter names. See
 > [`help(SimSSMLinSDEFixed)`](https://github.com/jeksterslab/simStateSpace/reference/SimSSMLinSDEFixed.html)
 > for more details.
