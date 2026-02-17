@@ -53,7 +53,9 @@ and \(D\) is diagonal.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">LDL</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">LDL</span><span class="op">(</span><span class="va">x</span>, epsilon <span class="op">=</span> <span class="fl">1e-10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">InvLDL</span><span class="op">(</span><span class="va">s_l</span>, <span class="va">uc_d</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -61,47 +63,49 @@ and \(D\) is diagonal.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Numeric matrix. Must be symmetric positive-definite.</p></dd>
+<dd><p>Numeric matrix.
+Must be symmetric positive-definite.</p></dd>
+
+
+<dt id="arg-epsilon">epsilon<a class="anchor" aria-label="anchor" href="#arg-epsilon"></a></dt>
+<dd><p>Numeric.
+Small positive value used to replace zero diagonal entries.</p></dd>
+
+
+<dt id="arg-s-l">s_l<a class="anchor" aria-label="anchor" href="#arg-s-l"></a></dt>
+<dd><p>Matrix.
+Strictly lower-triangular part of \(L\).</p></dd>
+
+
+<dt id="arg-uc-d">uc_d<a class="anchor" aria-label="anchor" href="#arg-uc-d"></a></dt>
+<dd><p>Vector.
+Unconstrained vector with \(log1p(exp(uc\_d)) = d\).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with components:</p>
-<dl><dt>l_mat_unit</dt>
-<dd><p>Unit lower-triangular matrix \(L\).</p></dd>
 
-<dt>l_mat_strict</dt>
-<dd><p>Strictly lower-triangular part of \(L\).</p></dd>
-
-<dt>d_mat</dt>
-<dd><p>Diagonal matrix \(D\).</p></dd>
-
-<dt>d_vec</dt>
-<dd><p>Vector of diagonal entries of \(D\).</p></dd>
-
-<dt>d_uc</dt>
-<dd><p>Unconstrained vector with
-\(\mathrm{softplus}(d\_uc) = d\_vec\).</p></dd>
-
-<dt>x</dt>
-<dd><p>Original input matrix.</p></dd>
-
-<dt>y</dt>
-<dd><p>Reconstructed matrix \(L D L^\top\).</p></dd>
-
-<dt>diff</dt>
-<dd><p>Difference <code>x - y</code>.</p></dd>
-
-</dl></div>
+<ul><li><p><code>LDL()</code>: a list with components:</p><ul><li><p><code>l</code>: a unit lower-triangular matrix \(L\)</p></li>
+<li><p><code>s_l</code>: a strictly lower-triangular part of \(L\)</p></li>
+<li><p><code>d</code>: a vector of diagonal entries of \(D\)</p></li>
+<li><p><code>uc_d</code>: unconstrained vector with
+\(\mathrm{softplus}(uc\_d) = d\)</p></li>
+<li><p><code>x</code>: input matrix</p></li>
+</ul></li>
+<li><p><code>InvLDL()</code>: a symmetric positive definite matrix</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function returns both the unit lower-triangular factor \(L\)
+    <p><code>LDL()</code> returns both the unit lower-triangular factor \(L\)
 and the diagonal factor \(D\).
 The strictly lower-triangular part of \(L\) is also provided
 for convenience. The function additionally computes an unconstrained
-vector <code>d_uc</code> such that <code>softplus(d_uc) = d_vec</code>, using
+vector <code>uc_d</code> such that <code>softplus(uc_d) = d</code>, using
 \(\mathrm{softplus}^{-1}(y) = \log(\exp(y) - 1)\) for stable
-back-transformation.</p>
+back-transformation.
+<code>InvLDL()</code> returns a symmetric positive definite matrix
+from the strictly lower-triangular part of \(L\)
+and the unconstrained vector <code>uc_d</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -113,10 +117,47 @@ back-transformation.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">1e-6</span>, <span class="fl">4</span><span class="op">)</span> <span class="co"># SPD</span></span></span>
-<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">LDL</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">diff</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">16</span><span class="op">)</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">1e-6</span>, <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ldl</span> <span class="op">&lt;-</span> <span class="fu">LDL</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ldl</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $l</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]     [,3] [,4]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0000000  0.0000000 0.000000    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.0578245  1.0000000 0.000000    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.8640960 -0.1856754 1.000000    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] -0.3535410 -0.4657727 1.945589    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $s_l</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]     [,3] [,4]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.0000000  0.0000000 0.000000    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.0578245  0.0000000 0.000000    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.8640960 -0.1856754 0.000000    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] -0.3535410 -0.4657727 1.945589    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.8016587 4.7616201 0.0421744 2.1320553</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $uc_d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  2.739028  4.753032 -3.144781  2.005819</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]       [,3]       [,4]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  2.8016587  0.1620045  2.4209020 -0.9905011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.1620045  4.7709879 -0.7441283 -2.2751078</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  2.4209020 -0.7441283  2.2982247 -0.3620371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] -0.9905011 -2.2751078 -0.3620371  3.6748873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $epsilon</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1e-10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">inv_ldl</span> <span class="op">&lt;-</span> <span class="fu">InvLDL</span><span class="op">(</span>s_l <span class="op">=</span> <span class="va">ldl</span><span class="op">$</span><span class="va">s_l</span>, uc_d <span class="op">=</span> <span class="va">ldl</span><span class="op">$</span><span class="va">uc_d</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">inv_ldl</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]       [,3]       [,4]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  2.8016587  0.1620045  2.4209020 -0.9905011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.1620045  4.7709879 -0.7441283 -2.2751078</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  2.4209020 -0.7441283  2.2982247 -0.3620371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] -0.9905011 -2.2751078 -0.3620371  3.6748873</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">inv_ldl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4.440892e-16</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

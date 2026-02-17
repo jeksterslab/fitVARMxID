@@ -5,6 +5,7 @@
 - [`FitVARMxID()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md)
   : Fit the First-Order Vector Autoregressive Model by ID
 - [`LDL()`](https://github.com/jeksterslab/fitVARMxID/reference/LDL.md)
+  [`InvLDL()`](https://github.com/jeksterslab/fitVARMxID/reference/LDL.md)
   : LDL' Decomposition of a Symmetric Positive-Definite Matrix
 - [`Softplus()`](https://github.com/jeksterslab/fitVARMxID/reference/Softplus.md)
   [`InvSoftplus()`](https://github.com/jeksterslab/fitVARMxID/reference/Softplus.md)

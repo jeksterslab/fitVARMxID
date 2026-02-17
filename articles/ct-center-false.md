@@ -274,7 +274,7 @@ fit <- FitVARMxID(
 summary(fit, means = TRUE)
 #> Call:
 #> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
-#>     ct = TRUE, time = "time", center = FALSE, ncores = parallel::detectCores())
+#>     time = "time", ct = TRUE, center = FALSE, ncores = parallel::detectCores())
 #> 
 #> Means of the estimated paramaters per individual.
 #> alpha[1,1] alpha[2,1] alpha[3,1]  beta[1,1]  beta[2,1]  beta[3,1]  beta[1,2] 
