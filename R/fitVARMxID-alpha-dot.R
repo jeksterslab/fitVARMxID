@@ -41,14 +41,6 @@
       name = name
     )
   }
-  alpha_iden <- list(
-    alpha_iden = OpenMx::mxMatrix(
-      type = "Iden",
-      nrow = k,
-      ncol = k,
-      name = "alpha_iden"
-    )
-  )
   b_mat <- list(
     b_mat = OpenMx::mxAlgebraFromString(
       algString = "alpha",
@@ -73,7 +65,7 @@
   } else {
     mu <- list(
       mu = OpenMx::mxAlgebraFromString(
-        algString = "solve(alpha_iden - beta) %*% alpha",
+        algString = "solve(iden_k - beta) %*% alpha",
         name = "mu",
         dimnames = list(
           statenames,
@@ -84,7 +76,6 @@
   }
   c(
     alpha,
-    alpha_iden,
     mu,
     b_mat
   )

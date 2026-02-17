@@ -5,14 +5,6 @@
   # initial condition
   # mean
   # alpha is specified as a covariate (gamma)
-  mu0_iden <- list(
-    mu0_iden = OpenMx::mxMatrix(
-      type = "Iden",
-      nrow = k,
-      ncol = k,
-      name = "mu0_iden"
-    )
-  )
   if (ct) {
     mu0 <- list(
       mu0 = OpenMx::mxAlgebraFromString(
@@ -27,7 +19,7 @@
   } else {
     mu0 <- list(
       mu0 = OpenMx::mxAlgebraFromString(
-        algString = "solve(mu0_iden - beta) %*% alpha",
+        algString = "solve(iden_k - beta) %*% alpha",
         name = "mu0",
         dimnames = list(
           statenames,
@@ -36,8 +28,5 @@
       )
     )
   }
-  c(
-    mu0,
-    mu0_iden
-  )
+  mu0
 }

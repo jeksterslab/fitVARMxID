@@ -39,7 +39,6 @@ lapply(
               sigma0
             ) == c(
               "sigma0",
-              "sigma0_iden_func",
               "sigma0_column",
               "sigma0_mat",
               "p0_mat"

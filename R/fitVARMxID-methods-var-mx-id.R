@@ -85,6 +85,14 @@ summary.varmxid <- function(object,
                             theta_tol = 0.001,
                             digits = 4,
                             ...) {
+  converged_prop <- converged.varmxid(
+    object = object,
+    grad_tol = grad_tol,
+    hess_tol = hess_tol,
+    vanishing_theta = vanishing_theta,
+    theta_tol = theta_tol,
+    prop = TRUE
+  )
   out <- do.call(
     what = "rbind",
     args = coef.varmxid(
@@ -130,6 +138,7 @@ summary.varmxid <- function(object,
   attr(out, "vanishing_theta") <- vanishing_theta
   attr(out, "theta_tol") <- theta_tol
   attr(out, "digits") <- digits
+  attr(out, "converged_prop") <- converged_prop
   attr(out, "print_summary") <- print_summary
   out
 }
@@ -151,8 +160,13 @@ print.summary.varmxid <- function(x,
     x = x,
     which = "fit"
   )
+  converged_prop <- attr(
+    x = x,
+    which = "converged_prop"
+  )
   cat("Call:\n")
   base::print(object$call)
+  cat(sprintf("\nConvergence: %.1f%%\n", converged_prop * 100))
   if (means) {
     cat("\nMeans of the estimated paramaters per individual.\n")
   } else {

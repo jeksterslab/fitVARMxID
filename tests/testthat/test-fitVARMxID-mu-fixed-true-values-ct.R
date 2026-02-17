@@ -47,7 +47,6 @@ lapply(
               mu
             ) == c(
               "alpha",
-              "alpha_iden",
               "mu",
               "b_mat"
             )
@@ -90,50 +89,6 @@ lapply(
               times = k
             )
           )
-        )
-        testthat::expect_true(
-          all(
-            is.na(
-              obj$lbound
-            )
-          )
-        )
-        testthat::expect_true(
-          all(
-            is.na(
-              obj$ubound
-            )
-          )
-        )
-      }
-    )
-    testthat::test_that(
-      paste(text, "alpha_iden"),
-      {
-        testthat::skip_on_cran()
-        obj <- mu$alpha_iden
-        testthat::expect_true(
-          class(
-            obj
-          ) == "IdenMatrix"
-        )
-        testthat::expect_true(
-          obj$name == "alpha_iden"
-        )
-        testthat::expect_true(
-          all(
-            obj$values == diag(k)
-          )
-        )
-        testthat::expect_true(
-          all(
-            is.na(
-              obj$labels
-            )
-          )
-        )
-        testthat::expect_true(
-          all(!obj$free)
         )
         testthat::expect_true(
           all(

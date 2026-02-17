@@ -12,7 +12,8 @@
                                mu0,
                                sigma0,
                                covariate,
-                               sigma) {
+                               sigma,
+                               algebras) {
   parameter_vec <- .FitVARMxParameterVec(
     mean_str = mean_str,
     beta = beta,
@@ -92,6 +93,7 @@
     sigma0,
     covariate,
     sigma,
+    algebras,
     parameter_vec,
     expectation,
     time,

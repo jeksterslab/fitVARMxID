@@ -2,18 +2,10 @@
                              statenames,
                              ct) {
   if (ct) {
-    sigma_iden <- list(
-      sigma_iden = OpenMx::mxMatrix(
-        type = "Iden",
-        nrow = k,
-        ncol = k,
-        name = "sigma_iden"
-      )
-    )
     sigma_column <- list(
       sigma_column = OpenMx::mxAlgebraFromString(
         algString = paste0(
-          "solve(beta %x% sigma_iden + sigma_iden %x% beta)",
+          "solve(beta %x% iden_k + iden_k %x% beta)",
           " %*% ",
           "-cvectorize(psi)"
         ),
@@ -21,18 +13,10 @@
       )
     )
   } else {
-    sigma_iden <- list(
-      sigma_iden = OpenMx::mxMatrix(
-        type = "Iden",
-        nrow = k * k,
-        ncol = k * k,
-        name = "sigma_iden"
-      )
-    )
     sigma_column <- list(
       sigma_column = OpenMx::mxAlgebraFromString(
         algString = paste0(
-          "solve(sigma_iden - beta %x% beta)",
+          "solve(iden_k_sqr - beta %x% beta)",
           " %*% ",
           "cvectorize(psi)"
         ),
@@ -73,7 +57,6 @@
   )
   c(
     sigma,
-    sigma_iden,
     sigma_column,
     sigma_mat
   )

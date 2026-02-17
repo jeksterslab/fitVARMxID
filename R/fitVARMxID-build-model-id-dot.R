@@ -294,6 +294,23 @@
       )
     }
   )
+  algebras <- lapply(
+    X = seq_len(n),
+    FUN = function(i) {
+      .FitVARMxIDAlgebras(
+        k = k,
+        ct = ct,
+        eigenval_beta = TRUE,
+        eigenvec_beta = TRUE,
+        eigenmod_beta = TRUE,
+        spectral_beta = TRUE,
+        solve_psi = TRUE,
+        halflife_beta = TRUE,
+        cor_psi = TRUE,
+        pcor_psi = TRUE
+      )
+    }
+  )
   matrices <- lapply(
     X = seq_len(n),
     FUN = function(i) {
@@ -309,7 +326,8 @@
         mu0 = mu0[[i]],
         sigma0 = sigma0[[i]],
         covariate = covariate[[i]],
-        sigma = sigma[[i]]
+        sigma = sigma[[i]],
+        algebras = algebras[[i]]
       )
     }
   )
@@ -332,7 +350,8 @@
         mu0 = mat$mu0,
         sigma0 = mat$sigma0,
         covariate = mat$covariate,
-        sigma = mat$sigma
+        sigma = mat$sigma,
+        algebras = mat$algebras
       )
       fn <- file.path(
         path,

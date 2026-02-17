@@ -135,11 +135,9 @@ If \code{mu_fixed = FALSE}, these are starting values.
 If \code{NULL}, defaults to a vector of zeros.}
 
 \item{mu_lbound}{Numeric vector of lower bounds for \code{mu}.
-If \code{NULL}, no lower bounds are set.
 Ignored if \code{mu_fixed = TRUE}.}
 
 \item{mu_ubound}{Numeric vector of upper bounds for \code{mu}.
-If \code{NULL}, no upper bounds are set.
 Ignored if \code{mu_fixed = TRUE}.}
 
 \item{alpha_fixed}{Logical.
@@ -159,11 +157,9 @@ If \code{alpha_fixed = FALSE}, these are starting values.
 If \code{NULL}, defaults to a vector of zeros.}
 
 \item{alpha_lbound}{Numeric vector of lower bounds for \code{alpha}.
-If \code{NULL}, no lower bounds are set.
 Ignored if \code{alpha_fixed = TRUE}.}
 
 \item{alpha_ubound}{Numeric vector of upper bounds for \code{alpha}.
-If \code{NULL}, no upper bounds are set.
 Ignored if \code{alpha_fixed = TRUE}.}
 
 \item{beta_fixed}{Logical.
@@ -213,12 +209,10 @@ If \code{psi_fixed = TRUE}, these are fixed values.
 If \code{psi_fixed = FALSE}, these are starting values.}
 
 \item{psi_d_lbound}{Numeric vector
-with lower bounds for \code{psi_d}.
-If \code{NULL}, no lower bounds are set.}
+with lower bounds for \code{psi_d}.}
 
 \item{psi_d_ubound}{Numeric vector
-with upper bounds for \code{psi_d}.
-If \code{NULL}, no upper bounds are set.}
+with upper bounds for \code{psi_d}.}
 
 \item{psi_d_equal}{Logical.
 When \code{TRUE}, all free diagonal elements of \code{psi_d} are constrained
@@ -231,16 +225,14 @@ If \code{NULL}, all element of \code{psi_l} are free.
 Ignored if \code{psi_diag = TRUE}.}
 
 \item{psi_l_values}{Numeric matrix
-of starting values for the strictly-lower-triangular elements of \code{psi_l}.
-If \code{NULL}, defaults to a null matrix.}
+of starting values
+for the strictly-lower-triangular elements of \code{psi_l}.}
 
 \item{psi_l_lbound}{Numeric matrix
-with lower bounds for \code{psi_l}.
-If \code{NULL}, no lower bounds are set.}
+with lower bounds for \code{psi_l}.}
 
 \item{psi_l_ubound}{Numeric matrix
-with upper bounds for \code{psi_l}.
-If \code{NULL}, no upper bounds are set.}
+with upper bounds for \code{psi_l}.}
 
 \item{nu_fixed}{Logical.
 If \code{TRUE},
@@ -259,11 +251,9 @@ If \code{nu_fixed = FALSE}, these are starting values.
 If \code{NULL}, defaults to a vector of zeros.}
 
 \item{nu_lbound}{Numeric vector of lower bounds for \code{nu}.
-If \code{NULL}, no lower bounds are set.
 Ignored if \code{nu_fixed = TRUE}.}
 
 \item{nu_ubound}{Numeric vector of upper bounds for \code{nu}.
-If \code{NULL}, no upper bounds are set.
 Ignored if \code{nu_fixed = TRUE}.}
 
 \item{theta_diag}{Logical.
@@ -286,12 +276,10 @@ If \code{theta_fixed = TRUE}, these are fixed values.
 If \code{theta_fixed = FALSE}, these are starting values.}
 
 \item{theta_d_lbound}{Numeric vector
-with lower bounds for \code{theta_d}.
-If \code{NULL}, no lower bounds are set.}
+with lower bounds for \code{theta_d}.}
 
 \item{theta_d_ubound}{Numeric vector
-with upper bounds for \code{theta_d}.
-If \code{NULL}, no upper bounds are set.}
+with upper bounds for \code{theta_d}.}
 
 \item{theta_d_equal}{Logical.
 When \code{TRUE}, all free diagonal elements of \code{theta_d} are constrained
@@ -304,16 +292,14 @@ If \code{NULL}, all element of \code{theta_l} are free.
 Ignored if \code{theta_diag = TRUE}.}
 
 \item{theta_l_values}{Numeric matrix
-of starting values for the strictly-lower-triangular elements of \code{theta_l}.
-If \code{NULL}, defaults to a null matrix.}
+of starting values
+for the strictly-lower-triangular elements of \code{theta_l}.}
 
 \item{theta_l_lbound}{Numeric matrix
-with lower bounds for \code{theta_l}.
-If \code{NULL}, no lower bounds are set.}
+with lower bounds for \code{theta_l}.}
 
 \item{theta_l_ubound}{Numeric matrix
-with upper bounds for \code{theta_l}.
-If \code{NULL}, no upper bounds are set.}
+with upper bounds for \code{theta_l}.}
 
 \item{mu0_fixed}{Logical.
 If \code{TRUE}, the initial mean vector \code{mu0} is fixed.
@@ -338,11 +324,9 @@ If \code{NULL}, defaults to a vector of zeros.
 Ignored if \code{mu0_fixed = TRUE} and \code{mu0_func = TRUE}.}
 
 \item{mu0_lbound}{Numeric vector of lower bounds for \code{mu0}.
-If \code{NULL}, no lower bounds are set.
 Ignored if \code{mu0_fixed = TRUE}.}
 
 \item{mu0_ubound}{Numeric vector of upper bounds for \code{mu0}.
-If \code{NULL}, no upper bounds are set.
 Ignored if \code{mu0_fixed = TRUE}.}
 
 \item{sigma0_fixed}{Logical.
@@ -371,12 +355,10 @@ If \code{sigma0_fixed = TRUE}, these are fixed values.
 If \code{sigma0_fixed = FALSE}, these are starting values.}
 
 \item{sigma0_d_lbound}{Numeric vector
-with lower bounds for \code{sigma0_d}.
-If \code{NULL}, no lower bounds are set.}
+with lower bounds for \code{sigma0_d}.}
 
 \item{sigma0_d_ubound}{Numeric vector
-with upper bounds for \code{sigma0_d}.
-If \code{NULL}, no upper bounds are set.}
+with upper bounds for \code{sigma0_d}.}
 
 \item{sigma0_d_equal}{Logical.
 When \code{TRUE}, all free diagonal elements of \code{sigma0_d} are constrained
@@ -390,16 +372,13 @@ Ignored if \code{sigma0_diag = TRUE}.}
 
 \item{sigma0_l_values}{Numeric matrix
 of starting values
-for the strictly-lower-triangular elements of \code{sigma0_l}.
-If \code{NULL}, defaults to a null matrix.}
+for the strictly-lower-triangular elements of \code{sigma0_l}.}
 
 \item{sigma0_l_lbound}{Numeric matrix
-with lower bounds for \code{sigma0_l}.
-If \code{NULL}, no lower bounds are set.}
+with lower bounds for \code{sigma0_l}.}
 
 \item{sigma0_l_ubound}{Numeric matrix
-with upper bounds for \code{sigma0_l}.
-If \code{NULL}, no upper bounds are set.}
+with upper bounds for \code{sigma0_l}.}
 
 \item{robust}{Logical.
 If \code{TRUE}, calculate robust (sandwich) sampling variance-covariance matrix.}
