@@ -513,7 +513,10 @@
 #'     data = data,
 #'     observed = paste0("y", seq_len(k)),
 #'     id = "id",
-#'     center = TRUE
+#'     center = TRUE,
+#'     tries_explore = 1000,
+#'     tries_local = 100,
+#'     max_attempts = 100
 #'   )
 #'   print(fit)
 #'   summary(fit)
@@ -528,7 +531,10 @@
 #'     data = data,
 #'     observed = paste0("y", seq_len(k)),
 #'     id = "id",
-#'     center = FALSE
+#'     center = FALSE,
+#'     tries_explore = 1000,
+#'     tries_local = 100,
+#'     max_attempts = 100
 #'   )
 #'   print(fit)
 #'   summary(fit)
