@@ -5,7 +5,6 @@
   # initial condition
   # mean
   # alpha is specified as a covariate (gamma)
-  # mu0_values will implied by the algebra
   mu0_iden <- list(
     mu0_iden = OpenMx::mxMatrix(
       type = "Iden",

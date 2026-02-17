@@ -40,11 +40,15 @@ NULL
 #' @rdname Softplus
 #' @export
 Softplus <- function(x) {
-  log1p(exp(x))
+  .MxHelperSoftplus(
+    x = x
+  )
 }
 
 #' @rdname Softplus
 #' @export
 InvSoftplus <- function(x) {
-  log(expm1(x))
+  .MxHelperInvSoftplus(
+    x = x
+  )
 }

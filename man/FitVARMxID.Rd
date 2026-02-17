@@ -27,10 +27,12 @@ FitVARMxID(
   beta_lbound = NULL,
   beta_ubound = NULL,
   psi_diag = FALSE,
+  psi_fixed = FALSE,
   psi_d_free = NULL,
   psi_d_values = NULL,
   psi_d_lbound = NULL,
   psi_d_ubound = NULL,
+  psi_d_equal = FALSE,
   psi_l_free = NULL,
   psi_l_values = NULL,
   psi_l_lbound = NULL,
@@ -64,13 +66,14 @@ FitVARMxID(
   sigma0_d_values = NULL,
   sigma0_d_lbound = NULL,
   sigma0_d_ubound = NULL,
+  sigma0_d_equal = FALSE,
   sigma0_l_free = NULL,
   sigma0_l_values = NULL,
   sigma0_l_lbound = NULL,
   sigma0_l_ubound = NULL,
   robust = FALSE,
-  tries_explore = 1000,
-  tries_local = 100,
+  tries_explore = 100,
+  tries_local = 10,
   max_attempts = 10,
   grad_tol = 0.01,
   hess_tol = 1e-08,
@@ -109,16 +112,21 @@ If TRUE, fit a continuous-time vector autoregressive model.
 If FALSE, fit a discrete-time vector autoregressive model.}
 
 \item{center}{Logical.
-If TRUE, use the mean-centered (mean-reverting) state equation.
-Note that when \code{center = TRUE}, \code{alpha} is implied
-and the set-point \code{mu} is estimated.}
+If \code{TRUE}, use the mean-centered (mean-reverting) state equation.
+When \code{center = TRUE}, \code{alpha} is implied and the set-point \code{mu} is
+estimated. When \code{center = FALSE},
+\code{alpha} is estimated and \code{mu} is implied.}
 
 \item{mu_fixed}{Logical.
-If \code{TRUE}, the dynamic model set-point vector \code{mu} is fixed.
+If \code{TRUE}, the set-point mean vector \code{mu}
+is fixed to \code{mu_values}.
+If \code{mu_fixed = TRUE} and \code{mu_values = NULL},
+\code{mu} is fixed to a zero vector.
 If \code{FALSE}, \code{mu} is estimated.}
 
-\item{mu_free}{Logical vector indicating which elements of \code{mu}
-are freely estimated. If \code{NULL}, all elements are free.
+\item{mu_free}{Logical vector indicating
+which elements of \code{mu} are freely estimated.
+If \code{NULL}, all elements are free.
 Ignored if \code{mu_fixed = TRUE}.}
 
 \item{mu_values}{Numeric vector of values for \code{mu}.
@@ -135,11 +143,14 @@ If \code{NULL}, no upper bounds are set.
 Ignored if \code{mu_fixed = TRUE}.}
 
 \item{alpha_fixed}{Logical.
-If \code{TRUE}, the dynamic model intercept vector \code{alpha} is fixed.
+If \code{TRUE},
+the dynamic model intercept vector \code{alpha}
+is fixed to \code{alpha_values}.
 If \code{FALSE}, \code{alpha} is estimated.}
 
-\item{alpha_free}{Logical vector indicating which elements of \code{alpha}
-are freely estimated. If \code{NULL}, all elements are free.
+\item{alpha_free}{Logical vector indicating
+which elements of \code{alpha} are freely estimated.
+If \code{NULL}, all elements are free.
 Ignored if \code{alpha_fixed = TRUE}.}
 
 \item{alpha_values}{Numeric vector of values for \code{alpha}.
@@ -159,26 +170,38 @@ Ignored if \code{alpha_fixed = TRUE}.}
 If \code{TRUE}, the dynamic model coefficient matrix \code{beta} is fixed.
 If \code{FALSE}, \code{beta} is estimated.}
 
-\item{beta_free}{Logical matrix indicating which elements of \code{beta}
-are freely estimated. If \code{NULL}, all elements are free.
+\item{beta_free}{Logical matrix indicating
+which elements of \code{beta} are freely estimated.
+If \code{NULL}, all elements are free.
 Ignored if \code{beta_fixed = TRUE}.}
 
-\item{beta_values}{Numeric matrix of values for \code{beta}.
-If \code{beta_fixed = TRUE}, these are fixed values.
-If \code{beta_fixed = FALSE}, these are starting values.
-If \code{NULL}, defaults to a zero matrix.}
+\item{beta_values}{Numeric matrix.
+Values for \code{beta}.
+If \code{beta_fixed = TRUE}, these are fixed values;
+if \code{beta_fixed = FALSE}, these are starting values.
+If \code{NULL}, defaults to a diagonal matrix
+with -0.001 when \code{ct = TRUE} and 0.001 when \code{ct = FALSE}.}
 
 \item{beta_lbound}{Numeric matrix of lower bounds for \code{beta}.
-If \code{NULL}, defaults to -1.5.
+If \code{NULL}, defaults to -2.5.
 Ignored if \code{beta_fixed = TRUE}.}
 
-\item{beta_ubound}{Numeric matrix of upper bounds for \code{beta}.
-If \code{NULL}, defaults to +1.5.
-Ignored if \code{beta_fixed = TRUE}.}
+\item{beta_ubound}{Numeric matrix.
+Upper bounds for \code{beta}.
+Ignored if \code{beta_fixed = TRUE}.
+If \code{NULL}, defaults to \code{+2.5}.
+If \code{NULL} and \code{ct = TRUE},
+diagonal upper bounds are set to -1e-05.}
 
 \item{psi_diag}{Logical.
 If \code{TRUE}, \code{psi} is diagonal.
 If \code{FALSE}, \code{psi} is symmetric.}
+
+\item{psi_fixed}{Logical.
+If \code{TRUE}, the process noise covariance matrix \code{psi}
+is fixed using \code{psi_d_values} and \code{psi_l_values}.
+If \code{psi_d_values} is \code{NULL} it is fixed to a zero matrix.
+If \code{FALSE}, \code{psi} is estimated.}
 
 \item{psi_d_free}{Logical vector
 indicating free/fixed status of the elements of \code{psi_d}.
@@ -186,7 +209,8 @@ If \code{NULL}, all element of \code{psi_d} are free.}
 
 \item{psi_d_values}{Numeric vector
 with starting values for \code{psi_d}.
-If \code{NULL}, defaults to a vector of ones.}
+If \code{psi_fixed = TRUE}, these are fixed values.
+If \code{psi_fixed = FALSE}, these are starting values.}
 
 \item{psi_d_lbound}{Numeric vector
 with lower bounds for \code{psi_d}.
@@ -196,8 +220,14 @@ If \code{NULL}, no lower bounds are set.}
 with upper bounds for \code{psi_d}.
 If \code{NULL}, no upper bounds are set.}
 
+\item{psi_d_equal}{Logical.
+When \code{TRUE}, all free diagonal elements of \code{psi_d} are constrained
+to be equal and estimated as a single shared parameter.
+Ignored if no diagonal elements are free.}
+
 \item{psi_l_free}{Logical matrix
 indicating which strictly-lower-triangular elements of \code{psi_l} are free.
+If \code{NULL}, all element of \code{psi_l} are free.
 Ignored if \code{psi_diag = TRUE}.}
 
 \item{psi_l_values}{Numeric matrix
@@ -213,11 +243,14 @@ with upper bounds for \code{psi_l}.
 If \code{NULL}, no upper bounds are set.}
 
 \item{nu_fixed}{Logical.
-If \code{TRUE}, the measurement model intercept vector \code{nu} is fixed.
+If \code{TRUE},
+the measurement model intercept vector \code{nu}
+is fixed to \code{nu_values}.
 If \code{FALSE}, \code{nu} is estimated.}
 
-\item{nu_free}{Logical vector indicating which elements of \code{nu}
-are freely estimated. If \code{NULL}, all elements are free.
+\item{nu_free}{Logical vector indicating
+which elements of \code{nu} are freely estimated.
+If \code{NULL}, all elements are free.
 Ignored if \code{nu_fixed = TRUE}.}
 
 \item{nu_values}{Numeric vector of values for \code{nu}.
@@ -238,10 +271,10 @@ If \code{TRUE}, \code{theta} is diagonal.
 If \code{FALSE}, \code{theta} is symmetric.}
 
 \item{theta_fixed}{Logical.
-If \code{TRUE}, the measurement error matrix \code{theta}
-is fixed to \code{SoftPlus(theta_d_values)}.
-If \code{FALSE}, only diagonal elements are estimated
-(off-diagonals fixed to zero).}
+If \code{TRUE}, the measurement error covariance matrix \code{theta}
+is fixed using \code{theta_d_values} and \code{theta_l_values}.
+If \code{theta_d_values} is \code{NULL} it is fixed to a zero matrix.
+If \code{FALSE}, \code{theta} is estimated.}
 
 \item{theta_d_free}{Logical vector
 indicating free/fixed status of the diagonal parameters \code{theta_d}.
@@ -250,8 +283,7 @@ If \code{NULL}, all element of \code{theta_d} are free.}
 \item{theta_d_values}{Numeric vector
 with starting values for \code{theta_d}.
 If \code{theta_fixed = TRUE}, these are fixed values.
-If \code{theta_fixed = FALSE}, these are starting values.
-If \code{NULL}, defaults to an identity matrix.}
+If \code{theta_fixed = FALSE}, these are starting values.}
 
 \item{theta_d_lbound}{Numeric vector
 with lower bounds for \code{theta_d}.
@@ -263,11 +295,12 @@ If \code{NULL}, no upper bounds are set.}
 
 \item{theta_d_equal}{Logical.
 When \code{TRUE}, all free diagonal elements of \code{theta_d} are constrained
-to be equal and estimated as a single shared parameter (\code{theta_eq}).
+to be equal and estimated as a single shared parameter.
 Ignored if no diagonal elements are free.}
 
 \item{theta_l_free}{Logical matrix
 indicating which strictly-lower-triangular elements of \code{theta_l} are free.
+If \code{NULL}, all element of \code{theta_l} are free.
 Ignored if \code{theta_diag = TRUE}.}
 
 \item{theta_l_values}{Numeric matrix
@@ -284,21 +317,25 @@ If \code{NULL}, no upper bounds are set.}
 
 \item{mu0_fixed}{Logical.
 If \code{TRUE}, the initial mean vector \code{mu0} is fixed.
+If \code{mu0_fixed = TRUE} and \code{mu0_func = TRUE},
+\code{mu0} is fixed to the implied stable mean vector.
+If \code{mu0_fixed = TRUE} and \code{mu0_values = NULL},
+\code{mu0} is fixed to a zero vector.
 If \code{FALSE}, \code{mu0} is estimated.}
 
 \item{mu0_func}{Logical.
-If \code{TRUE}, \code{mu0_fixed = TRUE}, and \code{ct = FALSE}, \code{mu0} is fixed to
-\eqn{ (I - \beta)^{-1} \alpha }.
-If \code{TRUE}, \code{mu0_fixed = TRUE}, and \code{ct = TRUE}, \code{mu0} is fixed to
-\eqn{ (- \beta)^{-1} \alpha }.}
+If \code{TRUE} and \code{mu0_fixed = TRUE},
+\code{mu0} is fixed to the implied stable mean vector.}
 
-\item{mu0_free}{Logical vector indicating which elements of \code{mu0}
-are freely estimated.}
+\item{mu0_free}{Logical vector indicating
+which elements of \code{mu0} are free.
+Ignored if \code{mu0_fixed = TRUE}.}
 
 \item{mu0_values}{Numeric vector of values for \code{mu0}.
 If \code{mu0_fixed = TRUE}, these are fixed values.
 If \code{mu0_fixed = FALSE}, these are starting values.
-If \code{NULL}, defaults to a vector of zeros.}
+If \code{NULL}, defaults to a vector of zeros.
+Ignored if \code{mu0_fixed = TRUE} and \code{mu0_func = TRUE}.}
 
 \item{mu0_lbound}{Numeric vector of lower bounds for \code{mu0}.
 If \code{NULL}, no lower bounds are set.
@@ -309,12 +346,16 @@ If \code{NULL}, no upper bounds are set.
 Ignored if \code{mu0_fixed = TRUE}.}
 
 \item{sigma0_fixed}{Logical.
-If \code{TRUE}, the initial covariance matrix \code{sigma0} is fixed.
-If \code{FALSE}, \code{sigma0} is estimated.}
+If \code{TRUE}, the initial condition covariance matrix \code{sigma0}
+is fixed using \code{sigma0_d_values} and \code{sigma0_l_values}.
+If \code{sigma0_fixed = TRUE} and \code{sigma0_func = TRUE},
+\code{sigma0} is fixed to the implied stable covariance matrix.
+If \code{sigma0_fixed = TRUE} and \code{sigma0_d_values = NULL},
+\code{sigma0} is fixed to a diffused matrix.}
 
 \item{sigma0_func}{Logical.
 If \code{TRUE} and \code{sigma0_fixed = TRUE}, \code{sigma0} is fixed to
-\eqn{ (I - \beta \otimes \beta)^{-1} \mathrm{Vec}(\Psi) }.}
+the implied stable covariance matrix.}
 
 \item{sigma0_diag}{Logical.
 If \code{TRUE}, \code{sigma0} is diagonal.
@@ -326,7 +367,8 @@ If \code{NULL}, all element of \code{sigma0_d} are free.}
 
 \item{sigma0_d_values}{Numeric vector
 with starting values for \code{sigma0_d}.
-If \code{NULL}, defaults to a vector of ones.}
+If \code{sigma0_fixed = TRUE}, these are fixed values.
+If \code{sigma0_fixed = FALSE}, these are starting values.}
 
 \item{sigma0_d_lbound}{Numeric vector
 with lower bounds for \code{sigma0_d}.
@@ -336,9 +378,14 @@ If \code{NULL}, no lower bounds are set.}
 with upper bounds for \code{sigma0_d}.
 If \code{NULL}, no upper bounds are set.}
 
+\item{sigma0_d_equal}{Logical.
+When \code{TRUE}, all free diagonal elements of \code{sigma0_d} are constrained
+to be equal and estimated as a single shared parameter.
+Ignored if no diagonal elements are free.}
+
 \item{sigma0_l_free}{Logical matrix
-indicating which
-strictly-lower-triangular elements of \code{sigma0_l} are free.
+indicating which strictly-lower-triangular elements of \code{sigma0_l} are free.
+If \code{NULL}, all element of \code{sigma0_l} are free.
 Ignored if \code{sigma0_diag = TRUE}.}
 
 \item{sigma0_l_values}{Numeric matrix

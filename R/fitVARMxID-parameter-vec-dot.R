@@ -5,7 +5,7 @@
                                   theta,
                                   mu0,
                                   sigma0) {
-  if (is.null(mu0$mu0_vec)) {
+  if (is.null(mu0[["mu0_vec"]])) {
     mu0_vec <- NA
     mu0_vec_labels <- NA
   } else {
@@ -14,7 +14,7 @@
       mu0$mu0_vec$labels
     )
   }
-  if (is.null(sigma0$sigma0_vec)) {
+  if (is.null(sigma0[["sigma0_vec"]])) {
     sigma0_vec <- NA
     sigma0_vec_labels <- NA
     sigma0_log_diag_vec <- NA
@@ -27,7 +27,7 @@
       sigma0$sigma0_vec$labels
     )
   }
-  if (is.null(mean_str$mu_vec)) {
+  if (is.null(mean_str[["mu_vec"]])) {
     mu_vec <- NA
     mu_vec_labels <- NA
   } else {
@@ -36,7 +36,7 @@
       mean_str$mu_vec$labels
     )
   }
-  if (is.null(mean_str$alpha_vec)) {
+  if (is.null(mean_str[["alpha_vec"]])) {
     alpha_vec <- NA
     alpha_vec_labels <- NA
   } else {
@@ -45,7 +45,7 @@
       mean_str$alpha_vec$labels
     )
   }
-  if (is.null(beta$beta_vec)) {
+  if (is.null(beta[["beta_vec"]])) {
     beta_vec <- NA
     beta_vec_labels <- NA
   } else {
@@ -54,7 +54,7 @@
       beta$beta_vec$labels
     )
   }
-  if (is.null(nu$nu_vec)) {
+  if (is.null(nu[["nu_vec"]])) {
     nu_vec <- NA
     nu_vec_labels <- NA
   } else {
@@ -63,7 +63,7 @@
       nu$nu_vec$labels
     )
   }
-  if (is.null(psi$psi_vec)) {
+  if (is.null(psi[["psi_vec"]])) {
     psi_vec <- NA
     psi_vec_labels <- NA
     psi_log_diag_vec <- NA
@@ -76,7 +76,7 @@
       psi$psi_vec$labels
     )
   }
-  if (is.null(theta$theta_vec)) {
+  if (is.null(theta[["theta_vec"]])) {
     theta_vec <- NA
     theta_vec_labels <- NA
     theta_log_diag_vec <- NA

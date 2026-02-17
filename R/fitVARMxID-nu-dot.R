@@ -7,37 +7,37 @@
                           nu_ubound) {
   # D
   # observed variables on covariates
+  m <- k
+  n <- 1
+  free_val <- nu_free
+  values <- nu_values
+  lbound_val <- nu_lbound
+  ubound_val <- nu_ubound
+  vec <- TRUE
+  row <- observed
+  col <- "nu"
+  name <- "nu"
   if (nu_fixed) {
-    nu <- .FitVARMxIDNuFixed(
-      k = k,
-      nu_values = nu_values
+    nu <- .MxHelperFullFixed(
+      m = m,
+      n = n,
+      values = values,
+      row = row,
+      col = col,
+      name = name
     )
   } else {
-    nu_values <- tryCatch(
-      {
-        .MxHelperDTVARAlphaValues(
-          p = k,
-          val = nu_values
-        )
-      },
-      error = function(e) {
-        stop("Error in `nu_values`: ", e$message)
-      },
-      warning = function(w) {
-        stop("Warning in `nu_values`: ", w$message)
-      }
-    )
     nu <- .MxHelperFullMxMatrix(
-      m = k,
-      n = 1,
-      free_val = nu_free,
-      values = nu_values,
-      lbound_val = nu_lbound,
-      ubound_val = nu_ubound,
-      vec = TRUE,
-      row = observed,
-      col = 1,
-      name = "nu"
+      m = m,
+      n = n,
+      free_val = free_val,
+      values = values,
+      lbound_val = lbound_val,
+      ubound_val = ubound_val,
+      vec = vec,
+      row = row,
+      col = col,
+      name = name
     )
   }
   d_mat <- list(

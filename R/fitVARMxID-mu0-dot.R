@@ -10,6 +10,16 @@
   # x0
   # initial condition
   # mean
+  m <- k
+  n <- 1
+  free_val <- mu0_free
+  values <- mu0_values
+  lbound_val <- mu0_lbound
+  ubound_val <- mu0_ubound
+  vec <- TRUE
+  row <- statenames
+  col <- "mu0"
+  name <- "mu0"
   if (mu0_fixed) {
     if (mu0_func) {
       mu0 <- .FitVARMxIDMu0Func(
@@ -18,24 +28,31 @@
         ct = ct
       )
     } else {
-      mu0 <- .FitVARMxIDMu0Fixed(
-        k = k,
-        statenames = statenames,
-        mu0_values = mu0_values
+      mu0 <- .MxHelperFullFixed(
+        m = m,
+        n = n,
+        values = values,
+        row = row,
+        col = col,
+        name = name
       )
     }
   } else {
-    mu0 <- .FitVARMxIDMu0Vec(
-      k = k,
-      statenames = statenames,
-      mu0_free = mu0_free,
-      mu0_values = mu0_values,
-      mu0_lbound = mu0_lbound,
-      mu0_ubound = mu0_ubound
+    mu0 <- .MxHelperFullMxMatrix(
+      m = m,
+      n = n,
+      free_val = free_val,
+      values = values,
+      lbound_val = lbound_val,
+      ubound_val = ubound_val,
+      vec = vec,
+      row = row,
+      col = col,
+      name = name
     )
   }
   x0_mat <- list(
-    OpenMx::mxAlgebraFromString(
+    x0_mat = OpenMx::mxAlgebraFromString(
       algString = "mu0",
       name = "x0",
       dimnames = list(

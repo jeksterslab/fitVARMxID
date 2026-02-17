@@ -15,25 +15,16 @@ lapply(
       paste(text, "LDL reconstructs the input matrix"),
       {
         testthat::skip_on_cran()
-        A <- matrix(
+        a <- matrix(
           data = rnorm(16),
           nrow = 4,
           ncol = 4
         )
-        X <- crossprod(A) + diag(1e-6, 4)
-        out <- LDL(X)
-        testthat::expect_equal(
-          out$l_mat_unit %*% out$d_mat %*% t(out$l_mat_unit),
-          X,
-          tolerance = 1e-8
-        )
-        testthat::expect_equal(
-          out$diff,
-          X - out$y,
-          tolerance = 1e-12
-        )
+        x <- crossprod(a) + diag(1e-6, 4)
+        ldl <- LDL(x)
+        inv_ldl <- InvLDL(s_l = ldl$s_l, uc_d = ldl$uc_d)
         testthat::expect_true(
-          max(abs(out$diff)) < 1e-8
+          max(abs(x - inv_ldl)) < 1e-8
         )
       }
     )
@@ -41,11 +32,11 @@ lapply(
       paste(text, "LDL diagonal entries are positive"),
       {
         testthat::skip_on_cran()
-        A <- matrix(rnorm(25), 5, 5)
-        X <- crossprod(A) + diag(1e-6, 5)
-        out <- LDL(X)
+        a <- matrix(rnorm(25), 5, 5)
+        x <- crossprod(a) + diag(1e-6, 5)
+        out <- LDL(x)
         testthat::expect_true(
-          all(out$d_vec > 0)
+          all(out$d > 0)
         )
       }
     )

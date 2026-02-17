@@ -200,193 +200,234 @@
 #'   If TRUE, fit a continuous-time vector autoregressive model.
 #'   If FALSE, fit a discrete-time vector autoregressive model.
 #' @param center Logical.
-#'   If TRUE, use the mean-centered (mean-reverting) state equation.
-#'   Note that when `center = TRUE`, `alpha` is implied
-#'   and the set-point `mu` is estimated.
+#'   If `TRUE`, use the mean-centered (mean-reverting) state equation.
+#'   When `center = TRUE`, `alpha` is implied and the set-point `mu` is
+#'   estimated. When `center = FALSE`,
+#'   `alpha` is estimated and `mu` is implied.
 #' @param mu_fixed Logical.
-#'   If `TRUE`, the dynamic model set-point vector `mu` is fixed.
+#'   If `TRUE`, the set-point mean vector `mu`
+#'   is fixed to `mu_values`.
+#'   If `mu_fixed = TRUE` and `mu_values = NULL`,
+#'   `mu` is fixed to a zero vector.
 #'   If `FALSE`, `mu` is estimated.
-#' @param mu_free Logical vector indicating which elements of `mu`
-#'   are freely estimated. If `NULL`, all elements are free.
+#' @param alpha_fixed Logical.
+#'   If `TRUE`,
+#'   the dynamic model intercept vector `alpha`
+#'   is fixed to `alpha_values`.
+#'   If `FALSE`, `alpha` is estimated.
+#' @param nu_fixed Logical.
+#'   If `TRUE`,
+#'   the measurement model intercept vector `nu`
+#'   is fixed to `nu_values`.
+#'   If `FALSE`, `nu` is estimated.
+#' @param mu0_fixed Logical.
+#'   If `TRUE`, the initial mean vector `mu0` is fixed.
+#'   If `mu0_fixed = TRUE` and `mu0_func = TRUE`,
+#'   `mu0` is fixed to the implied stable mean vector.
+#'   If `mu0_fixed = TRUE` and `mu0_values = NULL`,
+#'   `mu0` is fixed to a zero vector.
+#'   If `FALSE`, `mu0` is estimated.
+#' @param mu0_func Logical.
+#'   If `TRUE` and `mu0_fixed = TRUE`,
+#'   `mu0` is fixed to the implied stable mean vector.
+#' @param mu_free Logical vector indicating
+#'   which elements of `mu` are freely estimated.
+#'   If `NULL`, all elements are free.
 #'   Ignored if `mu_fixed = TRUE`.
+#' @param alpha_free Logical vector indicating
+#'   which elements of `alpha` are freely estimated.
+#'   If `NULL`, all elements are free.
+#'   Ignored if `alpha_fixed = TRUE`.
+#' @param nu_free Logical vector indicating
+#'   which elements of `nu` are freely estimated.
+#'   If `NULL`, all elements are free.
+#'   Ignored if `nu_fixed = TRUE`.
+#' @param mu0_free Logical vector indicating
+#'   which elements of `mu0` are free.
+#'   Ignored if `mu0_fixed = TRUE`.
 #' @param mu_values Numeric vector of values for `mu`.
 #'   If `mu_fixed = TRUE`, these are fixed values.
 #'   If `mu_fixed = FALSE`, these are starting values.
 #'   If `NULL`, defaults to a vector of zeros.
-#' @param mu_lbound Numeric vector of lower bounds for `mu`.
-#'   If `NULL`, no lower bounds are set.
-#'   Ignored if `mu_fixed = TRUE`.
-#' @param mu_ubound Numeric vector of upper bounds for `mu`.
-#'   If `NULL`, no upper bounds are set.
-#'   Ignored if `mu_fixed = TRUE`.
-#' @param alpha_fixed Logical.
-#'   If `TRUE`, the dynamic model intercept vector `alpha` is fixed.
-#'   If `FALSE`, `alpha` is estimated.
-#' @param alpha_free Logical vector indicating which elements of `alpha`
-#'   are freely estimated. If `NULL`, all elements are free.
-#'   Ignored if `alpha_fixed = TRUE`.
 #' @param alpha_values Numeric vector of values for `alpha`.
 #'   If `alpha_fixed = TRUE`, these are fixed values.
 #'   If `alpha_fixed = FALSE`, these are starting values.
 #'   If `NULL`, defaults to a vector of zeros.
-#' @param alpha_lbound Numeric vector of lower bounds for `alpha`.
-#'   If `NULL`, no lower bounds are set.
-#'   Ignored if `alpha_fixed = TRUE`.
-#' @param alpha_ubound Numeric vector of upper bounds for `alpha`.
-#'   If `NULL`, no upper bounds are set.
-#'   Ignored if `alpha_fixed = TRUE`.
-#' @param beta_fixed Logical.
-#'   If `TRUE`, the dynamic model coefficient matrix `beta` is fixed.
-#'   If `FALSE`, `beta` is estimated.
-#' @param beta_free Logical matrix indicating which elements of `beta`
-#'   are freely estimated. If `NULL`, all elements are free.
-#'   Ignored if `beta_fixed = TRUE`.
-#' @param beta_values Numeric matrix of values for `beta`.
-#'   If `beta_fixed = TRUE`, these are fixed values.
-#'   If `beta_fixed = FALSE`, these are starting values.
-#'   If `NULL`, defaults to a zero matrix.
-#' @param beta_lbound Numeric matrix of lower bounds for `beta`.
-#'   If `NULL`, defaults to -1.5.
-#'   Ignored if `beta_fixed = TRUE`.
-#' @param beta_ubound Numeric matrix of upper bounds for `beta`.
-#'   If `NULL`, defaults to +1.5.
-#'   Ignored if `beta_fixed = TRUE`.
-#' @param psi_diag Logical.
-#'   If `TRUE`, `psi` is diagonal.
-#'   If `FALSE`, `psi` is symmetric.
-#' @param psi_d_free Logical vector
-#'   indicating free/fixed status of the elements of `psi_d`.
-#'   If `NULL`, all element of `psi_d` are free.
-#' @param psi_d_values Numeric vector
-#'   with starting values for `psi_d`.
-#'   If `NULL`, defaults to a vector of ones.
-#' @param psi_d_lbound Numeric vector
-#'   with lower bounds for `psi_d`.
-#'   If `NULL`, no lower bounds are set.
-#' @param psi_d_ubound Numeric vector
-#'   with upper bounds for `psi_d`.
-#'   If `NULL`, no upper bounds are set.
-#' @param psi_l_free Logical matrix
-#'   indicating which strictly-lower-triangular elements of `psi_l` are free.
-#'   Ignored if `psi_diag = TRUE`.
-#' @param psi_l_values Numeric matrix
-#'   of starting values for the strictly-lower-triangular elements of `psi_l`.
-#'   If `NULL`, defaults to a null matrix.
-#' @param psi_l_lbound Numeric matrix
-#'   with lower bounds for `psi_l`.
-#'   If `NULL`, no lower bounds are set.
-#' @param psi_l_ubound Numeric matrix
-#'   with upper bounds for `psi_l`.
-#'   If `NULL`, no upper bounds are set.
-#' @param nu_fixed Logical.
-#'   If `TRUE`, the measurement model intercept vector `nu` is fixed.
-#'   If `FALSE`, `nu` is estimated.
-#' @param nu_free Logical vector indicating which elements of `nu`
-#'   are freely estimated. If `NULL`, all elements are free.
-#'   Ignored if `nu_fixed = TRUE`.
 #' @param nu_values Numeric vector of values for `nu`.
 #'   If `nu_fixed = TRUE`, these are fixed values.
 #'   If `nu_fixed = FALSE`, these are starting values.
 #'   If `NULL`, defaults to a vector of zeros.
-#' @param nu_lbound Numeric vector of lower bounds for `nu`.
-#'   If `NULL`, no lower bounds are set.
-#'   Ignored if `nu_fixed = TRUE`.
-#' @param nu_ubound Numeric vector of upper bounds for `nu`.
-#'   If `NULL`, no upper bounds are set.
-#'   Ignored if `nu_fixed = TRUE`.
-#' @param theta_diag Logical.
-#'   If `TRUE`, `theta` is diagonal.
-#'   If `FALSE`, `theta` is symmetric.
-#' @param theta_fixed Logical.
-#'   If `TRUE`, the measurement error matrix `theta`
-#'   is fixed to `SoftPlus(theta_d_values)`.
-#'   If `FALSE`, only diagonal elements are estimated
-#'   (off-diagonals fixed to zero).
-#' @param theta_d_free Logical vector
-#'   indicating free/fixed status of the diagonal parameters `theta_d`.
-#'   If `NULL`, all element of `theta_d` are free.
-#' @param theta_d_values Numeric vector
-#'   with starting values for `theta_d`.
-#'   If `theta_fixed = TRUE`, these are fixed values.
-#'   If `theta_fixed = FALSE`, these are starting values.
-#'   If `NULL`, defaults to an identity matrix.
-#' @param theta_d_lbound Numeric vector
-#'   with lower bounds for `theta_d`.
-#'   If `NULL`, no lower bounds are set.
-#' @param theta_d_ubound Numeric vector
-#'   with upper bounds for `theta_d`.
-#'   If `NULL`, no upper bounds are set.
-#' @param theta_d_equal Logical.
-#'   When `TRUE`, all free diagonal elements of `theta_d` are constrained
-#'   to be equal and estimated as a single shared parameter (`theta_eq`).
-#'   Ignored if no diagonal elements are free.
-#' @param theta_l_free Logical matrix
-#'   indicating which strictly-lower-triangular elements of `theta_l` are free.
-#'   Ignored if `theta_diag = TRUE`.
-#' @param theta_l_values Numeric matrix
-#'   of starting values for the strictly-lower-triangular elements of `theta_l`.
-#'   If `NULL`, defaults to a null matrix.
-#' @param theta_l_lbound Numeric matrix
-#'   with lower bounds for `theta_l`.
-#'   If `NULL`, no lower bounds are set.
-#' @param theta_l_ubound Numeric matrix
-#'   with upper bounds for `theta_l`.
-#'   If `NULL`, no upper bounds are set.
-#' @param mu0_fixed Logical.
-#'   If `TRUE`, the initial mean vector `mu0` is fixed.
-#'   If `FALSE`, `mu0` is estimated.
-#' @param mu0_func Logical.
-#'   If `TRUE`, `mu0_fixed = TRUE`, and `ct = FALSE`, `mu0` is fixed to
-#'   \eqn{ (I - \beta)^{-1} \alpha }.
-#'   If `TRUE`, `mu0_fixed = TRUE`, and `ct = TRUE`, `mu0` is fixed to
-#'   \eqn{ (- \beta)^{-1} \alpha }.
-#' @param mu0_free Logical vector indicating which elements of `mu0`
-#'   are freely estimated.
 #' @param mu0_values Numeric vector of values for `mu0`.
 #'   If `mu0_fixed = TRUE`, these are fixed values.
 #'   If `mu0_fixed = FALSE`, these are starting values.
 #'   If `NULL`, defaults to a vector of zeros.
+#'   Ignored if `mu0_fixed = TRUE` and `mu0_func = TRUE`.
+#' @param mu_lbound Numeric vector of lower bounds for `mu`.
+#'   If `NULL`, no lower bounds are set.
+#'   Ignored if `mu_fixed = TRUE`.
+#' @param alpha_lbound Numeric vector of lower bounds for `alpha`.
+#'   If `NULL`, no lower bounds are set.
+#'   Ignored if `alpha_fixed = TRUE`.
+#' @param nu_lbound Numeric vector of lower bounds for `nu`.
+#'   If `NULL`, no lower bounds are set.
+#'   Ignored if `nu_fixed = TRUE`.
 #' @param mu0_lbound Numeric vector of lower bounds for `mu0`.
 #'   If `NULL`, no lower bounds are set.
 #'   Ignored if `mu0_fixed = TRUE`.
+#' @param mu_ubound Numeric vector of upper bounds for `mu`.
+#'   If `NULL`, no upper bounds are set.
+#'   Ignored if `mu_fixed = TRUE`.
+#' @param alpha_ubound Numeric vector of upper bounds for `alpha`.
+#'   If `NULL`, no upper bounds are set.
+#'   Ignored if `alpha_fixed = TRUE`.
+#' @param nu_ubound Numeric vector of upper bounds for `nu`.
+#'   If `NULL`, no upper bounds are set.
+#'   Ignored if `nu_fixed = TRUE`.
 #' @param mu0_ubound Numeric vector of upper bounds for `mu0`.
 #'   If `NULL`, no upper bounds are set.
 #'   Ignored if `mu0_fixed = TRUE`.
-#' @param sigma0_fixed Logical.
-#'   If `TRUE`, the initial covariance matrix `sigma0` is fixed.
-#'   If `FALSE`, `sigma0` is estimated.
-#' @param sigma0_func Logical.
-#'   If `TRUE` and `sigma0_fixed = TRUE`, `sigma0` is fixed to
-#'   \eqn{ (I - \beta \otimes \beta)^{-1} \mathrm{Vec}(\Psi) }.
+#' @param beta_fixed Logical.
+#'   If `TRUE`, the dynamic model coefficient matrix `beta` is fixed.
+#'   If `FALSE`, `beta` is estimated.
+#' @param beta_free Logical matrix indicating
+#'   which elements of `beta` are freely estimated.
+#'   If `NULL`, all elements are free.
+#'   Ignored if `beta_fixed = TRUE`.
+#' @param beta_values Numeric matrix.
+#'   Values for `beta`.
+#'   If `beta_fixed = TRUE`, these are fixed values;
+#'   if `beta_fixed = FALSE`, these are starting values.
+#'   If `NULL`, defaults to a diagonal matrix
+#'   with -0.001 when `ct = TRUE` and 0.001 when `ct = FALSE`.
+#' @param beta_lbound Numeric matrix of lower bounds for `beta`.
+#'   If `NULL`, defaults to -2.5.
+#'   Ignored if `beta_fixed = TRUE`.
+#' @param beta_ubound Numeric matrix.
+#'   Upper bounds for `beta`.
+#'   Ignored if `beta_fixed = TRUE`.
+#'   If `NULL`, defaults to `+2.5`.
+#'   If `NULL` and `ct = TRUE`,
+#'   diagonal upper bounds are set to -1e-05.
+#' @param psi_diag Logical.
+#'   If `TRUE`, `psi` is diagonal.
+#'   If `FALSE`, `psi` is symmetric.
+#' @param theta_diag Logical.
+#'   If `TRUE`, `theta` is diagonal.
+#'   If `FALSE`, `theta` is symmetric.
 #' @param sigma0_diag Logical.
 #'   If `TRUE`, `sigma0` is diagonal.
 #'   If `FALSE`, `sigma0` is symmetric.
+#' @param psi_fixed Logical.
+#'   If `TRUE`, the process noise covariance matrix `psi`
+#'   is fixed using `psi_d_values` and `psi_l_values`.
+#'   If `psi_d_values` is `NULL` it is fixed to a zero matrix.
+#'   If `FALSE`, `psi` is estimated.
+#' @param theta_fixed Logical.
+#'   If `TRUE`, the measurement error covariance matrix `theta`
+#'   is fixed using `theta_d_values` and `theta_l_values`.
+#'   If `theta_d_values` is `NULL` it is fixed to a zero matrix.
+#'   If `FALSE`, `theta` is estimated.
+#' @param sigma0_fixed Logical.
+#'   If `TRUE`, the initial condition covariance matrix `sigma0`
+#'   is fixed using `sigma0_d_values` and `sigma0_l_values`.
+#'   If `sigma0_fixed = TRUE` and `sigma0_func = TRUE`,
+#'   `sigma0` is fixed to the implied stable covariance matrix.
+#'   If `sigma0_fixed = TRUE` and `sigma0_d_values = NULL`,
+#'   `sigma0` is fixed to a diffused matrix.
+#' @param sigma0_func Logical.
+#'   If `TRUE` and `sigma0_fixed = TRUE`, `sigma0` is fixed to
+#'   the implied stable covariance matrix.
+#' @param psi_d_free Logical vector
+#'   indicating free/fixed status of the elements of `psi_d`.
+#'   If `NULL`, all element of `psi_d` are free.
+#' @param theta_d_free Logical vector
+#'   indicating free/fixed status of the diagonal parameters `theta_d`.
+#'   If `NULL`, all element of `theta_d` are free.
 #' @param sigma0_d_free Logical vector
 #'   indicating free/fixed status of the elements of `sigma0_d`.
 #'   If `NULL`, all element of `sigma0_d` are free.
+#' @param psi_l_free Logical matrix
+#'   indicating which strictly-lower-triangular elements of `psi_l` are free.
+#'   If `NULL`, all element of `psi_l` are free.
+#'   Ignored if `psi_diag = TRUE`.
+#' @param theta_l_free Logical matrix
+#'   indicating which strictly-lower-triangular elements of `theta_l` are free.
+#'   If `NULL`, all element of `theta_l` are free.
+#'   Ignored if `theta_diag = TRUE`.
+#' @param sigma0_l_free Logical matrix
+#'   indicating which strictly-lower-triangular elements of `sigma0_l` are free.
+#'   If `NULL`, all element of `sigma0_l` are free.
+#'   Ignored if `sigma0_diag = TRUE`.
+#' @param psi_d_values Numeric vector
+#'   with starting values for `psi_d`.
+#'   If `psi_fixed = TRUE`, these are fixed values.
+#'   If `psi_fixed = FALSE`, these are starting values.
+#' @param theta_d_values Numeric vector
+#'   with starting values for `theta_d`.
+#'   If `theta_fixed = TRUE`, these are fixed values.
+#'   If `theta_fixed = FALSE`, these are starting values.
 #' @param sigma0_d_values Numeric vector
 #'   with starting values for `sigma0_d`.
-#'   If `NULL`, defaults to a vector of ones.
+#'   If `sigma0_fixed = TRUE`, these are fixed values.
+#'   If `sigma0_fixed = FALSE`, these are starting values.
+#' @param psi_d_lbound Numeric vector
+#'   with lower bounds for `psi_d`.
+#'   If `NULL`, no lower bounds are set.
+#' @param theta_d_lbound Numeric vector
+#'   with lower bounds for `theta_d`.
+#'   If `NULL`, no lower bounds are set.
 #' @param sigma0_d_lbound Numeric vector
 #'   with lower bounds for `sigma0_d`.
 #'   If `NULL`, no lower bounds are set.
+#' @param psi_d_ubound Numeric vector
+#'   with upper bounds for `psi_d`.
+#'   If `NULL`, no upper bounds are set.
+#' @param theta_d_ubound Numeric vector
+#'   with upper bounds for `theta_d`.
+#'   If `NULL`, no upper bounds are set.
 #' @param sigma0_d_ubound Numeric vector
 #'   with upper bounds for `sigma0_d`.
 #'   If `NULL`, no upper bounds are set.
-#' @param sigma0_l_free Logical matrix
-#'   indicating which
-#'   strictly-lower-triangular elements of `sigma0_l` are free.
-#'   Ignored if `sigma0_diag = TRUE`.
+#' @param psi_l_values Numeric matrix
+#'   of starting values for the strictly-lower-triangular elements of `psi_l`.
+#'   If `NULL`, defaults to a null matrix.
+#' @param theta_l_values Numeric matrix
+#'   of starting values for the strictly-lower-triangular elements of `theta_l`.
+#'   If `NULL`, defaults to a null matrix.
 #' @param sigma0_l_values Numeric matrix
 #'   of starting values
 #'   for the strictly-lower-triangular elements of `sigma0_l`.
 #'   If `NULL`, defaults to a null matrix.
+#' @param psi_l_lbound Numeric matrix
+#'   with lower bounds for `psi_l`.
+#'   If `NULL`, no lower bounds are set.
+#' @param theta_l_lbound Numeric matrix
+#'   with lower bounds for `theta_l`.
+#'   If `NULL`, no lower bounds are set.
 #' @param sigma0_l_lbound Numeric matrix
 #'   with lower bounds for `sigma0_l`.
 #'   If `NULL`, no lower bounds are set.
+#' @param psi_l_ubound Numeric matrix
+#'   with upper bounds for `psi_l`.
+#'   If `NULL`, no upper bounds are set.
+#' @param theta_l_ubound Numeric matrix
+#'   with upper bounds for `theta_l`.
+#'   If `NULL`, no upper bounds are set.
 #' @param sigma0_l_ubound Numeric matrix
 #'   with upper bounds for `sigma0_l`.
 #'   If `NULL`, no upper bounds are set.
+#' @param psi_d_equal Logical.
+#'   When `TRUE`, all free diagonal elements of `psi_d` are constrained
+#'   to be equal and estimated as a single shared parameter.
+#'   Ignored if no diagonal elements are free.
+#' @param theta_d_equal Logical.
+#'   When `TRUE`, all free diagonal elements of `theta_d` are constrained
+#'   to be equal and estimated as a single shared parameter.
+#'   Ignored if no diagonal elements are free.
+#' @param sigma0_d_equal Logical.
+#'   When `TRUE`, all free diagonal elements of `sigma0_d` are constrained
+#'   to be equal and estimated as a single shared parameter.
+#'   Ignored if no diagonal elements are free.
 #' @param robust Logical.
 #'   If `TRUE`, calculate robust (sandwich) sampling variance-covariance matrix.
 #' @param tries_explore Integer.
@@ -561,10 +602,12 @@ FitVARMxID <- function(data,
                        beta_lbound = NULL,
                        beta_ubound = NULL,
                        psi_diag = FALSE,
+                       psi_fixed = FALSE,
                        psi_d_free = NULL,
                        psi_d_values = NULL,
                        psi_d_lbound = NULL,
                        psi_d_ubound = NULL,
+                       psi_d_equal = FALSE,
                        psi_l_free = NULL,
                        psi_l_values = NULL,
                        psi_l_lbound = NULL,
@@ -598,13 +641,14 @@ FitVARMxID <- function(data,
                        sigma0_d_values = NULL,
                        sigma0_d_lbound = NULL,
                        sigma0_d_ubound = NULL,
+                       sigma0_d_equal = FALSE,
                        sigma0_l_free = NULL,
                        sigma0_l_values = NULL,
                        sigma0_l_lbound = NULL,
                        sigma0_l_ubound = NULL,
                        robust = FALSE,
-                       tries_explore = 1000,
-                       tries_local = 100,
+                       tries_explore = 100,
+                       tries_local = 10,
                        max_attempts = 10,
                        grad_tol = 1e-2,
                        hess_tol = 1e-8,
@@ -626,7 +670,7 @@ FitVARMxID <- function(data,
   )
   if (ct && is.null(time)) {
     stop(
-      "Argument `time` cannot be `NULL` if `ct = TRUE`\n."
+      "\nArgument `time` cannot be `NULL` if `ct = TRUE`\n."
     )
   }
   if (!silent) {
@@ -634,7 +678,7 @@ FitVARMxID <- function(data,
       # nocov start
       message(
         paste0(
-          "Intermediate files will be saved in ",
+          "\nIntermediate files will be saved in ",
           path,
           "\n"
         )
@@ -665,10 +709,12 @@ FitVARMxID <- function(data,
     beta_lbound = beta_lbound,
     beta_ubound = beta_ubound,
     psi_diag = psi_diag,
+    psi_fixed = psi_fixed,
     psi_d_free = psi_d_free,
     psi_d_values = psi_d_values,
     psi_d_lbound = psi_d_lbound,
     psi_d_ubound = psi_d_ubound,
+    psi_d_equal = psi_d_equal,
     psi_l_free = psi_l_free,
     psi_l_values = psi_l_values,
     psi_l_lbound = psi_l_lbound,
@@ -702,6 +748,7 @@ FitVARMxID <- function(data,
     sigma0_d_values = sigma0_d_values,
     sigma0_d_lbound = sigma0_d_lbound,
     sigma0_d_ubound = sigma0_d_ubound,
+    sigma0_d_equal = sigma0_d_equal,
     sigma0_l_free = sigma0_l_free,
     sigma0_l_values = sigma0_l_values,
     sigma0_l_lbound = sigma0_l_lbound,
@@ -744,10 +791,12 @@ FitVARMxID <- function(data,
     beta_lbound = beta_lbound,
     beta_ubound = beta_ubound,
     psi_diag = psi_diag,
+    psi_fixed = psi_fixed,
     psi_d_free = psi_d_free,
     psi_d_values = psi_d_values,
     psi_d_lbound = psi_d_lbound,
     psi_d_ubound = psi_d_ubound,
+    psi_d_equal = psi_d_equal,
     psi_l_free = psi_l_free,
     psi_l_values = psi_l_values,
     psi_l_lbound = psi_l_lbound,
@@ -781,6 +830,7 @@ FitVARMxID <- function(data,
     sigma0_d_values = sigma0_d_values,
     sigma0_d_lbound = sigma0_d_lbound,
     sigma0_d_ubound = sigma0_d_ubound,
+    sigma0_d_equal = sigma0_d_equal,
     sigma0_l_free = sigma0_l_free,
     sigma0_l_values = sigma0_l_values,
     sigma0_l_lbound = sigma0_l_lbound,

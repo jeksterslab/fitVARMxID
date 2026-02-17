@@ -2,24 +2,39 @@
 % Please edit documentation in R/fitVARMxID-ldl.R
 \name{LDL}
 \alias{LDL}
+\alias{InvLDL}
 \title{LDL' Decomposition of a Symmetric Positive-Definite Matrix}
 \usage{
-LDL(x)
+LDL(x, epsilon = 1e-10)
+
+InvLDL(s_l, uc_d)
 }
 \arguments{
-\item{x}{Numeric matrix. Must be symmetric positive-definite.}
+\item{x}{Numeric matrix.
+Must be symmetric positive-definite.}
+
+\item{epsilon}{Numeric.
+Small positive value used to replace zero diagonal entries.}
+
+\item{s_l}{Matrix.
+Strictly lower-triangular part of \eqn{L}.}
+
+\item{uc_d}{Vector.
+Unconstrained vector with \eqn{log1p(exp(uc\_d)) = d}.}
 }
 \value{
-A list with components:
-\item{l_mat_unit}{Unit lower-triangular matrix \eqn{L}.}
-\item{l_mat_strict}{Strictly lower-triangular part of \eqn{L}.}
-\item{d_mat}{Diagonal matrix \eqn{D}.}
-\item{d_vec}{Vector of diagonal entries of \eqn{D}.}
-\item{d_uc}{Unconstrained vector with
-\eqn{\mathrm{softplus}(d\_uc) = d\_vec}.}
-\item{x}{Original input matrix.}
-\item{y}{Reconstructed matrix \eqn{L D L^\top}.}
-\item{diff}{Difference \code{x - y}.}
+\itemize{
+\item \code{LDL()}: a list with components:
+\itemize{
+\item \code{l}: a unit lower-triangular matrix \eqn{L}
+\item \code{s_l}: a strictly lower-triangular part of \eqn{L}
+\item \code{d}: a vector of diagonal entries of \eqn{D}
+\item \code{uc_d}: unconstrained vector with
+\eqn{\mathrm{softplus}(uc\_d) = d}
+\item \code{x}: input matrix
+}
+\item \code{InvLDL()}: a symmetric positive definite matrix
+}
 }
 \description{
 Performs an LDL' factorization of a symmetric positive-definite
@@ -29,20 +44,25 @@ where \eqn{L} is unit lower-triangular (ones on the diagonal)
 and \eqn{D} is diagonal.
 }
 \details{
-This function returns both the unit lower-triangular factor \eqn{L}
+\code{LDL()} returns both the unit lower-triangular factor \eqn{L}
 and the diagonal factor \eqn{D}.
 The strictly lower-triangular part of \eqn{L} is also provided
 for convenience. The function additionally computes an unconstrained
-vector \code{d_uc} such that \code{softplus(d_uc) = d_vec}, using
+vector \code{uc_d} such that \code{softplus(uc_d) = d}, using
 \eqn{\mathrm{softplus}^{-1}(y) = \log(\exp(y) - 1)} for stable
 back-transformation.
+\code{InvLDL()} returns a symmetric positive definite matrix
+from the strictly lower-triangular part of \eqn{L}
+and the unconstrained vector \code{uc_d}.
 }
 \examples{
 set.seed(123)
-A <- matrix(rnorm(16), 4, 4)
-S <- crossprod(A) + diag(1e-6, 4) # SPD
-out <- LDL(S)
-max(abs(out$diff))
+x <- crossprod(matrix(rnorm(16), 4, 4)) + diag(1e-6, 4)
+ldl <- LDL(x = x)
+ldl
+inv_ldl <- InvLDL(s_l = ldl$s_l, uc_d = ldl$uc_d)
+inv_ldl
+max(abs(x - inv_ldl))
 
 }
 \seealso{

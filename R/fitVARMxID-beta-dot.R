@@ -8,66 +8,89 @@
                             ct) {
   # A
   # auto regression and cross regression coefficients
+  m <- k
+  n <- k
+  values <- beta_values
+  free_val <- beta_free
+  lbound_val <- beta_lbound
+  ubound_val <- beta_ubound
+  vec <- TRUE
+  row <- statenames
+  col <- statenames
+  name <- "beta"
+  # tryCatch projects values to stability
+  values <- tryCatch(
+    {
+      if (ct) {
+        values <- .MxHelperCTVARBetaValues(
+          p = k,
+          val = values
+        )
+      } else {
+        values <- .MxHelperDTVARBetaValues(
+          p = k,
+          val = values
+        )
+      }
+      values
+    },
+    error = function(e) {
+      # nocov start
+      stop("\nError in `beta_values`: ", e$message)
+      # nocov end
+    },
+    warning = function(w) {
+      # nocov start
+      stop("\nWarning in `beta_values`: ", w$message)
+      # nocov end
+    }
+  )
+  if (is.null(lbound_val)) {
+    lbound_val <- matrix(
+      data = -2.5,
+      nrow = m,
+      ncol = n
+    )
+  }
+  if (is.null(ubound_val)) {
+    ubound_val <- matrix(
+      data = +2.5,
+      nrow = m,
+      ncol = n
+    )
+    if (ct) {
+      diag(ubound_val) <- -1e-05
+    }
+  }
   if (beta_fixed) {
-    beta <- .FitVARMxBetaFixed(
-      k = k,
-      beta_values = beta_values
+    # bypass values if beta_values is NULL
+    if (is.null(beta_values)) {
+      values <- matrix(
+        data = 0,
+        nrow = m,
+        ncol = n
+      )
+    }
+    beta <- .MxHelperFullFixed(
+      m = m,
+      n = n,
+      values = values,
+      row = row,
+      col = col,
+      name = name
     )
   } else {
-    beta_values <- tryCatch(
-      {
-        if (ct) {
-          out <- .MxHelperCTVARBetaValues(
-            p = k,
-            val = beta_values
-          )
-        } else {
-          out <- .MxHelperDTVARBetaValues(
-            p = k,
-            val = beta_values
-          )
-        }
-        out
-      },
-      error = function(e) {
-        # nocov start
-        stop("Error in `beta_values`: ", e$message)
-        # nocov end
-      },
-      warning = function(w) {
-        # nocov start
-        stop("Warning in `beta_values`: ", w$message)
-        # nocov end
-      }
-    )
-    if (is.null(beta_lbound)) {
-      beta_lbound <- matrix(
-        data = -2.5,
-        nrow = k,
-        ncol = k
-      )
-    }
-    if (is.null(beta_ubound)) {
-      beta_ubound <- matrix(
-        data = +2.5,
-        nrow = k,
-        ncol = k
-      )
-      if (ct) {
-        diag(beta_ubound) <- -1e-05
-      }
-    }
     beta <- .MxHelperFullMxMatrix(
-      m = k,
-      n = k,
-      values = beta_values,
-      free_val = beta_free,
-      lbound_val = beta_lbound,
-      ubound_val = beta_ubound,
-      vec = TRUE,
-      row = statenames,
-      col = statenames,
-      name = "beta"
+      m = m,
+      n = n,
+      values = values,
+      free_val = free_val,
+      lbound_val = lbound_val,
+      ubound_val = ubound_val,
+      vec = vec,
+      row = row,
+      col = col,
+      name = name
     )
   }
   a_mat <- list(
