@@ -92,7 +92,7 @@ summary.varmxid <- function(object,
     vanishing_theta = vanishing_theta,
     theta_tol = theta_tol,
     prop = TRUE
-  )             
+  )
   out <- do.call(
     what = "rbind",
     args = coef.varmxid(
