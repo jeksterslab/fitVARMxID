@@ -53,6 +53,16 @@ lapply(
         )
       }
     )
+    testthat::test_that(
+      paste(text, "Expect error"),
+      {
+        testthat::skip_on_cran()
+        x <- c(-50, -5, 0, 5, 50)
+        testthat::expect_error(
+          InvSoftplus(x)
+        )
+      }
+    )
   },
   text = "test-fitVARMxID-softplus"
 )
