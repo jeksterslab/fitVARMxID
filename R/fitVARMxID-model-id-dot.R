@@ -23,7 +23,7 @@
     mu0 = mu0,
     sigma0 = sigma0
   )
-  if (ct) {
+  if (isTRUE(ct)) {
     model <- paste0(
       "CTVAR",
       "_",

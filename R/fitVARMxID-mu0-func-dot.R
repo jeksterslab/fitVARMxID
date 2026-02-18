@@ -5,7 +5,7 @@
   # initial condition
   # mean
   # alpha is specified as a covariate (gamma)
-  if (ct) {
+  if (isTRUE(ct)) {
     mu0 <- list(
       mu0 = OpenMx::mxAlgebraFromString(
         algString = "solve(-beta) %*% alpha",

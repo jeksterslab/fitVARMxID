@@ -72,20 +72,21 @@ FitVARMxID(
   sigma0_l_lbound = NULL,
   sigma0_l_ubound = NULL,
   robust = FALSE,
+  seed = NULL,
   tries_explore = 100,
-  tries_local = 10,
+  tries_local = 100,
   max_attempts = 10,
   grad_tol = 0.01,
-  hess_tol = 1e-08,
-  eps = 1e-06,
-  factor = 10,
-  overwrite = FALSE,
-  path = getwd(),
-  prefix = "FitVARMxID",
-  seed = NULL,
+  hess_tol_abs = 1e-08,
+  hess_tol_rel = 1e-10,
+  check_condition = FALSE,
+  cond_max = 1e+12,
+  abs_bnd_tol = 1e-06,
+  rel_bnd_tol = 1e-04,
+  ok_codes = 0L,
+  require_finite_fit = TRUE,
   silent = FALSE,
-  ncores = NULL,
-  clean = TRUE
+  ncores = NULL
 )
 }
 \arguments{
@@ -383,59 +384,49 @@ with upper bounds for \code{sigma0_l}.}
 \item{robust}{Logical.
 If \code{TRUE}, calculate robust (sandwich) sampling variance-covariance matrix.}
 
+\item{seed}{Random seed for reproducibility.}
+
 \item{tries_explore}{Integer.
-Number of extra tries for the wide exploration
-phase using \code{OpenMx::mxTryHardWideSearch()} with \code{checkHess = FALSE}.}
+Number of extra tries for the wide exploration phase.}
 
 \item{tries_local}{Integer.
-Number of extra tries for local polishing via
-\code{OpenMx::mxTryHard()} when gradients remain above tolerance.}
+Number of extra tries for local polishing.}
 
 \item{max_attempts}{Integer.
 Maximum number of remediation attempts
-after the first Hessian computation fails the criteria.
-Each attempt may nudge off bounds,
-refit locally without the Hessian, and,
-on the last attempt, relax bounds.}
+after the first Hessian computation fails the criteria.}
 
-\item{grad_tol}{Numeric.
-Tolerance for the maximum absolute gradient.
-Smaller values are stricter.}
+\item{grad_tol}{Numeric. Tolerance for the gradient-based convergence check.}
 
-\item{hess_tol}{Numeric.
-Minimum allowable Hessian eigenvalue.
-Smaller values are less strict.}
+\item{hess_tol_abs}{Numeric. Absolute tolerance used when checking whether
+the Hessian is positive-definite.}
 
-\item{eps}{Numeric.
-Proximity threshold to detect parameters on their bounds
-and to nudge them inward by \code{10 * eps}.}
+\item{hess_tol_rel}{Numeric. Relative tolerance used when checking whether
+the Hessian is positive-definite.}
 
-\item{factor}{Numeric.
-Multiplicative factor to relax parameter bounds
-on the final remediation attempt.
-Lower bounds are divided by \code{factor} and
-upper bounds are multiplied by \code{factor}.}
+\item{check_condition}{Logical. If \code{TRUE}, also check the Hessian condition
+number as part of the Hessian diagnostics.}
 
-\item{overwrite}{Logical.
-If \code{TRUE}, existing intermediate files are overwritten.
-Defaults to \code{FALSE}.}
+\item{cond_max}{Numeric. Maximum allowed condition number for the Hessian
+when \code{check_condition = TRUE}.}
 
-\item{path}{Character string.
-Directory in which to save intermediate files.}
+\item{abs_bnd_tol}{Numeric. Absolute tolerance for detecting whether a
+parameter is at its lower or upper bound.}
 
-\item{prefix}{Alphanumeric character string.
-Prefix to use when naming intermediate files.}
+\item{rel_bnd_tol}{Numeric. Relative tolerance for detecting whether a
+parameter is at its lower or upper bound.}
 
-\item{seed}{Random seed for reproducibility.}
+\item{ok_codes}{Integer vector. Optimizer status codes that are considered
+acceptable.}
+
+\item{require_finite_fit}{Logical. If \code{TRUE}, require a finite objective
+value (fit) as part of the convergence check.}
 
 \item{silent}{Logical.
 If \code{TRUE}, suppresses messages during the model fitting stage.}
 
 \item{ncores}{Positive integer.
 Number of cores to use.}
-
-\item{clean}{Logical.
-If \code{TRUE}, clean intermediate files saved in \code{path}.}
 }
 \value{
 Returns an object of class \code{varmxid} which is
@@ -649,8 +640,14 @@ alpha <- rep(x = 0, times = p)
 beta <- 0.50 * diag(p)
 psi <- 0.001 * diag(p)
 psi_l <- t(chol(psi))
-mu0 <- c(solve(diag(p) - beta) \%*\% alpha)
-sigma0 <- 0.001 * diag(p)
+mu0 <- simStateSpace::SSMMeanEta(
+  beta = beta,
+  alpha = alpha
+)
+sigma0 <- simStateSpace::SSMCovEta(
+  beta = beta,
+  psi = psi
+)
 sigma0_l <- t(chol(sigma0))
 sim <- SimSSMVARFixed(
   n = n,

@@ -1,4 +1,4 @@
-## ---- test-fitVARMxID-fitvarmxid-center-false-alpha-fixed
+## ---- test-fitVARMxID-fitvarmxid-nu-theta
 lapply(
   X = 1,
   FUN = function(i,
@@ -27,6 +27,7 @@ lapply(
     beta <- 0.50 * diag(k)
     mu <- c(solve(diag(k) - beta) %*% alpha)
     psi <- 0.10 * diag(k)
+    psi_ldl <- LDL(psi)
     psi_l <- t(chol(psi))
     mu0 <- simStateSpace::SSMMeanEta(
       beta = beta,
@@ -38,17 +39,21 @@ lapply(
     )
     sigma0 <- 0.5 * (sigma0 + t(sigma0))
     sigma0_l <- t(chol(sigma0))
-    nu <- rep(x = 0, times = k)
+    nu <- stats::runif(n = k)
     lambda <- diag(k)
-    theta <- matrix(data = 0, nrow = k, ncol = k)
-    sim <- simStateSpace::SimSSMVARFixed(
+    theta <- 0.10 * diag(k)
+    theta_l <- t(chol(theta))
+    sim <- simStateSpace::SimSSMFixed(
       n = n,
       time = time,
       mu0 = mu0,
       sigma0_l = sigma0_l,
       alpha = alpha,
       beta = beta,
-      psi_l = psi_l
+      psi_l = psi_l,
+      nu = nu,
+      lambda = lambda,
+      theta_l = theta_l
     )
     data <- as.data.frame(sim)
     fit <- FitVARMxID(
@@ -58,7 +63,13 @@ lapply(
       center = FALSE,
       alpha_fixed = TRUE,
       alpha_values = alpha,
-      robust = TRUE,
+      psi_fixed = TRUE,
+      psi_d_values = psi_ldl$uc_d,
+      psi_l_values = psi_ldl$s_l,
+      nu_fixed = FALSE,
+      theta_fixed = FALSE,
+      theta_diag = FALSE,
+      robust = FALSE,
       seed = 42
     )
     if (ci) {
@@ -353,5 +364,5 @@ lapply(
       }
     )
   },
-  text = "test-fitVARMxID-fitvarmxid-center-false-alpha-fixed"
+  text = "test-fitVARMxID-fitvarmxid-nu-theta"
 )

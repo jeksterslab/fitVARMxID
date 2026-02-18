@@ -63,10 +63,7 @@
                                     sigma0_l_free,
                                     sigma0_l_values,
                                     sigma0_l_lbound,
-                                    sigma0_l_ubound,
-                                    overwrite,
-                                    path,
-                                    prefix) {
+                                    sigma0_l_ubound) {
   ids <- sort(
     unique(data[, id])
   )
@@ -82,7 +79,7 @@
       data[which(data[, id] == i), , drop = FALSE]
     }
   )
-  if (!is.list(beta_values)) {
+  if (isFALSE(is.list(beta_values))) {
     beta_values <- list(beta_values)
   }
   beta <- lapply(
@@ -100,13 +97,13 @@
       )
     }
   )
-  if (center) {
-    if (!mu_fixed && !nu_fixed) {
+  if (isTRUE(center)) {
+    if (isFALSE(mu_fixed) && isFALSE(nu_fixed)) {
       stop(
         "\n`mu` and `nu` cannot be modeled at the same time at the moment."
       )
     }
-    if (!is.list(mu_values)) {
+    if (isFALSE(is.list(mu_values))) {
       mu_values <- list(mu_values)
     }
     mean_str <- lapply(
@@ -125,12 +122,12 @@
       }
     )
   } else {
-    if (!alpha_fixed && !nu_fixed) {
+    if (isFALSE(alpha_fixed) && isFALSE(nu_fixed)) {
       stop(
         "\n`alpha` and `nu` cannot be modeled at the same time at the moment."
       )
     }
-    if (!is.list(alpha_values)) {
+    if (isFALSE(is.list(alpha_values))) {
       alpha_values <- list(alpha_values)
     }
     mean_str <- lapply(
@@ -159,7 +156,7 @@
       )
     }
   )
-  if (!is.list(nu_values)) {
+  if (isFALSE(is.list(nu_values))) {
     nu_values <- list(nu_values)
   }
   nu <- lapply(
@@ -176,10 +173,10 @@
       )
     }
   )
-  if (!is.list(psi_d_values)) {
+  if (isFALSE(is.list(psi_d_values))) {
     psi_d_values <- list(psi_d_values)
   }
-  if (!is.list(psi_l_values)) {
+  if (isFALSE(is.list(psi_l_values))) {
     psi_l_values <- list(psi_l_values)
   }
   psi <- mapply(
@@ -205,7 +202,7 @@
     },
     SIMPLIFY = FALSE
   )
-  if (!is.list(theta_d_values)) {
+  if (isFALSE(is.list(theta_d_values))) {
     theta_d_values <- list(theta_d_values)
   }
   theta <- lapply(
@@ -228,7 +225,7 @@
       )
     }
   )
-  if (!is.list(mu0_values)) {
+  if (isFALSE(is.list(mu0_values))) {
     mu0_values <- list(mu0_values)
   }
   mu0 <- lapply(
@@ -247,10 +244,10 @@
       )
     }
   )
-  if (!is.list(sigma0_d_values)) {
+  if (isFALSE(is.list(sigma0_d_values))) {
     sigma0_d_values <- list(sigma0_d_values)
   }
-  if (!is.list(sigma0_l_values)) {
+  if (isFALSE(is.list(sigma0_l_values))) {
     sigma0_l_values <- list(sigma0_l_values)
   }
   sigma0 <- mapply(
@@ -331,11 +328,11 @@
       )
     }
   )
-  submodels <- lapply(
+  lapply(
     X = seq_len(n),
     FUN = function(i) {
       mat <- matrices[[i]]
-      out <- .FitVARMxIDModelID(
+      .FitVARMxIDModelID(
         id = mat$id,
         data = mat$data,
         observed = observed,
@@ -353,37 +350,6 @@
         sigma = mat$sigma,
         algebras = mat$algebras
       )
-      fn <- file.path(
-        path,
-        paste0(
-          prefix,
-          "_",
-          methods::slot(
-            object = out,
-            name = "name"
-          ),
-          ".Rds"
-        )
-      )
-      needs_rewrite <- !file.exists(fn) || {
-        # nocov start
-        obj <- tryCatch(readRDS(fn), error = function(e) NULL)
-        is.null(obj) || !inherits(obj, "MxModel")
-        # nocov end
-      }
-      if (overwrite || needs_rewrite) {
-        saveRDS(
-          object = out,
-          file = fn
-        )
-      }
-      fn
     }
-  )
-  c(
-    do.call(
-      what = "rbind",
-      args = submodels
-    )
   )
 }

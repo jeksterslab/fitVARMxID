@@ -1,4 +1,4 @@
-## ---- test-fitVARMxID-sigma0-fixed-true-func-ct
+## ---- test-fitVARMxID-sigma0-fixed-true-func-false-ct
 lapply(
   X = 1,
   FUN = function(i,
@@ -128,5 +128,5 @@ lapply(
       }
     )
   },
-  text = "test-fitVARMxID-sigma0-fixed-true-func-ct"
+  text = "test-fitVARMxID-sigma0-fixed-true-func-false-ct"
 )

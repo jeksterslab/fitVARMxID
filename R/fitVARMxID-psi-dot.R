@@ -13,8 +13,12 @@
                            psi_l_ubound) {
   # Q
   # process noise
+  if (isTRUE(psi_fixed)) {
+    psi_d_free <- FALSE
+    psi_l_free <- FALSE
+  }
   type <- NULL
-  if (psi_fixed) {
+  if (isTRUE(psi_fixed)) {
     if (is.null(psi_d_values)) {
       # fix to a zero matrix (jitter 1e-10)
       type <- "zero"
@@ -44,7 +48,7 @@
     l_lbound = psi_l_lbound,
     l_ubound = psi_l_ubound
   )
-  if (psi_fixed) {
+  if (isTRUE(psi_fixed)) {
     if (!is.null(type)) {
       if (type == "zero") {
         psi$psi <- .MxHelperFullMxMatrix(

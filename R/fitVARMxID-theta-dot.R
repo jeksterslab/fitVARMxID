@@ -13,8 +13,12 @@
                              theta_l_ubound) {
   # R
   # measurement error
+  if (isTRUE(theta_fixed)) {
+    theta_d_free <- FALSE
+    theta_l_free <- FALSE
+  }
   type <- NULL
-  if (theta_fixed) {
+  if (isTRUE(theta_fixed)) {
     if (is.null(theta_d_values)) {
       # fix to a zero matrix (jitter 1e-10)
       type <- "zero"
@@ -44,7 +48,7 @@
     l_lbound = theta_l_lbound,
     l_ubound = theta_l_ubound
   )
-  if (theta_fixed) {
+  if (isTRUE(theta_fixed)) {
     if (!is.null(type)) {
       if (type == "zero") {
         theta$theta <- .MxHelperFullMxMatrix(

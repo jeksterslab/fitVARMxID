@@ -64,20 +64,21 @@
                         sigma0_l_values,
                         sigma0_l_lbound,
                         sigma0_l_ubound,
+                        seed,
                         tries_explore,
                         tries_local,
                         max_attempts,
                         grad_tol,
-                        hess_tol,
-                        eps,
-                        factor,
-                        overwrite,
-                        path,
-                        prefix,
-                        seed,
+                        hess_tol_abs,
+                        hess_tol_rel,
+                        check_condition,
+                        cond_max,
+                        abs_bnd_tol,
+                        rel_bnd_tol,
+                        ok_codes,
+                        require_finite_fit,
                         silent,
-                        ncores,
-                        clean) {
+                        ncores) {
   threads <- OpenMx::mxOption(
     key = "Number of Threads"
   )
@@ -88,6 +89,13 @@
     ),
     add = TRUE
   )
+  factor <- 10
+  relax_on_last <- TRUE
+  relax_exclude <- NULL
+  protect_lb_zero <- TRUE
+  rerun_code6 <- TRUE
+  relax_streak <- 3
+  relax_min_attempt <- 3
   model <- .FitVARMxIDBuildModelID(
     data = data,
     observed = observed,
@@ -154,10 +162,7 @@
     sigma0_l_free = sigma0_l_free,
     sigma0_l_values = sigma0_l_values,
     sigma0_l_lbound = sigma0_l_lbound,
-    sigma0_l_ubound = sigma0_l_ubound,
-    overwrite = overwrite,
-    path = path,
-    prefix = prefix
+    sigma0_l_ubound = sigma0_l_ubound
   )
   # nocov start
   if (is.null(ncores)) {
@@ -175,7 +180,7 @@
     }
   }
   # nocov end
-  if (par) {
+  if (isTRUE(par)) {
     # nocov start
     OpenMx::mxOption(
       key = "Number of Threads",
@@ -189,30 +194,114 @@
     } else {
       fork <- FALSE
     }
-    if (fork) {
+    if (isTRUE(fork)) {
       if (!is.null(seed)) {
+        RNGkind("L'Ecuyer-CMRG")
         set.seed(seed)
       }
-      check_hess <- c(
-        FALSE,
-        TRUE,
-        TRUE
+      # first pass
+      fit <- parallel::mclapply(
+        X = model,
+        FUN = .MxHelperRun,
+        grad_tol = grad_tol,
+        ok_codes = ok_codes,
+        require_finite_fit = require_finite_fit,
+        hess_tol_abs = hess_tol_abs,
+        hess_tol_rel = hess_tol_rel,
+        check_condition = check_condition,
+        cond_max = cond_max,
+        silent = silent,
+        mc.cores = ncores
       )
-      for (i in seq_len(2)) {
-        try(
-          fit <- parallel::mclapply(
-            X = model,
-            FUN = .MxHelperReadRunSave,
-            tries_explore = tries_explore,
-            tries_local = tries_local,
-            max_attempts = max_attempts,
-            grad_tol = grad_tol,
-            hess_tol = hess_tol,
-            eps = eps,
-            silent = silent,
-            check_hess = check_hess[i],
-            mc.cores = ncores
+      # second pass
+      refit <- vapply(
+        X = fit,
+        FUN = .MxHelperNeedsRescue,
+        grad_tol = grad_tol,
+        ok_codes = ok_codes,
+        require_finite_fit = require_finite_fit,
+        hess_tol_abs = hess_tol_abs,
+        hess_tol_rel = hess_tol_rel,
+        check_condition = check_condition,
+        cond_max = cond_max,
+        abs_bnd_tol = abs_bnd_tol,
+        rel_bnd_tol = rel_bnd_tol,
+        FUN.VALUE = logical(1)
+      )
+      if (any(refit)) {
+        fit[refit] <- parallel::mclapply(
+          X = fit[refit],
+          FUN = .MxHelperEnsureGoodHessian,
+          tries_explore = tries_explore,
+          tries_local = tries_local,
+          max_attempts = max_attempts,
+          grad_tol = grad_tol,
+          hess_tol_abs = hess_tol_abs,
+          hess_tol_rel = hess_tol_rel,
+          check_condition = check_condition,
+          cond_max = cond_max,
+          abs_bnd_tol = abs_bnd_tol,
+          rel_bnd_tol = rel_bnd_tol,
+          factor = factor,
+          relax_on_last = relax_on_last,
+          relax_exclude = relax_exclude,
+          protect_lb_zero = protect_lb_zero,
+          ok_codes = ok_codes,
+          require_finite_fit = require_finite_fit,
+          rerun_code6 = rerun_code6,
+          relax_streak = relax_streak,
+          relax_min_attempt = relax_min_attempt,
+          silent = silent,
+          mc.cores = ncores
+        )
+      }
+      still_bad <- vapply(
+        X = fit,
+        FUN = .MxHelperNeedsRescue,
+        grad_tol = grad_tol,
+        ok_codes = ok_codes,
+        require_finite_fit = require_finite_fit,
+        hess_tol_abs = hess_tol_abs,
+        hess_tol_rel = hess_tol_rel,
+        check_condition = check_condition,
+        cond_max = cond_max,
+        abs_bnd_tol = abs_bnd_tol,
+        rel_bnd_tol = rel_bnd_tol,
+        FUN.VALUE = logical(1)
+      )
+      if (any(still_bad)) {
+        warning(
+          paste0(
+            sum(still_bad),
+            " model(s) still did not meet convergence criteria after Hessian rescue."
           )
+        )
+      }
+      if (any(still_bad)) {
+        fit[still_bad] <- parallel::mclapply(
+          X = fit[still_bad],
+          FUN = .MxHelperEnsureGoodHessian,
+          tries_explore = tries_explore * 5,
+          tries_local = tries_local * 5,
+          max_attempts = max_attempts * 2,
+          grad_tol = grad_tol,
+          hess_tol_abs = hess_tol_abs,
+          hess_tol_rel = hess_tol_rel,
+          check_condition = check_condition,
+          cond_max = cond_max,
+          abs_bnd_tol = abs_bnd_tol,
+          rel_bnd_tol = rel_bnd_tol,
+          factor = factor * 10,
+          relax_on_last = TRUE,
+          relax_exclude = relax_exclude,
+          protect_lb_zero = protect_lb_zero,
+          ok_codes = ok_codes,
+          require_finite_fit = require_finite_fit,
+          rerun_code6 = rerun_code6,
+          relax_streak = relax_streak,
+          relax_min_attempt = relax_min_attempt,
+          silent = silent,
+          mc.cores = ncores
         )
       }
     } else {
@@ -228,26 +317,110 @@
         parallel::stopCluster(cl = cl),
         add = TRUE
       )
-      check_hess <- c(
-        FALSE,
-        TRUE,
-        TRUE
+      # first pass
+      fit <- parallel::parLapply(
+        cl = cl,
+        X = model,
+        FUN = .MxHelperRun,
+        grad_tol = grad_tol,
+        ok_codes = ok_codes,
+        require_finite_fit = require_finite_fit,
+        hess_tol_abs = hess_tol_abs,
+        hess_tol_rel = hess_tol_rel,
+        check_condition = check_condition,
+        cond_max = cond_max,
+        silent = silent,
+        mc.cores = ncores
       )
-      for (i in seq_len(2)) {
-        try(
-          fit <- parallel::parLapply(
-            cl = cl,
-            X = model,
-            fun = .MxHelperReadRunSave,
-            tries_explore = tries_explore,
-            tries_local = tries_local,
-            max_attempts = max_attempts,
-            grad_tol = grad_tol,
-            hess_tol = hess_tol,
-            eps = eps,
-            silent = silent,
-            check_hess = check_hess[i]
+      # second pass
+      refit <- vapply(
+        X = fit,
+        FUN = .MxHelperNeedsRescue,
+        grad_tol = grad_tol,
+        ok_codes = ok_codes,
+        require_finite_fit = require_finite_fit,
+        hess_tol_abs = hess_tol_abs,
+        hess_tol_rel = hess_tol_rel,
+        check_condition = check_condition,
+        cond_max = cond_max,
+        abs_bnd_tol = abs_bnd_tol,
+        rel_bnd_tol = rel_bnd_tol,
+        FUN.VALUE = logical(1)
+      )
+      if (any(refit)) {
+        fit[refit] <- parallel::parLapply(
+          cl = cl,
+          X = fit[refit],
+          FUN = .MxHelperEnsureGoodHessian,
+          tries_explore = tries_explore,
+          tries_local = tries_local,
+          max_attempts = max_attempts,
+          grad_tol = grad_tol,
+          hess_tol_abs = hess_tol_abs,
+          hess_tol_rel = hess_tol_rel,
+          check_condition = check_condition,
+          cond_max = cond_max,
+          abs_bnd_tol = abs_bnd_tol,
+          rel_bnd_tol = rel_bnd_tol,
+          factor = factor,
+          relax_on_last = relax_on_last,
+          relax_exclude = relax_exclude,
+          protect_lb_zero = protect_lb_zero,
+          ok_codes = ok_codes,
+          require_finite_fit = require_finite_fit,
+          rerun_code6 = rerun_code6,
+          relax_streak = relax_streak,
+          relax_min_attempt = relax_min_attempt,
+          silent = silent
+        )
+      }
+      still_bad <- vapply(
+        X = fit,
+        FUN = .MxHelperNeedsRescue,
+        grad_tol = grad_tol,
+        ok_codes = ok_codes,
+        require_finite_fit = require_finite_fit,
+        hess_tol_abs = hess_tol_abs,
+        hess_tol_rel = hess_tol_rel,
+        check_condition = check_condition,
+        cond_max = cond_max,
+        abs_bnd_tol = abs_bnd_tol,
+        rel_bnd_tol = rel_bnd_tol,
+        FUN.VALUE = logical(1)
+      )
+      if (any(still_bad)) {
+        warning(
+          paste0(
+            sum(still_bad),
+            " model(s) still did not meet convergence criteria after Hessian rescue."
           )
+        )
+      }
+      if (any(still_bad)) {
+        fit[still_bad] <- parallel::parLapply(
+          cl = cl,
+          X = fit[still_bad],
+          FUN = .MxHelperEnsureGoodHessian,
+          tries_explore = tries_explore * 5,
+          tries_local = tries_local * 5,
+          max_attempts = max_attempts * 2,
+          grad_tol = grad_tol,
+          hess_tol_abs = hess_tol_abs,
+          hess_tol_rel = hess_tol_rel,
+          check_condition = check_condition,
+          cond_max = cond_max,
+          abs_bnd_tol = abs_bnd_tol,
+          rel_bnd_tol = rel_bnd_tol,
+          factor = factor * 10,
+          relax_on_last = TRUE,
+          relax_exclude = relax_exclude,
+          protect_lb_zero = protect_lb_zero,
+          ok_codes = ok_codes,
+          require_finite_fit = require_finite_fit,
+          rerun_code6 = rerun_code6,
+          relax_streak = relax_streak,
+          relax_min_attempt = relax_min_attempt,
+          silent = silent
         )
       }
     }
@@ -256,31 +429,108 @@
     if (!is.null(seed)) {
       set.seed(seed)
     }
-    check_hess <- c(
-      FALSE,
-      TRUE,
-      TRUE
+    # first pass
+    fit <- lapply(
+      X = model,
+      FUN = .MxHelperRun,
+      grad_tol = grad_tol,
+      ok_codes = ok_codes,
+      require_finite_fit = require_finite_fit,
+      hess_tol_abs = hess_tol_abs,
+      hess_tol_rel = hess_tol_rel,
+      check_condition = check_condition,
+      cond_max = cond_max,
+      silent = silent,
     )
-    for (i in seq_len(2)) {
-      try(
-        fit <- lapply(
-          X = model,
-          FUN = .MxHelperReadRunSave,
-          tries_explore = tries_explore,
-          tries_local = tries_local,
-          max_attempts = max_attempts,
-          grad_tol = grad_tol,
-          hess_tol = hess_tol,
-          eps = eps,
-          silent = silent,
-          check_hess = check_hess[i]
+    # second pass
+    refit <- vapply(
+      X = fit,
+      FUN = .MxHelperNeedsRescue,
+      grad_tol = grad_tol,
+      ok_codes = ok_codes,
+      require_finite_fit = require_finite_fit,
+      hess_tol_abs = hess_tol_abs,
+      hess_tol_rel = hess_tol_rel,
+      check_condition = check_condition,
+      cond_max = cond_max,
+      abs_bnd_tol = abs_bnd_tol,
+      rel_bnd_tol = rel_bnd_tol,
+      FUN.VALUE = logical(1)
+    )
+    if (any(refit)) {
+      fit[refit] <- lapply(
+        X = fit[refit],
+        FUN = .MxHelperEnsureGoodHessian,
+        tries_explore = tries_explore,
+        tries_local = tries_local,
+        max_attempts = max_attempts,
+        grad_tol = grad_tol,
+        hess_tol_abs = hess_tol_abs,
+        hess_tol_rel = hess_tol_rel,
+        check_condition = check_condition,
+        cond_max = cond_max,
+        abs_bnd_tol = abs_bnd_tol,
+        rel_bnd_tol = rel_bnd_tol,
+        factor = factor,
+        relax_on_last = relax_on_last,
+        relax_exclude = relax_exclude,
+        protect_lb_zero = protect_lb_zero,
+        ok_codes = ok_codes,
+        require_finite_fit = require_finite_fit,
+        rerun_code6 = rerun_code6,
+        relax_streak = relax_streak,
+        relax_min_attempt = relax_min_attempt,
+        silent = silent
+      )
+    }
+    still_bad <- vapply(
+      X = fit,
+      FUN = .MxHelperNeedsRescue,
+      grad_tol = grad_tol,
+      ok_codes = ok_codes,
+      require_finite_fit = require_finite_fit,
+      hess_tol_abs = hess_tol_abs,
+      hess_tol_rel = hess_tol_rel,
+      check_condition = check_condition,
+      cond_max = cond_max,
+      abs_bnd_tol = abs_bnd_tol,
+      rel_bnd_tol = rel_bnd_tol,
+      FUN.VALUE = logical(1)
+    )
+    if (any(still_bad)) {
+      warning(
+        paste0(
+          sum(still_bad),
+          " model(s) still did not meet convergence criteria after Hessian rescue."
         )
       )
     }
-  }
-  names(fit) <- basename(model)
-  if (clean) {
-    unlink(model)
+    if (any(still_bad)) {
+      fit[still_bad] <- lapply(
+        X = fit[still_bad],
+        FUN = .MxHelperEnsureGoodHessian,
+        tries_explore = tries_explore * 5,
+        tries_local = tries_local * 5,
+        max_attempts = max_attempts * 2,
+        grad_tol = grad_tol,
+        hess_tol_abs = hess_tol_abs,
+        hess_tol_rel = hess_tol_rel,
+        check_condition = check_condition,
+        cond_max = cond_max,
+        abs_bnd_tol = abs_bnd_tol,
+        rel_bnd_tol = rel_bnd_tol,
+        factor = factor * 10,
+        relax_on_last = TRUE,
+        relax_exclude = relax_exclude,
+        protect_lb_zero = protect_lb_zero,
+        ok_codes = ok_codes,
+        require_finite_fit = require_finite_fit,
+        rerun_code6 = rerun_code6,
+        relax_streak = relax_streak,
+        relax_min_attempt = relax_min_attempt,
+        silent = silent
+      )
+    }
   }
   fit
 }

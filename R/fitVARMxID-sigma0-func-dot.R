@@ -4,7 +4,7 @@
   # P0
   # Initial condition covariance matrix
   # sigma0_values will be implied by the algebra
-  if (ct) {
+  if (isTRUE(ct)) {
     sigma0_column <- list(
       sigma0_column = OpenMx::mxAlgebraFromString(
         algString = paste0(

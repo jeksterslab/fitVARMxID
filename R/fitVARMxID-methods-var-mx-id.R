@@ -8,6 +8,7 @@
 #' @param digits Integer indicating the number of decimal places to display.
 #' @param ... further arguments.
 #' @inheritParams coef.varmxid
+#' @inheritParams converged.varmxid
 #' @return Prints means or raw estimates
 #'   depending the the value of the argument `means`.
 #'
@@ -25,10 +26,18 @@ print.varmxid <- function(x,
                           theta = TRUE,
                           var_metric = "var",
                           converged = TRUE,
-                          grad_tol = 1e-2,
-                          hess_tol = 1e-8,
                           vanishing_theta = TRUE,
                           theta_tol = 0.001,
+                          prop = FALSE,
+                          grad_tol = 1e-2,
+                          hess_tol_abs = 1e-8,
+                          hess_tol_rel = 1e-10,
+                          check_condition = FALSE,
+                          cond_max = 1e12,
+                          abs_bnd_tol = 1e-6,
+                          rel_bnd_tol = 1e-4,
+                          ok_codes = 0L,
+                          require_finite_fit = TRUE,
                           digits = 4,
                           ...) {
   print.summary.varmxid(
@@ -43,8 +52,6 @@ print.varmxid <- function(x,
       theta = theta,
       var_metric = var_metric,
       converged = converged,
-      grad_tol = grad_tol,
-      hess_tol = hess_tol,
       vanishing_theta = vanishing_theta,
       theta_tol = theta_tol,
       digits = digits
@@ -62,6 +69,7 @@ print.varmxid <- function(x,
 #' @param digits Integer indicating the number of decimal places to display.
 #' @param ... further arguments.
 #' @inheritParams coef.varmxid
+#' @inheritParams converged.varmxid
 #' @return Returns means or raw estimates
 #'   depending the the value of the argument `means`.
 #'
@@ -79,19 +87,33 @@ summary.varmxid <- function(object,
                             theta = TRUE,
                             var_metric = "var",
                             converged = TRUE,
-                            grad_tol = 1e-2,
-                            hess_tol = 1e-8,
                             vanishing_theta = TRUE,
                             theta_tol = 0.001,
+                            prop = FALSE,
+                            grad_tol = 1e-2,
+                            hess_tol_abs = 1e-8,
+                            hess_tol_rel = 1e-10,
+                            check_condition = FALSE,
+                            cond_max = 1e12,
+                            abs_bnd_tol = 1e-6,
+                            rel_bnd_tol = 1e-4,
+                            ok_codes = 0L,
+                            require_finite_fit = TRUE,
                             digits = 4,
                             ...) {
   converged_prop <- converged.varmxid(
     object = object,
-    grad_tol = grad_tol,
-    hess_tol = hess_tol,
     vanishing_theta = vanishing_theta,
     theta_tol = theta_tol,
-    prop = TRUE
+    prop = TRUE,
+    grad_tol = grad_tol,
+    hess_tol_abs = hess_tol_abs,
+    check_condition = check_condition,
+    cond_max = cond_max,
+    abs_bnd_tol = abs_bnd_tol,
+    rel_bnd_tol = rel_bnd_tol,
+    ok_codes = ok_codes,
+    require_finite_fit = require_finite_fit
   )
   out <- do.call(
     what = "rbind",
@@ -105,14 +127,12 @@ summary.varmxid <- function(object,
       theta = theta,
       var_metric = var_metric,
       converged = converged,
-      grad_tol = grad_tol,
-      hess_tol = hess_tol,
       vanishing_theta = vanishing_theta,
       theta_tol = theta_tol,
       ...
     )
   )
-  if (means) {
+  if (isTRUE(means)) {
     out <- colMeans(out)
   }
   print_summary <- round(
@@ -133,8 +153,6 @@ summary.varmxid <- function(object,
   attr(out, "theta") <- theta
   attr(out, "var_metric") <- var_metric
   attr(out, "converged") <- converged
-  attr(out, "grad_tol") <- grad_tol
-  attr(out, "hess_tol") <- hess_tol
   attr(out, "vanishing_theta") <- vanishing_theta
   attr(out, "theta_tol") <- theta_tol
   attr(out, "digits") <- digits
@@ -167,7 +185,7 @@ print.summary.varmxid <- function(x,
   cat("Call:\n")
   base::print(object$call)
   cat(sprintf("\nConvergence: %.1f%%\n", converged_prop * 100))
-  if (means) {
+  if (isTRUE(means)) {
     cat("\nMeans of the estimated paramaters per individual.\n")
   } else {
     cat("\nEstimated paramaters per individual.\n")
@@ -213,19 +231,6 @@ print.summary.varmxid <- function(x,
 #'   exclude estimates of the `theta` matrix.
 #' @param converged Logical.
 #'   Only include converged cases.
-#' @param grad_tol Numeric scalar.
-#'   Tolerance for the maximum absolute gradient
-#'   if `converged = TRUE`.
-#' @param hess_tol Numeric scalar.
-#'   Tolerance for Hessian eigenvalues;
-#'   eigenvalues must be strictly greater than this value
-#'   if `converged = TRUE`.
-#' @param vanishing_theta Logical.
-#'   Test for measurement error variance going to zero
-#'   if `converged = TRUE`.
-#' @param theta_tol Numeric.
-#'   Tolerance for vanishing theta test
-#'   if `converged` and `theta_tol` are `TRUE`.
 #' @param var_metric Character string.
 #'   If `var_metric = "var"`,
 #'   `psi` and `theta`
@@ -241,6 +246,7 @@ print.summary.varmxid <- function(x,
 #'   and the off-diagonal elements correspond to strict `L`
 #'   in the `LDL'` decomposition.
 #' @param ... additional arguments.
+#' @inheritParams converged.varmxid
 #' @return Returns a list of vectors of parameter estimates.
 #'
 #' @method coef varmxid
@@ -256,22 +262,36 @@ coef.varmxid <- function(object,
                          theta = TRUE,
                          var_metric = "var",
                          converged = TRUE,
-                         grad_tol = 1e-2,
-                         hess_tol = 1e-8,
                          vanishing_theta = TRUE,
                          theta_tol = 0.001,
+                         prop = FALSE,
+                         grad_tol = 1e-2,
+                         hess_tol_abs = 1e-8,
+                         hess_tol_rel = 1e-10,
+                         check_condition = FALSE,
+                         cond_max = 1e12,
+                         abs_bnd_tol = 1e-6,
+                         rel_bnd_tol = 1e-4,
+                         ok_codes = 0L,
+                         require_finite_fit = TRUE,
                          ...) {
   fit <- object$output
-  if (converged) {
+  if (isTRUE(converged)) {
     fit <- fit[
       which(
         converged.varmxid(
           object = object,
-          grad_tol = grad_tol,
-          hess_tol = hess_tol,
           vanishing_theta = vanishing_theta,
           theta_tol = theta_tol,
-          prop = FALSE
+          prop = FALSE,
+          grad_tol = grad_tol,
+          hess_tol_abs = hess_tol_abs,
+          check_condition = check_condition,
+          cond_max = cond_max,
+          abs_bnd_tol = abs_bnd_tol,
+          rel_bnd_tol = rel_bnd_tol,
+          ok_codes = ok_codes,
+          require_finite_fit = require_finite_fit
         )
       )
     ]
@@ -285,7 +305,7 @@ coef.varmxid <- function(object,
     coefs
   )
   idx <- integer(0)
-  if (mu) {
+  if (isTRUE(mu)) {
     idx <- c(
       idx,
       grep(
@@ -294,7 +314,7 @@ coef.varmxid <- function(object,
       )
     )
   }
-  if (alpha) {
+  if (isTRUE(alpha)) {
     idx <- c(
       idx,
       grep(
@@ -303,7 +323,7 @@ coef.varmxid <- function(object,
       )
     )
   }
-  if (beta) {
+  if (isTRUE(beta)) {
     idx <- c(
       idx,
       grep(
@@ -312,7 +332,7 @@ coef.varmxid <- function(object,
       )
     )
   }
-  if (psi) {
+  if (isTRUE(psi)) {
     idx <- c(
       idx,
       grep(
@@ -321,7 +341,7 @@ coef.varmxid <- function(object,
       )
     )
   }
-  if (nu) {
+  if (isTRUE(nu)) {
     idx <- c(
       idx,
       grep(
@@ -330,7 +350,7 @@ coef.varmxid <- function(object,
       )
     )
   }
-  if (theta) {
+  if (isTRUE(theta)) {
     idx <- c(
       idx,
       grep(
@@ -374,13 +394,6 @@ coef.varmxid <- function(object,
 #'
 #' @author Ivan Jacob Agaloos Pesigan
 #'
-#' @param grad_tol Numeric scalar.
-#'   Tolerance for the maximum absolute gradient
-#'   if `converged = TRUE`.
-#' @param hess_tol Numeric scalar.
-#'   Tolerance for Hessian eigenvalues;
-#'   eigenvalues must be strictly greater than this value
-#'   if `converged = TRUE`.
 #' @param vanishing_theta Logical.
 #'   Test for measurement error variance going to zero
 #'   if `converged = TRUE`.
@@ -391,6 +404,7 @@ coef.varmxid <- function(object,
 #'   If `TRUE`, use robust (sandwich) sampling variance-covariance matrix.
 #'   If `FALSE`, use normal theory sampling variance-covariance matrix.
 #' @inheritParams coef.varmxid
+#' @inheritParams converged.varmxid
 #' @param ... additional arguments.
 #' @return Returns a list of sampling variance-covariance matrices.
 #'
@@ -407,28 +421,42 @@ vcov.varmxid <- function(object,
                          theta = TRUE,
                          var_metric = "var",
                          converged = TRUE,
-                         grad_tol = 1e-2,
-                         hess_tol = 1e-8,
                          vanishing_theta = TRUE,
                          theta_tol = 0.001,
+                         prop = FALSE,
+                         grad_tol = 1e-2,
+                         hess_tol_abs = 1e-8,
+                         hess_tol_rel = 1e-10,
+                         check_condition = FALSE,
+                         cond_max = 1e12,
+                         abs_bnd_tol = 1e-6,
+                         rel_bnd_tol = 1e-4,
+                         ok_codes = 0L,
+                         require_finite_fit = TRUE,
                          robust = FALSE,
                          ...) {
   fit <- object$output
-  if (converged) {
+  if (isTRUE(converged)) {
     fit <- fit[
       which(
         converged.varmxid(
           object = object,
-          grad_tol = grad_tol,
-          hess_tol = hess_tol,
           vanishing_theta = vanishing_theta,
           theta_tol = theta_tol,
-          prop = FALSE
+          prop = FALSE,
+          grad_tol = grad_tol,
+          hess_tol_abs = hess_tol_abs,
+          check_condition = check_condition,
+          cond_max = cond_max,
+          abs_bnd_tol = abs_bnd_tol,
+          rel_bnd_tol = rel_bnd_tol,
+          ok_codes = ok_codes,
+          require_finite_fit = require_finite_fit
         )
       )
     ]
   }
-  if (robust) {
+  if (isTRUE(robust)) {
     if (is.null(object$robust)) {
       fit <- lapply(
         X = fit,
@@ -470,7 +498,7 @@ vcov.varmxid <- function(object,
     coefs
   )
   idx <- integer(0)
-  if (mu) {
+  if (isTRUE(mu)) {
     idx <- c(
       idx,
       grep(
@@ -479,7 +507,7 @@ vcov.varmxid <- function(object,
       )
     )
   }
-  if (alpha) {
+  if (isTRUE(alpha)) {
     idx <- c(
       idx,
       grep(
@@ -488,7 +516,7 @@ vcov.varmxid <- function(object,
       )
     )
   }
-  if (beta) {
+  if (isTRUE(beta)) {
     idx <- c(
       idx,
       grep(
@@ -497,7 +525,7 @@ vcov.varmxid <- function(object,
       )
     )
   }
-  if (psi) {
+  if (isTRUE(psi)) {
     idx <- c(
       idx,
       grep(
@@ -506,7 +534,7 @@ vcov.varmxid <- function(object,
       )
     )
   }
-  if (nu) {
+  if (isTRUE(nu)) {
     idx <- c(
       idx,
       grep(
@@ -515,7 +543,7 @@ vcov.varmxid <- function(object,
       )
     )
   }
-  if (theta) {
+  if (isTRUE(theta)) {
     idx <- c(
       idx,
       grep(
@@ -561,19 +589,11 @@ vcov.varmxid <- function(object,
 
 #' Check Model Convergence
 #'
-#' Evaluate whether OpenMx fit has converged successfully.
-#'
-#' @details Convergence is defined by three criteria:
-#' \enumerate{
-#'   \item Status code equals `0L`.
-#'   \item The maximum absolute gradient is below `grad_tol`.
-#'   \item The Hessian is positive definite
-#'         with all eigenvalues greater than `hess_tol`.
-#'   \item If \code{vanishing_theta = TRUE}, the model additionally checks
-#'         that the diagonal elements of the measurement error covariance matrix
-#'         (\eqn{\Theta}) are not vanishingly small,
-#'         where “small” is defined by `theta_tol`.
-#' }
+#' Determines whether each fitted \pkg{OpenMx} model in a `varmxid` object
+#' meets convergence criteria based on (a) acceptable optimizer status and
+#' gradient size, (b) a positive-definite Hessian, (c) parameters not being
+#' at their bounds, and (optionally) non-vanishing measurement error
+#' variances (`theta`).
 #'
 #' @author Ivan Jacob Agaloos Pesigan
 #'
@@ -589,6 +609,29 @@ converged <- function(object,
 }
 
 #' @rdname converged
+#' @param vanishing_theta Logical.
+#'   Test for measurement error variance going to zero
+#'   if `converged = TRUE`.
+#' @param theta_tol Numeric.
+#'   Tolerance for vanishing theta test
+#'   if `converged` and `theta_tol` are `TRUE`.
+#' @param grad_tol Numeric. Tolerance for the gradient-based convergence check.
+#' @param hess_tol_abs Numeric. Absolute tolerance used when checking whether
+#'   the Hessian is positive-definite.
+#' @param hess_tol_rel Numeric. Relative tolerance used when checking whether
+#'   the Hessian is positive-definite.
+#' @param check_condition Logical. If `TRUE`, also check the Hessian condition
+#'   number as part of the Hessian diagnostics.
+#' @param cond_max Numeric. Maximum allowed condition number for the Hessian
+#'   when `check_condition = TRUE`.
+#' @param abs_bnd_tol Numeric. Absolute tolerance for detecting whether a
+#'   parameter is at its lower or upper bound.
+#' @param rel_bnd_tol Numeric. Relative tolerance for detecting whether a
+#'   parameter is at its lower or upper bound.
+#' @param ok_codes Integer vector. Optimizer status codes that are considered
+#'   acceptable.
+#' @param require_finite_fit Logical. If `TRUE`, require a finite objective
+#'   value (fit) as part of the convergence check.
 #' @param prop Logical.
 #'   If `prop = FALSE`, a named logical vector indicating,
 #'   for each individual fit, whether the convergence criteria are met.
@@ -604,127 +647,168 @@ converged <- function(object,
 #' @import OpenMx
 #' @export
 converged.varmxid <- function(object,
-                              grad_tol = 1e-2,
-                              hess_tol = 1e-8,
                               vanishing_theta = TRUE,
                               theta_tol = 0.001,
                               prop = FALSE,
+                              grad_tol = 1e-2,
+                              hess_tol_abs = 1e-8,
+                              hess_tol_rel = 1e-10,
+                              check_condition = FALSE,
+                              cond_max = 1e12,
+                              abs_bnd_tol = 1e-6,
+                              rel_bnd_tol = 1e-4,
+                              ok_codes = 0L,
+                              require_finite_fit = TRUE,
                               ...) {
-  out <- sapply(
+  if (is.null(object$output)) {
+    out <- FALSE
+    if (isTRUE(prop)) {
+      out <- as.numeric(out)
+    }
+    # nolint start
+    return(out)
+    # nolint end
+  }
+
+  out <- vapply(
     X = object$output,
-    FUN = function(i,
-                   grad_tol,
-                   hess_tol,
-                   vanishing_theta,
-                   theta_tol) {
-      class <- inherits(i, "MxModel")
-      if (!class) {
+    FUN = function(i) {
+      if (!inherits(i, "MxModel")) {
         # nolint start
         return(FALSE)
         # nolint end
       }
-      coef <- tryCatch(
+
+      has_coef <- tryCatch(
         {
-          coef(i$output)
-          TRUE
+          tmp <- stats::coef(i)
+          !is.null(tmp)
         },
         error = function(e) {
           FALSE
         }
       )
-      if (!coef) {
+      if (isFALSE(has_coef)) {
         # nolint start
         return(FALSE)
         # nolint end
       }
-      code <- tryCatch(
-        {
-          !(
-            is.null(i$output) ||
-              is.null(i$output$status) ||
-              i$output$status$code != 0L
-          )
-        },
-        error = function(e) {
-          FALSE
-        }
-      )
-      if (!code) {
-        # nolint start
-        return(FALSE)
-        # nolint end
-      }
+
       good_fit <- tryCatch(
         {
-          good_grad <- .MxHelperIsGoodFit(
+          .MxHelperIsGoodFit(
             x = i,
-            tol = grad_tol
+            grad_tol = grad_tol,
+            ok_codes = ok_codes,
+            require_finite_fit = require_finite_fit
           )
-          pd_hessian <- .MxHelperHasPdHessian(
-            x = i,
-            tol = hess_tol
-          )
-          good_grad && pd_hessian
         },
         error = function(e) {
           FALSE
         }
       )
-      if (!good_fit) {
+      if (!isTRUE(good_fit)) {
         # nolint start
         return(FALSE)
         # nolint end
       }
-      theta_ok <- TRUE
-      if (vanishing_theta) {
-        parnames <- names(
-          coef(i)
-        )
-        has_theta <- any(
-          grepl(
-            "^theta_",
-            parnames,
-            perl = TRUE
+
+      pd_hessian <- tryCatch(
+        {
+          .MxHelperHasPdHessian(
+            x = i,
+            hess_tol_abs = hess_tol_abs,
+            hess_tol_rel = hess_tol_rel,
+            check_condition = check_condition,
+            cond_max = cond_max
           )
-        )
-        if (has_theta) {
-          theta_diag <- tryCatch(
-            diag(
-              OpenMx::mxEvalByName(
-                name = "theta",
-                model = i
-              )
-            ),
-            error = function(e) {
-              numeric(0)
-            }
-          )
-          if (length(theta_diag) > 0) {
-            theta_ok <- all(theta_diag > theta_tol)
-          } else {
-            theta_ok <- TRUE
-          }
-        } else {
-          theta_ok <- TRUE
+        },
+        error = function(e) {
+          FALSE
         }
+      )
+      if (!isTRUE(pd_hessian)) {
+        # nolint start
+        return(FALSE)
+        # nolint end
       }
-      good_fit && theta_ok && code
+
+      bd_any <- tryCatch(
+        {
+          isTRUE(
+            .MxHelperAtBounds(
+              x = i,
+              abs_bnd_tol = abs_bnd_tol,
+              rel_bnd_tol = rel_bnd_tol
+            )$any
+          )
+        },
+        error = function(e) {
+          TRUE
+        }
+      )
+      if (isTRUE(bd_any)) {
+        # nolint start
+        return(FALSE)
+        # nolint end
+      }
+
+      if (!isTRUE(vanishing_theta)) {
+        # nolint start
+        return(TRUE)
+        # nolint end
+      }
+
+      parnames <- tryCatch(
+        {
+          names(stats::coef(i))
+        },
+        error = function(e) {
+          character(0)
+        }
+      )
+
+      has_theta <- any(
+        grepl(
+          "^theta_",
+          parnames,
+          perl = TRUE
+        )
+      )
+      if (!isTRUE(has_theta)) {
+        # nolint start
+        return(TRUE)
+        # nolint end
+      }
+
+      theta_diag <- tryCatch(
+        {
+          diag(
+            OpenMx::mxEvalByName(
+              name = "theta",
+              model = i
+            )
+          )
+        },
+        error = function(e) {
+          numeric(0)
+        }
+      )
+
+      if (length(theta_diag) == 0L) {
+        # nolint start
+        return(TRUE)
+        # nolint end
+      }
+
+      isTRUE(all(theta_diag > theta_tol, na.rm = TRUE))
     },
-    grad_tol = grad_tol,
-    hess_tol = hess_tol,
-    vanishing_theta = vanishing_theta,
-    theta_tol = theta_tol
+    FUN.VALUE = logical(1)
   )
-  if (prop) {
+
+  if (isTRUE(prop)) {
     out <- mean(out)
-  } else {
-    files <- names(out)
-    clean_names <- sub(
-      pattern = ".*ID(.*)\\.Rds$",
-      replacement = "\\1",
-      x = files
-    )
-    names(out) <- clean_names
   }
+
   out
 }

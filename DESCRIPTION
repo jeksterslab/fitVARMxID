@@ -16,11 +16,11 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.1.0), OpenMx (>= 2.22.10)
-Imports: stats, methods, simStateSpace (>= 1.2.14)
+Imports: stats, simStateSpace (>= 1.2.14)
 Suggests: knitr, rmarkdown, testthat
 RoxygenNote: 7.3.3.9000
 NeedsCompilation: no
-Packaged: 2026-02-17 19:22:15 UTC; root
+Packaged: 2026-02-18 23:01:46 UTC; root
 Author: Ivan Jacob Agaloos Pesigan [aut, cre, cph] (ORCID:
     <https://orcid.org/0000-0003-4818-8420>)
 Maintainer: Ivan Jacob Agaloos Pesigan <r.jeksterslab@gmail.com>

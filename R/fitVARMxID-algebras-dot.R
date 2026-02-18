@@ -8,7 +8,7 @@
                                 halflife_beta,
                                 cor_psi,
                                 pcor_psi) {
-  if (pcor_psi) {
+  if (isTRUE(pcor_psi)) {
     solve_psi <- TRUE
   }
   out <- list()
@@ -30,7 +30,7 @@
     out,
     iden
   )
-  if (eigenval_beta) {
+  if (isTRUE(eigenval_beta)) {
     eigenval_beta <- list(
       eigenval_beta = OpenMx::mxAlgebraFromString(
         algString = "eigenval(beta)",
@@ -46,7 +46,7 @@
       eigenval_beta
     )
   }
-  if (eigenvec_beta) {
+  if (isTRUE(eigenvec_beta)) {
     eigenvec_beta <- list(
       eigenvec_beta = OpenMx::mxAlgebraFromString(
         algString = "eigenvec(beta)",
@@ -62,7 +62,7 @@
       eigenvec_beta
     )
   }
-  if (solve_psi) {
+  if (isTRUE(solve_psi)) {
     solve_psi <- list(
       solve_psi = OpenMx::mxAlgebraFromString(
         algString = "solve(psi)",
@@ -74,7 +74,7 @@
       solve_psi
     )
   }
-  if (eigenmod_beta) {
+  if (isTRUE(eigenmod_beta)) {
     eigenmod_beta_algebra <- paste0(
       "sqrt(eigenval(beta)",
       " * eigenval(beta) + ieigenval(beta) * ",
@@ -91,8 +91,8 @@
       eigenmod_beta
     )
   }
-  if (spectral_beta) {
-    if (ct) {
+  if (isTRUE(spectral_beta)) {
+    if (isTRUE(ct)) {
       spectral_beta <- list(
         spectral_beta = OpenMx::mxAlgebraFromString(
           algString = "max(eigenval(beta))",
@@ -117,8 +117,8 @@
       spectral_beta
     )
   }
-  if (halflife_beta) {
-    if (ct) {
+  if (isTRUE(halflife_beta)) {
+    if (isTRUE(ct)) {
       halflife_beta_algebra <- paste0(
         "log(2) / (-max(eigenval(beta)))"
       )
@@ -145,7 +145,7 @@
       halflife_beta
     )
   }
-  if (cor_psi) {
+  if (isTRUE(cor_psi)) {
     cor_psi_algebra <- paste0(
       "vec2diag(1 / sqrt(diag2vec(psi)))",
       " %*% psi %*% ",
@@ -162,7 +162,7 @@
       cor_psi
     )
   }
-  if (pcor_psi) {
+  if (isTRUE(pcor_psi)) {
     pcor_raw <- paste0(
       "-vec2diag(1 / sqrt(diag2vec(solve_psi)))",
       " %*% solve_psi %*% ",

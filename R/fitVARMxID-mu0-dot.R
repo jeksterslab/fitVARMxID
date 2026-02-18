@@ -10,6 +10,12 @@
   # x0
   # initial condition
   # mean
+  if (isTRUE(mu0_fixed)) {
+    mu0_free <- FALSE
+  }
+  if (isFALSE(is.null(mu0_values))) {
+    mu0_func <- FALSE
+  }
   m <- k
   n <- 1
   free_val <- mu0_free
@@ -20,14 +26,20 @@
   row <- statenames
   col <- "mu0"
   name <- "mu0"
-  if (mu0_fixed) {
-    if (mu0_func) {
+  if (isTRUE(mu0_fixed)) {
+    if (isTRUE(mu0_func)) {
       mu0 <- .FitVARMxIDMu0Func(
         k = k,
         statenames = statenames,
         ct = ct
       )
     } else {
+      if (is.null(values)) {
+        values <- rep(
+          x = 0,
+          times = k
+        )
+      }
       mu0 <- .MxHelperFullFixed(
         m = m,
         n = n,

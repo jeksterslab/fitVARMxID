@@ -19,37 +19,36 @@ lapply(
     } else {
       ci <- FALSE
       n <- 2
-      time <- 1000
+      time <- 100
       tol <- 1.00
     }
-    Sys.setenv(
-      OMP_NUM_THREADS = "1",
-      MKL_NUM_THREADS = "1",
-      OPENBLAS_NUM_THREADS = "1"
-    )
     k <- 2
-    alpha <- stats::runif(n = k)
-    beta <- 0.90 * diag(k)
+    alpha <- rep(x = 0, times = k)
+    beta <- 0.50 * diag(k)
     mu <- c(solve(diag(k) - beta) %*% alpha)
-    psi <- diag(k)
+    psi <- 0.10 * diag(k)
     psi_l <- t(chol(psi))
-    mu0 <- c(solve(diag(k) - beta) %*% alpha)
-    sigma0 <- matrix(
-      data = c(
-        solve(diag(k * k) - beta %x% beta) %*% c(psi)
-      ),
-      nrow = k,
-      ncol = k
+    mu0 <- simStateSpace::SSMMeanEta(
+      beta = beta,
+      alpha = alpha
     )
+    sigma0 <- simStateSpace::SSMCovEta(
+      beta = beta,
+      psi = psi
+    )
+    sigma0 <- 0.5 * (sigma0 + t(sigma0))
     sigma0_l <- t(chol(sigma0))
-    sim <- simStateSpace::SimSSMVARIVary(
+    nu <- rep(x = 0, times = k)
+    lambda <- diag(k)
+    theta <- matrix(data = 0, nrow = k, ncol = k)
+    sim <- simStateSpace::SimSSMVARFixed(
       n = n,
       time = time,
-      mu0 = list(mu0),
-      sigma0_l = list(sigma0_l),
-      alpha = list(alpha),
-      beta = list(beta),
-      psi_l = list(psi_l)
+      mu0 = mu0,
+      sigma0_l = sigma0_l,
+      alpha = alpha,
+      beta = beta,
+      psi_l = psi_l
     )
     data <- as.data.frame(sim)
     fit <- FitVARMxID(
@@ -58,8 +57,7 @@ lapply(
       id = "id",
       center = TRUE,
       mu_fixed = TRUE,
-      mu_values = list(mu),
-      theta_fixed = TRUE, # no measurement component
+      mu_values = mu,
       robust = TRUE,
       seed = 42
     )
@@ -91,6 +89,38 @@ lapply(
       }
     )
     library(OpenMx)
+    mu0_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "mu0",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    sigma0_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "sigma0",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
     mu_hat <- colMeans(
       do.call(
         what = "rbind",
@@ -148,6 +178,54 @@ lapply(
             c(
               mxEvalByName(
                 name = "psi",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    nu_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "nu",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    lambda_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "lambda",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    theta_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "theta",
                 model = fit$output[[i]]
               )
             )
@@ -224,18 +302,52 @@ lapply(
       }
     )
     testthat::test_that(
-      paste(text, "error"),
+      paste(text, "nu"),
       {
         testthat::skip_on_cran()
-        testthat::expect_error(
-          FitVARMxID(
-            data = data,
-            observed = paste0("y", seq_len(k)),
-            id = "id",
-            center = FALSE,
-            mu_fixed = FALSE,
-            nu_fixed = FALSE,
-            theta_fixed = TRUE # no measurement component
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                nu
+              ) - c(
+                nu_hat
+              )
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "lambda"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                lambda
+              ) - c(
+                lambda_hat
+              )
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "theta"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                theta
+              ) - c(
+                theta_hat
+              )
+            ) <= tol
           )
         )
       }

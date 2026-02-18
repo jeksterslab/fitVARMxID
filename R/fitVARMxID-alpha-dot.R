@@ -8,6 +8,9 @@
                              ct) {
   # B
   # latent variables on covariates
+  if (isTRUE(alpha_fixed)) {
+    alpha_free <- FALSE
+  }
   m <- k
   n <- 1
   free_val <- alpha_free
@@ -18,7 +21,7 @@
   row <- statenames
   col <- "alpha"
   name <- "alpha"
-  if (alpha_fixed) {
+  if (isTRUE(alpha_fixed)) {
     alpha <- .MxHelperFullFixed(
       m = m,
       n = n,
@@ -51,7 +54,7 @@
       )
     )
   )
-  if (ct) {
+  if (isTRUE(ct)) {
     mu <- list(
       mu = OpenMx::mxAlgebraFromString(
         algString = "solve(-beta) %*% alpha",
