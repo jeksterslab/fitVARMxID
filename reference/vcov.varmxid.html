@@ -52,10 +52,18 @@
 <span>  theta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  var_metric <span class="op">=</span> <span class="st">"var"</span>,</span>
 <span>  converged <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  grad_tol <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span>  hess_tol <span class="op">=</span> <span class="fl">1e-08</span>,</span>
 <span>  vanishing_theta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  theta_tol <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  prop <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  grad_tol <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  hess_tol_abs <span class="op">=</span> <span class="fl">1e-08</span>,</span>
+<span>  hess_tol_rel <span class="op">=</span> <span class="fl">1e-10</span>,</span>
+<span>  check_condition <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cond_max <span class="op">=</span> <span class="fl">1e+12</span>,</span>
+<span>  abs_bnd_tol <span class="op">=</span> <span class="fl">1e-06</span>,</span>
+<span>  rel_bnd_tol <span class="op">=</span> <span class="fl">1e-04</span>,</span>
+<span>  ok_codes <span class="op">=</span> <span class="fl">0L</span>,</span>
+<span>  require_finite_fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  robust <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -139,19 +147,6 @@ in the <code>LDL'</code> decomposition.</p></dd>
 Only include converged cases.</p></dd>
 
 
-<dt id="arg-grad-tol">grad_tol<a class="anchor" aria-label="anchor" href="#arg-grad-tol"></a></dt>
-<dd><p>Numeric scalar.
-Tolerance for the maximum absolute gradient
-if <code>converged = TRUE</code>.</p></dd>
-
-
-<dt id="arg-hess-tol">hess_tol<a class="anchor" aria-label="anchor" href="#arg-hess-tol"></a></dt>
-<dd><p>Numeric scalar.
-Tolerance for Hessian eigenvalues;
-eigenvalues must be strictly greater than this value
-if <code>converged = TRUE</code>.</p></dd>
-
-
 <dt id="arg-vanishing-theta">vanishing_theta<a class="anchor" aria-label="anchor" href="#arg-vanishing-theta"></a></dt>
 <dd><p>Logical.
 Test for measurement error variance going to zero
@@ -162,6 +157,57 @@ if <code>converged = TRUE</code>.</p></dd>
 <dd><p>Numeric.
 Tolerance for vanishing theta test
 if <code>converged</code> and <code>theta_tol</code> are <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-prop">prop<a class="anchor" aria-label="anchor" href="#arg-prop"></a></dt>
+<dd><p>Logical.
+If <code>prop = FALSE</code>, a named logical vector indicating,
+for each individual fit, whether the convergence criteria are met.
+If <code>prop = TRUE</code>, the proportion of cases that converged.</p></dd>
+
+
+<dt id="arg-grad-tol">grad_tol<a class="anchor" aria-label="anchor" href="#arg-grad-tol"></a></dt>
+<dd><p>Numeric. Tolerance for the gradient-based convergence check.</p></dd>
+
+
+<dt id="arg-hess-tol-abs">hess_tol_abs<a class="anchor" aria-label="anchor" href="#arg-hess-tol-abs"></a></dt>
+<dd><p>Numeric. Absolute tolerance used when checking whether
+the Hessian is positive-definite.</p></dd>
+
+
+<dt id="arg-hess-tol-rel">hess_tol_rel<a class="anchor" aria-label="anchor" href="#arg-hess-tol-rel"></a></dt>
+<dd><p>Numeric. Relative tolerance used when checking whether
+the Hessian is positive-definite.</p></dd>
+
+
+<dt id="arg-check-condition">check_condition<a class="anchor" aria-label="anchor" href="#arg-check-condition"></a></dt>
+<dd><p>Logical. If <code>TRUE</code>, also check the Hessian condition
+number as part of the Hessian diagnostics.</p></dd>
+
+
+<dt id="arg-cond-max">cond_max<a class="anchor" aria-label="anchor" href="#arg-cond-max"></a></dt>
+<dd><p>Numeric. Maximum allowed condition number for the Hessian
+when <code>check_condition = TRUE</code>.</p></dd>
+
+
+<dt id="arg-abs-bnd-tol">abs_bnd_tol<a class="anchor" aria-label="anchor" href="#arg-abs-bnd-tol"></a></dt>
+<dd><p>Numeric. Absolute tolerance for detecting whether a
+parameter is at its lower or upper bound.</p></dd>
+
+
+<dt id="arg-rel-bnd-tol">rel_bnd_tol<a class="anchor" aria-label="anchor" href="#arg-rel-bnd-tol"></a></dt>
+<dd><p>Numeric. Relative tolerance for detecting whether a
+parameter is at its lower or upper bound.</p></dd>
+
+
+<dt id="arg-ok-codes">ok_codes<a class="anchor" aria-label="anchor" href="#arg-ok-codes"></a></dt>
+<dd><p>Integer vector. Optimizer status codes that are considered
+acceptable.</p></dd>
+
+
+<dt id="arg-require-finite-fit">require_finite_fit<a class="anchor" aria-label="anchor" href="#arg-require-finite-fit"></a></dt>
+<dd><p>Logical. If <code>TRUE</code>, require a finite objective
+value (fit) as part of the convergence check.</p></dd>
 
 
 <dt id="arg-robust">robust<a class="anchor" aria-label="anchor" href="#arg-robust"></a></dt>
