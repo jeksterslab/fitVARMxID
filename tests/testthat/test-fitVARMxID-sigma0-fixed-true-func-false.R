@@ -1,4 +1,4 @@
-## ---- test-fitVARMxID-sigma0-fixed-true-func
+## ---- test-fitVARMxID-sigma0-fixed-true-func-false
 lapply(
   X = 1,
   FUN = function(i,
@@ -61,8 +61,16 @@ lapply(
           obj$name == "sigma0"
         )
         testthat::expect_true(
-          is.null(
-            obj$values
+          all(
+            obj$values == matrix(
+              data = c(
+                1, 0, 0,
+                0, 1, 0,
+                0, 0, 1
+              ),
+              nrow = k,
+              ncol = k
+            )
           )
         )
         testthat::expect_true(
@@ -128,5 +136,5 @@ lapply(
       }
     )
   },
-  text = "test-fitVARMxID-sigma0-fixed-true-func"
+  text = "test-fitVARMxID-sigma0-fixed-true-func-false"
 )

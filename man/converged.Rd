@@ -9,11 +9,18 @@ converged(object, ...)
 
 \method{converged}{varmxid}(
   object,
-  grad_tol = 0.01,
-  hess_tol = 1e-08,
   vanishing_theta = TRUE,
   theta_tol = 0.001,
   prop = FALSE,
+  grad_tol = 0.01,
+  hess_tol_abs = 1e-08,
+  hess_tol_rel = 1e-10,
+  check_condition = FALSE,
+  cond_max = 1e+12,
+  abs_bnd_tol = 1e-06,
+  rel_bnd_tol = 1e-04,
+  ok_codes = 0L,
+  require_finite_fit = TRUE,
   ...
 )
 }
@@ -21,15 +28,6 @@ converged(object, ...)
 \item{object}{A fit object.}
 
 \item{...}{Passed to and/or used by methods.}
-
-\item{grad_tol}{Numeric scalar.
-Tolerance for the maximum absolute gradient
-if \code{converged = TRUE}.}
-
-\item{hess_tol}{Numeric scalar.
-Tolerance for Hessian eigenvalues;
-eigenvalues must be strictly greater than this value
-if \code{converged = TRUE}.}
 
 \item{vanishing_theta}{Logical.
 Test for measurement error variance going to zero
@@ -43,6 +41,32 @@ if \code{converged} and \code{theta_tol} are \code{TRUE}.}
 If \code{prop = FALSE}, a named logical vector indicating,
 for each individual fit, whether the convergence criteria are met.
 If \code{prop = TRUE}, the proportion of cases that converged.}
+
+\item{grad_tol}{Numeric. Tolerance for the gradient-based convergence check.}
+
+\item{hess_tol_abs}{Numeric. Absolute tolerance used when checking whether
+the Hessian is positive-definite.}
+
+\item{hess_tol_rel}{Numeric. Relative tolerance used when checking whether
+the Hessian is positive-definite.}
+
+\item{check_condition}{Logical. If \code{TRUE}, also check the Hessian condition
+number as part of the Hessian diagnostics.}
+
+\item{cond_max}{Numeric. Maximum allowed condition number for the Hessian
+when \code{check_condition = TRUE}.}
+
+\item{abs_bnd_tol}{Numeric. Absolute tolerance for detecting whether a
+parameter is at its lower or upper bound.}
+
+\item{rel_bnd_tol}{Numeric. Relative tolerance for detecting whether a
+parameter is at its lower or upper bound.}
+
+\item{ok_codes}{Integer vector. Optimizer status codes that are considered
+acceptable.}
+
+\item{require_finite_fit}{Logical. If \code{TRUE}, require a finite objective
+value (fit) as part of the convergence check.}
 }
 \value{
 For the \code{varmxid} method:
@@ -51,20 +75,11 @@ for each individual fit, whether the convergence criteria are met.
 If \code{prop = TRUE}, the proportion of cases that converged.
 }
 \description{
-Evaluate whether OpenMx fit has converged successfully.
-}
-\details{
-Convergence is defined by three criteria:
-\enumerate{
-\item Status code equals \code{0L}.
-\item The maximum absolute gradient is below \code{grad_tol}.
-\item The Hessian is positive definite
-with all eigenvalues greater than \code{hess_tol}.
-\item If \code{vanishing_theta = TRUE}, the model additionally checks
-that the diagonal elements of the measurement error covariance matrix
-(\eqn{\Theta}) are not vanishingly small,
-where “small” is defined by \code{theta_tol}.
-}
+Determines whether each fitted \pkg{OpenMx} model in a \code{varmxid} object
+meets convergence criteria based on (a) acceptable optimizer status and
+gradient size, (b) a positive-definite Hessian, (c) parameters not being
+at their bounds, and (optionally) non-vanishing measurement error
+variances (\code{theta}).
 }
 \author{
 Ivan Jacob Agaloos Pesigan

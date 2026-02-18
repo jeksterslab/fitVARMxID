@@ -15,9 +15,13 @@
                               ct) {
   # P0
   # Initial condition covariance matrix
+  if (isTRUE(sigma0_fixed)) {
+    sigma0_d_free <- FALSE
+    sigma0_l_free <- FALSE
+  }
   type <- NULL
-  if (sigma0_fixed) {
-    if (sigma0_func) {
+  if (isTRUE(sigma0_fixed)) {
+    if (isTRUE(sigma0_func)) {
       sigma0 <- .FitVARMxIDSigma0Func(
         k = k,
         statenames = statenames,
@@ -26,8 +30,8 @@
       run <- FALSE
     } else {
       if (is.null(sigma0_d_values)) {
-        # fix to a diffused matrix (diag of 1e10)
-        type <- "diffused"
+        # fix to an identity matrix
+        type <- "identity"
       } else {
         type <- NULL
       }
@@ -42,7 +46,7 @@
       sigma0_d_ubound <- 650
     }
   }
-  if (run) {
+  if (isTRUE(run)) {
     sigma0 <- .FitVARMxIDCov(
       k = k,
       row = statenames,
@@ -61,14 +65,14 @@
       l_ubound = sigma0_l_ubound
     )
   }
-  if (sigma0_fixed) {
+  if (isTRUE(sigma0_fixed)) {
     if (!is.null(type)) {
-      if (type == "diffused") {
+      if (type == "identity") {
         sigma0$sigma0 <- .MxHelperFullMxMatrix(
           m = k,
           n = k,
           free_val = FALSE,
-          values = 1e10 * diag(k),
+          values = diag(k),
           lbound_val = NA,
           ubound_val = NA,
           vec = FALSE,

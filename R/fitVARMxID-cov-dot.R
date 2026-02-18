@@ -20,14 +20,14 @@
   d_cols <- paste0(name, "_", "d")
   l_rows <- row
   l_cols <- row
-  if (diag) {
+  if (isTRUE(diag)) {
     l_values <- matrix(
       data = 0,
       nrow = k,
       ncol = k
     )
   }
-  if (fixed) {
+  if (isTRUE(fixed)) {
     if (is.null(d_values)) {
       out <- .MxHelperSigmaFixed(
         p = k,
@@ -46,7 +46,7 @@
       )
     }
   } else {
-    if (diag) {
+    if (isTRUE(diag)) {
       out <- .MxHelperSigmaDiagFromLDLMxMatrix(
         p = k,
         name = name,

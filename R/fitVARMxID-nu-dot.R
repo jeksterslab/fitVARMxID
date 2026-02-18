@@ -7,6 +7,9 @@
                           nu_ubound) {
   # D
   # observed variables on covariates
+  if (isTRUE(nu_fixed)) {
+    nu_free <- FALSE
+  }
   m <- k
   n <- 1
   free_val <- nu_free
@@ -17,7 +20,7 @@
   row <- observed
   col <- "nu"
   name <- "nu"
-  if (nu_fixed) {
+  if (isTRUE(nu_fixed)) {
     nu <- .MxHelperFullFixed(
       m = m,
       n = n,

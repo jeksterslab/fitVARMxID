@@ -1,7 +1,7 @@
 .FitVARMxIDSigma <- function(k,
                              statenames,
                              ct) {
-  if (ct) {
+  if (isTRUE(ct)) {
     sigma_column <- list(
       sigma_column = OpenMx::mxAlgebraFromString(
         algString = paste0(

@@ -15,10 +15,18 @@
   theta = TRUE,
   var_metric = "var",
   converged = TRUE,
-  grad_tol = 0.01,
-  hess_tol = 1e-08,
   vanishing_theta = TRUE,
   theta_tol = 0.001,
+  prop = FALSE,
+  grad_tol = 0.01,
+  hess_tol_abs = 1e-08,
+  hess_tol_rel = 1e-10,
+  check_condition = FALSE,
+  cond_max = 1e+12,
+  abs_bnd_tol = 1e-06,
+  rel_bnd_tol = 1e-04,
+  ok_codes = 0L,
+  require_finite_fit = TRUE,
   digits = 4,
   ...
 )
@@ -84,15 +92,6 @@ in the \verb{LDL'} decomposition.}
 \item{converged}{Logical.
 Only include converged cases.}
 
-\item{grad_tol}{Numeric scalar.
-Tolerance for the maximum absolute gradient
-if \code{converged = TRUE}.}
-
-\item{hess_tol}{Numeric scalar.
-Tolerance for Hessian eigenvalues;
-eigenvalues must be strictly greater than this value
-if \code{converged = TRUE}.}
-
 \item{vanishing_theta}{Logical.
 Test for measurement error variance going to zero
 if \code{converged = TRUE}.}
@@ -100,6 +99,37 @@ if \code{converged = TRUE}.}
 \item{theta_tol}{Numeric.
 Tolerance for vanishing theta test
 if \code{converged} and \code{theta_tol} are \code{TRUE}.}
+
+\item{prop}{Logical.
+If \code{prop = FALSE}, a named logical vector indicating,
+for each individual fit, whether the convergence criteria are met.
+If \code{prop = TRUE}, the proportion of cases that converged.}
+
+\item{grad_tol}{Numeric. Tolerance for the gradient-based convergence check.}
+
+\item{hess_tol_abs}{Numeric. Absolute tolerance used when checking whether
+the Hessian is positive-definite.}
+
+\item{hess_tol_rel}{Numeric. Relative tolerance used when checking whether
+the Hessian is positive-definite.}
+
+\item{check_condition}{Logical. If \code{TRUE}, also check the Hessian condition
+number as part of the Hessian diagnostics.}
+
+\item{cond_max}{Numeric. Maximum allowed condition number for the Hessian
+when \code{check_condition = TRUE}.}
+
+\item{abs_bnd_tol}{Numeric. Absolute tolerance for detecting whether a
+parameter is at its lower or upper bound.}
+
+\item{rel_bnd_tol}{Numeric. Relative tolerance for detecting whether a
+parameter is at its lower or upper bound.}
+
+\item{ok_codes}{Integer vector. Optimizer status codes that are considered
+acceptable.}
+
+\item{require_finite_fit}{Logical. If \code{TRUE}, require a finite objective
+value (fit) as part of the convergence check.}
 
 \item{digits}{Integer indicating the number of decimal places to display.}
 

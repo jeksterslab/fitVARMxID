@@ -39,7 +39,7 @@
     }
   }
   # nocov end
-  if (par) {
+  if (isTRUE(par)) {
     # nocov start
     OpenMx::mxOption(
       key = "Number of Threads",
@@ -53,7 +53,7 @@
     } else {
       fork <- FALSE
     }
-    if (fork) {
+    if (isTRUE(fork)) {
       out <- parallel::mclapply(
         X = fit,
         FUN = foo,

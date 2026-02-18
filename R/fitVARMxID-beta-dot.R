@@ -8,6 +8,9 @@
                             ct) {
   # A
   # auto regression and cross regression coefficients
+  if (isTRUE(beta_fixed)) {
+    beta_free <- FALSE
+  }
   m <- k
   n <- k
   values <- beta_values
@@ -21,7 +24,7 @@
   # tryCatch projects values to stability
   values <- tryCatch(
     {
-      if (ct) {
+      if (isTRUE(ct)) {
         values <- .MxHelperCTVARBetaValues(
           p = k,
           val = values
@@ -58,11 +61,11 @@
       nrow = m,
       ncol = n
     )
-    if (ct) {
+    if (isTRUE(ct)) {
       diag(ubound_val) <- -1e-05
     }
   }
-  if (beta_fixed) {
+  if (isTRUE(beta_fixed)) {
     # bypass values if beta_values is NULL
     if (is.null(beta_values)) {
       values <- matrix(

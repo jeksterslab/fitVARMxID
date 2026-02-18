@@ -20,7 +20,6 @@ Depends:
     OpenMx (>= 2.22.10)
 Imports:
     stats,
-    methods,
     simStateSpace (>= 1.2.14)
 Suggests:
     knitr,

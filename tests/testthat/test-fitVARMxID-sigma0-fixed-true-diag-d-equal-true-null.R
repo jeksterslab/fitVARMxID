@@ -71,9 +71,9 @@ lapply(
           all(
             obj$values == matrix(
               data = c(
-                1e10, 0, 0,
-                0, 1e10, 0,
-                0, 0, 1e10
+                1, 0, 0,
+                0, 1, 0,
+                0, 0, 1
               ),
               nrow = k,
               ncol = k

@@ -23,12 +23,6 @@ reference:
   - has_keyword("methods")
 
 articles:
-- title: Examples with Fixed Parameters
-  contents:
-  - dt-center-true
-  - dt-center-false
-  - ct-center-true
-  - ct-center-false
 - title: Session Information
   contents:
   - session

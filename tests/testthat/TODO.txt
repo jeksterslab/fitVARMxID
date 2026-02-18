@@ -1,4 +1,0 @@
-estimate mu0, sigma0, nu, theta
-
-
-fix alpha/mu, beta, psi

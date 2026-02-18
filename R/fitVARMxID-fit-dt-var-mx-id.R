@@ -409,46 +409,19 @@
 #'   Ignored if no diagonal elements are free.
 #' @param robust Logical.
 #'   If `TRUE`, calculate robust (sandwich) sampling variance-covariance matrix.
+#' @param seed Random seed for reproducibility.
 #' @param tries_explore Integer.
-#'   Number of extra tries for the wide exploration
-#'   phase using `OpenMx::mxTryHardWideSearch()` with `checkHess = FALSE`.
+#'   Number of extra tries for the wide exploration phase.
 #' @param tries_local Integer.
-#'   Number of extra tries for local polishing via
-#'   `OpenMx::mxTryHard()` when gradients remain above tolerance.
+#'   Number of extra tries for local polishing.
 #' @param max_attempts Integer.
 #'   Maximum number of remediation attempts
 #'   after the first Hessian computation fails the criteria.
-#'   Each attempt may nudge off bounds,
-#'   refit locally without the Hessian, and,
-#'   on the last attempt, relax bounds.
-#' @param grad_tol Numeric.
-#'   Tolerance for the maximum absolute gradient.
-#'   Smaller values are stricter.
-#' @param hess_tol Numeric.
-#'   Minimum allowable Hessian eigenvalue.
-#'   Smaller values are less strict.
-#' @param eps Numeric.
-#'   Proximity threshold to detect parameters on their bounds
-#'   and to nudge them inward by `10 * eps`.
-#' @param factor Numeric.
-#'   Multiplicative factor to relax parameter bounds
-#'   on the final remediation attempt.
-#'   Lower bounds are divided by `factor` and
-#'   upper bounds are multiplied by `factor`.
-#' @param overwrite Logical.
-#'   If `TRUE`, existing intermediate files are overwritten.
-#'   Defaults to `FALSE`.
-#' @param path Character string.
-#'   Directory in which to save intermediate files.
-#' @param prefix Alphanumeric character string.
-#'   Prefix to use when naming intermediate files.
-#' @param seed Random seed for reproducibility.
 #' @param silent Logical.
 #'   If `TRUE`, suppresses messages during the model fitting stage.
 #' @param ncores Positive integer.
 #'   Number of cores to use.
-#' @param clean Logical.
-#'   If `TRUE`, clean intermediate files saved in `path`.
+#' @inheritParams converged
 #'
 #' @return Returns an object of class `varmxid` which is
 #'   a list with the following elements:
@@ -474,8 +447,14 @@
 #' beta <- 0.50 * diag(p)
 #' psi <- 0.001 * diag(p)
 #' psi_l <- t(chol(psi))
-#' mu0 <- c(solve(diag(p) - beta) %*% alpha)
-#' sigma0 <- 0.001 * diag(p)
+#' mu0 <- simStateSpace::SSMMeanEta(
+#'   beta = beta,
+#'   alpha = alpha
+#' )
+#' sigma0 <- simStateSpace::SSMCovEta(
+#'   beta = beta,
+#'   psi = psi
+#' )
 #' sigma0_l <- t(chol(sigma0))
 #' sim <- SimSSMVARFixed(
 #'   n = n,
@@ -607,44 +586,38 @@ FitVARMxID <- function(data,
                        sigma0_l_lbound = NULL,
                        sigma0_l_ubound = NULL,
                        robust = FALSE,
+                       seed = NULL,
                        tries_explore = 100,
-                       tries_local = 10,
+                       tries_local = 100,
                        max_attempts = 10,
                        grad_tol = 1e-2,
-                       hess_tol = 1e-8,
-                       eps = 1e-6,
-                       factor = 10,
-                       overwrite = FALSE,
-                       path = getwd(),
-                       prefix = "FitVARMxID",
-                       seed = NULL,
+                       hess_tol_abs = 1e-8,
+                       hess_tol_rel = 1e-10,
+                       check_condition = FALSE,
+                       cond_max = 1e12,
+                       abs_bnd_tol = 1e-6,
+                       rel_bnd_tol = 1e-4,
+                       ok_codes = 0L,
+                       require_finite_fit = TRUE,
                        silent = FALSE,
-                       ncores = NULL,
-                       clean = TRUE) {
-  stopifnot(
-    dir.exists(path),
-    grepl(
-      pattern = "^[A-Za-z0-9]+$",
-      x = prefix
-    )
-  )
-  if (ct && is.null(time)) {
+                       ncores = NULL) {
+  if (isTRUE(center)) {
+    if (isFALSE(mu_fixed) && isFALSE(nu_fixed)) {
+      stop(
+        "\n`mu` and `nu` cannot be modeled at the same time at the moment."
+      )
+    }
+  } else {
+    if (isFALSE(alpha_fixed) && isFALSE(nu_fixed)) {
+      stop(
+        "\n`alpha` and `nu` cannot be modeled at the same time at the moment."
+      )
+    }
+  }
+  if (isTRUE(ct) && is.null(time)) {
     stop(
       "\nArgument `time` cannot be `NULL` if `ct = TRUE`\n."
     )
-  }
-  if (!silent) {
-    if (interactive()) {
-      # nocov start
-      message(
-        paste0(
-          "\nIntermediate files will be saved in ",
-          path,
-          "\n"
-        )
-      )
-      # nocov end
-    }
   }
   args <- list(
     data = data,
@@ -713,20 +686,18 @@ FitVARMxID <- function(data,
     sigma0_l_values = sigma0_l_values,
     sigma0_l_lbound = sigma0_l_lbound,
     sigma0_l_ubound = sigma0_l_ubound,
-    tries_explore = tries_explore,
-    tries_local = tries_local,
-    max_attempts = max_attempts,
-    grad_tol = grad_tol,
-    hess_tol = hess_tol,
-    eps = eps,
-    factor = factor,
-    overwrite = overwrite,
-    path = path,
-    prefix = prefix,
     seed = seed,
+    grad_tol = grad_tol,
+    hess_tol_abs = hess_tol_abs,
+    hess_tol_rel = hess_tol_rel,
+    check_condition = check_condition,
+    cond_max = cond_max,
+    abs_bnd_tol = abs_bnd_tol,
+    rel_bnd_tol = rel_bnd_tol,
+    ok_codes = ok_codes,
+    require_finite_fit = require_finite_fit,
     silent = silent,
-    ncores = ncores,
-    clean = clean
+    ncores = ncores
   )
   output <- .FitVARMxID(
     data = data,
@@ -795,20 +766,18 @@ FitVARMxID <- function(data,
     sigma0_l_values = sigma0_l_values,
     sigma0_l_lbound = sigma0_l_lbound,
     sigma0_l_ubound = sigma0_l_ubound,
-    tries_explore = tries_explore,
-    tries_local = tries_local,
-    max_attempts = max_attempts,
-    grad_tol = grad_tol,
-    hess_tol = hess_tol,
-    eps = eps,
-    factor = factor,
-    overwrite = overwrite,
-    path = path,
-    prefix = prefix,
     seed = seed,
+    grad_tol = grad_tol,
+    hess_tol_abs = hess_tol_abs,
+    hess_tol_rel = hess_tol_rel,
+    check_condition = check_condition,
+    cond_max = cond_max,
+    abs_bnd_tol = abs_bnd_tol,
+    rel_bnd_tol = rel_bnd_tol,
+    ok_codes = ok_codes,
+    require_finite_fit = require_finite_fit,
     silent = silent,
-    ncores = ncores,
-    clean = clean
+    ncores = ncores
   )
   if (robust) {
     sandwich <- tryCatch(
