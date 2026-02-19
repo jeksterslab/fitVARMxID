@@ -64,19 +64,11 @@
                         sigma0_l_values,
                         sigma0_l_lbound,
                         sigma0_l_ubound,
+                        robust,
                         seed,
                         tries_explore,
                         tries_local,
                         max_attempts,
-                        grad_tol,
-                        hess_tol_abs,
-                        hess_tol_rel,
-                        check_condition,
-                        cond_max,
-                        abs_bnd_tol,
-                        rel_bnd_tol,
-                        ok_codes,
-                        require_finite_fit,
                         silent,
                         ncores) {
   threads <- OpenMx::mxOption(
@@ -89,6 +81,15 @@
     ),
     add = TRUE
   )
+  grad_tol <- 1e-2
+  hess_tol_abs <- 1e-8
+  hess_tol_rel <- 1e-10
+  check_condition <- FALSE
+  cond_max <- 1e12
+  abs_bnd_tol <- 1e-6
+  rel_bnd_tol <- 1e-4
+  ok_codes <- 0L
+  require_finite_fit <- TRUE
   factor <- 10
   relax_on_last <- TRUE
   relax_exclude <- NULL
@@ -270,14 +271,6 @@
         FUN.VALUE = logical(1)
       )
       if (any(still_bad)) {
-        warning(
-          paste0(
-            sum(still_bad),
-            " model(s) still did not meet convergence criteria after Hessian rescue."
-          )
-        )
-      }
-      if (any(still_bad)) {
         fit[still_bad] <- parallel::mclapply(
           X = fit[still_bad],
           FUN = .MxHelperEnsureGoodHessian,
@@ -389,14 +382,6 @@
         FUN.VALUE = logical(1)
       )
       if (any(still_bad)) {
-        warning(
-          paste0(
-            sum(still_bad),
-            " model(s) still did not meet convergence criteria after Hessian rescue."
-          )
-        )
-      }
-      if (any(still_bad)) {
         fit[still_bad] <- parallel::parLapply(
           cl = cl,
           X = fit[still_bad],
@@ -498,14 +483,6 @@
       FUN.VALUE = logical(1)
     )
     if (any(still_bad)) {
-      warning(
-        paste0(
-          sum(still_bad),
-          " model(s) still did not meet convergence criteria after Hessian rescue."
-        )
-      )
-    }
-    if (any(still_bad)) {
       fit[still_bad] <- lapply(
         X = fit[still_bad],
         FUN = .MxHelperEnsureGoodHessian,
@@ -532,5 +509,53 @@
       )
     }
   }
-  fit
+  converged <- vapply(
+    X = fit,
+    FUN = function(x) {
+      if (!inherits(x, "MxModel")) {
+        FALSE
+      } else {
+        !.MxHelperNeedsRescue(
+          model = x,
+          grad_tol = grad_tol,
+          ok_codes = ok_codes,
+          require_finite_fit = require_finite_fit,
+          hess_tol_abs = hess_tol_abs,
+          hess_tol_rel = hess_tol_rel,
+          check_condition = check_condition,
+          cond_max = cond_max,
+          abs_bnd_tol = abs_bnd_tol,
+          rel_bnd_tol = rel_bnd_tol
+        )
+      }
+    },
+    FUN.VALUE = logical(1)
+  )
+  model_names <- lapply(
+    X = model,
+    FUN = function(i) {
+      methods::slot(
+        object = i,
+        name = "name"
+      )
+    }
+  )
+  if (robust) {
+    sandwich <- .Robust(
+      fit = fit,
+      ncores = ncores
+    )
+    names(sandwich) <- model_names
+  } else {
+    sandwich <- NULL
+  }
+  names(model) <- model_names
+  names(fit) <- model_names
+  names(converged) <- model_names
+  list(
+    model = model,
+    fit = fit,
+    converged = converged,
+    robust = sandwich
+  )
 }

@@ -76,15 +76,6 @@ FitVARMxID(
   tries_explore = 100,
   tries_local = 100,
   max_attempts = 10,
-  grad_tol = 0.01,
-  hess_tol_abs = 1e-08,
-  hess_tol_rel = 1e-10,
-  check_condition = FALSE,
-  cond_max = 1e+12,
-  abs_bnd_tol = 1e-06,
-  rel_bnd_tol = 1e-04,
-  ok_codes = 0L,
-  require_finite_fit = TRUE,
   silent = FALSE,
   ncores = NULL
 )
@@ -396,32 +387,6 @@ Number of extra tries for local polishing.}
 Maximum number of remediation attempts
 after the first Hessian computation fails the criteria.}
 
-\item{grad_tol}{Numeric. Tolerance for the gradient-based convergence check.}
-
-\item{hess_tol_abs}{Numeric. Absolute tolerance used when checking whether
-the Hessian is positive-definite.}
-
-\item{hess_tol_rel}{Numeric. Relative tolerance used when checking whether
-the Hessian is positive-definite.}
-
-\item{check_condition}{Logical. If \code{TRUE}, also check the Hessian condition
-number as part of the Hessian diagnostics.}
-
-\item{cond_max}{Numeric. Maximum allowed condition number for the Hessian
-when \code{check_condition = TRUE}.}
-
-\item{abs_bnd_tol}{Numeric. Absolute tolerance for detecting whether a
-parameter is at its lower or upper bound.}
-
-\item{rel_bnd_tol}{Numeric. Relative tolerance for detecting whether a
-parameter is at its lower or upper bound.}
-
-\item{ok_codes}{Integer vector. Optimizer status codes that are considered
-acceptable.}
-
-\item{require_finite_fit}{Logical. If \code{TRUE}, require a finite objective
-value (fit) as part of the convergence check.}
-
 \item{silent}{Logical.
 If \code{TRUE}, suppresses messages during the model fitting stage.}
 
@@ -436,6 +401,7 @@ a list with the following elements:
 \item{args}{List of function arguments.}
 \item{fun}{Function used ("FitVARMxID").}
 \item{output}{A list of fitted OpenMx models.}
+\item{converged}{A logical vector indicating converged cases.}
 \item{robust}{A list of output from \code{\link[OpenMx:imxRobustSE]{OpenMx::imxRobustSE()}}
 with argument \code{details = TRUE} for each \code{id}
 if \code{robust = TRUE}.}

@@ -8,12 +8,19 @@
                          cond_max = 1e12,
                          silent = FALSE,
                          ...) {
+  obj <- inherits(model, "MxModel")
+  if (isFALSE(obj)) {
+    # nolint start
+    return(NULL)
+    # nolint end
+  }
   # Default: rerun unless we can prove it's already "good"
   run <- TRUE
-  has_status <-
+  has_status <- (
     !is.null(model$output) &&
       !is.null(model$output$status) &&
       !is.null(model$output$status$code)
+  )
   if (has_status && model$output$status$code == 0L) {
     good_fit <- tryCatch(
       .MxHelperIsGoodFit(
@@ -41,10 +48,13 @@
     }
   }
   if (run) {
-    model <- OpenMx::mxTryHard(
-      model  = model,
-      silent = silent,
-      ...
+    model <- tryCatch(
+      OpenMx::mxTryHard(
+        model  = model,
+        silent = silent,
+        ...
+      ),
+      error = function(e) NULL
     )
   }
   model

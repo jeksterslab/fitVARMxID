@@ -8,12 +8,13 @@
                                  cond_max = 1e12,
                                  abs_bnd_tol = 1e-6,
                                  rel_bnd_tol = 1e-4) {
-  bad_status <-
+  bad_status <- (
     is.null(model$output) ||
       is.null(model$output$status) ||
       is.null(model$output$status$code) ||
       is.na(model$output$status$code) ||
       !(model$output$status$code %in% ok_codes)
+  )
 
   if (isTRUE(bad_status)) {
     # nolint start

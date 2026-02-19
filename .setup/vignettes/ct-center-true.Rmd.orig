@@ -1,0 +1,340 @@
+---
+title: "Continuous-Time Vector Autoregressive Model (center = TRUE)"
+author: "Ivan Jacob Agaloos Pesigan"
+date: "`r Sys.Date()`"
+bibliography: "vignettes.bib"
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+nocite: |
+  @RCoreTeam-2025
+  @Neale-Hunter-Pritikin-etal-2015
+  @Hunter-2017
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Continuous-Time Vector Autoregressive Model (center = TRUE)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r include=FALSE}
+Sys.setenv(
+  OMP_NUM_THREADS = "1",
+  MKL_NUM_THREADS = "1",
+  OPENBLAS_NUM_THREADS = "1"
+)
+```
+
+```{r}
+#| include = FALSE
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.path = "fig-vignettes-ct-center-true-",
+  fig.cap = "",
+  fig.width = 11,
+  fig.height = 8,
+  fig.retina = 2,
+  dpi = 300,
+  comment = "#>"
+)
+```
+
+```{r}
+#| echo = FALSE
+set.seed(42)
+n <- 100
+time <- 1000
+k <- p <- 3
+iden <- diag(k)
+null_vec <- rep(x = 0, times = k)
+alpha <- stats::runif(
+  n = k
+)
+beta <- matrix(
+  data = c(
+    -0.35667494,
+     0.77075340,
+    -0.44994489,
+     0.00000000,
+    -0.51082562,
+     0.72928623,
+     0.00000000,
+     0.00000000,
+    -0.69314718
+  ),
+  nrow = 3
+)
+psi <- 0.1 * iden
+psi_l <- t(chol(psi))
+nu <- null_vec
+lambda <- iden
+theta <- 0.0 * iden
+theta_l <- 0.0 * iden
+mu0 <- simStateSpace::LinSDEMeanEta(
+  phi = beta,
+  iota = alpha
+)
+mu <- simStateSpace::LinSDEMeanEta(
+  phi = beta,
+  iota = alpha
+)
+sigma0 <- simStateSpace::LinSDECovEta(
+  phi = beta,
+  sigma = psi
+)
+sigma0_l <- t(chol(sigma0))
+```
+
+## Model
+
+The measurement model is given by
+\begin{equation}
+  \mathbf{y}_{i, t}
+  =
+  \boldsymbol{\eta}_{i, t}
+\end{equation}
+where
+$\mathbf{y}_{i, t}$, and
+$\boldsymbol{\eta}_{i, t}$ are random variables.
+
+The dynamic structure is given by
+\begin{equation}
+  \mathrm{d}
+  \boldsymbol{\eta}_{i, t}
+  =
+  \boldsymbol{\beta}_{i}
+  \left(
+    \boldsymbol{\eta}_{i, t - 1}
+    -
+    \boldsymbol{\mu}_{i}
+  \right)
+  \mathrm{d} t
+  +
+  \boldsymbol{\Psi}_{i}^{\frac{1}{2}}
+  \mathrm{d}
+  \mathbf{W}_{i, t}
+\end{equation}
+where
+$\mathrm{d}\boldsymbol{W}$
+is a Wiener process or Brownian motion,
+which represents random fluctuations,
+$\boldsymbol{\eta}_{i, t}$, and
+$\boldsymbol{\eta}_{i, t - 1}$
+are random variables,
+and
+$\boldsymbol{\mu}$,
+$\boldsymbol{\beta}$,
+and
+$\boldsymbol{\Psi}$
+are model parameters.
+Here,
+$\boldsymbol{\eta}_{i, t}$
+is a vector of latent variables
+at time $t$ and individual $i$, and
+$\boldsymbol{\eta}_{i, t - 1}$
+represents a vector of latent variables
+at time $t - 1$ and individual $i$.
+$\boldsymbol{\mu}$
+denotes a vector of set-points,
+$\boldsymbol{\beta}$
+a matrix of auto
+and cross effect coefficients,
+and
+$\boldsymbol{\Psi}$
+the covariance matrix of the random fluctuations.
+
+## Data Generation
+
+### Notation
+
+Let $t = `r time`$ be the number of time points and $n = `r n`$ be the number of individuals.
+
+Let the initial condition
+$\boldsymbol{\eta}_{0}$
+be given by
+
+\begin{equation}
+\boldsymbol{\eta}_{0} \sim \mathcal{N} \left( \boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}, \boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0} \right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{c}
+  `r mu0[1]` \\
+  `r mu0[2]` \\
+  `r mu0[3]` \\
+\end{array}
+\right)
+\end{equation}
+
+\begin{equation}
+\boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{ccc}
+  `r sigma0[1, 1]` & `r sigma0[1, 2]` & `r sigma0[1, 3]` \\
+  `r sigma0[2, 1]` & `r sigma0[2, 2]` & `r sigma0[2, 3]` \\
+  `r sigma0[3, 1]` & `r sigma0[3, 2]` & `r sigma0[3, 3]` \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the set-point vector $\boldsymbol{\mu}$ be given by
+
+\begin{equation}
+\boldsymbol{\mu}
+=
+\left(
+\begin{array}{c}
+  `r mu[1]` \\
+  `r mu[2]` \\
+  `r mu[3]` \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the transition matrix $\boldsymbol{\Phi}$ be given by
+
+\begin{equation}
+\boldsymbol{\Phi}
+=
+\left(
+\begin{array}{ccc}
+  `r beta[1, 1]` & `r beta[1, 2]` & `r beta[1, 3]` \\
+  `r beta[2, 1]` & `r beta[2, 2]` & `r beta[2, 3]` \\
+  `r beta[3, 1]` & `r beta[3, 2]` & `r beta[3, 3]` \\
+\end{array}
+\right) .
+\end{equation}
+
+Let the dynamic process noise $\boldsymbol{\Psi}$ be given by
+
+\begin{equation}
+\boldsymbol{\Psi}
+=
+\left(
+\begin{array}{ccc}
+  `r psi[1, 1]` & `r psi[1, 2]` & `r psi[1, 3]` \\
+  `r psi[2, 1]` & `r psi[2, 2]` & `r psi[2, 3]` \\
+  `r psi[3, 1]` & `r psi[3, 2]` & `r psi[3, 3]` \\
+\end{array}
+\right) .
+\end{equation}
+
+### R Function Arguments
+
+```{r}
+n
+time
+mu0
+sigma0
+sigma0_l # sigma0_l <- t(chol(sigma0))
+alpha
+beta
+psi
+psi_l # psi_l <- t(chol(psi))
+# set-point
+mu
+nu
+lambda
+theta
+```
+
+### Visualizing the Dynamics Without Process Noise (n = 5 with Different Initial Condition)
+
+```{r no-error-ssm}
+#| echo = FALSE
+library(simStateSpace)
+sim <- SimSSMLinSDEFixed(
+  n = 5,
+  time = 100,
+  delta_t = 0.1,
+  mu0 = mu0,
+  sigma0_l = sigma0_l,
+  iota = alpha,
+  phi = beta,
+  sigma_l = matrix(
+    data = 0,
+    nrow = k,
+    ncol = k
+  ),
+  nu = nu,
+  lambda = lambda,
+  theta_l = matrix(
+    data = 0,
+    nrow = k,
+    ncol = k
+  )
+)
+plot(sim, type = "l")
+```
+
+### Using the `SimSSMLinSDEFixed` Function from the `simStateSpace` Package to Simulate Data
+
+> **Note:** The `SimSSMLinSDEFixed` function uses a different set of parameter names.
+> See `help(SimSSMLinSDEFixed)` for more details.
+
+```{r error-ssm}
+library(simStateSpace)
+sim <- SimSSMLinSDEFixed(
+  n = n,
+  time = time,
+  delta_t = 0.1,
+  mu0 = mu0,
+  sigma0_l = sigma0_l,
+  iota = alpha,
+  phi = beta,
+  sigma_l = psi_l,
+  nu = nu,
+  lambda = lambda,
+  theta_l, theta_l
+)
+data <- as.data.frame(sim)
+head(data)
+summary(data)
+plot(sim)
+```
+
+## Model Fitting
+
+```{r}
+#| include = FALSE
+library(OpenMx)
+library(fitVARMxID)
+```
+
+```{r}
+library(OpenMx)
+library(fitVARMxID)
+```
+
+The `FitVARMxID` function fits a CT-VAR model on each individual $i$.
+
+> **Note:** Consider using the argument `ncores` to use multiple cores for parallel processing.
+
+```{r, message = FALSE, warning = FALSE, results = "hide"}
+fit <- FitVARMxID(
+  data = data,
+  observed = c("y1", "y2", "y3"),
+  id = "id",
+  ct = TRUE,
+  time = "time",
+  center = TRUE,
+  ncores = 16
+)
+```
+
+#### Parameter estimates
+
+```{r}
+summary(fit, means = TRUE)
+```
+
+## References
+
+```{r}
+#| include = FALSE
+rm(list = ls())
+```

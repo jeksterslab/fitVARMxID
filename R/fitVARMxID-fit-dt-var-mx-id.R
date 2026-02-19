@@ -421,7 +421,6 @@
 #'   If `TRUE`, suppresses messages during the model fitting stage.
 #' @param ncores Positive integer.
 #'   Number of cores to use.
-#' @inheritParams converged
 #'
 #' @return Returns an object of class `varmxid` which is
 #'   a list with the following elements:
@@ -430,6 +429,7 @@
 #'     \item{args}{List of function arguments.}
 #'     \item{fun}{Function used ("FitVARMxID").}
 #'     \item{output}{A list of fitted OpenMx models.}
+#'     \item{converged}{A logical vector indicating converged cases.}
 #'     \item{robust}{A list of output from [OpenMx::imxRobustSE()]
 #'         with argument `details = TRUE` for each `id`
 #'         if `robust = TRUE`.}
@@ -590,15 +590,6 @@ FitVARMxID <- function(data,
                        tries_explore = 100,
                        tries_local = 100,
                        max_attempts = 10,
-                       grad_tol = 1e-2,
-                       hess_tol_abs = 1e-8,
-                       hess_tol_rel = 1e-10,
-                       check_condition = FALSE,
-                       cond_max = 1e12,
-                       abs_bnd_tol = 1e-6,
-                       rel_bnd_tol = 1e-4,
-                       ok_codes = 0L,
-                       require_finite_fit = TRUE,
                        silent = FALSE,
                        ncores = NULL) {
   if (isTRUE(center)) {
@@ -686,16 +677,11 @@ FitVARMxID <- function(data,
     sigma0_l_values = sigma0_l_values,
     sigma0_l_lbound = sigma0_l_lbound,
     sigma0_l_ubound = sigma0_l_ubound,
+    robust = robust,
     seed = seed,
-    grad_tol = grad_tol,
-    hess_tol_abs = hess_tol_abs,
-    hess_tol_rel = hess_tol_rel,
-    check_condition = check_condition,
-    cond_max = cond_max,
-    abs_bnd_tol = abs_bnd_tol,
-    rel_bnd_tol = rel_bnd_tol,
-    ok_codes = ok_codes,
-    require_finite_fit = require_finite_fit,
+    tries_explore = tries_explore,
+    tries_local = tries_local,
+    max_attempts = max_attempts,
     silent = silent,
     ncores = ncores
   )
@@ -766,40 +752,22 @@ FitVARMxID <- function(data,
     sigma0_l_values = sigma0_l_values,
     sigma0_l_lbound = sigma0_l_lbound,
     sigma0_l_ubound = sigma0_l_ubound,
+    robust = robust,
     seed = seed,
-    grad_tol = grad_tol,
-    hess_tol_abs = hess_tol_abs,
-    hess_tol_rel = hess_tol_rel,
-    check_condition = check_condition,
-    cond_max = cond_max,
-    abs_bnd_tol = abs_bnd_tol,
-    rel_bnd_tol = rel_bnd_tol,
-    ok_codes = ok_codes,
-    require_finite_fit = require_finite_fit,
+    tries_explore = tries_explore,
+    tries_local = tries_local,
+    max_attempts = max_attempts,
     silent = silent,
     ncores = ncores
   )
-  if (robust) {
-    sandwich <- tryCatch(
-      {
-        .Robust(
-          fit = output,
-          ncores = ncores
-        )
-      },
-      error = function(e) {
-        NULL
-      }
-    )
-  } else {
-    sandwich <- NULL
-  }
   out <- list(
     call = match.call(),
     args = args,
     fun = "FitVARMxID",
-    output = output,
-    robust = sandwich
+    model = output$model,
+    output = output$fit,
+    converged = output$converged,
+    robust = output$robust
   )
   class(out) <- c(
     "varmxid",

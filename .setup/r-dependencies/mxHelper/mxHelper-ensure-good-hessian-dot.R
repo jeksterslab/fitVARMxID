@@ -19,6 +19,12 @@
                                        relax_streak = 3,
                                        relax_min_attempt = 3,
                                        silent = FALSE) {
+  obj <- inherits(model, "MxModel")
+  if (isFALSE(obj)) {
+    # nolint start
+    return(NULL)
+    # nolint end
+  }
   # Use this function only when an initial fitting attempt (e.g., mxTryHard)
   # did not meet criteria for convergence + PD Hessian + not at bounds.
   model <- .MxHelperForceHessianOptions(model)
