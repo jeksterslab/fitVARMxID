@@ -19,11 +19,6 @@
 - [`converged()`](https://github.com/jeksterslab/fitVARMxID/reference/converged.md)
   : Check Model Convergence
 
-- [`print(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/print.varmxid.md)
-  :
-
-  Print Method for Object of Class `varmxid`
-
 - [`summary(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/summary.varmxid.md)
   :
 

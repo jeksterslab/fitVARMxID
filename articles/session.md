@@ -3,10 +3,6 @@
 ``` r
 
 library(fitVARMxID)
-#> Loading required package: OpenMx
-#> To take full advantage of multiple cores, use:
-#>   mxOption(key='Number of Threads', value=parallel::detectCores()) #now
-#>   Sys.setenv(OMP_NUM_THREADS=parallel::detectCores()) #before library(OpenMx)
 ```
 
 ## Session
@@ -37,15 +33,16 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] fitVARMxID_1.0.2 OpenMx_2.22.10  
+#> [1] fitVARMxID_1.0.2     OpenMx_2.22.10       simStateSpace_1.2.15
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] digest_0.6.39         xfun_0.56             Matrix_1.7-4         
-#>  [4] lattice_0.22-7        knitr_1.51            parallel_4.5.2       
-#>  [7] RcppParallel_5.1.11-1 lifecycle_1.0.5       cli_3.6.5.9000       
-#> [10] rProject_0.0.25       grid_4.5.2            compiler_4.5.2       
-#> [13] tools_4.5.2           evaluate_1.0.5        Rcpp_1.1.1           
-#> [16] otel_0.2.0            rlang_1.1.7           MASS_7.3-65
+#>  [1] digest_0.6.39         Matrix_1.7-4          xfun_0.56            
+#>  [4] lattice_0.22-7        glue_1.8.0            knitr_1.51           
+#>  [7] parallel_4.5.2        RcppParallel_5.1.11-1 lifecycle_1.0.5      
+#> [10] cli_3.6.5.9000        rProject_0.0.25       grid_4.5.2           
+#> [13] vctrs_0.7.1           compiler_4.5.2        tools_4.5.2          
+#> [16] evaluate_1.0.5        pillar_1.11.1         Rcpp_1.1.1           
+#> [19] otel_0.2.0            rlang_1.1.7           MASS_7.3-65
 ```
 
 ## Packages
@@ -480,7 +477,7 @@ installed.packages()[, c("Package", "Version")]
     #> Socket(s):                               1
     #> Stepping:                                0
     #> Frequency boost:                         enabled
-    #> CPU(s) scaling MHz:                      55%
+    #> CPU(s) scaling MHz:                      50%
     #> CPU max MHz:                             5060.9761
     #> CPU min MHz:                             1219.5129
     #> BogoMIPS:                                4990.57
@@ -513,6 +510,6 @@ installed.packages()[, c("Package", "Version")]
 ## Memory
 
     #>                total        used        free      shared  buff/cache   available
-    #> Mem:            44Gi       3.6Gi        38Gi        49Mi       3.4Gi        40Gi
+    #> Mem:            44Gi       3.5Gi        37Gi        41Mi       3.6Gi        40Gi
     #> Swap:           22Gi          0B        22Gi
-    #> Total:          66Gi       3.6Gi        60Gi
+    #> Total:          66Gi       3.5Gi        60Gi

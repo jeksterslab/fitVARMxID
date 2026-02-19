@@ -119,15 +119,6 @@ for each unit ID.</p>
 <span>  tries_explore <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  tries_local <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  max_attempts <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>  grad_tol <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span>  hess_tol_abs <span class="op">=</span> <span class="fl">1e-08</span>,</span>
-<span>  hess_tol_rel <span class="op">=</span> <span class="fl">1e-10</span>,</span>
-<span>  check_condition <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  cond_max <span class="op">=</span> <span class="fl">1e+12</span>,</span>
-<span>  abs_bnd_tol <span class="op">=</span> <span class="fl">1e-06</span>,</span>
-<span>  rel_bnd_tol <span class="op">=</span> <span class="fl">1e-04</span>,</span>
-<span>  ok_codes <span class="op">=</span> <span class="fl">0L</span>,</span>
-<span>  require_finite_fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  silent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  ncores <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -585,50 +576,6 @@ Maximum number of remediation attempts
 after the first Hessian computation fails the criteria.</p></dd>
 
 
-<dt id="arg-grad-tol">grad_tol<a class="anchor" aria-label="anchor" href="#arg-grad-tol"></a></dt>
-<dd><p>Numeric. Tolerance for the gradient-based convergence check.</p></dd>
-
-
-<dt id="arg-hess-tol-abs">hess_tol_abs<a class="anchor" aria-label="anchor" href="#arg-hess-tol-abs"></a></dt>
-<dd><p>Numeric. Absolute tolerance used when checking whether
-the Hessian is positive-definite.</p></dd>
-
-
-<dt id="arg-hess-tol-rel">hess_tol_rel<a class="anchor" aria-label="anchor" href="#arg-hess-tol-rel"></a></dt>
-<dd><p>Numeric. Relative tolerance used when checking whether
-the Hessian is positive-definite.</p></dd>
-
-
-<dt id="arg-check-condition">check_condition<a class="anchor" aria-label="anchor" href="#arg-check-condition"></a></dt>
-<dd><p>Logical. If <code>TRUE</code>, also check the Hessian condition
-number as part of the Hessian diagnostics.</p></dd>
-
-
-<dt id="arg-cond-max">cond_max<a class="anchor" aria-label="anchor" href="#arg-cond-max"></a></dt>
-<dd><p>Numeric. Maximum allowed condition number for the Hessian
-when <code>check_condition = TRUE</code>.</p></dd>
-
-
-<dt id="arg-abs-bnd-tol">abs_bnd_tol<a class="anchor" aria-label="anchor" href="#arg-abs-bnd-tol"></a></dt>
-<dd><p>Numeric. Absolute tolerance for detecting whether a
-parameter is at its lower or upper bound.</p></dd>
-
-
-<dt id="arg-rel-bnd-tol">rel_bnd_tol<a class="anchor" aria-label="anchor" href="#arg-rel-bnd-tol"></a></dt>
-<dd><p>Numeric. Relative tolerance for detecting whether a
-parameter is at its lower or upper bound.</p></dd>
-
-
-<dt id="arg-ok-codes">ok_codes<a class="anchor" aria-label="anchor" href="#arg-ok-codes"></a></dt>
-<dd><p>Integer vector. Optimizer status codes that are considered
-acceptable.</p></dd>
-
-
-<dt id="arg-require-finite-fit">require_finite_fit<a class="anchor" aria-label="anchor" href="#arg-require-finite-fit"></a></dt>
-<dd><p>Logical. If <code>TRUE</code>, require a finite objective
-value (fit) as part of the convergence check.</p></dd>
-
-
 <dt id="arg-silent">silent<a class="anchor" aria-label="anchor" href="#arg-silent"></a></dt>
 <dd><p>Logical.
 If <code>TRUE</code>, suppresses messages during the model fitting stage.</p></dd>
@@ -653,6 +600,9 @@ a list with the following elements:</p><dl><dt>call</dt>
 
 <dt>output</dt>
 <dd><p>A list of fitted OpenMx models.</p></dd>
+
+<dt>converged</dt>
+<dd><p>A logical vector indicating converged cases.</p></dd>
 
 <dt>robust</dt>
 <dd><p>A list of output from <code><a href="https://rdrr.io/pkg/OpenMx/man/imxRobustSE.html" class="external-link">OpenMx::imxRobustSE()</a></code>
@@ -992,18 +942,18 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Convergence: 100.0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated paramaters per individual.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1] psi[2,1]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.0058  0.0071    0.3316   -0.0198    0.0270    0.5393    1e-03    1e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.0028 -0.0199    0.5467   -0.0201   -0.0488    0.2975    8e-04    1e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.0043 -0.0017    0.5281   -0.3325    0.0109    0.3614    9e-04   -2e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] -0.0131  0.0033    0.1608   -0.1218   -0.0299    0.4818    7e-04    0e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] -0.0011  0.0033    0.2991    0.0349   -0.0802    0.4659    1e-03   -2e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      psi[2,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   0.0009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   0.0011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   0.0012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]   0.0010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]   0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1  0.0058  0.0071    0.3316   -0.0198    0.0270    0.5393    1e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID2 -0.0028 -0.0199    0.5467   -0.0201   -0.0488    0.2975    8e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID3 -0.0043 -0.0017    0.5281   -0.3325    0.0109    0.3614    9e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID4 -0.0131  0.0033    0.1608   -0.1218   -0.0299    0.4818    7e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID5 -0.0011  0.0033    0.2991    0.0349   -0.0802    0.4659    1e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           psi[2,1] psi[2,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1    1e-04   0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID2    1e-04   0.0011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID3   -2e-04   0.0012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID4    0e+00   0.0010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID5   -2e-04   0.0009</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", </span>
@@ -1012,51 +962,51 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Convergence: 100.0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated paramaters per individual.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1] psi[2,1]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.0058  0.0071    0.3316   -0.0198    0.0270    0.5393    1e-03    1e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.0028 -0.0199    0.5467   -0.0201   -0.0488    0.2975    8e-04    1e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.0043 -0.0017    0.5281   -0.3325    0.0109    0.3614    9e-04   -2e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] -0.0131  0.0033    0.1608   -0.1218   -0.0299    0.4818    7e-04    0e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] -0.0011  0.0033    0.2991    0.0349   -0.0802    0.4659    1e-03   -2e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      psi[2,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   0.0009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   0.0011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   0.0012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]   0.0010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]   0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1  0.0058  0.0071    0.3316   -0.0198    0.0270    0.5393    1e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID2 -0.0028 -0.0199    0.5467   -0.0201   -0.0488    0.2975    8e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID3 -0.0043 -0.0017    0.5281   -0.3325    0.0109    0.3614    9e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID4 -0.0131  0.0033    0.1608   -0.1218   -0.0299    0.4818    7e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID5 -0.0011  0.0033    0.2991    0.0349   -0.0802    0.4659    1e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           psi[2,1] psi[2,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1    1e-04   0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID2    1e-04   0.0011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID3   -2e-04   0.0012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID4    0e+00   0.0010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID5   -2e-04   0.0009</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  5.794695e-03  7.106199e-03  3.316127e-01 -1.976314e-02  2.701813e-02 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  5.392601e-01  9.953214e-04  6.207953e-05  9.262857e-04 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -0.0028415317 -0.0199122101  0.5466790303 -0.0201020489 -0.0487574619 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.2974502906  0.0007904397  0.0001392235  0.0010550290 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -0.0042623000 -0.0017317348  0.5281055611 -0.3325012835  0.0108536161 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.3614197053  0.0009432480 -0.0002017399  0.0011560438 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[4]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -1.309553e-02  3.261008e-03  1.608442e-01 -1.218248e-01 -2.989196e-02 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4.818157e-01  7.231704e-04  4.352386e-06  1.007466e-03 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[5]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -0.0011111505  0.0033156320  0.2990559852  0.0348621727 -0.0801687056 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.4658903909  0.0009954751 -0.0001656666  0.0008606361 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[1,1]    2.224531e-05  2.743979e-06 -5.546138e-06  5.372819e-06  1.426060e-05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[2,1]    2.743979e-06  4.246265e-05 -8.513834e-08  2.692920e-07 -6.084754e-06</span>
@@ -1078,7 +1028,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,1]   1.100977e-08  1.237250e-09  9.257098e-09  1.150936e-09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]  -1.024578e-07  7.717316e-11  1.150936e-09  1.716564e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[1,1]    3.711430e-05  1.028041e-06 -1.259632e-06 -1.486527e-06 -6.233540e-06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[2,1]    1.028041e-06  2.111878e-05 -5.442272e-07 -5.152523e-06  3.401863e-06</span>
@@ -1100,7 +1050,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,1]  -4.464222e-09  2.199571e-09  8.528443e-09  2.938846e-09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]  -6.176501e-08  3.880986e-10  2.938846e-09  2.226704e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[1,1]    4.014794e-05 -2.654775e-05 -4.975392e-06  3.545267e-08  6.952597e-06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[2,1]   -2.654775e-05  4.483621e-05 -7.485950e-06  1.159674e-05 -2.039629e-05</span>
@@ -1122,7 +1072,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,1]   4.371743e-09 -3.803148e-09  1.136282e-08 -4.703032e-09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]  -7.603266e-08  8.297955e-10 -4.703032e-09  2.676450e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[4]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[1,1]    1.043712e-05 -3.604418e-06  4.814324e-06 -1.628211e-06 -1.951168e-07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[2,1]   -3.604418e-06  3.796609e-05  3.531995e-07 -3.004506e-06  7.858673e-06</span>
@@ -1144,7 +1094,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,1]   1.850297e-08  6.372424e-11  7.297033e-09  9.078742e-11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]  -9.165652e-08  1.141598e-12  9.078742e-11  2.030675e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[5]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 mu[1,1]       mu[2,1]     beta[1,1]     beta[2,1]     beta[1,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[1,1]    2.115776e-05 -6.312505e-06 -9.365997e-07 -7.441133e-06  2.767397e-07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu[2,1]   -6.312505e-06  2.876505e-05  3.661845e-08  8.679316e-08 -8.396412e-07</span>
@@ -1167,7 +1117,8 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]  -8.224086e-08  5.501745e-10 -2.854392e-09  1.481772e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="converged.html">converged</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE TRUE TRUE TRUE TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1 DTVAR_ID2 DTVAR_ID3 DTVAR_ID4 DTVAR_ID5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      TRUE      TRUE      TRUE      TRUE      TRUE </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit the model---------------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># center = FALSE</span></span></span>
@@ -1251,18 +1202,18 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Convergence: 100.0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated paramaters per individual.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]     0.0037     0.0034    0.3316   -0.0198    0.0270    0.5393    1e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    -0.0023    -0.0140    0.5467   -0.0201   -0.0488    0.2975    8e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    -0.0020    -0.0025    0.5281   -0.3325    0.0109    0.3614    9e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]    -0.0109     0.0001    0.1608   -0.1218   -0.0299    0.4818    7e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]    -0.0005     0.0018    0.2991    0.0349   -0.0802    0.4659    1e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      psi[2,1] psi[2,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1e-04   0.0009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    1e-04   0.0011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   -2e-04   0.0012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]    0e+00   0.0010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]   -2e-04   0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1     0.0037     0.0034    0.3316   -0.0198    0.0270    0.5393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID2    -0.0023    -0.0140    0.5467   -0.0201   -0.0488    0.2975</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID3    -0.0020    -0.0025    0.5281   -0.3325    0.0109    0.3614</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID4    -0.0109     0.0001    0.1608   -0.1218   -0.0299    0.4818</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID5    -0.0005     0.0018    0.2991    0.0349   -0.0802    0.4659</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           psi[1,1] psi[2,1] psi[2,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1    1e-03    1e-04   0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID2    8e-04    1e-04   0.0011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID3    9e-04   -2e-04   0.0012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID4    7e-04    0e+00   0.0010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID5    1e-03   -2e-04   0.0009</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", </span>
@@ -1271,51 +1222,51 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Convergence: 100.0%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated paramaters per individual.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]     0.0037     0.0034    0.3316   -0.0198    0.0270    0.5393    1e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    -0.0023    -0.0140    0.5467   -0.0201   -0.0488    0.2975    8e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    -0.0020    -0.0025    0.5281   -0.3325    0.0109    0.3614    9e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]    -0.0109     0.0001    0.1608   -0.1218   -0.0299    0.4818    7e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]    -0.0005     0.0018    0.2991    0.0349   -0.0802    0.4659    1e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      psi[2,1] psi[2,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1e-04   0.0009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    1e-04   0.0011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   -2e-04   0.0012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]    0e+00   0.0010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]   -2e-04   0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1     0.0037     0.0034    0.3316   -0.0198    0.0270    0.5393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID2    -0.0023    -0.0140    0.5467   -0.0201   -0.0488    0.2975</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID3    -0.0020    -0.0025    0.5281   -0.3325    0.0109    0.3614</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID4    -0.0109     0.0001    0.1608   -0.1218   -0.0299    0.4818</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID5    -0.0005     0.0018    0.2991    0.0349   -0.0802    0.4659</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           psi[1,1] psi[2,1] psi[2,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1    1e-03    1e-04   0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID2    8e-04    1e-04   0.0011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID3    9e-04   -2e-04   0.0012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID4    7e-04    0e+00   0.0010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID5    1e-03   -2e-04   0.0009</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3.681113e-03  3.388633e-03  3.316128e-01 -1.976313e-02  2.701815e-02 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  5.392600e-01  9.953219e-04  6.207963e-05  9.262859e-04 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -0.0022590347 -0.0140464531  0.5466790837 -0.0201029545 -0.0487573561 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.2974504584  0.0007904395  0.0001392246  0.0010550305 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -0.0019925640 -0.0025230744  0.5281055238 -0.3325011849  0.0108536589 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.3614197102  0.0009432483 -0.0002017401  0.0011560435 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[4]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -1.089173e-02  9.445977e-05  1.608448e-01 -1.218225e-01 -2.989108e-02 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  4.818163e-01  7.231700e-04  4.351938e-06  1.007467e-03 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[5]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -0.0005130370  0.0018096495  0.2990567150  0.0348620015 -0.0801683884 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.4658899620  0.0009954750 -0.0001656666  0.0008606358 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[1,1]  1.041603e-05  6.394386e-07 -5.052813e-05  1.065411e-06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[2,1]  6.394386e-07  9.499927e-06 -2.801871e-06 -4.336068e-05</span>
@@ -1347,7 +1298,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,1]    1.150882e-09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]    1.716566e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[1,1]  1.032520e-05  1.895363e-06  4.491604e-06 -4.439589e-07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[2,1]  1.895363e-06  1.388419e-05  4.954290e-07  3.218983e-06</span>
@@ -1379,7 +1330,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,1]    2.938828e-09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]    2.226711e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[1,1]  9.428506e-06 -2.010191e-06  3.931285e-05 -8.901042e-06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[2,1] -2.010191e-06  1.178478e-05 -1.526270e-05  5.685430e-05</span>
@@ -1411,7 +1362,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,1]   -4.702820e-09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]    2.676429e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[4]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[1,1]  9.037944e-06  5.971385e-08  1.324679e-04 -9.195905e-07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[2,1]  5.971385e-08  1.220647e-05  1.226437e-06  1.729198e-04</span>
@@ -1443,7 +1394,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,1]    9.071773e-11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]    2.030681e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[5]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $DTVAR_ID5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[1,1]  9.968760e-06 -1.649475e-06  3.243225e-06 -5.834209e-06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> alpha[2,1] -1.649475e-06  8.582750e-06 -5.982085e-07  3.749137e-06</span>
@@ -1476,7 +1427,8 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 <span class="r-out co"><span class="r-pr">#&gt;</span> psi[2,2]    1.481758e-08</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="converged.html">converged</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE TRUE TRUE TRUE TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DTVAR_ID1 DTVAR_ID2 DTVAR_ID3 DTVAR_ID4 DTVAR_ID5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      TRUE      TRUE      TRUE      TRUE      TRUE </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

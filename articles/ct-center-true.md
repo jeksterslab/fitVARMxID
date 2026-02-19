@@ -1,0 +1,294 @@
+# Continuous-Time Vector Autoregressive Model (center = TRUE)
+
+## Model
+
+The measurement model is given by
+``` math
+\begin{equation}
+  \mathbf{y}_{i, t}
+  =
+  \boldsymbol{\eta}_{i, t}
+\end{equation}
+```
+where $`\mathbf{y}_{i, t}`$, and $`\boldsymbol{\eta}_{i, t}`$ are random
+variables.
+
+The dynamic structure is given by
+``` math
+\begin{equation}
+  \mathrm{d}
+  \boldsymbol{\eta}_{i, t}
+  =
+  \boldsymbol{\beta}_{i}
+  \left(
+    \boldsymbol{\eta}_{i, t - 1}
+    -
+    \boldsymbol{\mu}_{i}
+  \right)
+  \mathrm{d} t
+  +
+  \boldsymbol{\Psi}_{i}^{\frac{1}{2}}
+  \mathrm{d}
+  \mathbf{W}_{i, t}
+\end{equation}
+```
+where $`\mathrm{d}\boldsymbol{W}`$ is a Wiener process or Brownian
+motion, which represents random fluctuations,
+$`\boldsymbol{\eta}_{i, t}`$, and $`\boldsymbol{\eta}_{i, t - 1}`$ are
+random variables, and $`\boldsymbol{\mu}`$, $`\boldsymbol{\beta}`$, and
+$`\boldsymbol{\Psi}`$ are model parameters. Here,
+$`\boldsymbol{\eta}_{i, t}`$ is a vector of latent variables at time
+$`t`$ and individual $`i`$, and $`\boldsymbol{\eta}_{i, t - 1}`$
+represents a vector of latent variables at time $`t - 1`$ and individual
+$`i`$. $`\boldsymbol{\mu}`$ denotes a vector of set-points,
+$`\boldsymbol{\beta}`$ a matrix of auto and cross effect coefficients,
+and $`\boldsymbol{\Psi}`$ the covariance matrix of the random
+fluctuations.
+
+## Data Generation
+
+### Notation
+
+Let $`t = 1000`$ be the number of time points and $`n = 100`$ be the
+number of individuals.
+
+Let the initial condition $`\boldsymbol{\eta}_{0}`$ be given by
+
+``` math
+\begin{equation}
+\boldsymbol{\eta}_{0} \sim \mathcal{N} \left( \boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}, \boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0} \right)
+\end{equation}
+```
+
+``` math
+\begin{equation}
+\boldsymbol{\mu}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{c}
+  2.5648173 \\
+  5.7043283 \\
+  4.7496423 \\
+\end{array}
+\right)
+\end{equation}
+```
+
+``` math
+\begin{equation}
+\boldsymbol{\Sigma}_{\boldsymbol{\eta} \mid 0}
+=
+\left(
+\begin{array}{ccc}
+  0.1401837 & 0.1245498 & 0.0264402 \\
+  0.1245498 & 0.2858063 & 0.1435024 \\
+  0.0264402 & 0.1435024 & 0.2059558 \\
+\end{array}
+\right) .
+\end{equation}
+```
+
+Let the set-point vector $`\boldsymbol{\mu}`$ be given by
+
+``` math
+\begin{equation}
+\boldsymbol{\mu}
+=
+\left(
+\begin{array}{c}
+  2.5648173 \\
+  5.7043283 \\
+  4.7496423 \\
+\end{array}
+\right) .
+\end{equation}
+```
+
+Let the transition matrix $`\boldsymbol{\Phi}`$ be given by
+
+``` math
+\begin{equation}
+\boldsymbol{\Phi}
+=
+\left(
+\begin{array}{ccc}
+  -0.3566749 & 0 & 0 \\
+  0.7707534 & -0.5108256 & 0 \\
+  -0.4499449 & 0.7292862 & -0.6931472 \\
+\end{array}
+\right) .
+\end{equation}
+```
+
+Let the dynamic process noise $`\boldsymbol{\Psi}`$ be given by
+
+``` math
+\begin{equation}
+\boldsymbol{\Psi}
+=
+\left(
+\begin{array}{ccc}
+  0.1 & 0 & 0 \\
+  0 & 0.1 & 0 \\
+  0 & 0 & 0.1 \\
+\end{array}
+\right) .
+\end{equation}
+```
+
+### R Function Arguments
+
+``` r
+
+n
+#> [1] 100
+time
+#> [1] 1000
+mu0
+#> [1] 2.564817 5.704328 4.749642
+sigma0
+#>            [,1]      [,2]       [,3]
+#> [1,] 0.14018366 0.1245498 0.02644023
+#> [2,] 0.12454982 0.2858063 0.14350238
+#> [3,] 0.02644023 0.1435024 0.20595577
+sigma0_l # sigma0_l <- t(chol(sigma0))
+#>            [,1]      [,2]      [,3]
+#> [1,] 0.37441109 0.0000000 0.0000000
+#> [2,] 0.33265526 0.4185054 0.0000000
+#> [3,] 0.07061819 0.2867606 0.3445827
+alpha
+#> [1] 0.9148060 0.9370754 0.2861395
+beta
+#>            [,1]       [,2]       [,3]
+#> [1,] -0.3566749  0.0000000  0.0000000
+#> [2,]  0.7707534 -0.5108256  0.0000000
+#> [3,] -0.4499449  0.7292862 -0.6931472
+psi
+#>      [,1] [,2] [,3]
+#> [1,]  0.1  0.0  0.0
+#> [2,]  0.0  0.1  0.0
+#> [3,]  0.0  0.0  0.1
+psi_l # psi_l <- t(chol(psi))
+#>           [,1]      [,2]      [,3]
+#> [1,] 0.3162278 0.0000000 0.0000000
+#> [2,] 0.0000000 0.3162278 0.0000000
+#> [3,] 0.0000000 0.0000000 0.3162278
+# set-point
+mu
+#> [1] 2.564817 5.704328 4.749642
+nu
+#> [1] 0 0 0
+lambda
+#>      [,1] [,2] [,3]
+#> [1,]    1    0    0
+#> [2,]    0    1    0
+#> [3,]    0    0    1
+theta
+#>      [,1] [,2] [,3]
+#> [1,]    0    0    0
+#> [2,]    0    0    0
+#> [3,]    0    0    0
+```
+
+### Visualizing the Dynamics Without Process Noise (n = 5 with Different Initial Condition)
+
+![](fig-vignettes-ct-center-true-no-error-ssm-1.png)![](fig-vignettes-ct-center-true-no-error-ssm-2.png)![](fig-vignettes-ct-center-true-no-error-ssm-3.png)
+
+### Using the `SimSSMLinSDEFixed` Function from the `simStateSpace` Package to Simulate Data
+
+> **Note:** The `SimSSMLinSDEFixed` function uses a different set of
+> parameter names. See
+> [`help(SimSSMLinSDEFixed)`](https://github.com/jeksterslab/simStateSpace/reference/SimSSMLinSDEFixed.html)
+> for more details.
+
+``` r
+
+library(simStateSpace)
+sim <- SimSSMLinSDEFixed(
+  n = n,
+  time = time,
+  delta_t = 0.1,
+  mu0 = mu0,
+  sigma0_l = sigma0_l,
+  iota = alpha,
+  phi = beta,
+  sigma_l = psi_l,
+  nu = nu,
+  lambda = lambda,
+  theta_l, theta_l
+)
+#> Error in `if (type > 0) ...`:
+#> ! the condition has length > 1
+data <- as.data.frame(sim)
+head(data)
+#>   id time       y1       y2       y3
+#> 1  1  0.0 2.959975 6.244881 5.001853
+#> 2  1  0.1 2.946129 6.247126 5.006265
+#> 3  1  0.2 2.932768 6.248238 5.011090
+#> 4  1  0.3 2.919876 6.248307 5.016203
+#> 5  1  0.4 2.907435 6.247422 5.021495
+#> 6  1  0.5 2.895430 6.245663 5.026869
+summary(data)
+#>        id         time             y1              y2              y3       
+#>  Min.   :1   Min.   :0.000   Min.   :1.730   Min.   :4.670   Min.   :3.970  
+#>  1st Qu.:2   1st Qu.:2.475   1st Qu.:2.498   1st Qu.:5.460   1st Qu.:4.523  
+#>  Median :3   Median :4.950   Median :2.573   Median :5.707   Median :4.714  
+#>  Mean   :3   Mean   :4.950   Mean   :2.530   Mean   :5.634   Mean   :4.679  
+#>  3rd Qu.:4   3rd Qu.:7.425   3rd Qu.:2.606   3rd Qu.:5.814   3rd Qu.:4.920  
+#>  Max.   :5   Max.   :9.900   Max.   :2.960   Max.   :6.525   Max.   :5.240
+plot(sim)
+```
+
+![](fig-vignettes-ct-center-true-error-ssm-1.png)![](fig-vignettes-ct-center-true-error-ssm-2.png)![](fig-vignettes-ct-center-true-error-ssm-3.png)
+
+## Model Fitting
+
+``` r
+
+library(OpenMx)
+library(fitVARMxID)
+```
+
+The `FitVARMxID` function fits a CT-VAR model on each individual $`i`$.
+
+> **Note:** Consider using the argument `ncores` to use multiple cores
+> for parallel processing.
+
+``` r
+
+fit <- FitVARMxID(
+  data = data,
+  observed = c("y1", "y2", "y3"),
+  id = "id",
+  ct = TRUE,
+  time = "time",
+  center = TRUE,
+  ncores = 16
+)
+```
+
+#### Parameter estimates
+
+``` r
+
+summary(fit, means = TRUE)
+#> Error in `fit[[1]]`:
+#> ! subscript out of bounds
+```
+
+## References
+
+Hunter, M. D. (2017). State space modeling in an open source, modular,
+structural equation modeling environment. *Structural Equation Modeling:
+A Multidisciplinary Journal*, *25*(2), 307–324.
+<https://doi.org/10.1080/10705511.2017.1369354>
+
+Neale, M. C., Hunter, M. D., Pritikin, J. N., Zahery, M., Brick, T. R.,
+Kirkpatrick, R. M., Estabrook, R., Bates, T. C., Maes, H. H., & Boker,
+S. M. (2015). OpenMx 2.0: Extended structural equation and statistical
+modeling. *Psychometrika*, *81*(2), 535–549.
+<https://doi.org/10.1007/s11336-014-9435-8>
+
+R Core Team. (2025). *R: A language and environment for statistical
+computing*. R Foundation for Statistical Computing.
+<https://www.R-project.org/>
