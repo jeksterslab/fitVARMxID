@@ -11,6 +11,12 @@
     add = TRUE
   )
   foo <- function(model) {
+    obj <- inherits(model, "MxModel")
+    if (isFALSE(obj)) {
+      # nolint start
+      return(NULL)
+      # nolint end
+    }
     utils::capture.output(
       suppressMessages(
         suppressWarnings(

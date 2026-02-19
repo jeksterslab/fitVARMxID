@@ -4,10 +4,12 @@
                                          rel_bnd_tol = 1e-4,
                                          exclude = NULL,
                                          protect_lb_zero = TRUE) {
-  if (!is.numeric(factor) ||
-    length(factor) != 1L ||
-    !is.finite(factor) ||
-    factor <= 1) {
+  if (
+    !is.numeric(factor) ||
+      length(factor) != 1L ||
+      !is.finite(factor) ||
+      factor <= 1
+  ) {
     stop(
       ".MxHelperRelaxBoundsAtBounds() requires factor > 1."
     )
