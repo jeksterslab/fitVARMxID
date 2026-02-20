@@ -84,19 +84,29 @@
 
   .Rank <- function(chk) {
     if (isTRUE(chk$ok)) {
+      # nolint start
       return(0L)
+      # nolint end
     }
     if (isTRUE(chk$good_fit) && isTRUE(chk$pd_hessian)) {
+      # nolint start
       return(1L) # only bounds failing
+      # nolint end
     }
     if (isTRUE(chk$good_fit)) {
+      # nolint start
       return(2L)
+      # nolint end
     }
     if (isTRUE(chk$pd_hessian)) {
+      # nolint start
       return(3L)
+      # nolint end
     }
     if (is.finite(chk$fit)) {
+      # nolint start
       return(4L)
+      # nolint end
     }
     5L
   }
@@ -121,7 +131,9 @@
   }
 
   if (!run) {
+    # nolint start
     return(model)
+    # nolint end
   }
 
   # --- Start from the given (failed) fit whenever possible ---
@@ -129,7 +141,7 @@
   fit <- model
 
   if (!has_output) {
-    if (!silent && interactive()) {
+    if (isFALSE(silent) && interactive()) {
       cat("\nNo valid output; starting wide exploration.\n")
     }
     fit <- OpenMx::mxTryHardWideSearch(
@@ -147,8 +159,10 @@
       checkHess = FALSE
     )
   } else {
-    if (!silent && interactive()) {
+    if (isFALSE(silent) && interactive()) {
+      # nocov start
       cat("\nStarting Hessian rescue from existing fit.\n")
+      # nocov end
     }
   }
 
@@ -205,7 +219,9 @@
     }
 
     if (isTRUE(chk$ok)) {
+      # nolint start
       return(final)
+      # nolint end
     }
 
     if (attempt >= max_attempts) {
@@ -216,7 +232,9 @@
           " attempts; returning best candidate encountered."
         )
       )
+      # nolint start
       return(best_model)
+      # nolint end
     }
 
     # --- Track whether the SAME labels keep hitting bounds ---
@@ -250,8 +268,10 @@
 
     # --- Relax bounds FIRST (so the bound-hit is still visible) ---
     if (isTRUE(relax_now) && isTRUE(chk$bd$any)) {
-      if (!silent && interactive()) {
+      if (isFALSE(silent) && interactive()) {
+        # nocov start
         cat("\nRelaxing bounds for parameters at bounds.\n")
+        # nocov end
       }
       fit <- .MxHelperRelaxBoundsAtBounds(
         x = fit,
@@ -272,8 +292,10 @@
 
     # --- Then nudge (cheap cleanup if still at/near bounds after relax) ---
     if (isTRUE(chk$bd$any)) {
-      if (!silent && interactive()) {
+      if (isFALSE(silent) && interactive()) {
+        # nocov start
         cat("\nNudging parameter estimates off bounds.\n")
+        # nocov end
       }
       fit <- .MxHelperNudgeOffBounds(
         x = fit,

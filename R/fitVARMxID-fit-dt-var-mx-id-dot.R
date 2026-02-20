@@ -97,6 +97,32 @@
   rerun_code6 <- TRUE
   relax_streak <- 3
   relax_min_attempt <- 3
+  if (is.null(ncores)) {
+    ncores <- 1L
+  } else {
+    ncores <- min(
+      as.integer(ncores),
+      parallel::detectCores(),
+      length(unique(data[, id]))
+    )
+  }
+  fork <- FALSE
+  if (ncores > 1) {
+    # nocov start
+    OpenMx::mxOption(
+      key = "Number of Threads",
+      value = 1
+    )
+    os_type <- Sys.info()["sysname"]
+    if (os_type == "Darwin") {
+      fork <- TRUE
+    } else if (os_type == "Linux") {
+      fork <- TRUE
+    } else {
+      fork <- FALSE
+    }
+    # nocov end
+  }
   model <- .FitVARMxIDBuildModelID(
     data = data,
     observed = observed,
@@ -163,45 +189,22 @@
     sigma0_l_free = sigma0_l_free,
     sigma0_l_values = sigma0_l_values,
     sigma0_l_lbound = sigma0_l_lbound,
-    sigma0_l_ubound = sigma0_l_ubound
+    sigma0_l_ubound = sigma0_l_ubound,
+    ncores = ncores,
+    fork = fork
   )
-  # nocov start
-  if (is.null(ncores)) {
-    par <- FALSE
-  } else {
-    ncores <- min(
-      as.integer(ncores),
-      parallel::detectCores(),
-      length(model)
-    )
-    if (ncores > 1) {
-      par <- TRUE
-    } else {
-      par <- FALSE
-    }
-  }
-  # nocov end
-  if (isTRUE(par)) {
+  model_names <- names(model)
+  if (isTRUE(ncores > 1)) {
     # nocov start
-    OpenMx::mxOption(
-      key = "Number of Threads",
-      value = 1
-    )
-    os_type <- Sys.info()["sysname"]
-    if (os_type == "Darwin") {
-      fork <- TRUE
-    } else if (os_type == "Linux") {
-      fork <- TRUE
-    } else {
-      fork <- FALSE
-    }
     if (isTRUE(fork)) {
       if (!is.null(seed)) {
         set.seed(seed)
       }
       # first pass
-      if (!silent && interactive()) {
-        cat("\nFirst pass.\n")
+      if (isFALSE(silent) && interactive()) {
+        # nocov start
+        cat("\nModel fitting...\n")
+        # nocov end
       }
       fit <- parallel::mclapply(
         X = model,
@@ -232,8 +235,10 @@
         FUN.VALUE = logical(1)
       )
       if (any(refit)) {
-        if (!silent && interactive()) {
-          cat("\nSecond pass.\n")
+        if (isFALSE(silent) && interactive()) {
+          # nocov start
+          cat("\nChecking Hessian...\n")
+          # nocov end
         }
         fit[refit] <- parallel::mclapply(
           X = fit[refit],
@@ -276,8 +281,10 @@
         FUN.VALUE = logical(1)
       )
       if (any(still_bad)) {
-        if (!silent && interactive()) {
-          cat("\nFinal pass.\n")
+        if (isFALSE(silent) && interactive()) {
+          # nocov start
+          cat("\nChecking Hessian for a second time...\n")
+          # nocov end
         }
         fit[still_bad] <- parallel::mclapply(
           X = fit[still_bad],
@@ -305,6 +312,16 @@
           mc.cores = ncores
         )
       }
+      if (robust) {
+        sandwich <- parallel::mclapply(
+          X = fit,
+          FUN = .RobustSE,
+          mc.cores = ncores
+        )
+        names(sandwich) <- model_names
+      } else {
+        sandwich <- NULL
+      }
     } else {
       cl <- parallel::makeCluster(ncores)
       parallel::clusterEvalQ(cl = cl, library(OpenMx))
@@ -319,13 +336,15 @@
         add = TRUE
       )
       # first pass
-      if (!silent && interactive()) {
-        cat("\nFirst pass.\n")
+      if (isFALSE(silent) && interactive()) {
+        # nocov start
+        cat("\nModel fitting...\n")
+        # nocov end
       }
       fit <- parallel::parLapply(
         cl = cl,
         X = model,
-        FUN = .MxHelperRun,
+        fun = .MxHelperRun,
         grad_tol = grad_tol,
         ok_codes = ok_codes,
         require_finite_fit = require_finite_fit,
@@ -352,13 +371,15 @@
         FUN.VALUE = logical(1)
       )
       if (any(refit)) {
-        if (!silent && interactive()) {
-          cat("\nSecond pass.\n")
+        if (isFALSE(silent) && interactive()) {
+          # nocov start
+          cat("\nChecking Hessian...\n")
+          # nocov end
         }
         fit[refit] <- parallel::parLapply(
           cl = cl,
           X = fit[refit],
-          FUN = .MxHelperEnsureGoodHessian,
+          fun = .MxHelperEnsureGoodHessian,
           tries_explore = tries_explore,
           tries_local = tries_local,
           max_attempts = max_attempts,
@@ -396,13 +417,15 @@
         FUN.VALUE = logical(1)
       )
       if (any(still_bad)) {
-        if (!silent && interactive()) {
-          cat("\nFinal pass.\n")
+        if (isFALSE(silent) && interactive()) {
+          # nocov start
+          cat("\nChecking Hessian for a second time...\n")
+          # nocov end
         }
         fit[still_bad] <- parallel::parLapply(
           cl = cl,
           X = fit[still_bad],
-          FUN = .MxHelperEnsureGoodHessian,
+          fun = .MxHelperEnsureGoodHessian,
           tries_explore = tries_explore * 5,
           tries_local = tries_local * 5,
           max_attempts = max_attempts * 2,
@@ -425,6 +448,16 @@
           silent = silent
         )
       }
+      if (robust) {
+        sandwich <- parallel::parLapply(
+          cl = cl,
+          X = fit,
+          fun = .RobustSE
+        )
+        names(sandwich) <- model_names
+      } else {
+        sandwich <- NULL
+      }
     }
     # nocov end
   } else {
@@ -432,8 +465,10 @@
       set.seed(seed)
     }
     # first pass
-    if (!silent && interactive()) {
-      cat("\nFirst pass.\n")
+    if (isFALSE(silent) && interactive()) {
+      # nocov start
+      cat("\nModel fitting...\n")
+      # nocov end
     }
     fit <- lapply(
       X = model,
@@ -445,7 +480,7 @@
       hess_tol_rel = hess_tol_rel,
       check_condition = check_condition,
       cond_max = cond_max,
-      silent = silent,
+      silent = silent
     )
     # second pass
     refit <- vapply(
@@ -463,8 +498,10 @@
       FUN.VALUE = logical(1)
     )
     if (any(refit)) {
-      if (!silent && interactive()) {
-        cat("\nSecond pass.\n")
+      if (isFALSE(silent) && interactive()) {
+        # nocov start
+        cat("\nChecking Hessian...\n")
+        # nocov end
       }
       fit[refit] <- lapply(
         X = fit[refit],
@@ -506,8 +543,10 @@
       FUN.VALUE = logical(1)
     )
     if (any(still_bad)) {
-      if (!silent && interactive()) {
-        cat("\nFinal pass.\n")
+      if (isFALSE(silent) && interactive()) {
+        # nocov start
+        cat("\nChecking Hessian for a second time...\n")
+        # nocov end
       }
       fit[still_bad] <- lapply(
         X = fit[still_bad],
@@ -534,6 +573,15 @@
         silent = silent
       )
     }
+    if (robust) {
+      sandwich <- lapply(
+        X = fit,
+        FUN = .RobustSE
+      )
+      names(sandwich) <- model_names
+    } else {
+      sandwich <- NULL
+    }
   }
   converged <- vapply(
     X = fit,
@@ -557,25 +605,6 @@
     },
     FUN.VALUE = logical(1)
   )
-  model_names <- lapply(
-    X = model,
-    FUN = function(i) {
-      methods::slot(
-        object = i,
-        name = "name"
-      )
-    }
-  )
-  if (robust) {
-    sandwich <- .Robust(
-      fit = fit,
-      ncores = ncores
-    )
-    names(sandwich) <- model_names
-  } else {
-    sandwich <- NULL
-  }
-  names(model) <- model_names
   names(fit) <- model_names
   names(converged) <- model_names
   list(

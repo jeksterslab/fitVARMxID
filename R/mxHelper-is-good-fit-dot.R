@@ -11,7 +11,9 @@
     }
   )
   if (!isTRUE(status_code %in% ok_codes)) {
+    # nolint start
     return(FALSE)
+    # nolint end
   }
   if (require_finite_fit) {
     fitval <- tryCatch(
@@ -23,7 +25,9 @@
       }
     )
     if (!is.finite(fitval)) {
+      # nolint start
       return(FALSE)
+      # nolint end
     }
   }
   grad_raw <- tryCatch(
