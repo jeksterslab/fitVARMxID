@@ -83,21 +83,11 @@
     beta_values <- list(beta_values)
   }
   if (isTRUE(center)) {
-    if (isFALSE(mu_fixed) && isFALSE(nu_fixed)) {
-      stop(
-        "\n`mu` and `nu` cannot be modeled at the same time at the moment."
-      )
-    }
     if (isFALSE(is.list(mu_values))) {
       mu_values <- list(mu_values)
     }
     mu <- TRUE
   } else {
-    if (isFALSE(alpha_fixed) && isFALSE(nu_fixed)) {
-      stop(
-        "\n`alpha` and `nu` cannot be modeled at the same time at the moment."
-      )
-    }
     if (isFALSE(is.list(alpha_values))) {
       alpha_values <- list(alpha_values)
     }
