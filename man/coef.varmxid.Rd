@@ -13,6 +13,7 @@
   psi = TRUE,
   theta = TRUE,
   var_metric = "var",
+  ncores = NULL,
   ...
 )
 }
@@ -69,6 +70,9 @@ the diagonal elements of \code{psi} and \code{theta}
 are the softplus of the variances
 and the off-diagonal elements correspond to strict \code{L}
 in the \verb{LDL'} decomposition.}
+
+\item{ncores}{Positive integer.
+Number of cores to use.}
 
 \item{...}{additional arguments.}
 }

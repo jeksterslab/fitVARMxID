@@ -15,6 +15,7 @@
   theta = TRUE,
   var_metric = "var",
   digits = 4,
+  ncores = NULL,
   ...
 )
 }
@@ -77,6 +78,9 @@ and the off-diagonal elements correspond to strict \code{L}
 in the \verb{LDL'} decomposition.}
 
 \item{digits}{Integer indicating the number of decimal places to display.}
+
+\item{ncores}{Positive integer.
+Number of cores to use.}
 
 \item{...}{further arguments.}
 }

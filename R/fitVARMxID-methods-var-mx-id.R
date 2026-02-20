@@ -68,6 +68,7 @@ summary.varmxid <- function(object,
                             theta = TRUE,
                             var_metric = "var",
                             digits = 4,
+                            ncores = NULL,
                             ...) {
   convergence <- converged.varmxid(
     object = object,
@@ -96,7 +97,7 @@ summary.varmxid <- function(object,
       nu = nu,
       psi = psi,
       theta = theta,
-      ...
+      ncores = ncores
     )
   )
   if (isTRUE(means)) {
@@ -153,7 +154,7 @@ print.summary.varmxid <- function(x,
   )
   cat("Call:\n")
   base::print(object$call)
-  cat(sprintf("\nConvergence: %.1f%%\n", converged_prop * 100))
+  cat(sprintf("\nConvergence:\n%.1f%%\n", converged_prop * 100))
   if (isFALSE(is.null(convergence_issues))) {
     convergence_issues <- paste(
       convergence_issues,
@@ -162,7 +163,8 @@ print.summary.varmxid <- function(x,
     cat(
       paste0(
         "\nCases with the following IDs did not converge:\n",
-        convergence_issues
+        convergence_issues,
+        "\n"
       )
     )
   }
@@ -224,6 +226,8 @@ print.summary.varmxid <- function(x,
 #'   are the softplus of the variances
 #'   and the off-diagonal elements correspond to strict `L`
 #'   in the `LDL'` decomposition.
+#' @param ncores Positive integer.
+#'   Number of cores to use.
 #' @param ... additional arguments.
 #' @return Returns a list of vectors of parameter estimates.
 #'
@@ -239,7 +243,18 @@ coef.varmxid <- function(object,
                          psi = TRUE,
                          theta = TRUE,
                          var_metric = "var",
+                         ncores = NULL,
                          ...) {
+  threads <- OpenMx::mxOption(
+    key = "Number of Threads"
+  )
+  on.exit(
+    OpenMx::mxOption(
+      key = "Number of Threads",
+      value = threads
+    ),
+    add = TRUE
+  )
   fit <- object$output[object$converged]
   coefs <- OpenMx::mxEvalByName(
     name = "parameter_vec",
@@ -304,35 +319,86 @@ coef.varmxid <- function(object,
       )
     )
   }
-  lapply(
-    X = fit,
-    FUN = function(i) {
-      if (var_metric[1] == "var") {
-        out <- OpenMx::mxEvalByName(
-          name = "parameter_vec",
-          model = i,
-          compute = TRUE
-        )
-      }
-      if (var_metric[1] == "logvar") {
-        out <- OpenMx::mxEvalByName(
-          name = "parameter_log_diag_vec",
-          model = i,
-          compute = TRUE
-        )
-      }
-      if (var_metric[1] == "softplusvar") {
-        out <- OpenMx::mxEvalByName(
-          name = "parameter_softplus_diag_vec",
-          model = i,
-          compute = TRUE
-        )
-      }
-      out <- c(out[idx])
-      names(out) <- parnames[idx]
-      out
+  if (is.null(ncores)) {
+    ncores <- 1L
+  } else {
+    ncores <- min(
+      as.integer(ncores),
+      parallel::detectCores(),
+      length(fit)
+    )
+  }
+  if (ncores > 1) {
+    # nocov start
+    OpenMx::mxOption(
+      key = "Number of Threads",
+      value = 1
+    )
+    os_type <- Sys.info()["sysname"]
+    if (os_type == "Darwin") {
+      fork <- TRUE
+    } else if (os_type == "Linux") {
+      fork <- TRUE
+    } else {
+      fork <- FALSE
     }
-  )
+    # nocov end
+  }
+  foo <- function(i) {
+    if (var_metric[1] == "var") {
+      out <- OpenMx::mxEvalByName(
+        name = "parameter_vec",
+        model = i,
+        compute = TRUE
+      )
+    }
+    if (var_metric[1] == "logvar") {
+      out <- OpenMx::mxEvalByName(
+        name = "parameter_log_diag_vec",
+        model = i,
+        compute = TRUE
+      )
+    }
+    if (var_metric[1] == "softplusvar") {
+      out <- OpenMx::mxEvalByName(
+        name = "parameter_softplus_diag_vec",
+        model = i,
+        compute = TRUE
+      )
+    }
+    out <- c(out[idx])
+    names(out) <- parnames[idx]
+    out
+  }
+  if (ncores > 1) {
+    # nocov start
+    if (fork) {
+      out <- parallel::mclapply(
+        X = fit,
+        FUN = foo,
+        mc.cores = ncores
+      )
+    } else {
+      cl <- parallel::makeCluster(ncores)
+      parallel::clusterEvalQ(cl = cl, library(OpenMx))
+      on.exit(
+        parallel::stopCluster(cl = cl),
+        add = TRUE
+      )
+      out <- parallel::parLapply(
+        cl = cl,
+        X = fit,
+        fun = foo
+      )
+    }
+    # nocov end
+  } else {
+    out <- lapply(
+      X = fit,
+      FUN = foo
+    )
+  }
+  out
 }
 
 #' Sampling Covariance Matrix of the Parameter Estimates
@@ -359,41 +425,19 @@ vcov.varmxid <- function(object,
                          theta = TRUE,
                          var_metric = "var",
                          robust = FALSE,
+                         ncores = NULL,
                          ...) {
+  threads <- OpenMx::mxOption(
+    key = "Number of Threads"
+  )
+  on.exit(
+    OpenMx::mxOption(
+      key = "Number of Threads",
+      value = threads
+    ),
+    add = TRUE
+  )
   fit <- object$output[object$converged]
-  if (isTRUE(robust)) {
-    if (is.null(object$robust)) {
-      fit <- lapply(
-        X = fit,
-        FUN = function(i) {
-          utils::capture.output(
-            suppressMessages(
-              suppressWarnings(
-                sandwich <- OpenMx::imxRobustSE(
-                  model = i,
-                  details = TRUE
-                )
-              )
-            )
-          )
-          i@output$vcov <- sandwich$cov
-          i@output$standardErrors <- sandwich$SE
-          i
-        }
-      )
-    } else {
-      fit <- mapply(
-        FUN = function(i,
-                       sandwich) {
-          i@output$vcov <- sandwich$cov
-          i@output$standardErrors <- sandwich$SE
-          i
-        },
-        i = fit,
-        sandwich = object$robust
-      )
-    }
-  }
   coefs <- OpenMx::mxEvalByName(
     name = "parameter_vec",
     model = fit[[1]],
@@ -457,39 +501,252 @@ vcov.varmxid <- function(object,
       )
     )
   }
-  lapply(
-    X = fit,
-    FUN = function(i) {
-      if (var_metric[1] == "var") {
-        out <- OpenMx::mxSE(
-          x = "parameter_vec",
-          model = i,
-          details = TRUE,
-          silent = TRUE
-        )$Cov
-      }
-      if (var_metric[1] == "logvar") {
-        out <- OpenMx::mxSE(
-          x = "parameter_log_diag_vec",
-          model = i,
-          details = TRUE,
-          silent = TRUE
-        )$Cov
-      }
-      if (var_metric[1] == "softplusvar") {
-        out <- OpenMx::mxSE(
-          x = "parameter_softplus_diag_vec",
-          model = i,
-          details = TRUE,
-          silent = TRUE
-        )$Cov
-      }
-      out
-      out <- out[idx, idx]
-      colnames(out) <- rownames(out) <- parnames[idx]
-      out
+  if (is.null(ncores)) {
+    ncores <- 1L
+  } else {
+    ncores <- min(
+      as.integer(ncores),
+      parallel::detectCores(),
+      length(fit)
+    )
+  }
+  if (ncores > 1) {
+    # nocov start
+    OpenMx::mxOption(
+      key = "Number of Threads",
+      value = 1
+    )
+    os_type <- Sys.info()["sysname"]
+    if (os_type == "Darwin") {
+      fork <- TRUE
+    } else if (os_type == "Linux") {
+      fork <- TRUE
+    } else {
+      fork <- FALSE
     }
-  )
+    # nocov end
+  }
+  if (ncores > 1) {
+    # nocov start
+    if (fork) {
+      if (isTRUE(robust)) {
+        if (is.null(object$robust)) {
+          fit <- parallel::mclapply(
+            X = fit,
+            FUN = function(i) {
+              utils::capture.output(
+                suppressMessages(
+                  suppressWarnings(
+                    sandwich <- OpenMx::imxRobustSE(
+                      model = i,
+                      details = TRUE
+                    )
+                  )
+                )
+              )
+              i@output$vcov <- sandwich$cov
+              i@output$standardErrors <- sandwich$SE
+              i
+            },
+            mc.cores = ncores
+          )
+        } else {
+          fit <- mapply(
+            FUN = function(i,
+                           sandwich) {
+              i@output$vcov <- sandwich$cov
+              i@output$standardErrors <- sandwich$SE
+              i
+            },
+            SIMPLIFY = FALSE,
+            i = fit,
+            sandwich = object$robust
+          )
+        }
+      }
+      out <- parallel::mclapply(
+        X = fit,
+        FUN = function(i) {
+          if (var_metric[1] == "var") {
+            out <- OpenMx::mxSE(
+              x = "parameter_vec",
+              model = i,
+              details = TRUE,
+              silent = TRUE
+            )$Cov
+          }
+          if (var_metric[1] == "logvar") {
+            out <- OpenMx::mxSE(
+              x = "parameter_log_diag_vec",
+              model = i,
+              details = TRUE,
+              silent = TRUE
+            )$Cov
+          }
+          if (var_metric[1] == "softplusvar") {
+            out <- OpenMx::mxSE(
+              x = "parameter_softplus_diag_vec",
+              model = i,
+              details = TRUE,
+              silent = TRUE
+            )$Cov
+          }
+          out
+          out <- out[idx, idx]
+          colnames(out) <- rownames(out) <- parnames[idx]
+          out
+        },
+        mc.cores = ncores
+      )
+    } else {
+      cl <- parallel::makeCluster(ncores)
+      parallel::clusterEvalQ(cl = cl, library(OpenMx))
+      on.exit(
+        parallel::stopCluster(cl = cl),
+        add = TRUE
+      )
+      if (isTRUE(robust)) {
+        if (is.null(object$robust)) {
+          fit <- parallel::parLapply(
+            cl = cl,
+            X = fit,
+            fun = function(i) {
+              utils::capture.output(
+                suppressMessages(
+                  suppressWarnings(
+                    sandwich <- OpenMx::imxRobustSE(
+                      model = i,
+                      details = TRUE
+                    )
+                  )
+                )
+              )
+              i@output$vcov <- sandwich$cov
+              i@output$standardErrors <- sandwich$SE
+              i
+            },
+            mc.cores = ncores
+          )
+        } else {
+          fit <- mapply(
+            FUN = function(i,
+                           sandwich) {
+              i@output$vcov <- sandwich$cov
+              i@output$standardErrors <- sandwich$SE
+              i
+            },
+            SIMPLIFY = FALSE,
+            i = fit,
+            sandwich = object$robust
+          )
+        }
+      }
+      out <- parallel::parLapply(
+        cl = cl,
+        X = fit,
+        fun = function(i) {
+          if (var_metric[1] == "var") {
+            out <- OpenMx::mxSE(
+              x = "parameter_vec",
+              model = i,
+              details = TRUE,
+              silent = TRUE
+            )$Cov
+          }
+          if (var_metric[1] == "logvar") {
+            out <- OpenMx::mxSE(
+              x = "parameter_log_diag_vec",
+              model = i,
+              details = TRUE,
+              silent = TRUE
+            )$Cov
+          }
+          if (var_metric[1] == "softplusvar") {
+            out <- OpenMx::mxSE(
+              x = "parameter_softplus_diag_vec",
+              model = i,
+              details = TRUE,
+              silent = TRUE
+            )$Cov
+          }
+          out
+          out <- out[idx, idx]
+          colnames(out) <- rownames(out) <- parnames[idx]
+          out
+        }
+      )
+    }
+    # nocov end
+  } else {
+    if (isTRUE(robust)) {
+      if (is.null(object$robust)) {
+        fit <- lapply(
+          X = fit,
+          FUN = function(i) {
+            utils::capture.output(
+              suppressMessages(
+                suppressWarnings(
+                  sandwich <- OpenMx::imxRobustSE(
+                    model = i,
+                    details = TRUE
+                  )
+                )
+              )
+            )
+            i@output$vcov <- sandwich$cov
+            i@output$standardErrors <- sandwich$SE
+            i
+          }
+        )
+      } else {
+        fit <- mapply(
+          FUN = function(i,
+                         sandwich) {
+            i@output$vcov <- sandwich$cov
+            i@output$standardErrors <- sandwich$SE
+            i
+          },
+          SIMPLIFY = FALSE,
+          i = fit,
+          sandwich = object$robust
+        )
+      }
+    }
+    out <- lapply(
+      X = fit,
+      FUN = function(i) {
+        if (var_metric[1] == "var") {
+          out <- OpenMx::mxSE(
+            x = "parameter_vec",
+            model = i,
+            details = TRUE,
+            silent = TRUE
+          )$Cov
+        }
+        if (var_metric[1] == "logvar") {
+          out <- OpenMx::mxSE(
+            x = "parameter_log_diag_vec",
+            model = i,
+            details = TRUE,
+            silent = TRUE
+          )$Cov
+        }
+        if (var_metric[1] == "softplusvar") {
+          out <- OpenMx::mxSE(
+            x = "parameter_softplus_diag_vec",
+            model = i,
+            details = TRUE,
+            silent = TRUE
+          )$Cov
+        }
+        out
+        out <- out[idx, idx]
+        colnames(out) <- rownames(out) <- parnames[idx]
+        out
+      }
+    )
+  }
+  out
 }
 
 #' Check Model Convergence
