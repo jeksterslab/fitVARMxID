@@ -197,7 +197,7 @@ FitVARMxID(
 
   Numeric matrix. Upper bounds for `beta`. Ignored if
   `beta_fixed = TRUE`. If `NULL`, defaults to `+2.5`. If `NULL` and
-  `ct = TRUE`, diagonal upper bounds are set to -1e-05.
+  `ct = TRUE`, diagonal upper bounds are set to `-1e-05`.
 
 - psi_diag:
 
@@ -697,7 +697,8 @@ print(fit)
 #> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", 
 #>     center = TRUE)
 #> 
-#> Convergence: 100.0%
+#> Convergence:
+#> 100.0%
 #> 
 #> Estimated paramaters per individual.
 #>   mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1] psi[2,1]
@@ -717,7 +718,8 @@ summary(fit)
 #> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", 
 #>     center = TRUE)
 #> 
-#> Convergence: 100.0%
+#> Convergence:
+#> 100.0%
 #> 
 #> Estimated paramaters per individual.
 #>   mu[1,1] mu[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1] psi[2,1]
@@ -957,7 +959,8 @@ print(fit)
 #> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", 
 #>     center = FALSE)
 #> 
-#> Convergence: 100.0%
+#> Convergence:
+#> 100.0%
 #> 
 #> Estimated paramaters per individual.
 #>   alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1]
@@ -977,7 +980,8 @@ summary(fit)
 #> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", 
 #>     center = FALSE)
 #> 
-#> Convergence: 100.0%
+#> Convergence:
+#> 100.0%
 #> 
 #> Estimated paramaters per individual.
 #>   alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1]

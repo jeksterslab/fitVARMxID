@@ -17,6 +17,7 @@ summary(
   theta = TRUE,
   var_metric = "var",
   digits = 4,
+  ncores = NULL,
   ...
 )
 ```
@@ -78,6 +79,10 @@ summary(
 - digits:
 
   Integer indicating the number of decimal places to display.
+
+- ncores:
+
+  Positive integer. Number of cores to use.
 
 - ...:
 

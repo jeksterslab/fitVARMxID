@@ -352,12 +352,17 @@ individual
 <h4 id="parameter-estimates">Parameter estimates<a class="anchor" aria-label="anchor" href="#parameter-estimates"></a>
 </h4>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span>, means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span></span>
+<span>  <span class="va">fit</span>,</span>
+<span>  means <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ncores <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", </span></span>
 <span><span class="co">#&gt;     center = TRUE, ncores = parallel::detectCores())</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Convergence: 100.0%</span></span>
+<span><span class="co">#&gt; Convergence:</span></span>
+<span><span class="co">#&gt; 100.0%</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Means of the estimated paramaters per individual.</span></span>
 <span><span class="co">#&gt;   mu[1,1]   mu[2,1]   mu[3,1] beta[1,1] beta[2,1] beta[3,1] beta[1,2] beta[2,2] </span></span>

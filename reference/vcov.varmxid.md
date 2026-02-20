@@ -16,6 +16,7 @@ vcov(
   theta = TRUE,
   var_metric = "var",
   robust = FALSE,
+  ncores = NULL,
   ...
 )
 ```
@@ -74,6 +75,10 @@ vcov(
   Logical. If `TRUE`, use robust (sandwich) sampling variance-covariance
   matrix. If `FALSE`, use normal theory sampling variance-covariance
   matrix.
+
+- ncores:
+
+  Positive integer. Number of cores to use.
 
 - ...:
 

@@ -15,6 +15,7 @@ coef(
   psi = TRUE,
   theta = TRUE,
   var_metric = "var",
+  ncores = NULL,
   ...
 )
 ```
@@ -67,6 +68,10 @@ coef(
   diagonal elements of `psi` and `theta` are the softplus of the
   variances and the off-diagonal elements correspond to strict `L` in
   the `LDL'` decomposition.
+
+- ncores:
+
+  Positive integer. Number of cores to use.
 
 - ...:
 
