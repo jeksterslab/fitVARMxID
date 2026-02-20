@@ -51,7 +51,9 @@
     )
   }
   if (length(targets) == 0L) {
+    # nolint start
     return(x)
+    # nolint end
   }
   new_lb <- lb
   new_ub <- ub

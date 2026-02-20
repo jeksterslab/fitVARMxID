@@ -69,10 +69,23 @@ summary.varmxid <- function(object,
                             var_metric = "var",
                             digits = 4,
                             ...) {
-  converged_prop <- converged.varmxid(
+  convergence <- converged.varmxid(
     object = object,
-    prop = TRUE
+    prop = FALSE
   )
+  converged_prop <- mean(convergence)
+  if (converged_prop < 1) {
+    convergence_issues <- names(
+      convergence[!convergence]
+    )
+    convergence_issues <- sub(
+      pattern = "^(CTVAR_ID|DTVAR_ID)",
+      replacement = "",
+      x = convergence_issues
+    )
+  } else {
+    convergence_issues <- NULL
+  }
   out <- do.call(
     what = "rbind",
     args = coef.varmxid(
@@ -108,6 +121,7 @@ summary.varmxid <- function(object,
   attr(out, "var_metric") <- var_metric
   attr(out, "digits") <- digits
   attr(out, "converged_prop") <- converged_prop
+  attr(out, "convergence_issues") <- convergence_issues
   attr(out, "print_summary") <- print_summary
   out
 }
@@ -133,9 +147,25 @@ print.summary.varmxid <- function(x,
     x = x,
     which = "converged_prop"
   )
+  convergence_issues <- attr(
+    x = x,
+    which = "convergence_issues"
+  )
   cat("Call:\n")
   base::print(object$call)
   cat(sprintf("\nConvergence: %.1f%%\n", converged_prop * 100))
+  if (isFALSE(is.null(convergence_issues))) {
+    convergence_issues <- paste(
+      convergence_issues,
+      collapse = " "
+    )
+    cat(
+      paste0(
+        "\nCases with the following IDs did not converge:\n",
+        convergence_issues
+      )
+    )
+  }
   if (isTRUE(means)) {
     cat("\nMeans of the estimated paramaters per individual.\n")
   } else {

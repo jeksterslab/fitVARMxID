@@ -5,7 +5,9 @@
                                   cond_max = 1e12) {
   hessian <- x$output$hessian
   if (is.null(hessian) || !is.matrix(hessian) || anyNA(hessian)) {
+    # nolint start
     return(FALSE)
+    # nolint end
   }
   hessian <- 0.5 * (hessian + t(hessian))
   eig <- tryCatch(
@@ -27,13 +29,17 @@
   thresh <- hess_tol_abs + hess_tol_rel * scale
   is_pd <- min(eig) > thresh
   if (!is_pd) {
+    # nolint start
     return(FALSE)
+    # nolint end
   }
   if (check_condition) {
     # Condition number approx: max/min eigenvalue for symmetric PD matrix
     cond <- max(eig) / min(eig)
     if (!is.finite(cond) || cond > cond_max) {
+      # nolint start
       return(FALSE)
+      # nolint end
     }
   }
   TRUE

@@ -1,4 +1,4 @@
-## ---- test-fitVARMxID-fitvarmxid-nu-theta
+## ---- test-fitVARMxID-fitvarmxid-nu-theta-mu0
 lapply(
   X = 1,
   FUN = function(i,
@@ -69,6 +69,9 @@ lapply(
       nu_fixed = FALSE,
       theta_fixed = FALSE,
       theta_diag = FALSE,
+      theta_d_values = rep(x = 1, times = k),
+      mu0_fixed = FALSE,
+      mu0_values = mu0,
       robust = FALSE,
       seed = 42
     )
@@ -364,5 +367,5 @@ lapply(
       }
     )
   },
-  text = "test-fitVARMxID-fitvarmxid-nu-theta"
+  text = "test-fitVARMxID-fitvarmxid-nu-theta-mu0"
 )
