@@ -215,27 +215,32 @@ sim <- SimSSMLinSDEFixed(
   sigma_l = psi_l,
   nu = nu,
   lambda = lambda,
-  theta_l, theta_l
+  theta_l = theta_l
 )
-#> Error in `if (type > 0) ...`:
-#> ! the condition has length > 1
 data <- as.data.frame(sim)
 head(data)
 #>   id time       y1       y2       y3
-#> 1  1  0.0 2.959975 6.244881 5.001853
-#> 2  1  0.1 2.946129 6.247126 5.006265
-#> 3  1  0.2 2.932768 6.248238 5.011090
-#> 4  1  0.3 2.919876 6.248307 5.016203
-#> 5  1  0.4 2.907435 6.247422 5.021495
-#> 6  1  0.5 2.895430 6.245663 5.026869
+#> 1  1  0.0 2.713440 6.616955 5.826304
+#> 2  1  0.1 2.788586 6.625107 5.689081
+#> 3  1  0.2 2.752473 6.722281 5.621800
+#> 4  1  0.3 2.504163 6.706956 5.588982
+#> 5  1  0.4 2.541571 6.800410 5.517594
+#> 6  1  0.5 2.499550 6.830410 5.316913
 summary(data)
-#>        id         time             y1              y2              y3       
-#>  Min.   :1   Min.   :0.000   Min.   :1.730   Min.   :4.670   Min.   :3.970  
-#>  1st Qu.:2   1st Qu.:2.475   1st Qu.:2.498   1st Qu.:5.460   1st Qu.:4.523  
-#>  Median :3   Median :4.950   Median :2.573   Median :5.707   Median :4.714  
-#>  Mean   :3   Mean   :4.950   Mean   :2.530   Mean   :5.634   Mean   :4.679  
-#>  3rd Qu.:4   3rd Qu.:7.425   3rd Qu.:2.606   3rd Qu.:5.814   3rd Qu.:4.920  
-#>  Max.   :5   Max.   :9.900   Max.   :2.960   Max.   :6.525   Max.   :5.240
+#>        id              time             y1              y2       
+#>  Min.   :  1.00   Min.   : 0.00   Min.   :1.197   Min.   :3.688  
+#>  1st Qu.: 25.75   1st Qu.:24.98   1st Qu.:2.307   1st Qu.:5.342  
+#>  Median : 50.50   Median :49.95   Median :2.561   Median :5.709  
+#>  Mean   : 50.50   Mean   :49.95   Mean   :2.561   Mean   :5.709  
+#>  3rd Qu.: 75.25   3rd Qu.:74.92   3rd Qu.:2.811   3rd Qu.:6.067  
+#>  Max.   :100.00   Max.   :99.90   Max.   :4.172   Max.   :8.164  
+#>        y3       
+#>  Min.   :3.009  
+#>  1st Qu.:4.455  
+#>  Median :4.751  
+#>  Mean   :4.755  
+#>  3rd Qu.:5.054  
+#>  Max.   :6.718
 plot(sim)
 ```
 
@@ -263,7 +268,7 @@ fit <- FitVARMxID(
   ct = TRUE,
   time = "time",
   center = FALSE,
-  ncores = 16
+  ncores = parallel::detectCores()
 )
 ```
 
@@ -272,8 +277,19 @@ fit <- FitVARMxID(
 ``` r
 
 summary(fit, means = TRUE)
-#> Error in `fit[[1]]`:
-#> ! subscript out of bounds
+#> Call:
+#> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
+#>     time = "time", ct = TRUE, center = FALSE, ncores = parallel::detectCores())
+#> 
+#> Convergence: 100.0%
+#> 
+#> Means of the estimated paramaters per individual.
+#> alpha[1,1] alpha[2,1] alpha[3,1]  beta[1,1]  beta[2,1]  beta[3,1]  beta[1,2] 
+#>     1.1619     1.1276     0.3912    -0.4118     0.7893    -0.4533    -0.0064 
+#>  beta[2,2]  beta[3,2]  beta[1,3]  beta[2,3]  beta[3,3]   psi[1,1]   psi[2,1] 
+#>    -0.5344     0.7514    -0.0148    -0.0200    -0.7402     0.1007     0.0003 
+#>   psi[3,1]   psi[2,2]   psi[3,2]   psi[3,3] 
+#>    -0.0002     0.0993     0.0003     0.1003
 ```
 
 ## References

@@ -272,7 +272,7 @@ fit <- FitVARMxID(
   observed = c("y1", "y2", "y3"),
   id = "id",
   center = FALSE,
-  ncores = 16
+  ncores = parallel::detectCores()
 )
 ```
 
@@ -283,7 +283,7 @@ fit <- FitVARMxID(
 summary(fit, means = TRUE)
 #> Call:
 #> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
-#>     center = FALSE, ncores = 16)
+#>     center = FALSE, ncores = parallel::detectCores())
 #> 
 #> Convergence: 100.0%
 #> 
