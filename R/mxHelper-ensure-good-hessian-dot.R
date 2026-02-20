@@ -238,20 +238,7 @@
       bd_last_labels <- character(0)
     }
 
-    # --- If at bounds, try nudging first (cheap; doesn't change bounds) ---
-    if (isTRUE(chk$bd$any)) {
-      if (!silent && interactive()) {
-        cat("\nNudging parameter estimates off bounds.\n")
-      }
-      fit <- .MxHelperNudgeOffBounds(
-        x = fit,
-        abs_bnd_tol = abs_bnd_tol,
-        rel_bnd_tol = rel_bnd_tol,
-        mult = 10
-      )
-    }
-
-    # --- Relax bounds late OR when bound-hits persist ---
+    # --- Decide whether to relax now (keep your existing relax_now rule) ---
     relax_now <- isTRUE(relax_on_last) && (
       attempt == (max_attempts - 1L) ||
         (
@@ -261,6 +248,7 @@
         )
     )
 
+    # --- Relax bounds FIRST (so the bound-hit is still visible) ---
     if (isTRUE(relax_now) && isTRUE(chk$bd$any)) {
       if (!silent && interactive()) {
         cat("\nRelaxing bounds for parameters at bounds.\n")
@@ -282,18 +270,17 @@
       no_improve_streak <- 0L
     }
 
-    # --- If we're stuck and not making progress, do a wide exploration bump ---
-    if (!isTRUE(chk$bd$any) && no_improve_streak >= no_improve_max) {
+    # --- Then nudge (cheap cleanup if still at/near bounds after relax) ---
+    if (isTRUE(chk$bd$any)) {
       if (!silent && interactive()) {
-        cat("\nNo improvement; performing a small wide exploration bump.\n")
+        cat("\nNudging parameter estimates off bounds.\n")
       }
-      fit <- OpenMx::mxTryHardWideSearch(
-        model = fit,
-        extraTries = tries_explore,
-        checkHess = FALSE,
-        silent = silent
+      fit <- .MxHelperNudgeOffBounds(
+        x = fit,
+        abs_bnd_tol = abs_bnd_tol,
+        rel_bnd_tol = rel_bnd_tol,
+        mult = 10
       )
-      no_improve_streak <- 0L
     }
 
     # --- Local retry, with shrinking jitter as attempts increase ---

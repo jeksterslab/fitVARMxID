@@ -607,7 +607,7 @@ FitVARMxID <- function(data,
   }
   if (isTRUE(ct) && is.null(time)) {
     stop(
-      "\nArgument `time` cannot be `NULL` if `ct = TRUE`\n."
+      "\nArgument `time` cannot be `NULL` if `ct = TRUE`.\n"
     )
   }
   args <- list(

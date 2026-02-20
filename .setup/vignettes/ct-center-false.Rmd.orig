@@ -289,7 +289,7 @@ sim <- SimSSMLinSDEFixed(
   sigma_l = psi_l,
   nu = nu,
   lambda = lambda,
-  theta_l, theta_l
+  theta_l = theta_l
 )
 data <- as.data.frame(sim)
 head(data)
@@ -322,7 +322,7 @@ fit <- FitVARMxID(
   ct = TRUE,
   time = "time",
   center = FALSE,
-  ncores = 16
+  ncores = parallel::detectCores()
 )
 ```
 
