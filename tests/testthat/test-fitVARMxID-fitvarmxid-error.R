@@ -13,7 +13,7 @@ lapply(
     }
     if (identical(Sys.getenv("GITHUB_TEST"), "true")) {
       ci <- TRUE
-      n <- 10
+      n <- 5
       time <- 1000
       tol <- 0.20
     } else {

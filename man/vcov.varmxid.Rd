@@ -14,6 +14,7 @@
   theta = TRUE,
   var_metric = "var",
   robust = FALSE,
+  ncores = NULL,
   ...
 )
 }
@@ -74,6 +75,9 @@ in the \verb{LDL'} decomposition.}
 \item{robust}{Logical.
 If \code{TRUE}, use robust (sandwich) sampling variance-covariance matrix.
 If \code{FALSE}, use normal theory sampling variance-covariance matrix.}
+
+\item{ncores}{Positive integer.
+Number of cores to use.}
 
 \item{...}{additional arguments.}
 }

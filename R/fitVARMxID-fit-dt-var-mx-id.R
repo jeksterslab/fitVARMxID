@@ -299,7 +299,7 @@
 #'   Ignored if `beta_fixed = TRUE`.
 #'   If `NULL`, defaults to `+2.5`.
 #'   If `NULL` and `ct = TRUE`,
-#'   diagonal upper bounds are set to -1e-05.
+#'   diagonal upper bounds are set to `-1e-05`.
 #' @param psi_diag Logical.
 #'   If `TRUE`, `psi` is diagonal.
 #'   If `FALSE`, `psi` is symmetric.

@@ -338,7 +338,11 @@ fit <- FitVARMxID(
 #### Parameter estimates
 
 ```{r}
-summary(fit, means = TRUE)
+summary(
+  fit,
+  means = TRUE,
+  ncores = parallel::detectCores()
+)
 ```
 
 ## References

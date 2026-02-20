@@ -179,7 +179,7 @@ Upper bounds for \code{beta}.
 Ignored if \code{beta_fixed = TRUE}.
 If \code{NULL}, defaults to \code{+2.5}.
 If \code{NULL} and \code{ct = TRUE},
-diagonal upper bounds are set to -1e-05.}
+diagonal upper bounds are set to \code{-1e-05}.}
 
 \item{psi_diag}{Logical.
 If \code{TRUE}, \code{psi} is diagonal.

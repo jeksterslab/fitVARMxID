@@ -25,51 +25,74 @@
     return(NULL)
     # nolint end
   }
-  # Use this function only when an initial fitting attempt (e.g., mxTryHard)
-  # did not meet criteria for convergence + PD Hessian + not at bounds.
+
   model <- .MxHelperForceHessianOptions(model)
 
+  .Safe <- function(expr, default) {
+    tryCatch(expr, error = function(e) default)
+  }
+
   .GetStatusCode <- function(x) {
-    tryCatch(
-      {
-        x$output$status$code
-      },
-      error = function(e) {
-        NA_integer_
-      }
-    )
+    .Safe(x$output$status$code, NA_integer_)
   }
 
   .GetFitValue <- function(x) {
-    tryCatch(
-      {
-        x$output$fit
-      },
-      error = function(e) {
-        NA_real_
-      }
+    .Safe(x$output$fit, NA_real_)
+  }
+
+  .EmptyBd <- function() {
+    list(
+      any = FALSE,
+      at_lb = stats::setNames(logical(0), character(0)),
+      at_ub = stats::setNames(logical(0), character(0))
     )
   }
 
   .Check <- function(x) {
-    good_fit <- .MxHelperIsGoodFit(
-      x = x,
-      grad_tol = grad_tol,
-      ok_codes = ok_codes,
-      require_finite_fit = require_finite_fit
+    # Make .Check total: never throw, even if output is missing.
+    has_output <- inherits(x, "MxModel") && !is.null(x$output)
+
+    if (!has_output) {
+      return(list(
+        ok = FALSE,
+        good_fit = FALSE,
+        pd_hessian = FALSE,
+        bd = .EmptyBd(),
+        code = .GetStatusCode(x),
+        fit = .GetFitValue(x)
+      ))
+    }
+
+    good_fit <- .Safe(
+      .MxHelperIsGoodFit(
+        x = x,
+        grad_tol = grad_tol,
+        ok_codes = ok_codes,
+        require_finite_fit = require_finite_fit
+      ),
+      FALSE
     )
-    pd_hessian <- .MxHelperHasPdHessian(
-      x = x,
-      hess_tol_abs = hess_tol_abs,
-      hess_tol_rel = hess_tol_rel,
-      check_condition = check_condition,
-      cond_max = cond_max
+
+    pd_hessian <- .Safe(
+      .MxHelperHasPdHessian(
+        x = x,
+        hess_tol_abs = hess_tol_abs,
+        hess_tol_rel = hess_tol_rel,
+        check_condition = check_condition,
+        cond_max = cond_max
+      ),
+      FALSE
     )
-    bd_obj <- .MxHelperAtBounds(
-      x = x,
-      abs_bnd_tol = abs_bnd_tol,
-      rel_bnd_tol = rel_bnd_tol
+
+    bd_obj <- .Safe(
+      .MxHelperAtBounds(
+        x = x,
+        abs_bnd_tol = abs_bnd_tol,
+        rel_bnd_tol = rel_bnd_tol
+      ),
+      .EmptyBd()
     )
+
     list(
       ok = isTRUE(good_fit) &&
         isTRUE(pd_hessian) &&
@@ -84,42 +107,27 @@
 
   .Rank <- function(chk) {
     if (isTRUE(chk$ok)) {
-      # nolint start
       return(0L)
-      # nolint end
-    }
+    } # nolint
     if (isTRUE(chk$good_fit) && isTRUE(chk$pd_hessian)) {
-      # nolint start
-      return(1L) # only bounds failing
-      # nolint end
-    }
+      return(1L)
+    } # nolint
     if (isTRUE(chk$good_fit)) {
-      # nolint start
       return(2L)
-      # nolint end
-    }
+    } # nolint
     if (isTRUE(chk$pd_hessian)) {
-      # nolint start
       return(3L)
-      # nolint end
-    }
+    } # nolint
     if (is.finite(chk$fit)) {
-      # nolint start
       return(4L)
-      # nolint end
-    }
+    } # nolint
     5L
   }
 
   .Obj <- function(chk) {
-    if (is.finite(chk$fit)) {
-      chk$fit
-    } else {
-      Inf
-    }
+    if (is.finite(chk$fit)) chk$fit else Inf
   }
 
-  # --- Decide whether we should do anything ---
   status_code <- .GetStatusCode(model)
   run <- is.null(model$output) ||
     is.na(status_code) ||
@@ -136,7 +144,6 @@
     # nolint end
   }
 
-  # --- Start from the given (failed) fit whenever possible ---
   has_output <- !is.null(model$output) && !is.na(status_code)
   fit <- model
 
@@ -166,7 +173,6 @@
     }
   }
 
-  # --- Best-so-far tracking ---
   best_model <- fit
   best_chk <- .Check(fit)
   best_rank <- .Rank(best_chk)
@@ -184,27 +190,23 @@
       best_obj <<- obj
       improved <- TRUE
     }
-
     improved
   }
 
   attempt <- 1L
 
-  # Bound-hit tracking
   bd_streak <- 0L
   bd_last_labels <- character(0)
 
-  # Progress tracking (based on best-so-far improvement)
   no_improve_streak <- 0L
   no_improve_max <- 3L
 
   repeat {
     final <- OpenMx::mxRun(model = fit, silent = silent)
 
-    # Code 6 often clears with a single rerun;
     if (isTRUE(rerun_code6)) {
       code_now <- .GetStatusCode(final)
-      if (isTRUE(code_now == 6L) && !isTRUE(6L %in% ok_codes)) {
+      if (identical(code_now, 6L) && !isTRUE(6L %in% ok_codes)) {
         final <- OpenMx::mxRun(model = final, silent = silent)
       }
     }
@@ -237,7 +239,6 @@
       # nolint end
     }
 
-    # --- Track whether the SAME labels keep hitting bounds ---
     if (isTRUE(chk$bd$any)) {
       bd_labels <- sort(unique(c(
         names(chk$bd$at_lb)[chk$bd$at_lb],
@@ -256,7 +257,6 @@
       bd_last_labels <- character(0)
     }
 
-    # --- Decide whether to relax now (keep your existing relax_now rule) ---
     relax_now <- isTRUE(relax_on_last) && (
       attempt == (max_attempts - 1L) ||
         (
@@ -266,7 +266,6 @@
         )
     )
 
-    # --- Relax bounds FIRST (so the bound-hit is still visible) ---
     if (isTRUE(relax_now) && isTRUE(chk$bd$any)) {
       if (isFALSE(silent) && interactive()) {
         # nocov start
@@ -287,10 +286,13 @@
         checkHess = FALSE,
         silent = silent
       )
+
+      # IMPORTANT: recompute chk after relax/search (avoid stale nudging)
+      chk <- .Check(fit)
+      .UpdateBest(candidate = fit, chk = chk)
       no_improve_streak <- 0L
     }
 
-    # --- Then nudge (cheap cleanup if still at/near bounds after relax) ---
     if (isTRUE(chk$bd$any)) {
       if (isFALSE(silent) && interactive()) {
         # nocov start
@@ -305,7 +307,19 @@
       )
     }
 
-    # --- Local retry, with shrinking jitter as attempts increase ---
+    # Optional: if we've stalled, kick a wide search (uses your no_improve_max)
+    if (no_improve_streak >= no_improve_max) {
+      fit <- OpenMx::mxTryHardWideSearch(
+        model = fit,
+        extraTries = tries_explore,
+        checkHess = FALSE,
+        silent = silent
+      )
+      chk <- .Check(fit)
+      .UpdateBest(candidate = fit, chk = chk)
+      no_improve_streak <- 0L
+    }
+
     local_scale <- 0.05 / sqrt(attempt + 1)
     fit <- OpenMx::mxTryHard(
       model = fit,
