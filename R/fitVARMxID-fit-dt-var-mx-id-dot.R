@@ -197,10 +197,12 @@
     }
     if (isTRUE(fork)) {
       if (!is.null(seed)) {
-        RNGkind("L'Ecuyer-CMRG")
         set.seed(seed)
       }
       # first pass
+      if (!silent && interactive()) {
+        cat("\nFirst pass.\n")
+      }
       fit <- parallel::mclapply(
         X = model,
         FUN = .MxHelperRun,
@@ -230,6 +232,9 @@
         FUN.VALUE = logical(1)
       )
       if (any(refit)) {
+        if (!silent && interactive()) {
+          cat("\nSecond pass.\n")
+        }
         fit[refit] <- parallel::mclapply(
           X = fit[refit],
           FUN = .MxHelperEnsureGoodHessian,
@@ -271,6 +276,9 @@
         FUN.VALUE = logical(1)
       )
       if (any(still_bad)) {
+        if (!silent && interactive()) {
+          cat("\nFinal pass.\n")
+        }
         fit[still_bad] <- parallel::mclapply(
           X = fit[still_bad],
           FUN = .MxHelperEnsureGoodHessian,
@@ -311,6 +319,9 @@
         add = TRUE
       )
       # first pass
+      if (!silent && interactive()) {
+        cat("\nFirst pass.\n")
+      }
       fit <- parallel::parLapply(
         cl = cl,
         X = model,
@@ -341,6 +352,9 @@
         FUN.VALUE = logical(1)
       )
       if (any(refit)) {
+        if (!silent && interactive()) {
+          cat("\nSecond pass.\n")
+        }
         fit[refit] <- parallel::parLapply(
           cl = cl,
           X = fit[refit],
@@ -382,6 +396,9 @@
         FUN.VALUE = logical(1)
       )
       if (any(still_bad)) {
+        if (!silent && interactive()) {
+          cat("\nFinal pass.\n")
+        }
         fit[still_bad] <- parallel::parLapply(
           cl = cl,
           X = fit[still_bad],
@@ -415,6 +432,9 @@
       set.seed(seed)
     }
     # first pass
+    if (!silent && interactive()) {
+      cat("\nFirst pass.\n")
+    }
     fit <- lapply(
       X = model,
       FUN = .MxHelperRun,
@@ -443,6 +463,9 @@
       FUN.VALUE = logical(1)
     )
     if (any(refit)) {
+      if (!silent && interactive()) {
+        cat("\nSecond pass.\n")
+      }
       fit[refit] <- lapply(
         X = fit[refit],
         FUN = .MxHelperEnsureGoodHessian,
@@ -483,6 +506,9 @@
       FUN.VALUE = logical(1)
     )
     if (any(still_bad)) {
+      if (!silent && interactive()) {
+        cat("\nFinal pass.\n")
+      }
       fit[still_bad] <- lapply(
         X = fit[still_bad],
         FUN = .MxHelperEnsureGoodHessian,

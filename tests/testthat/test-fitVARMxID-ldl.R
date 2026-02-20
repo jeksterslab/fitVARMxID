@@ -26,6 +26,11 @@ lapply(
         testthat::expect_true(
           max(abs(x - inv_ldl)) < 1e-8
         )
+        testthat::expect_true(
+          all(
+            .SymofVech(.Vech(x), k = 4) == x
+          )
+        )
       }
     )
     testthat::test_that(

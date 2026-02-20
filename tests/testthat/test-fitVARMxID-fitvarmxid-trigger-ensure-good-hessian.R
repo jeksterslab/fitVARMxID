@@ -1,0 +1,359 @@
+## ---- test-fitVARMxID-fitvarmxid-trigger-ensure-good-hessian
+lapply(
+  X = 1,
+  FUN = function(i,
+                 text) {
+    message(text)
+    set.seed(42)
+    if (!identical(Sys.getenv("NOT_CRAN"), "true") && !interactive()) {
+      message("CRAN: tests skipped.")
+      # nolint start
+      return(invisible(NULL))
+      # nolint end
+    }
+    if (identical(Sys.getenv("GITHUB_TEST"), "true")) {
+      ci <- TRUE
+      n <- 10
+      time <- 1000
+      tol <- 0.20
+    } else {
+      ci <- FALSE
+      n <- 2
+      time <- 100
+      tol <- 1.00
+    }
+    k <- 2
+    alpha <- rep(x = 0, times = k)
+    beta <- diag(
+      x = c(-0.50, 0.50),
+      nrow = k
+    )
+    mu <- c(solve(diag(k) - beta) %*% alpha)
+    psi <- 0.10 * diag(k)
+    psi_l <- t(chol(psi))
+    mu0 <- simStateSpace::SSMMeanEta(
+      beta = beta,
+      alpha = alpha
+    )
+    sigma0 <- simStateSpace::SSMCovEta(
+      beta = beta,
+      psi = psi
+    )
+    sigma0 <- 0.5 * (sigma0 + t(sigma0))
+    sigma0_l <- t(chol(sigma0))
+    nu <- rep(x = 0, times = k)
+    lambda <- diag(k)
+    theta <- matrix(data = 0, nrow = k, ncol = k)
+    sim <- simStateSpace::SimSSMVARFixed(
+      n = n,
+      time = time,
+      mu0 = mu0,
+      sigma0_l = sigma0_l,
+      alpha = alpha,
+      beta = beta,
+      psi_l = psi_l
+    )
+    data <- as.data.frame(sim)
+    fit <- FitVARMxID(
+      data = data,
+      observed = paste0("y", seq_len(k)),
+      id = "id",
+      center = TRUE,
+      beta_lbound = matrix(
+        data = c(
+          -0.50, NA,
+          NA, -0.50
+        ),
+        nrow = 2,
+        ncol = 2
+      ),
+      beta_ubound = matrix(
+        data = c(
+          0.50, NA,
+          NA, 0.50
+        ),
+        nrow = 2,
+        ncol = 2
+      ),
+      robust = FALSE,
+      seed = 42
+    )
+    testthat::test_that(
+      paste(text, "converged"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(converged(fit, prop = FALSE))
+        )
+        testthat::expect_true(
+          converged(fit, prop = TRUE) == 1
+        )
+      }
+    )
+    library(OpenMx)
+    mu0_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "mu0",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    sigma0_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "sigma0",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    mu_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "mu",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    alpha_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "alpha",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    beta_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "beta",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    psi_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "psi",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    nu_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "nu",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    lambda_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "lambda",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    theta_hat <- colMeans(
+      do.call(
+        what = "rbind",
+        args = lapply(
+          X = seq_len(n),
+          FUN = function(i) {
+            c(
+              mxEvalByName(
+                name = "theta",
+                model = fit$output[[i]]
+              )
+            )
+          }
+        )
+      )
+    )
+    testthat::test_that(
+      paste(text, "mu"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                mu
+              ) - c(
+                mu_hat
+              )
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "alpha"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                alpha
+              ) - c(
+                alpha_hat
+              )
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "beta"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                beta
+              ) - c(
+                beta_hat
+              )
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "psi"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                psi
+              ) - c(
+                psi_hat
+              )
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "nu"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                nu
+              ) - c(
+                nu_hat
+              )
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "lambda"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                lambda
+              ) - c(
+                lambda_hat
+              )
+            ) <= tol
+          )
+        )
+      }
+    )
+    testthat::test_that(
+      paste(text, "theta"),
+      {
+        testthat::skip_on_cran()
+        testthat::expect_true(
+          all(
+            abs(
+              c(
+                theta
+              ) - c(
+                theta_hat
+              )
+            ) <= tol
+          )
+        )
+      }
+    )
+  },
+  text = "test-fitVARMxID-fitvarmxid-trigger-ensure-good-hessian"
+)
