@@ -97,6 +97,7 @@ summary.varmxid <- function(object,
       nu = nu,
       psi = psi,
       theta = theta,
+      var_metric = var_metric,
       ncores = ncores
     )
   )
