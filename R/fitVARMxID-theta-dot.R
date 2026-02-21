@@ -27,7 +27,7 @@
     if (is.null(theta_d_lbound)) {
       theta_d_lbound <- -30
     } else {
-      if(
+      if (
         any(theta_d_lbound <= -700)
       ) {
         stop(
@@ -40,13 +40,13 @@
     if (is.null(theta_d_ubound)) {
       theta_d_ubound <- 650
     } else {
-      if(
+      if (
         any(theta_d_ubound >= 700)
       ) {
         stop(
           "`theta_d_ubound` >= 700."
         )
-      } 
+      }
     }
   }
   theta <- .FitVARMxIDCov(

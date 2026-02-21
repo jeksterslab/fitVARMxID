@@ -42,7 +42,7 @@
     if (is.null(sigma0_d_lbound)) {
       sigma0_d_lbound <- -30
     } else {
-      if(
+      if (
         any(sigma0_d_lbound <= -700)
       ) {
         stop(
@@ -55,13 +55,13 @@
     if (is.null(sigma0_d_ubound)) {
       sigma0_d_ubound <- 650
     } else {
-      if(
+      if (
         any(sigma0_d_ubound >= 700)
       ) {
         stop(
           "`sigma0_d_ubound` >= 700."
         )
-      } 
+      }
     }
   }
   if (isTRUE(run)) {

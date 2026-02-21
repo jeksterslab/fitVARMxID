@@ -27,7 +27,7 @@
     if (is.null(psi_d_lbound)) {
       psi_d_lbound <- -30
     } else {
-      if(
+      if (
         any(psi_d_lbound <= -700)
       ) {
         stop(
@@ -40,13 +40,13 @@
     if (is.null(psi_d_ubound)) {
       psi_d_ubound <- 650
     } else {
-      if(
+      if (
         any(psi_d_ubound >= 700)
       ) {
         stop(
           "`psi_d_ubound` >= 700."
         )
-      } 
+      }
     }
   }
   psi <- .FitVARMxIDCov(
