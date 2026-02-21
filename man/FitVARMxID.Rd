@@ -400,6 +400,7 @@ a list with the following elements:
 \item{call}{Function call.}
 \item{args}{List of function arguments.}
 \item{fun}{Function used ("FitVARMxID").}
+\item{model}{A list of generated OpenMx models.}
 \item{output}{A list of fitted OpenMx models.}
 \item{converged}{A logical vector indicating converged cases.}
 \item{robust}{A list of output from \code{\link[OpenMx:imxRobustSE]{OpenMx::imxRobustSE()}}
