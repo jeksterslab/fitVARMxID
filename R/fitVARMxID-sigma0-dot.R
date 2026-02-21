@@ -41,9 +41,27 @@
     run <- TRUE
     if (is.null(sigma0_d_lbound)) {
       sigma0_d_lbound <- -30
+    } else {
+      if(
+        any(sigma0_d_lbound <= -700)
+      ) {
+        stop(
+          paste0(
+            "`sigma0_d_ubound` <= -700."
+          )
+        )
+      }
     }
     if (is.null(sigma0_d_ubound)) {
       sigma0_d_ubound <- 650
+    } else {
+      if(
+        any(sigma0_d_ubound >= 700)
+      ) {
+        stop(
+          "`sigma0_d_ubound` >= 700."
+        )
+      } 
     }
   }
   if (isTRUE(run)) {
