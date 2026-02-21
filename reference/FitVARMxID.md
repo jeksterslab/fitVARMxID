@@ -478,6 +478,10 @@ elements:
 
   Function used ("FitVARMxID").
 
+- model:
+
+  A list of generated OpenMx models.
+
 - output:
 
   A list of fitted OpenMx models.
