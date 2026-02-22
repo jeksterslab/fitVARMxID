@@ -14,7 +14,6 @@ vcov(
   nu = TRUE,
   psi = TRUE,
   theta = TRUE,
-  var_metric = "var",
   robust = FALSE,
   ncores = NULL,
   ...
@@ -58,17 +57,6 @@ vcov(
   Logical. If `theta = TRUE`, include estimates of the `theta` matrix,
   if available. If `theta = FALSE`, exclude estimates of the `theta`
   matrix.
-
-- var_metric:
-
-  Character string. If `var_metric = "var"`, `psi` and `theta` are in
-  the original variance/covariance metric. If `var_metric = "logvar"`,
-  the diagonal elements of `psi` and `theta` are the log of the
-  variances and the off-diagonal elements correspond to strict `L` in
-  the `LDL'` decomposition. If `var_metric = "softplusvar"`, the
-  diagonal elements of `psi` and `theta` are the softplus of the
-  variances and the off-diagonal elements correspond to strict `L` in
-  the `LDL'` decomposition.
 
 - robust:
 

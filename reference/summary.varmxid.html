@@ -51,7 +51,6 @@
 <span>  nu <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  psi <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  theta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  var_metric <span class="op">=</span> <span class="st">"var"</span>,</span>
 <span>  digits <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  ncores <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -118,23 +117,6 @@ If <code>theta = TRUE</code>,
 include estimates of the <code>theta</code> matrix, if available.
 If <code>theta = FALSE</code>,
 exclude estimates of the <code>theta</code> matrix.</p></dd>
-
-
-<dt id="arg-var-metric">var_metric<a class="anchor" aria-label="anchor" href="#arg-var-metric"></a></dt>
-<dd><p>Character string.
-If <code>var_metric = "var"</code>,
-<code>psi</code> and <code>theta</code>
-are in the original variance/covariance metric.
-If <code>var_metric = "logvar"</code>,
-the diagonal elements of <code>psi</code> and <code>theta</code>
-are the log of the variances
-and the off-diagonal elements correspond to strict <code>L</code>
-in the <code>LDL'</code> decomposition.
-If <code>var_metric = "softplusvar"</code>,
-the diagonal elements of <code>psi</code> and <code>theta</code>
-are the softplus of the variances
-and the off-diagonal elements correspond to strict <code>L</code>
-in the <code>LDL'</code> decomposition.</p></dd>
 
 
 <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
