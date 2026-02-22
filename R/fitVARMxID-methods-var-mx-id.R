@@ -22,7 +22,6 @@ print.varmxid <- function(x,
                           nu = TRUE,
                           psi = TRUE,
                           theta = TRUE,
-                          var_metric = "var",
                           digits = 4,
                           ...) {
   print.summary.varmxid(
@@ -35,7 +34,6 @@ print.varmxid <- function(x,
       nu = nu,
       psi = psi,
       theta = theta,
-      var_metric = var_metric,
       digits = digits
     )
   )
@@ -66,7 +64,6 @@ summary.varmxid <- function(object,
                             nu = TRUE,
                             psi = TRUE,
                             theta = TRUE,
-                            var_metric = "var",
                             digits = 4,
                             ncores = NULL,
                             ...) {
@@ -97,7 +94,6 @@ summary.varmxid <- function(object,
       nu = nu,
       psi = psi,
       theta = theta,
-      var_metric = var_metric,
       ncores = ncores
     )
   )
@@ -120,7 +116,6 @@ summary.varmxid <- function(object,
   attr(out, "nu") <- nu
   attr(out, "psi") <- psi
   attr(out, "theta") <- theta
-  attr(out, "var_metric") <- var_metric
   attr(out, "digits") <- digits
   attr(out, "converged_prop") <- converged_prop
   attr(out, "convergence_issues") <- convergence_issues
@@ -213,20 +208,6 @@ print.summary.varmxid <- function(x,
 #'   include estimates of the `theta` matrix, if available.
 #'   If `theta = FALSE`,
 #'   exclude estimates of the `theta` matrix.
-#' @param var_metric Character string.
-#'   If `var_metric = "var"`,
-#'   `psi` and `theta`
-#'   are in the original variance/covariance metric.
-#'   If `var_metric = "logvar"`,
-#'   the diagonal elements of `psi` and `theta`
-#'   are the log of the variances
-#'   and the off-diagonal elements correspond to strict `L`
-#'   in the `LDL'` decomposition.
-#'   If `var_metric = "softplusvar"`,
-#'   the diagonal elements of `psi` and `theta`
-#'   are the softplus of the variances
-#'   and the off-diagonal elements correspond to strict `L`
-#'   in the `LDL'` decomposition.
 #' @param ncores Positive integer.
 #'   Number of cores to use.
 #' @param ... additional arguments.
@@ -243,7 +224,6 @@ coef.varmxid <- function(object,
                          nu = TRUE,
                          psi = TRUE,
                          theta = TRUE,
-                         var_metric = "var",
                          ncores = NULL,
                          ...) {
   threads <- OpenMx::mxOption(
@@ -346,27 +326,11 @@ coef.varmxid <- function(object,
     # nocov end
   }
   foo <- function(i) {
-    if (var_metric[1] == "var") {
-      out <- OpenMx::mxEvalByName(
-        name = "parameter_vec",
-        model = i,
-        compute = TRUE
-      )
-    }
-    if (var_metric[1] == "logvar") {
-      out <- OpenMx::mxEvalByName(
-        name = "parameter_log_diag_vec",
-        model = i,
-        compute = TRUE
-      )
-    }
-    if (var_metric[1] == "softplusvar") {
-      out <- OpenMx::mxEvalByName(
-        name = "parameter_softplus_diag_vec",
-        model = i,
-        compute = TRUE
-      )
-    }
+    out <- OpenMx::mxEvalByName(
+      name = "parameter_vec",
+      model = i,
+      compute = TRUE
+    )
     out <- c(out[idx])
     names(out) <- parnames[idx]
     out
@@ -424,7 +388,6 @@ vcov.varmxid <- function(object,
                          nu = TRUE,
                          psi = TRUE,
                          theta = TRUE,
-                         var_metric = "var",
                          robust = FALSE,
                          ncores = NULL,
                          ...) {
@@ -568,31 +531,12 @@ vcov.varmxid <- function(object,
       out <- parallel::mclapply(
         X = fit,
         FUN = function(i) {
-          if (var_metric[1] == "var") {
-            out <- OpenMx::mxSE(
-              x = "parameter_vec",
-              model = i,
-              details = TRUE,
-              silent = TRUE
-            )$Cov
-          }
-          if (var_metric[1] == "logvar") {
-            out <- OpenMx::mxSE(
-              x = "parameter_log_diag_vec",
-              model = i,
-              details = TRUE,
-              silent = TRUE
-            )$Cov
-          }
-          if (var_metric[1] == "softplusvar") {
-            out <- OpenMx::mxSE(
-              x = "parameter_softplus_diag_vec",
-              model = i,
-              details = TRUE,
-              silent = TRUE
-            )$Cov
-          }
-          out
+          out <- OpenMx::mxSE(
+            x = "parameter_vec",
+            model = i,
+            details = TRUE,
+            silent = TRUE
+          )$Cov
           out <- out[idx, idx]
           colnames(out) <- rownames(out) <- parnames[idx]
           out
@@ -646,31 +590,12 @@ vcov.varmxid <- function(object,
         cl = cl,
         X = fit,
         fun = function(i) {
-          if (var_metric[1] == "var") {
-            out <- OpenMx::mxSE(
-              x = "parameter_vec",
-              model = i,
-              details = TRUE,
-              silent = TRUE
-            )$Cov
-          }
-          if (var_metric[1] == "logvar") {
-            out <- OpenMx::mxSE(
-              x = "parameter_log_diag_vec",
-              model = i,
-              details = TRUE,
-              silent = TRUE
-            )$Cov
-          }
-          if (var_metric[1] == "softplusvar") {
-            out <- OpenMx::mxSE(
-              x = "parameter_softplus_diag_vec",
-              model = i,
-              details = TRUE,
-              silent = TRUE
-            )$Cov
-          }
-          out
+          out <- OpenMx::mxSE(
+            x = "parameter_vec",
+            model = i,
+            details = TRUE,
+            silent = TRUE
+          )$Cov
           out <- out[idx, idx]
           colnames(out) <- rownames(out) <- parnames[idx]
           out
@@ -716,31 +641,12 @@ vcov.varmxid <- function(object,
     out <- lapply(
       X = fit,
       FUN = function(i) {
-        if (var_metric[1] == "var") {
-          out <- OpenMx::mxSE(
-            x = "parameter_vec",
-            model = i,
-            details = TRUE,
-            silent = TRUE
-          )$Cov
-        }
-        if (var_metric[1] == "logvar") {
-          out <- OpenMx::mxSE(
-            x = "parameter_log_diag_vec",
-            model = i,
-            details = TRUE,
-            silent = TRUE
-          )$Cov
-        }
-        if (var_metric[1] == "softplusvar") {
-          out <- OpenMx::mxSE(
-            x = "parameter_softplus_diag_vec",
-            model = i,
-            details = TRUE,
-            silent = TRUE
-          )$Cov
-        }
-        out
+        out <- OpenMx::mxSE(
+          x = "parameter_vec",
+          model = i,
+          details = TRUE,
+          silent = TRUE
+        )$Cov
         out <- out[idx, idx]
         colnames(out) <- rownames(out) <- parnames[idx]
         out

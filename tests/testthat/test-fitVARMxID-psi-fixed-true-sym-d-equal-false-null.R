@@ -43,11 +43,8 @@ lapply(
             ) == c(
               "psi_l",
               "psi_d",
-              "psi_iden",
               "psi",
               "psi_vech",
-              "psi_log_diag",
-              "psi_softplus_diag",
               "q_mat"
             )
           )

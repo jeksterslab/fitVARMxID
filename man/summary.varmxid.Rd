@@ -13,7 +13,6 @@
   nu = TRUE,
   psi = TRUE,
   theta = TRUE,
-  var_metric = "var",
   digits = 4,
   ncores = NULL,
   ...
@@ -61,21 +60,6 @@ If \code{theta = TRUE},
 include estimates of the \code{theta} matrix, if available.
 If \code{theta = FALSE},
 exclude estimates of the \code{theta} matrix.}
-
-\item{var_metric}{Character string.
-If \code{var_metric = "var"},
-\code{psi} and \code{theta}
-are in the original variance/covariance metric.
-If \code{var_metric = "logvar"},
-the diagonal elements of \code{psi} and \code{theta}
-are the log of the variances
-and the off-diagonal elements correspond to strict \code{L}
-in the \verb{LDL'} decomposition.
-If \code{var_metric = "softplusvar"},
-the diagonal elements of \code{psi} and \code{theta}
-are the softplus of the variances
-and the off-diagonal elements correspond to strict \code{L}
-in the \verb{LDL'} decomposition.}
 
 \item{digits}{Integer indicating the number of decimal places to display.}
 

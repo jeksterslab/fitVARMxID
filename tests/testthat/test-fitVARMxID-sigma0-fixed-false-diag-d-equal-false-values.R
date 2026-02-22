@@ -46,11 +46,7 @@ lapply(
               "sigma0_d_vec",
               "sigma0",
               "sigma0_vech",
-              "sigma0_log_diag",
-              "sigma0_softplus_diag",
               "sigma0_vec",
-              "sigma0_log_diag_vec",
-              "sigma0_softplus_diag_vec",
               "p0_mat"
             )
           )

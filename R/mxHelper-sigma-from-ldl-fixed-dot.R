@@ -2,7 +2,8 @@
                                        d_values,
                                        l_values,
                                        row,
-                                       name) {
+                                       name,
+                                       iden_name) {
   if (is.null(d_values) || is.null(l_values)) {
     stop(
       paste(
@@ -13,7 +14,9 @@
   }
   column_name <- paste0(name, "_", "d")
   sdiag_name <- paste0(name, "_", "l")
-  iden_name <- paste0(name, "_", "iden")
+  if (is.null(iden_name)) {
+    iden_name <- paste0(name, "_", "iden")
+  }
   .MxHelperSigmaFromLDLMxMatrix(
     p = p,
     name = name,

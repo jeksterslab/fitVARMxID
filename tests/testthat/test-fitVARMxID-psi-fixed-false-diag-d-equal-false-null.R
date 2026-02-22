@@ -46,11 +46,7 @@ lapply(
               "psi_d_vec",
               "psi",
               "psi_vech",
-              "psi_log_diag",
-              "psi_softplus_diag",
               "psi_vec",
-              "psi_log_diag_vec",
-              "psi_softplus_diag_vec",
               "q_mat"
             )
           )

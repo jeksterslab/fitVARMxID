@@ -15,7 +15,7 @@
                            l_ubound) {
   column_name <- paste0(name, "_", "d")
   sdiag_name <- paste0(name, "_", "l")
-  iden_name <- paste0(name, "_", "iden")
+  iden_name <- "iden_k"
   d_rows <- row
   d_cols <- paste0(name, "_", "d")
   l_rows <- row
@@ -34,6 +34,7 @@
         values = NULL,
         row = row,
         name = name,
+        iden_name = iden_name,
         type = type
       )
     } else {
@@ -42,7 +43,8 @@
         d_values = d_values,
         l_values = l_values,
         row = row,
-        name = name
+        name = name,
+        iden_name = iden_name
       )
     }
   } else {
