@@ -55,11 +55,7 @@ lapply(
               "theta_d_vec",
               "theta",
               "theta_vech",
-              "theta_log_diag",
-              "theta_softplus_diag",
               "theta_vec",
-              "theta_log_diag_vec",
-              "theta_softplus_diag_vec",
               "r_mat"
             )
           )

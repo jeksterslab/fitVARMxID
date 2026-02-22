@@ -17,12 +17,8 @@
   if (is.null(sigma0[["sigma0_vec"]])) {
     sigma0_vec <- NA
     sigma0_vec_labels <- NA
-    sigma0_log_diag_vec <- NA
-    sigma0_softplus_diag_vec <- NA
   } else {
     sigma0_vec <- "sigma0_vec"
-    sigma0_log_diag_vec <- "sigma0_log_diag_vec"
-    sigma0_softplus_diag_vec <- "sigma0_softplus_diag_vec"
     sigma0_vec_labels <- c(
       sigma0$sigma0_vec$labels
     )
@@ -66,12 +62,8 @@
   if (is.null(psi[["psi_vec"]])) {
     psi_vec <- NA
     psi_vec_labels <- NA
-    psi_log_diag_vec <- NA
-    psi_softplus_diag_vec <- NA
   } else {
     psi_vec <- "psi_vec"
-    psi_log_diag_vec <- "psi_log_diag_vec"
-    psi_softplus_diag_vec <- "psi_softplus_diag_vec"
     psi_vec_labels <- c(
       psi$psi_vec$labels
     )
@@ -79,12 +71,8 @@
   if (is.null(theta[["theta_vec"]])) {
     theta_vec <- NA
     theta_vec_labels <- NA
-    theta_log_diag_vec <- NA
-    theta_softplus_diag_vec <- NA
   } else {
     theta_vec <- "theta_vec"
-    theta_log_diag_vec <- "theta_log_diag_vec"
-    theta_softplus_diag_vec <- "theta_softplus_diag_vec"
     theta_vec_labels <- c(
       theta$theta_vec$labels
     )
@@ -106,44 +94,6 @@
   ]
   parameter_vec <- paste0(
     parameter_vec,
-    collapse = ","
-  )
-  parameter_log_diag_vec <- c(
-    mu_vec,
-    alpha_vec,
-    beta_vec,
-    psi_log_diag_vec,
-    nu_vec,
-    theta_log_diag_vec,
-    mu0_vec,
-    sigma0_log_diag_vec
-  )
-  parameter_log_diag_vec <- parameter_log_diag_vec[
-    stats::complete.cases(
-      parameter_log_diag_vec
-    )
-  ]
-  parameter_log_diag_vec <- paste0(
-    parameter_log_diag_vec,
-    collapse = ","
-  )
-  parameter_softplus_diag_vec <- c(
-    mu_vec,
-    alpha_vec,
-    beta_vec,
-    psi_softplus_diag_vec,
-    nu_vec,
-    theta_softplus_diag_vec,
-    mu0_vec,
-    sigma0_softplus_diag_vec
-  )
-  parameter_softplus_diag_vec <- parameter_softplus_diag_vec[
-    stats::complete.cases(
-      parameter_softplus_diag_vec
-    )
-  ]
-  parameter_softplus_diag_vec <- paste0(
-    parameter_softplus_diag_vec,
     collapse = ","
   )
   parameter_vec_labels <- c(
@@ -172,30 +122,6 @@
       dimnames = list(
         parameter_vec_labels,
         "parameter_vec"
-      )
-    ),
-    parameter_log_diag_vec = OpenMx::mxAlgebraFromString(
-      algString = paste0(
-        "rbind(",
-        parameter_log_diag_vec,
-        ")"
-      ),
-      name = "parameter_log_diag_vec",
-      dimnames = list(
-        parameter_vec_labels,
-        "parameter_log_diag_vec"
-      )
-    ),
-    parameter_softplus_diag_vec = OpenMx::mxAlgebraFromString(
-      algString = paste0(
-        "rbind(",
-        parameter_softplus_diag_vec,
-        ")"
-      ),
-      name = "parameter_softplus_diag_vec",
-      dimnames = list(
-        parameter_vec_labels,
-        "parameter_softplus_diag_vec"
       )
     )
   )

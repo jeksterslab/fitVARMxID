@@ -80,11 +80,8 @@ lapply(
             ) == c(
               "sigma0_l",
               "sigma0_d",
-              "sigma0_iden",
               "sigma0",
               "sigma0_vech",
-              "sigma0_log_diag",
-              "sigma0_softplus_diag",
               "p0_mat"
             )
           )

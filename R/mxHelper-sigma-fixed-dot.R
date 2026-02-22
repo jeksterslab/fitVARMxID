@@ -2,6 +2,7 @@
                                 values,
                                 row,
                                 name,
+                                iden_name = NULL,
                                 type) {
   if (is.null(values)) {
     if (is.null(type)) {
@@ -19,7 +20,9 @@
   ldl <- .MxHelperLDL(x = values)
   column_name <- paste0(name, "_", "d")
   sdiag_name <- paste0(name, "_", "l")
-  iden_name <- paste0(name, "_", "iden")
+  if (is.null(iden_name)) {
+    iden_name <- paste0(name, "_", "iden")
+  }
   .MxHelperSigmaFromLDLMxMatrix(
     p = p,
     name = name,

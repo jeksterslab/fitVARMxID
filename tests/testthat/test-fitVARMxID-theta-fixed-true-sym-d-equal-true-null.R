@@ -41,11 +41,8 @@ lapply(
             ) == c(
               "theta_l",
               "theta_d",
-              "theta_iden",
               "theta",
               "theta_vech",
-              "theta_log_diag",
-              "theta_softplus_diag",
               "r_mat"
             )
           )
