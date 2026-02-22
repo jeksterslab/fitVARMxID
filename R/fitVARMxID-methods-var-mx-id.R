@@ -1,3 +1,4 @@
+#' Print Method for Object of Class `varmxid`
 #'
 #' @author Ivan Jacob Agaloos Pesigan
 #' @param x an object of class `varmxid`.
