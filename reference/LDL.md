@@ -1,7 +1,7 @@
 # LDL' Decomposition of a Symmetric Positive-Definite Matrix
 
 Performs an LDL' factorization of a symmetric positive-definite matrix
-\\X\\, such that \$\$X = L D L^\top,\$\$ where \\L\\ is unit
+\\X\\, such that \$\$X = L D L^\prime,\$\$ where \\L\\ is unit
 lower-triangular (ones on the diagonal) and \\D\\ is diagonal.
 
 ## Usage
@@ -16,19 +16,25 @@ InvLDL(s_l, uc_d)
 
 - x:
 
-  Numeric matrix. Must be symmetric positive-definite.
+  Numeric matrix. Assumed symmetric positive-definite (not checked).
+  Note: `LDL()` may error if the implied diagonal entries of \\D\\ are
+  not strictly positive.
 
 - epsilon:
 
-  Numeric. Small positive value used to replace zero diagonal entries.
+  Numeric. Small positive value used to replace *exactly zero* diagonal
+  entries of `x` prior to factorization.
 
 - s_l:
 
-  Matrix. Strictly lower-triangular part of \\L\\.
+  Matrix. Strictly lower-triangular part of \\L\\. In `InvLDL()`, only
+  the strictly lower triangle is used (upper triangle and diagonal are
+  ignored).
 
 - uc_d:
 
-  Vector. Unconstrained vector with \\log1p(exp(uc\\d)) = d\\.
+  Vector. Unconstrained vector such that `Softplus(uc_d) = d`, where `d`
+  are the diagonal entries of \\D\\.
 
 ## Value
 
@@ -42,7 +48,10 @@ InvLDL(s_l, uc_d)
 
   - `uc_d`: unconstrained vector with \\\mathrm{softplus}(uc\\d) = d\\
 
-  - `x`: input matrix
+  - `x`: input matrix (with diagonal zeros possibly replaced by
+    `epsilon`)
+
+  - `epsilon`: the `epsilon` value used
 
 - `InvLDL()`: a symmetric positive definite matrix
 
@@ -51,11 +60,15 @@ InvLDL(s_l, uc_d)
 `LDL()` returns both the unit lower-triangular factor \\L\\ and the
 diagonal factor \\D\\. The strictly lower-triangular part of \\L\\ is
 also provided for convenience. The function additionally computes an
-unconstrained vector `uc_d` such that `softplus(uc_d) = d`, using
-\\\mathrm{softplus}^{-1}(y) = \log(\exp(y) - 1)\\ for stable
-back-transformation. `InvLDL()` returns a symmetric positive definite
-matrix from the strictly lower-triangular part of \\L\\ and the
-unconstrained vector `uc_d`.
+unconstrained vector `uc_d` such that `Softplus(uc_d) = d`. This uses a
+numerically stable inverse softplus implementation based on
+`log(expm1(d))` (and a large-`d` rewrite), rather than the unstable
+expression \\\log(\exp(d) - 1)\\.
+
+`InvLDL()` returns a symmetric positive definite matrix from the
+strictly lower-triangular part of \\L\\ and the unconstrained vector
+`uc_d`. The reconstructed matrix is symmetrized as \\(\Sigma +
+\Sigma^\prime)/2\\ to reduce numerical asymmetry.
 
 ## See also
 
