@@ -11,16 +11,21 @@ InvLDL(s_l, uc_d)
 }
 \arguments{
 \item{x}{Numeric matrix.
-Must be symmetric positive-definite.}
+Assumed symmetric positive-definite (not checked).
+Note: \code{LDL()} may error if the implied diagonal entries of \eqn{D}
+are not strictly positive.}
 
 \item{epsilon}{Numeric.
-Small positive value used to replace zero diagonal entries.}
+Small positive value used to replace \emph{exactly zero} diagonal entries
+of \code{x} prior to factorization.}
 
 \item{s_l}{Matrix.
-Strictly lower-triangular part of \eqn{L}.}
+Strictly lower-triangular part of \eqn{L}. In \code{InvLDL()}, only the
+strictly lower triangle is used (upper triangle and diagonal are ignored).}
 
 \item{uc_d}{Vector.
-Unconstrained vector with \eqn{log1p(exp(uc\_d)) = d}.}
+Unconstrained vector such that \code{Softplus(uc_d) = d}, where \code{d}
+are the diagonal entries of \eqn{D}.}
 }
 \value{
 \itemize{
@@ -31,7 +36,8 @@ Unconstrained vector with \eqn{log1p(exp(uc\_d)) = d}.}
 \item \code{d}: a vector of diagonal entries of \eqn{D}
 \item \code{uc_d}: unconstrained vector with
 \eqn{\mathrm{softplus}(uc\_d) = d}
-\item \code{x}: input matrix
+\item \code{x}: input matrix (with diagonal zeros possibly replaced by \code{epsilon})
+\item \code{epsilon}: the \code{epsilon} value used
 }
 \item \code{InvLDL()}: a symmetric positive definite matrix
 }
@@ -39,7 +45,7 @@ Unconstrained vector with \eqn{log1p(exp(uc\_d)) = d}.}
 \description{
 Performs an LDL' factorization of a symmetric positive-definite
 matrix \eqn{X}, such that
-\deqn{X = L D L^\top,}
+\deqn{X = L D L^\prime,}
 where \eqn{L} is unit lower-triangular (ones on the diagonal)
 and \eqn{D} is diagonal.
 }
@@ -47,13 +53,17 @@ and \eqn{D} is diagonal.
 \code{LDL()} returns both the unit lower-triangular factor \eqn{L}
 and the diagonal factor \eqn{D}.
 The strictly lower-triangular part of \eqn{L} is also provided
-for convenience. The function additionally computes an unconstrained
-vector \code{uc_d} such that \code{softplus(uc_d) = d}, using
-\eqn{\mathrm{softplus}^{-1}(y) = \log(\exp(y) - 1)} for stable
-back-transformation.
+for convenience.
+The function additionally computes an unconstrained vector \code{uc_d}
+such that \code{Softplus(uc_d) = d}. This uses a numerically stable inverse
+softplus implementation based on \code{log(expm1(d))} (and a large-\code{d} rewrite),
+rather than the unstable expression \eqn{\log(\exp(d) - 1)}.
+
 \code{InvLDL()} returns a symmetric positive definite matrix
 from the strictly lower-triangular part of \eqn{L}
-and the unconstrained vector \code{uc_d}.
+and the unconstrained vector \code{uc_d}. The reconstructed matrix is
+symmetrized as \eqn{(\Sigma + \Sigma^\prime)/2} to reduce numerical
+asymmetry.
 }
 \examples{
 set.seed(123)

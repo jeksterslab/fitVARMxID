@@ -15,24 +15,35 @@ Input values to be transformed.}
 }
 \value{
 \itemize{
-\item \code{Softplus()}: numeric vector or matrix of strictly positive values.
+\item \code{Softplus()}: numeric vector or matrix of nonnegative values
+(mathematically strictly positive for finite inputs, but can underflow
+to 0 for very negative values).
 \item \code{InvSoftplus()}: numeric vector or matrix of unconstrained values.
 }
 }
 \description{
 The softplus transformation maps unconstrained real values to the
 positive real line. This is useful when parameters (e.g., variances)
-must be strictly positive. The inverse softplus transformation
-recovers the unconstrained value from a positive input.
+must be positive. The inverse softplus transformation
+recovers the unconstrained value from a strictly positive input.
 }
 \details{
+Mathematical definitions:
 \itemize{
 \item \code{Softplus(x) = log(1 + exp(x))}
 \item \code{InvSoftplus(x) = log(exp(x) - 1)}
 }
 
+Numerical implementation (stable forms):
+\itemize{
+\item \code{Softplus(x) = max(x, 0) + log1p(exp(-abs(x)))}
+\item \code{InvSoftplus(y)} uses \code{log(expm1(y))}, and for large \code{y} uses the rewrite
+\code{y + log1p(-exp(-y))} for stability.
+}
+
 For numerical stability, these functions use \code{log1p()} and \code{expm1()}
-internally.
+internally. \code{InvSoftplus()} requires strictly positive input and will
+error if any values are \verb{<= 0}.
 }
 \examples{
 # Apply softplus to unconstrained values
