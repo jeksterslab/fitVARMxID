@@ -40,15 +40,15 @@ The dynamic structure is given by
   \mathrm{d}
   \boldsymbol{\eta}_{i, t}
   =
-  \boldsymbol{\beta}_{i}
+  \boldsymbol{\beta}
   \left(
     \boldsymbol{\eta}_{i, t}
     -
-    \boldsymbol{\mu}_{i}
+    \boldsymbol{\mu}
   \right)
   \mathrm{d} t
   +
-  \boldsymbol{\Psi}_{i}^{\frac{1}{2}}
+  \boldsymbol{\Psi}^{\frac{1}{2}}
   \mathrm{d}
   \mathbf{W}_{i, t}
 \end{equation}
