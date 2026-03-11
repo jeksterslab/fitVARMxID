@@ -150,7 +150,7 @@
 #'   \boldsymbol{\alpha}_{i}
 #'   +
 #'   \boldsymbol{\beta}_{i}
-#'   \boldsymbol{\eta}_{i, t - 1}
+#'   \boldsymbol{\eta}_{i, t}
 #'   \right)
 #'   \mathrm{d} t
 #'   +
@@ -169,7 +169,7 @@
 #'   =
 #'   \boldsymbol{\beta}_{i}
 #'   \left(
-#'     \boldsymbol{\eta}_{i, t - 1}
+#'     \boldsymbol{\eta}_{i, t}
 #'     -
 #'     \boldsymbol{\mu}_{i}
 #'   \right)

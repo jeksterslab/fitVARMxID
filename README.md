@@ -1,12 +1,16 @@
 fitVARMxID
 ================
 Ivan Jacob Agaloos Pesigan
-2026-02-22
+2026-03-11
 
 <!-- README.md is generated from .setup/readme/README.Rmd. Please edit that file -->
 
 <!-- badges: start -->
 
+[![CRAN
+Status](https://www.r-pkg.org/badges/version/fitVARMxID)](https://cran.r-project.org/package=fitVARMxID)
+[![R-Universe
+Status](https://jeksterslab.r-universe.dev/badges/fitVARMxID)](https://jeksterslab.r-universe.dev)
 [![Make
 Project](https://github.com/jeksterslab/fitVARMxID/actions/workflows/make.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/make.yml)
 [![R-CMD-check-standard](https://github.com/jeksterslab/fitVARMxID/actions/workflows/check-standard.yml/badge.svg)](https://github.com/jeksterslab/fitVARMxID/actions/workflows/check-standard.yml)
@@ -31,7 +35,13 @@ Fit the vector autoregressive model for multiple individuals using the
 
 ## Installation
 
-You can install the released version of `fitVARMxID` from
+You can install the CRAN release of `fitVARMxID` with:
+
+``` r
+install.packages("fitVARMxID")
+```
+
+You can install the development version of `fitVARMxID` from
 [GitHub](https://github.com/jeksterslab/fitVARMxID) with:
 
 ``` r

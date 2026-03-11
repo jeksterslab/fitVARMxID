@@ -79,7 +79,14 @@ Fit the vector autoregressive model using the \texttt{OpenMx} package.
 
 \section*{Installation}
 
-You can install the released version of
+You can install the CRAN release of \texttt{fitVARMxID} with:
+
+%% begin.rcode
+% #| eval = FALSE
+% install.packages("fitVARMxID")
+%% end.rcode
+
+You can install the development version of
 \texttt{fitVARMxID}
 from
 \href{https://github.com/jeksterslab/fitVARMxID}{GitHub}
@@ -87,8 +94,8 @@ with:
 
 %% begin.rcode
 % #| eval = FALSE
-% install.packages("remotes")
-% remotes::install_github("jeksterslab/fitVARMxID")
+% if (!require("pak")) install.packages("pak")
+% pak::pkg_install("jeksterslab/fitVARMxID")
 %% end.rcode
 
 \section*{More Information}

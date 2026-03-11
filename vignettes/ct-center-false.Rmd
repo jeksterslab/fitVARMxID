@@ -1,7 +1,7 @@
 ---
 title: "Continuous-Time Vector Autoregressive Model (center = FALSE)"
 author: "Ivan Jacob Agaloos Pesigan"
-date: "2026-02-22"
+date: "2026-03-10"
 bibliography: "vignettes.bib"
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
 nocite: |
@@ -44,7 +44,7 @@ The dynamic structure is given by
    \boldsymbol{\alpha}_{i}
    +
    \boldsymbol{\beta}_{i}
-   \boldsymbol{\eta}_{i, t - 1}
+   \boldsymbol{\eta}_{i, t}
    \right)
    \mathrm{d} t
    +

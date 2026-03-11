@@ -104,7 +104,7 @@ The dynamic structure is given by
   =
   \boldsymbol{\beta}_{i}
   \left(
-    \boldsymbol{\eta}_{i, t - 1}
+    \boldsymbol{\eta}_{i, t}
     -
     \boldsymbol{\mu}_{i}
   \right)
