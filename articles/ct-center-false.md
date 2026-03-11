@@ -20,14 +20,14 @@ The dynamic structure is given by
    \boldsymbol{\eta}_{i, t}
    =
    \left(
-   \boldsymbol{\alpha}_{i}
+   \boldsymbol{\alpha}
    +
-   \boldsymbol{\beta}_{i}
+   \boldsymbol{\beta}
    \boldsymbol{\eta}_{i, t}
    \right)
    \mathrm{d} t
    +
-   \boldsymbol{\Psi}_{i}^{\frac{1}{2}}
+   \boldsymbol{\Psi}^{\frac{1}{2}}
    \mathrm{d}
    \mathbf{W}_{i, t}
 \end{equation}
