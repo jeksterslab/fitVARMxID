@@ -554,14 +554,14 @@ toward which the system is pulled over time.
 The continuous-time parameterization, when `ct = TRUE`, for the dynamic
 structure is given by \$\$ \mathrm{d} \boldsymbol{\eta}\_{i, t} = \left(
 \boldsymbol{\alpha}\_{i} + \boldsymbol{\beta}\_{i}
-\boldsymbol{\eta}\_{i, t - 1} \right) \mathrm{d} t +
+\boldsymbol{\eta}\_{i, t} \right) \mathrm{d} t +
 \boldsymbol{\Psi}\_{i}^{\frac{1}{2}} \mathrm{d} \mathbf{W}\_{i, t} \$\$
 note that \\\mathrm{d}\boldsymbol{W}\\ is a Wiener process or Brownian
 motion, which represents random fluctuations.
 
 If `center = TRUE`, the dynamic structure is parameterized as follows
 \$\$ \mathrm{d} \boldsymbol{\eta}\_{i, t} = \boldsymbol{\beta}\_{i}
-\left( \boldsymbol{\eta}\_{i, t - 1} - \boldsymbol{\mu}\_{i} \right)
+\left( \boldsymbol{\eta}\_{i, t} - \boldsymbol{\mu}\_{i} \right)
 \mathrm{d} t + \boldsymbol{\Psi}\_{i}^{\frac{1}{2}} \mathrm{d}
 \mathbf{W}\_{i, t} \$\$
 

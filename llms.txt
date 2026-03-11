@@ -1,6 +1,6 @@
 # fitVARMxID
 
-Ivan Jacob Agaloos Pesigan 2026-02-22
+Ivan Jacob Agaloos Pesigan 2026-03-11
 
 ## Description
 
@@ -9,7 +9,14 @@ Fit the vector autoregressive model for multiple individuals using the
 
 ## Installation
 
-You can install the released version of `fitVARMxID` from
+You can install the CRAN release of `fitVARMxID` with:
+
+``` r
+
+install.packages("fitVARMxID")
+```
+
+You can install the development version of `fitVARMxID` from
 [GitHub](https://github.com/jeksterslab/fitVARMxID) with:
 
 ``` r

@@ -12,7 +12,7 @@ library(fitVARMxID)
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.3 LTS
+#> Running under: Ubuntu 24.04.4 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -33,12 +33,12 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] fitVARMxID_1.0.2     OpenMx_2.22.10       simStateSpace_1.2.15
+#> [1] fitVARMxID_1.0.2.9000 OpenMx_2.22.10        simStateSpace_1.2.16 
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] digest_0.6.39         xfun_0.56             Matrix_1.7-4         
 #>  [4] lattice_0.22-7        knitr_1.51            parallel_4.5.2       
-#>  [7] RcppParallel_5.1.11-1 lifecycle_1.0.5       cli_3.6.5.9000       
+#>  [7] RcppParallel_5.1.11-2 lifecycle_1.0.5       cli_3.6.5.9000       
 #> [10] rProject_0.0.25       grid_4.5.2            compiler_4.5.2       
 #> [13] tools_4.5.2           evaluate_1.0.5        Rcpp_1.1.1           
 #> [16] otel_0.2.0            rlang_1.1.7           MASS_7.3-65
@@ -50,21 +50,21 @@ sessionInfo()
 
 installed.packages()[, c("Package", "Version")]
 #>                   Package             Version     
-#> fitVARMxID        "fitVARMxID"        "1.0.2"     
+#> fitVARMxID        "fitVARMxID"        "1.0.2.9000"
 #> abind             "abind"             "1.4-8"     
 #> Amelia            "Amelia"            "1.8.3"     
 #> arm               "arm"               "1.14-4"    
-#> arrow             "arrow"             "23.0.0.1"  
+#> arrow             "arrow"             "23.0.1.1"  
 #> ash               "ash"               "1.0-15"    
 #> AsioHeaders       "AsioHeaders"       "1.30.2-1"  
 #> askpass           "askpass"           "1.2.1"     
 #> assertthat        "assertthat"        "0.2.1"     
 #> backports         "backports"         "1.5.0"     
 #> base64enc         "base64enc"         "0.1-6"     
-#> betaDelta         "betaDelta"         "1.0.6"     
+#> betaDelta         "betaDelta"         "1.0.7"     
 #> betaMC            "betaMC"            "1.3.3"     
 #> betaNB            "betaNB"            "1.0.6"     
-#> betaSandwich      "betaSandwich"      "1.0.8"     
+#> betaSandwich      "betaSandwich"      "1.0.9"     
 #> BH                "BH"                "1.90.0-1"  
 #> bibtex            "bibtex"            "0.5.2"     
 #> BiocManager       "BiocManager"       "1.30.27"   
@@ -107,7 +107,7 @@ installed.packages()[, c("Package", "Version")]
 #> ctsem             "ctsem"             "3.10.6"    
 #> curl              "curl"              "7.0.0"     
 #> data.table        "data.table"        "1.18.2.1"  
-#> DBI               "DBI"               "1.2.3"     
+#> DBI               "DBI"               "1.3.0"     
 #> dbplyr            "dbplyr"            "2.5.2"     
 #> Deriv             "Deriv"             "4.2.0"     
 #> desc              "desc"              "1.4.3"     
@@ -141,7 +141,6 @@ installed.packages()[, c("Package", "Version")]
 #> fda               "fda"               "6.3.0"     
 #> fdrtool           "fdrtool"           "1.2.18"    
 #> fds               "fds"               "1.8"       
-#> fitDTVARMxID      "fitDTVARMxID"      "1.0.0"     
 #> fitVARMxID        "fitVARMxID"        "1.0.2"     
 #> FNN               "FNN"               "1.1.4.1"   
 #> fontawesome       "fontawesome"       "0.5.3"     
@@ -150,17 +149,17 @@ installed.packages()[, c("Package", "Version")]
 #> forecast          "forecast"          "9.0.1"     
 #> Formula           "Formula"           "1.2-5"     
 #> fracdiff          "fracdiff"          "1.5-3"     
-#> fs                "fs"                "1.6.6"     
+#> fs                "fs"                "1.6.7"     
 #> fst               "fst"               "0.9.8"     
 #> fstcore           "fstcore"           "0.10.0"    
 #> furrr             "furrr"             "0.3.1"     
 #> future            "future"            "1.69.0"    
-#> future.apply      "future.apply"      "1.20.1"    
+#> future.apply      "future.apply"      "1.20.2"    
 #> gargle            "gargle"            "1.6.1"     
 #> generics          "generics"          "0.1.4"     
 #> gert              "gert"              "2.3.1"     
 #> ggplot2           "ggplot2"           "4.0.2"     
-#> ggrepel           "ggrepel"           "0.9.6"     
+#> ggrepel           "ggrepel"           "0.9.7"     
 #> gh                "gh"                "1.5.0"     
 #> gitcreds          "gitcreds"          "0.1.2"     
 #> glasso            "glasso"            "1.11"      
@@ -181,13 +180,13 @@ installed.packages()[, c("Package", "Version")]
 #> haven             "haven"             "2.5.5"     
 #> hdrcde            "hdrcde"            "3.5.0"     
 #> here              "here"              "1.0.2"     
-#> highr             "highr"             "0.11"      
+#> highr             "highr"             "0.12"      
 #> Hmisc             "Hmisc"             "5.2-5"     
 #> hms               "hms"               "1.1.4"     
 #> htmlTable         "htmlTable"         "2.4.3"     
 #> htmltools         "htmltools"         "0.5.9"     
 #> htmlwidgets       "htmlwidgets"       "1.6.4"     
-#> httpgd            "httpgd"            "2.1.0"     
+#> httpgd            "httpgd"            "2.1.4"     
 #> httpuv            "httpuv"            "1.6.16"    
 #> httr              "httr"              "1.4.8"     
 #> httr2             "httr2"             "1.2.2"     
@@ -211,35 +210,34 @@ installed.packages()[, c("Package", "Version")]
 #> kutils            "kutils"            "1.73"      
 #> labeling          "labeling"          "0.4.3"     
 #> Lahman            "Lahman"            "14.0-0"    
-#> languageserver    "languageserver"    "0.3.16"    
-#> later             "later"             "1.4.6"     
+#> languageserver    "languageserver"    "0.3.17"    
+#> later             "later"             "1.4.8"     
 #> latex2exp         "latex2exp"         "0.9.8"     
 #> lava              "lava"              "1.8.2"     
 #> lavaan            "lavaan"            "0.6-21"    
 #> lazyeval          "lazyeval"          "0.2.2"     
-#> lhs               "lhs"               "1.2.0"     
+#> lhs               "lhs"               "1.2.1"     
 #> lifecycle         "lifecycle"         "1.0.5"     
 #> lintr             "lintr"             "3.3.0-1"   
 #> lisrelToR         "lisrelToR"         "0.3"       
 #> listenv           "listenv"           "0.10.0"    
 #> litedown          "litedown"          "0.9"       
-#> littler           "littler"           "0.3.21"    
-#> lme4              "lme4"              "1.1-38"    
+#> littler           "littler"           "0.3.22"    
+#> lme4              "lme4"              "2.0-1"     
 #> lmtest            "lmtest"            "0.9-40"    
 #> locfit            "locfit"            "1.5-9.12"  
 #> longMI            "longMI"            "1.0.0"     
 #> loo               "loo"               "2.9.0"     
 #> lubridate         "lubridate"         "1.9.5"     
-#> magick            "magick"            "2.9.0"     
+#> magick            "magick"            "2.9.1"     
 #> magrittr          "magrittr"          "2.0.4"     
 #> markdown          "markdown"          "2.0"       
 #> MatrixModels      "MatrixModels"      "0.5-4"     
 #> matrixStats       "matrixStats"       "1.5.0"     
 #> mclust            "mclust"            "6.1.2"     
 #> memoise           "memoise"           "2.0.1"     
-#> metaDyn           "metaDyn"           "0.0.0.9005"
+#> metaDyn           "metaDyn"           "1.0.0"     
 #> metaSEM           "metaSEM"           "1.5.0"     
-#> metaVAR           "metaVAR"           "0.0.0.9004"
 #> mi                "mi"                "1.2"       
 #> mice              "mice"              "3.19.0"    
 #> microbenchmark    "microbenchmark"    "1.5.0"     
@@ -260,7 +258,7 @@ installed.packages()[, c("Package", "Version")]
 #> numDeriv          "numDeriv"          "2016.8-1.1"
 #> nycflights13      "nycflights13"      "1.0.2"     
 #> OpenMx            "OpenMx"            "2.22.10"   
-#> openssl           "openssl"           "2.3.4"     
+#> openssl           "openssl"           "2.3.5"     
 #> openxlsx          "openxlsx"          "4.2.8.1"   
 #> ordinal           "ordinal"           "2025.12-29"
 #> otel              "otel"              "0.2.0"     
@@ -308,9 +306,9 @@ installed.packages()[, c("Package", "Version")]
 #> R.oo              "R.oo"              "1.27.1"    
 #> R.utils           "R.utils"           "2.13.0"    
 #> R2jags            "R2jags"            "0.8-9"     
-#> R2WinBUGS         "R2WinBUGS"         "2.1-23"    
+#> R2WinBUGS         "R2WinBUGS"         "2.1-24"    
 #> R6                "R6"                "2.6.1"     
-#> ragg              "ragg"              "1.5.0"     
+#> ragg              "ragg"              "1.5.1"     
 #> rainbow           "rainbow"           "3.8"       
 #> rappdirs          "rappdirs"          "0.3.4"     
 #> rbibutils         "rbibutils"         "2.4.1"     
@@ -319,8 +317,8 @@ installed.packages()[, c("Package", "Version")]
 #> Rcpp              "Rcpp"              "1.1.1"     
 #> RcppArmadillo     "RcppArmadillo"     "15.2.3-1"  
 #> RcppEigen         "RcppEigen"         "0.3.4.0.2" 
-#> RcppGSL           "RcppGSL"           "0.3.13"    
-#> RcppParallel      "RcppParallel"      "5.1.11-1"  
+#> RcppGSL           "RcppGSL"           "0.3.14"    
+#> RcppParallel      "RcppParallel"      "5.1.11-2"  
 #> RcppTOML          "RcppTOML"          "0.2.3"     
 #> RCurl             "RCurl"             "1.98-1.17" 
 #> Rdpack            "Rdpack"            "2.6.6"     
@@ -365,13 +363,13 @@ installed.packages()[, c("Package", "Version")]
 #> selectr           "selectr"           "0.5-1"     
 #> sem               "sem"               "3.1-16"    
 #> semlbci           "semlbci"           "0.11.5"    
-#> semmcci           "semmcci"           "1.1.5"     
+#> semmcci           "semmcci"           "1.1.6"     
 #> semPlot           "semPlot"           "1.1.8"     
 #> sessioninfo       "sessioninfo"       "1.2.3"     
 #> sfd               "sfd"               "0.1.0"     
 #> shape             "shape"             "1.4.6.1"   
 #> shiny             "shiny"             "1.13.0"    
-#> simStateSpace     "simStateSpace"     "1.2.15"    
+#> simStateSpace     "simStateSpace"     "1.2.16"    
 #> slider            "slider"            "0.3.3"     
 #> snow              "snow"              "0.4-4"     
 #> snowfall          "snowfall"          "1.84-6.3"  
@@ -385,12 +383,12 @@ installed.packages()[, c("Package", "Version")]
 #> styler            "styler"            "1.11.0"    
 #> symSEM            "symSEM"            "0.4"       
 #> sys               "sys"               "3.4.3"     
-#> systemfonts       "systemfonts"       "1.3.1"     
+#> systemfonts       "systemfonts"       "1.3.2"     
 #> tailor            "tailor"            "0.1.0"     
 #> tensorA           "tensorA"           "0.36.2.1"  
 #> testthat          "testthat"          "3.3.2"     
 #> texreg            "texreg"            "1.39.5"    
-#> textshaping       "textshaping"       "1.0.4"     
+#> textshaping       "textshaping"       "1.0.5"     
 #> tibble            "tibble"            "3.3.1"     
 #> tidymodels        "tidymodels"        "1.4.1"     
 #> tidyr             "tidyr"             "1.3.2"     
@@ -398,7 +396,7 @@ installed.packages()[, c("Package", "Version")]
 #> tidyverse         "tidyverse"         "2.0.0"     
 #> timechange        "timechange"        "0.4.0"     
 #> timeDate          "timeDate"          "4052.112"  
-#> tinytex           "tinytex"           "0.58.3"    
+#> tinytex           "tinytex"           "0.58.6"    
 #> tune              "tune"              "2.0.1"     
 #> tzdb              "tzdb"              "0.5.0"     
 #> ucminf            "ucminf"            "1.2.2"     
@@ -424,7 +422,7 @@ installed.packages()[, c("Package", "Version")]
 #> xml2              "xml2"              "1.5.2"     
 #> xmlparsedata      "xmlparsedata"      "1.0.5"     
 #> xopen             "xopen"             "1.0.1"     
-#> xtable            "xtable"            "1.8-4"     
+#> xtable            "xtable"            "1.8-8"     
 #> yaml              "yaml"              "2.3.12"    
 #> yardstick         "yardstick"         "1.3.2"     
 #> zip               "zip"               "2.3.3"     
@@ -476,7 +474,7 @@ installed.packages()[, c("Package", "Version")]
     #> Core(s) per socket:                      4
     #> Socket(s):                               1
     #> Stepping:                                12
-    #> CPU(s) scaling MHz:                      88%
+    #> CPU(s) scaling MHz:                      74%
     #> CPU max MHz:                             4100.0000
     #> CPU min MHz:                             400.0000
     #> BogoMIPS:                                3799.90
@@ -509,6 +507,6 @@ installed.packages()[, c("Package", "Version")]
 ## Memory
 
     #>                total        used        free      shared  buff/cache   available
-    #> Mem:            15Gi       4.7Gi       2.4Gi       329Mi       8.7Gi        10Gi
-    #> Swap:          7.8Gi        47Mi       7.7Gi
-    #> Total:          22Gi       4.7Gi        10Gi
+    #> Mem:            15Gi       5.3Gi       3.3Gi       517Mi       7.4Gi       9.8Gi
+    #> Swap:          7.8Gi       5.8Mi       7.8Gi
+    #> Total:          22Gi       5.3Gi        11Gi

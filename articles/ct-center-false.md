@@ -23,7 +23,7 @@ The dynamic structure is given by
    \boldsymbol{\alpha}_{i}
    +
    \boldsymbol{\beta}_{i}
-   \boldsymbol{\eta}_{i, t - 1}
+   \boldsymbol{\eta}_{i, t}
    \right)
    \mathrm{d} t
    +
