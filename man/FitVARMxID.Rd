@@ -564,7 +564,7 @@ for the dynamic structure is given by
   \boldsymbol{\alpha}_{i}
   +
   \boldsymbol{\beta}_{i}
-  \boldsymbol{\eta}_{i, t - 1}
+  \boldsymbol{\eta}_{i, t}
   \right)
   \mathrm{d} t
   +
@@ -583,7 +583,7 @@ If \code{center = TRUE}, the dynamic structure is parameterized as follows
   =
   \boldsymbol{\beta}_{i}
   \left(
-    \boldsymbol{\eta}_{i, t - 1}
+    \boldsymbol{\eta}_{i, t}
     -
     \boldsymbol{\mu}_{i}
   \right)
@@ -676,7 +676,7 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 \doi{10.1007/s11336-014-9435-8}
 }
 \seealso{
-Other VAR Functions: 
+Other VAR Functions:
 \code{\link{LDL}()},
 \code{\link{Softplus}()}
 }

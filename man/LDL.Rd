@@ -76,7 +76,7 @@ max(abs(x - inv_ldl))
 
 }
 \seealso{
-Other VAR Functions: 
+Other VAR Functions:
 \code{\link{FitVARMxID}()},
 \code{\link{Softplus}()}
 }
