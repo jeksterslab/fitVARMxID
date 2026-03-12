@@ -342,8 +342,7 @@ coef.varmxid <- function(object,
       out <- parallel::mclapply(
         X = fit,
         FUN = foo,
-        mc.cores = ncores,
-        mc.preschedule = FALSE
+        mc.cores = ncores
       )
     } else {
       cl <- parallel::makeCluster(ncores)
@@ -514,8 +513,7 @@ vcov.varmxid <- function(object,
               i@output$standardErrors <- sandwich$SE
               i
             },
-            mc.cores = ncores,
-            mc.preschedule = FALSE
+            mc.cores = ncores
           )
         } else {
           fit <- mapply(
@@ -544,8 +542,7 @@ vcov.varmxid <- function(object,
           colnames(out) <- rownames(out) <- parnames[idx]
           out
         },
-        mc.cores = ncores,
-        mc.preschedule = FALSE
+        mc.cores = ncores
       )
     } else {
       cl <- parallel::makeCluster(ncores)
@@ -574,8 +571,7 @@ vcov.varmxid <- function(object,
               i@output$standardErrors <- sandwich$SE
               i
             },
-            mc.cores = ncores,
-            mc.preschedule = FALSE
+            mc.cores = ncores
           )
         } else {
           fit <- mapply(
