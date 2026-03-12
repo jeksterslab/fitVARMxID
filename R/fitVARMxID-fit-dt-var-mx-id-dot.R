@@ -217,7 +217,8 @@
         check_condition = check_condition,
         cond_max = cond_max,
         silent = silent,
-        mc.cores = ncores
+        mc.cores = ncores,
+        mc.preschedule = FALSE
       )
       # second pass
       refit <- vapply(
@@ -263,7 +264,8 @@
           relax_streak = relax_streak,
           relax_min_attempt = relax_min_attempt,
           silent = silent,
-          mc.cores = ncores
+          mc.cores = ncores,
+          mc.preschedule = FALSE
         )
       }
       still_bad <- vapply(
@@ -309,14 +311,16 @@
           relax_streak = relax_streak,
           relax_min_attempt = relax_min_attempt,
           silent = silent,
-          mc.cores = ncores
+          mc.cores = ncores,
+          mc.preschedule = FALSE
         )
       }
       if (robust) {
         sandwich <- parallel::mclapply(
           X = fit,
           FUN = .RobustSE,
-          mc.cores = ncores
+          mc.cores = ncores,
+          mc.preschedule = FALSE
         )
         names(sandwich) <- model_names
       } else {
@@ -353,7 +357,8 @@
         check_condition = check_condition,
         cond_max = cond_max,
         silent = silent,
-        mc.cores = ncores
+        mc.cores = ncores,
+        mc.preschedule = FALSE
       )
       # second pass
       refit <- vapply(
