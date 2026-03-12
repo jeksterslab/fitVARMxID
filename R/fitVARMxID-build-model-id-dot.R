@@ -124,8 +124,7 @@
       FUN = function(i) {
         data[which(data[, id] == i), , drop = FALSE]
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     beta <- parallel::mclapply(
       X = rep(x = beta_values, length.out = n),
@@ -141,8 +140,7 @@
           ct = ct
         )
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     if (mu) {
       mean_str <- parallel::mclapply(
@@ -159,8 +157,7 @@
             ct = ct
           )
         },
-        mc.cores = ncores,
-        mc.preschedule = FALSE
+        mc.cores = ncores
       )
     } else {
       mean_str <- parallel::mclapply(
@@ -177,8 +174,7 @@
             ct = ct
           )
         },
-        mc.cores = ncores,
-        mc.preschedule = FALSE
+        mc.cores = ncores
       )
     }
     lambda <- parallel::mclapply(
@@ -190,8 +186,7 @@
           statenames = statenames
         )
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     nu <- parallel::mclapply(
       X = rep(x = nu_values, length.out = n),
@@ -206,8 +201,7 @@
           nu_ubound = nu_ubound
         )
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     psi <- parallel::mcmapply(
       psi_d_values = rep(x = psi_d_values, length.out = n),
@@ -231,8 +225,7 @@
         )
       },
       SIMPLIFY = FALSE,
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     theta <- parallel::mcmapply(
       theta_d_values = rep(x = theta_d_values, length.out = n),
@@ -256,8 +249,7 @@
         )
       },
       SIMPLIFY = FALSE,
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     mu0 <- parallel::mclapply(
       X = rep(x = mu0_values, length.out = n),
@@ -274,8 +266,7 @@
           ct = ct
         )
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     sigma0 <- parallel::mcmapply(
       sigma0_d_values = rep(x = sigma0_d_values, length.out = n),
@@ -301,16 +292,14 @@
         )
       },
       SIMPLIFY = FALSE,
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     covariate <- parallel::mclapply(
       X = idx,
       FUN = function(i) {
         .FitVARMxIDX()
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     sigma <- parallel::mclapply(
       X = idx,
@@ -321,8 +310,7 @@
           ct = ct
         )
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     algebras <- parallel::mclapply(
       X = idx,
@@ -340,8 +328,7 @@
           pcor_psi = TRUE
         )
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     matrices <- parallel::mclapply(
       X = idx,
@@ -362,8 +349,7 @@
           algebras = algebras[[i]]
         )
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     model <- parallel::mclapply(
       X = seq_len(n),
@@ -388,8 +374,7 @@
           algebras = mat$algebras
         )
       },
-      mc.cores = ncores,
-      mc.preschedule = FALSE
+      mc.cores = ncores
     )
     # nocov end
   } else {
