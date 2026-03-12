@@ -47,6 +47,7 @@
       run <- TRUE
     }
   }
+  input_model <- model
   if (run) {
     model <- tryCatch(
       OpenMx::mxTryHard(
@@ -54,7 +55,9 @@
         silent = silent,
         ...
       ),
-      error = function(e) NULL
+      error = function(e) {
+        input_model
+      }
     )
   }
   model
