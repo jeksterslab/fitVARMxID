@@ -126,7 +126,10 @@
       },
       mc.cores = ncores
     )
-    beta <- parallel::mclapply(
+    # TODO:
+    # forking causes issues with simStateSpace::ProjectToStability
+    # use single core until issue is resolved
+    beta <- lapply(
       X = rep(x = beta_values, length.out = n),
       FUN = function(beta_values) {
         .FitVARMxIDBeta(
@@ -139,8 +142,7 @@
           beta_ubound = beta_ubound,
           ct = ct
         )
-      },
-      mc.cores = ncores
+      }
     )
     if (mu) {
       mean_str <- parallel::mclapply(
