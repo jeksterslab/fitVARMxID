@@ -3,7 +3,6 @@
 ## Patch
 
 * Edits to documentation.
-* Edits to `max_attempts` when rescue is needed in `.FitVARMxID`.
 
 # fitVARMxID 1.0.2
 
