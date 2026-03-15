@@ -1,7 +1,7 @@
 fitVARMxID
 ================
 Ivan Jacob Agaloos Pesigan
-2026-03-13
+2026-03-15
 
 <!-- README.md is generated from .setup/readme/README.Rmd. Please edit that file -->
 
