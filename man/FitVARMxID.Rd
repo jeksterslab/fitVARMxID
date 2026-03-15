@@ -677,8 +677,8 @@ OpenMx 2.0: Extended structural equation and statistical modeling.
 }
 \seealso{
 Other VAR Functions:
-\code{\link{LDL}()},
-\code{\link{Softplus}()}
+\code{\link[=LDL]{LDL()}},
+\code{\link[=Softplus]{Softplus()}}
 }
 \author{
 Ivan Jacob Agaloos Pesigan
