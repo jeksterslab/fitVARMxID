@@ -607,11 +607,11 @@ alpha <- rep(x = 0, times = p)
 beta <- 0.50 * diag(p)
 psi <- 0.001 * diag(p)
 psi_l <- t(chol(psi))
-mu0 <- simStateSpace::SSMMeanEta(
+mu0 <- SSMMeanEta(
   beta = beta,
   alpha = alpha
 )
-sigma0 <- simStateSpace::SSMCovEta(
+sigma0 <- SSMCovEta(
   beta = beta,
   psi = psi
 )
