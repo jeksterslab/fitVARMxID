@@ -320,14 +320,14 @@
         .FitVARMxIDAlgebras(
           k = k,
           ct = ct,
-          eigenval_beta = TRUE,
-          eigenvec_beta = TRUE,
-          eigenmod_beta = TRUE,
-          spectral_beta = TRUE,
-          solve_psi = TRUE,
-          halflife_beta = TRUE,
-          cor_psi = TRUE,
-          pcor_psi = TRUE
+          eigenval_beta = FALSE,
+          eigenvec_beta = FALSE,
+          eigenmod_beta = FALSE,
+          spectral_beta = FALSE,
+          solve_psi = FALSE,
+          halflife_beta = FALSE,
+          cor_psi = FALSE,
+          pcor_psi = FALSE
         )
       },
       mc.cores = ncores
