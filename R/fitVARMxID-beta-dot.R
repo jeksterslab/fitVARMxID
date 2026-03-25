@@ -49,20 +49,34 @@
     }
   )
   if (is.null(lbound_val)) {
-    lbound_val <- matrix(
-      data = -2.5,
-      nrow = m,
-      ncol = n
-    )
+    if (isTRUE(ct)) {
+      lbound_val <- matrix(
+        data = NA,
+        nrow = m,
+        ncol = n
+      )
+    } else {
+      lbound_val <- matrix(
+        data = -2.5,
+        nrow = m,
+        ncol = n
+      )
+    }
   }
   if (is.null(ubound_val)) {
-    ubound_val <- matrix(
-      data = +2.5,
-      nrow = m,
-      ncol = n
-    )
     if (isTRUE(ct)) {
+      ubound_val <- matrix(
+        data = NA,
+        nrow = m,
+        ncol = n
+      )
       diag(ubound_val) <- -1e-05
+    } else {
+      ubound_val <- matrix(
+        data = +2.5,
+        nrow = m,
+        ncol = n
+      )
     }
   }
   if (isTRUE(beta_fixed)) {

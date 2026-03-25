@@ -113,7 +113,7 @@ lapply(
                 )
               )
             ] == rep(
-              x = -2.5,
+              x = NA,
               times = k
             )
           )

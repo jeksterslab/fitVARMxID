@@ -17,7 +17,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r}
+```{r, env}
 #| include = FALSE
 Sys.setenv(
   OMP_NUM_THREADS = "1",
@@ -26,7 +26,7 @@ Sys.setenv(
 )
 ```
 
-```{r}
+```{r, knitr}
 #| include = FALSE
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -40,7 +40,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
+```{r, parameters}
 #| echo = FALSE
 set.seed(42)
 n <- 100
@@ -226,7 +226,7 @@ Let the dynamic process noise $\boldsymbol{\Psi}$ be given by
 
 ### R Function Arguments
 
-```{r}
+```{r, arguments}
 n
 time
 mu0
@@ -245,7 +245,7 @@ theta
 
 ### Visualizing the Dynamics Without Process Noise (n = 5 with Different Initial Condition)
 
-```{r no-error-ssm}
+```{r, no-error-ssm}
 #| echo = FALSE
 library(simStateSpace)
 sim <- SimSSMLinSDEFixed(
@@ -277,7 +277,7 @@ plot(sim, type = "l")
 > **Note:** The `SimSSMLinSDEFixed` function uses a different set of parameter names.
 > See `help(SimSSMLinSDEFixed)` for more details.
 
-```{r error-ssm}
+```{r, error-ssm}
 library(simStateSpace)
 sim <- SimSSMLinSDEFixed(
   n = n,
@@ -300,13 +300,8 @@ plot(sim)
 
 ## Model Fitting
 
-```{r}
-#| include = FALSE
-library(OpenMx)
-library(fitVARMxID)
-```
-
-```{r}
+```{r, library}
+#| message = FALSE
 library(OpenMx)
 library(fitVARMxID)
 ```
@@ -315,7 +310,7 @@ The `FitVARMxID` function fits a CT-VAR model on each individual $i$.
 
 > **Note:** Consider using the argument `ncores` to use multiple cores for parallel processing.
 
-```{r, message = FALSE, warning = FALSE, results = "hide"}
+```{r, fit, message = FALSE, warning = FALSE, results = "hide"}
 fit <- FitVARMxID(
   data = data,
   observed = c("y1", "y2", "y3"),
@@ -329,7 +324,7 @@ fit <- FitVARMxID(
 
 #### Parameter estimates
 
-```{r}
+```{r, summary}
 summary(
   fit,
   means = TRUE,
@@ -339,7 +334,7 @@ summary(
 
 ## References
 
-```{r}
+```{r, rm}
 #| include = FALSE
 rm(list = ls())
 ```

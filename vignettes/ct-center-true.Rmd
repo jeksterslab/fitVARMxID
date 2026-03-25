@@ -272,8 +272,6 @@ plot(sim)
 ## Model Fitting
 
 
-
-
 ``` r
 library(OpenMx)
 library(fitVARMxID)

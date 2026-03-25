@@ -94,22 +94,17 @@ lapply(
         )
         testthat::expect_true(
           all(
-            obj$lbound == matrix(
-              data = -2.5,
-              nrow = k,
-              ncol = k
-            )
+            is.na(obj$lbound)
           )
         )
-        ubound <- matrix(
-          data = 2.5,
-          nrow = k,
-          ncol = k
-        )
-        diag(ubound) <- -0.00001
         testthat::expect_true(
           all(
-            obj$ubound == ubound
+            is.na(obj$ubound[row(obj$ubound) != col(obj$ubound)])
+          )
+        )
+        testthat::expect_true(
+          all(
+            diag(obj$ubound) == -0.00001
           )
         )
       }
