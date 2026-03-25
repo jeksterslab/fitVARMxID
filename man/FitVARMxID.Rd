@@ -170,16 +170,22 @@ if \code{beta_fixed = FALSE}, these are starting values.
 If \code{NULL}, defaults to a diagonal matrix
 with -0.001 when \code{ct = TRUE} and 0.001 when \code{ct = FALSE}.}
 
-\item{beta_lbound}{Numeric matrix of lower bounds for \code{beta}.
-If \code{NULL}, defaults to -2.5.
-Ignored if \code{beta_fixed = TRUE}.}
+\item{beta_lbound}{Numeric matrix.
+Lower bounds for \code{beta}.
+Ignored if \code{beta_fixed = TRUE}.
+If \code{NULL} and \code{ct = FALSE},
+defaults to \code{-2.5}.
+If \code{NULL} and \code{ct = TRUE},
+defaults to \code{NA}.}
 
 \item{beta_ubound}{Numeric matrix.
 Upper bounds for \code{beta}.
 Ignored if \code{beta_fixed = TRUE}.
-If \code{NULL}, defaults to \code{+2.5}.
+If \code{NULL} and \code{ct = FALSE},
+defaults to \code{+2.5}.
 If \code{NULL} and \code{ct = TRUE},
-diagonal upper bounds are set to \code{-1e-05}.}
+diagonal upper bounds are set to \code{-1e-05}
+and the off-diagonals are set to \code{NA}.}
 
 \item{psi_diag}{Logical.
 If \code{TRUE}, \code{psi} is diagonal.

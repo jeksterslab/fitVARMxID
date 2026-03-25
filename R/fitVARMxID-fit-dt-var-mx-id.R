@@ -291,15 +291,21 @@
 #'   if `beta_fixed = FALSE`, these are starting values.
 #'   If `NULL`, defaults to a diagonal matrix
 #'   with -0.001 when `ct = TRUE` and 0.001 when `ct = FALSE`.
-#' @param beta_lbound Numeric matrix of lower bounds for `beta`.
-#'   If `NULL`, defaults to -2.5.
+#' @param beta_lbound Numeric matrix.
+#'   Lower bounds for `beta`.
 #'   Ignored if `beta_fixed = TRUE`.
+#'   If `NULL` and `ct = FALSE`,
+#'   defaults to `-2.5`.
+#'   If `NULL` and `ct = TRUE`,
+#'   defaults to `NA`.
 #' @param beta_ubound Numeric matrix.
 #'   Upper bounds for `beta`.
 #'   Ignored if `beta_fixed = TRUE`.
-#'   If `NULL`, defaults to `+2.5`.
+#'   If `NULL` and `ct = FALSE`,
+#'   defaults to `+2.5`.
 #'   If `NULL` and `ct = TRUE`,
-#'   diagonal upper bounds are set to `-1e-05`.
+#'   diagonal upper bounds are set to `-1e-05`
+#'   and the off-diagonals are set to `NA`.
 #' @param psi_diag Logical.
 #'   If `TRUE`, `psi` is diagonal.
 #'   If `FALSE`, `psi` is symmetric.
