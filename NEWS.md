@@ -1,8 +1,9 @@
-# fitVARMxID 1.0.2.9000
+# fitVARMxID 1.0.3
 
 ## Patch
 
 * Edits to documentation.
+* Algebras in `.FitVARMxIDAlgebras()` set to `FALSE`.
 
 # fitVARMxID 1.0.2
 
