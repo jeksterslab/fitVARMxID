@@ -256,18 +256,24 @@ with -0.001 when <code>ct = TRUE</code> and 0.001 when <code>ct = FALSE</code>.<
 
 
 <dt id="arg-beta-lbound">beta_lbound<a class="anchor" aria-label="anchor" href="#arg-beta-lbound"></a></dt>
-<dd><p>Numeric matrix of lower bounds for <code>beta</code>.
-If <code>NULL</code>, defaults to -2.5.
-Ignored if <code>beta_fixed = TRUE</code>.</p></dd>
+<dd><p>Numeric matrix.
+Lower bounds for <code>beta</code>.
+Ignored if <code>beta_fixed = TRUE</code>.
+If <code>NULL</code> and <code>ct = FALSE</code>,
+defaults to <code>-2.5</code>.
+If <code>NULL</code> and <code>ct = TRUE</code>,
+defaults to <code>NA</code>.</p></dd>
 
 
 <dt id="arg-beta-ubound">beta_ubound<a class="anchor" aria-label="anchor" href="#arg-beta-ubound"></a></dt>
 <dd><p>Numeric matrix.
 Upper bounds for <code>beta</code>.
 Ignored if <code>beta_fixed = TRUE</code>.
-If <code>NULL</code>, defaults to <code>+2.5</code>.
+If <code>NULL</code> and <code>ct = FALSE</code>,
+defaults to <code>+2.5</code>.
 If <code>NULL</code> and <code>ct = TRUE</code>,
-diagonal upper bounds are set to <code>-1e-05</code>.</p></dd>
+diagonal upper bounds are set to <code>-1e-05</code>
+and the off-diagonals are set to <code>NA</code>.</p></dd>
 
 
 <dt id="arg-psi-diag">psi_diag<a class="anchor" aria-label="anchor" href="#arg-psi-diag"></a></dt>

@@ -190,14 +190,16 @@ FitVARMxID(
 
 - beta_lbound:
 
-  Numeric matrix of lower bounds for `beta`. If `NULL`, defaults to
-  -2.5. Ignored if `beta_fixed = TRUE`.
+  Numeric matrix. Lower bounds for `beta`. Ignored if
+  `beta_fixed = TRUE`. If `NULL` and `ct = FALSE`, defaults to `-2.5`.
+  If `NULL` and `ct = TRUE`, defaults to `NA`.
 
 - beta_ubound:
 
   Numeric matrix. Upper bounds for `beta`. Ignored if
-  `beta_fixed = TRUE`. If `NULL`, defaults to `+2.5`. If `NULL` and
-  `ct = TRUE`, diagonal upper bounds are set to `-1e-05`.
+  `beta_fixed = TRUE`. If `NULL` and `ct = FALSE`, defaults to `+2.5`.
+  If `NULL` and `ct = TRUE`, diagonal upper bounds are set to `-1e-05`
+  and the off-diagonals are set to `NA`.
 
 - psi_diag:
 

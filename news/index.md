@@ -5,7 +5,6 @@
 ### Patch
 
 - Edits to documentation.
-- Algebras in `.FitVARMxIDAlgebras()` set to `FALSE`.
 
 ## fitVARMxID 1.0.2
 
