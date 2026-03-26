@@ -51,6 +51,11 @@ sessionInfo()
 installed.packages()[, c("Package", "Version")]
 #>                   Package             Version     
 #> fitVARMxID        "fitVARMxID"        "1.0.3"     
+#> fs                "fs"                "2.0.1"     
+#> ragg              "ragg"              "1.5.2"     
+#> roxygen2          "roxygen2"          "7.3.3.9000"
+#> rProject          "rProject"          "0.0.25"    
+#> tinytex           "tinytex"           "0.58.6"    
 #> abind             "abind"             "1.4-8"     
 #> Amelia            "Amelia"            "1.8.3"     
 #> arm               "arm"               "1.15-1"    
@@ -475,7 +480,7 @@ installed.packages()[, c("Package", "Version")]
     #> Socket(s):                               1
     #> Stepping:                                0
     #> Frequency boost:                         enabled
-    #> CPU(s) scaling MHz:                      75%
+    #> CPU(s) scaling MHz:                      65%
     #> CPU max MHz:                             5060.9761
     #> CPU min MHz:                             1219.5129
     #> BogoMIPS:                                4990.83
@@ -508,6 +513,6 @@ installed.packages()[, c("Package", "Version")]
 ## Memory
 
     #>                total        used        free      shared  buff/cache   available
-    #> Mem:            44Gi       4.0Gi        35Gi        14Mi       5.2Gi        40Gi
+    #> Mem:            44Gi       3.9Gi        36Gi        14Mi       5.0Gi        40Gi
     #> Swap:           22Gi          0B        22Gi
-    #> Total:          66Gi       4.0Gi        58Gi
+    #> Total:          66Gi       3.9Gi        58Gi

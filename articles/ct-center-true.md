@@ -286,15 +286,18 @@ summary(
 #>     time = "time", ct = TRUE, center = TRUE, ncores = parallel::detectCores())
 #> 
 #> Convergence:
-#> 100.0%
+#> 99.0%
+#> 
+#> Cases with the following IDs did not converge:
+#> 46
 #> 
 #> Means of the estimated paramaters per individual.
 #>   mu[1,1]   mu[2,1]   mu[3,1] beta[1,1] beta[2,1] beta[3,1] beta[1,2] beta[2,2] 
-#>    2.5623    5.7117    4.7566   -0.4118    0.7893   -0.4533   -0.0064   -0.5344 
+#>    2.5625    5.7127    4.7581   -0.4103    0.7891   -0.4512   -0.0074   -0.5350 
 #> beta[3,2] beta[1,3] beta[2,3] beta[3,3]  psi[1,1]  psi[2,1]  psi[3,1]  psi[2,2] 
-#>    0.7514   -0.0148   -0.0200   -0.7402    0.1007    0.0003   -0.0002    0.0993 
+#>    0.7493   -0.0148   -0.0210   -0.7388    0.1007    0.0002   -0.0002    0.0993 
 #>  psi[3,2]  psi[3,3] 
-#>    0.0003    0.1003
+#>    0.0003    0.1004
 ```
 
 ## References
