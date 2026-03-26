@@ -70,7 +70,7 @@
         nrow = m,
         ncol = n
       )
-      diag(ubound_val) <- -1e-05
+      diag(ubound_val) <- -1e-10
     } else {
       ubound_val <- matrix(
         data = +2.5,
