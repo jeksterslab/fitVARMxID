@@ -172,7 +172,7 @@ lapply(
         )
         testthat::expect_true(
           all(
-            obj$lbound == -30
+            obj$lbound == -650
           )
         )
         testthat::expect_true(

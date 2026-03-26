@@ -40,7 +40,7 @@
   } else {
     run <- TRUE
     if (is.null(sigma0_d_lbound)) {
-      sigma0_d_lbound <- -30
+      sigma0_d_lbound <- -650
     } else {
       if (
         any(sigma0_d_lbound <= -700)

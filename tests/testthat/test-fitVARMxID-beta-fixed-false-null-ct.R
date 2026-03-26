@@ -104,7 +104,7 @@ lapply(
         )
         testthat::expect_true(
           all(
-            diag(obj$ubound) == -0.00001
+            diag(obj$ubound) == -1e-10
           )
         )
       }
