@@ -25,7 +25,7 @@
     }
   } else {
     if (is.null(psi_d_lbound)) {
-      psi_d_lbound <- -650
+      psi_d_lbound <- -30
     } else {
       if (
         any(psi_d_lbound <= -700)

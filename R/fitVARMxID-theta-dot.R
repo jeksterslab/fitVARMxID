@@ -25,7 +25,7 @@
     }
   } else {
     if (is.null(theta_d_lbound)) {
-      theta_d_lbound <- -650
+      theta_d_lbound <- -30
     } else {
       if (
         any(theta_d_lbound <= -700)
