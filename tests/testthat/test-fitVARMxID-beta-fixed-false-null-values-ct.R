@@ -67,7 +67,7 @@ lapply(
         )
         testthat::expect_true(
           all(
-            obj$values == -0.001 * diag(k)
+            obj$values == -0.1 * diag(k)
           )
         )
         testthat::expect_true(
