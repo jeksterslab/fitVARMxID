@@ -104,7 +104,7 @@ Let the set-point vector $`\boldsymbol{\mu}`$ be given by
 \end{equation}
 ```
 
-Let the transition matrix $`\boldsymbol{\Phi}`$ be given by
+Let the drift matrix $`\boldsymbol{\Phi}`$ be given by
 
 ``` math
 \begin{equation}
