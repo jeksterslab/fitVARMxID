@@ -2,6 +2,8 @@
 
 ## fitVARMxID 1.0.3
 
+CRAN release: 2026-03-31
+
 ### Patch
 
 - Edits to documentation.

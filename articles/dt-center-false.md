@@ -274,6 +274,8 @@ fit <- FitVARMxID(
   center = FALSE,
   ncores = parallel::detectCores()
 )
+#> Error in `model$output`:
+#> ! $ operator is invalid for atomic vectors
 ```
 
 #### Parameter estimates
@@ -285,20 +287,8 @@ summary(
   means = TRUE,
   ncores = parallel::detectCores()
 )
-#> Call:
-#> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
-#>     center = FALSE, ncores = parallel::detectCores())
-#> 
-#> Convergence:
-#> 100.0%
-#> 
-#> Means of the estimated paramaters per individual.
-#> alpha[1,1] alpha[2,1] alpha[3,1]  beta[1,1]  beta[2,1]  beta[3,1]  beta[1,2] 
-#>     0.9544     0.9524     0.2701     0.7001     0.4990    -0.0991    -0.0022 
-#>  beta[2,2]  beta[3,2]  beta[1,3]  beta[2,3]  beta[3,3]   psi[1,1]   psi[2,1] 
-#>     0.5998     0.4038    -0.0051    -0.0022     0.4982     0.0997     0.0004 
-#>   psi[3,1]   psi[2,2]   psi[3,2]   psi[3,3] 
-#>    -0.0003     0.0990     0.0005     0.0994
+#> Error:
+#> ! object 'fit' not found
 ```
 
 ## References

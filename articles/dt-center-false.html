@@ -60,7 +60,7 @@
                         <h4 data-toc-skip class="author">Ivan Jacob
 Agaloos Pesigan</h4>
             
-            <h4 data-toc-skip class="date">2026-03-30</h4>
+            <h4 data-toc-skip class="date">2026-04-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jeksterslab/fitVARMxID/blob/main/vignettes/dt-center-false.Rmd"><code>vignettes/dt-center-false.Rmd</code></a></small>
       <div class="d-none name"><code>dt-center-false.Rmd</code></div>
@@ -347,7 +347,9 @@ individual
 <span>  id <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  center <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  ncores <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `model$output`:</span></span>
+<span><span class="co">#&gt; ! $ operator is invalid for atomic vectors</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="parameter-estimates">Parameter estimates<a class="anchor" aria-label="anchor" href="#parameter-estimates"></a>
 </h4>
@@ -357,20 +359,8 @@ individual
 <span>  means <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ncores <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", </span></span>
-<span><span class="co">#&gt;     center = FALSE, ncores = parallel::detectCores())</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Convergence:</span></span>
-<span><span class="co">#&gt; 100.0%</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Means of the estimated paramaters per individual.</span></span>
-<span><span class="co">#&gt; alpha[1,1] alpha[2,1] alpha[3,1]  beta[1,1]  beta[2,1]  beta[3,1]  beta[1,2] </span></span>
-<span><span class="co">#&gt;     0.9544     0.9524     0.2701     0.7001     0.4990    -0.0991    -0.0022 </span></span>
-<span><span class="co">#&gt;  beta[2,2]  beta[3,2]  beta[1,3]  beta[2,3]  beta[3,3]   psi[1,1]   psi[2,1] </span></span>
-<span><span class="co">#&gt;     0.5998     0.4038    -0.0051    -0.0022     0.4982     0.0997     0.0004 </span></span>
-<span><span class="co">#&gt;   psi[3,1]   psi[2,2]   psi[3,2]   psi[3,3] </span></span>
-<span><span class="co">#&gt;    -0.0003     0.0990     0.0005     0.0994</span></span></code></pre></div>
+<span><span class="co">#&gt; Error:</span></span>
+<span><span class="co">#&gt; ! object 'fit' not found</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2 unnumbered">
