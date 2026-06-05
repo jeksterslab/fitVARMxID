@@ -1,6 +1,6 @@
 # fitVARMxID
 
-Ivan Jacob Agaloos Pesigan 2026-04-01
+Ivan Jacob Agaloos Pesigan 2026-06-05
 
 ## Description
 
@@ -65,8 +65,16 @@ computing*. R Foundation for Statistical Computing.
 - [`coef(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/coef.varmxid.md)
   : Parameter Estimates
 
+- [`confint(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/confint.varmxid.md)
+  : Confidence Intervals for the Parameter Estimates
+
 - [`converged()`](https://github.com/jeksterslab/fitVARMxID/reference/converged.md)
   : Check Model Convergence
+
+- [`plot(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/plot.varmxid.md)
+  :
+
+  Plot Method for an Object of Class `varmxid`
 
 - [`print(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/print.varmxid.md)
   :

@@ -1,13 +1,15 @@
-# Sampling Covariance Matrix of the Parameter Estimates
+# Confidence Intervals for the Parameter Estimates
 
-Sampling Covariance Matrix of the Parameter Estimates
+Confidence Intervals for the Parameter Estimates
 
 ## Usage
 
 ``` r
 # S3 method for class 'varmxid'
-vcov(
+confint(
   object,
+  parm = NULL,
+  level = 0.95,
   mu = TRUE,
   alpha = TRUE,
   beta = TRUE,
@@ -15,7 +17,6 @@ vcov(
   psi = TRUE,
   theta = TRUE,
   robust = FALSE,
-  se = FALSE,
   ncores = NULL,
   ...
 )
@@ -26,6 +27,14 @@ vcov(
 - object:
 
   Object of class `varmxid`.
+
+- parm:
+
+  Argument not used.
+
+- level:
+
+  the confidence level required.
 
 - mu:
 
@@ -65,10 +74,6 @@ vcov(
   matrix. If `FALSE`, use normal theory sampling variance-covariance
   matrix.
 
-- se:
-
-  Logical. Option to return standard errors. Default value is `FALSE`.
-
 - ncores:
 
   Positive integer. Number of cores to use.
@@ -79,7 +84,7 @@ vcov(
 
 ## Value
 
-Returns a list of sampling variance-covariance matrices.
+Returns list of matrices of confidence intervals.
 
 ## Author
 

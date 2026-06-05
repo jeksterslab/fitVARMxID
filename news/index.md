@@ -1,5 +1,11 @@
 # Changelog
 
+## fitVARMxID 1.0.4
+
+### Patch
+
+- Added a plot method.
+
 ## fitVARMxID 1.0.3
 
 CRAN release: 2026-03-31

@@ -16,8 +16,16 @@
 - [`coef(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/coef.varmxid.md)
   : Parameter Estimates
 
+- [`confint(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/confint.varmxid.md)
+  : Confidence Intervals for the Parameter Estimates
+
 - [`converged()`](https://github.com/jeksterslab/fitVARMxID/reference/converged.md)
   : Check Model Convergence
+
+- [`plot(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/plot.varmxid.md)
+  :
+
+  Plot Method for an Object of Class `varmxid`
 
 - [`print(`*`<varmxid>`*`)`](https://github.com/jeksterslab/fitVARMxID/reference/print.varmxid.md)
   :

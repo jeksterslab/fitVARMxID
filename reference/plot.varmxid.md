@@ -1,13 +1,14 @@
-# Sampling Covariance Matrix of the Parameter Estimates
+# Plot Method for an Object of Class `varmxid`
 
-Sampling Covariance Matrix of the Parameter Estimates
+Plot Method for an Object of Class `varmxid`
 
 ## Usage
 
 ``` r
 # S3 method for class 'varmxid'
-vcov(
-  object,
+plot(
+  x,
+  level = 0.95,
   mu = TRUE,
   alpha = TRUE,
   beta = TRUE,
@@ -15,7 +16,6 @@ vcov(
   psi = TRUE,
   theta = TRUE,
   robust = FALSE,
-  se = FALSE,
   ncores = NULL,
   ...
 )
@@ -23,9 +23,13 @@ vcov(
 
 ## Arguments
 
-- object:
+- x:
 
   Object of class `varmxid`.
+
+- level:
+
+  the confidence level required.
 
 - mu:
 
@@ -65,10 +69,6 @@ vcov(
   matrix. If `FALSE`, use normal theory sampling variance-covariance
   matrix.
 
-- se:
-
-  Logical. Option to return standard errors. Default value is `FALSE`.
-
 - ncores:
 
   Positive integer. Number of cores to use.
@@ -79,7 +79,7 @@ vcov(
 
 ## Value
 
-Returns a list of sampling variance-covariance matrices.
+Displays plots of point estimates and confidence intervals.
 
 ## Author
 
