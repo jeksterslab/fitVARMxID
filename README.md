@@ -58,7 +58,7 @@ documentation.
 ## References
 
 <div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0" line-spacing="2">
+data-entry-spacing="0" data-line-spacing="2">
 
 <div id="ref-Hunter-2017" class="csl-entry">
 
