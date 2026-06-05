@@ -662,6 +662,8 @@ summary(fit)
 coef(fit)
 vcov(fit)
 converged(fit)
+confint(fit)
+plot(fit)
 }
 
 }
