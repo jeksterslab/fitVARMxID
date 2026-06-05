@@ -374,6 +374,9 @@ coef.varmxid <- function(object,
 #' @param robust Logical.
 #'   If `TRUE`, use robust (sandwich) sampling variance-covariance matrix.
 #'   If `FALSE`, use normal theory sampling variance-covariance matrix.
+#' @param se Logical.
+#'   Option to return standard errors.
+#'   Default value is `FALSE`.
 #' @inheritParams coef.varmxid
 #' @param ... additional arguments.
 #' @return Returns a list of sampling variance-covariance matrices.
@@ -390,6 +393,7 @@ vcov.varmxid <- function(object,
                          psi = TRUE,
                          theta = TRUE,
                          robust = FALSE,
+                         se = FALSE,
                          ncores = NULL,
                          ...) {
   threads <- OpenMx::mxOption(
@@ -544,6 +548,15 @@ vcov.varmxid <- function(object,
         },
         mc.cores = ncores
       )
+      if (se) {
+        out <- parallel::mclapply(
+          X = out,
+          FUN = function(i) {
+            sqrt(diag(i))
+          },
+          mc.cores = ncores
+        )
+      }
     } else {
       cl <- parallel::makeCluster(ncores)
       parallel::clusterEvalQ(cl = cl, library(OpenMx))
@@ -602,6 +615,15 @@ vcov.varmxid <- function(object,
           out
         }
       )
+      if (se) {
+        out <- parallel::parLapply(
+          cl = cl,
+          X = out,
+          FUN = function(i) {
+            sqrt(diag(i))
+          }
+        )
+      }
     }
     # nocov end
   } else {
@@ -653,6 +675,14 @@ vcov.varmxid <- function(object,
         out
       }
     )
+    if (se) {
+      out <- lapply(
+        X = out,
+        FUN = function(i) {
+          sqrt(diag(i))
+        }
+      )
+    }
   }
   out
 }
@@ -699,4 +729,175 @@ converged.varmxid <- function(object,
     converged <- mean(converged)
   }
   converged
+}
+
+#' Confidence Intervals for the Parameter Estimates
+#'
+#' @author Ivan Jacob Agaloos Pesigan
+#'
+#' @inheritParams vcov.varmxid
+#' @param parm Argument not used.
+#' @param level the confidence level required.
+#' @return Returns list of matrices of confidence intervals.
+#'
+#' @method confint varmxid
+#' @keywords methods
+#' @export
+confint.varmxid <- function(object,
+                            parm = NULL, # argument not used
+                            level = 0.95,
+                            mu = TRUE,
+                            alpha = TRUE,
+                            beta = TRUE,
+                            nu = TRUE,
+                            psi = TRUE,
+                            theta = TRUE,
+                            robust = FALSE,
+                            ncores = NULL,
+                            ...) {
+  coefs <- coef.varmxid(
+    object = object,
+    mu = mu,
+    alpha = alpha,
+    beta = beta,
+    nu = nu,
+    psi = psi,
+    theta = theta,
+    ncores = ncores
+  )
+  ses <- vcov.varmxid(
+    object = object,
+    mu = mu,
+    alpha = alpha,
+    beta = beta,
+    nu = nu,
+    psi = psi,
+    theta = theta,
+    robust = robust,
+    se = TRUE,
+    ncores = ncores
+  )
+  if (is.null(ncores)) {
+    ncores <- 1L
+  } else {
+    ncores <- min(
+      as.integer(ncores),
+      parallel::detectCores(),
+      length(coefs)
+    )
+  }
+  if (ncores > 1) {
+    # nocov start
+    os_type <- Sys.info()["sysname"]
+    if (os_type == "Darwin") {
+      fork <- TRUE
+    } else if (os_type == "Linux") {
+      fork <- TRUE
+    } else {
+      fork <- FALSE
+    }
+    # nocov end
+  }
+  if (ncores > 1) {
+    # nocov start
+    if (fork) {
+      out <- parallel::mclapply(
+        X = seq_along(coefs),
+        FUN = function(i) {
+          .CIWald(
+            est = coefs[[i]],
+            se = ses[[i]],
+            theta = 0,
+            alpha = 1 - level,
+            z = TRUE,
+            test = FALSE
+          )
+        },
+        mc.cores = ncores
+      )
+    } else {
+      cl <- parallel::makeCluster(ncores)
+      parallel::clusterEvalQ(
+        cl = cl,
+        library(OpenMx),
+        coefs,
+        ses
+      )
+      on.exit(
+        parallel::stopCluster(cl = cl),
+        add = TRUE
+      )
+      out <- parallel::parLapply(
+        cl = cl,
+        X = seq_along(coefs),
+        FUN = function(i) {
+          .CIWald(
+            est = coefs[[i]],
+            se = ses[[i]],
+            theta = 0,
+            alpha = 1 - level,
+            z = TRUE,
+            test = FALSE
+          )
+        }
+      )
+    }
+    # nocov end
+  } else {
+    out <- lapply(
+      X = seq_along(coefs),
+      FUN = function(i) {
+        .CIWald(
+          est = coefs[[i]],
+          se = ses[[i]],
+          theta = 0,
+          alpha = 1 - level,
+          z = TRUE,
+          test = FALSE
+        )
+      }
+    )
+  }
+  names(out) <- names(coefs)
+  out
+}
+
+#' Plot Method for an Object of Class `varmxid`
+#'
+#' @author Ivan Jacob Agaloos Pesigan
+#'
+#' @param x Object of class `varmxid`.
+#' @inheritParams confint.varmxid
+#'
+#' @return Displays plots of point estimates and confidence intervals.
+#'
+#' @method plot varmxid
+#' @keywords methods
+#' @export
+plot.varmxid <- function(x,
+                         level = 0.95,
+                         mu = TRUE,
+                         alpha = TRUE,
+                         beta = TRUE,
+                         nu = TRUE,
+                         psi = TRUE,
+                         theta = TRUE,
+                         robust = FALSE,
+                         ncores = NULL,
+                         ...) {
+  .PlotCoefForest(
+    x = confint.varmxid(
+      object = x,
+      parm = NULL,
+      level = level,
+      mu = mu,
+      alpha = alpha,
+      beta = beta,
+      nu = nu,
+      psi = psi,
+      theta = theta,
+      robust = robust,
+      ncores = ncores
+    )
+  )
 }
