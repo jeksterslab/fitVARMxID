@@ -75,6 +75,25 @@ lapply(
       robust = FALSE,
       seed = 42
     )
+    sav <- FitVARMxIDSave(
+      data = data,
+      observed = paste0("y", seq_len(k)),
+      id = "id",
+      center = FALSE,
+      alpha_fixed = TRUE,
+      alpha_values = alpha,
+      psi_fixed = TRUE,
+      psi_d_values = psi_ldl$uc_d,
+      psi_l_values = psi_ldl$s_l,
+      nu_fixed = FALSE,
+      theta_fixed = FALSE,
+      theta_diag = FALSE,
+      theta_d_values = rep(x = 1, times = k),
+      mu0_fixed = FALSE,
+      mu0_values = mu0,
+      robust = FALSE,
+      seed = 42
+    )
     if (ci) {
       print(fit)
       print(fit, means = TRUE)
@@ -87,6 +106,17 @@ lapply(
       confint(fit, robust = TRUE)
       plot(fit)
       plot(fit, robust = TRUE)
+      print(sav)
+      print(sav, means = TRUE)
+      summary(sav)
+      summary(sav, means = TRUE)
+      coef(sav)
+      vcov(sav)
+      vcov(sav, robust = TRUE)
+      confint(sav)
+      confint(sav, robust = TRUE)
+      plot(sav)
+      plot(sav, robust = TRUE)
     }
     testthat::test_that(
       paste(text, "converged"),
