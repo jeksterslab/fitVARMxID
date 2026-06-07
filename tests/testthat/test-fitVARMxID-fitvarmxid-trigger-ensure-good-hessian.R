@@ -78,6 +78,30 @@ lapply(
       robust = FALSE,
       seed = 42
     )
+    sav <- FitVARMxIDSave(
+      data = data,
+      observed = paste0("y", seq_len(k)),
+      id = "id",
+      center = TRUE,
+      beta_lbound = matrix(
+        data = c(
+          -0.50, NA,
+          NA, -0.50
+        ),
+        nrow = 2,
+        ncol = 2
+      ),
+      beta_ubound = matrix(
+        data = c(
+          0.50, NA,
+          NA, 0.50
+        ),
+        nrow = 2,
+        ncol = 2
+      ),
+      robust = FALSE,
+      seed = 42
+    )
     testthat::test_that(
       paste(text, "converged"),
       {

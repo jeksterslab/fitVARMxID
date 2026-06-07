@@ -352,8 +352,7 @@
         hess_tol_rel = hess_tol_rel,
         check_condition = check_condition,
         cond_max = cond_max,
-        silent = silent,
-        mc.cores = ncores
+        silent = silent
       )
       # second pass
       refit <- vapply(

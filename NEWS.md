@@ -3,6 +3,7 @@
 ## Patch
 
 * Added a plot method.
+* Added the `FitVARMxIDSave()` function.
 
 # fitVARMxID 1.0.3
 
