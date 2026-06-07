@@ -5,6 +5,9 @@
 ### Patch
 
 - Added a plot method.
+- Added the
+  [`FitVARMxIDSave()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxIDSave.md)
+  function.
 
 ## fitVARMxID 1.0.3
 

@@ -74,6 +74,7 @@ strictly lower-triangular part of \\L\\ and the unconstrained vector
 
 Other VAR Functions:
 [`FitVARMxID()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md),
+[`FitVARMxIDSave()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxIDSave.md),
 [`Softplus()`](https://github.com/jeksterslab/fitVARMxID/reference/Softplus.md)
 
 ## Examples

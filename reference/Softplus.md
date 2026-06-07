@@ -52,6 +52,7 @@ requires strictly positive input and will error if any values are
 
 Other VAR Functions:
 [`FitVARMxID()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md),
+[`FitVARMxIDSave()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxIDSave.md),
 [`LDL()`](https://github.com/jeksterslab/fitVARMxID/reference/LDL.md)
 
 ## Author

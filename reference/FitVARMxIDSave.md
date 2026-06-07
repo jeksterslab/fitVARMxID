@@ -1,18 +1,31 @@
-# Fit the First-Order Vector Autoregressive Model by ID
+# Fit First-Order Vector Autoregressive Models by ID and Save Results
 
-The function fits the first-order vector autoregressive model for each
-unit ID.
+Fits a first-order vector autoregressive model separately for each unit
+ID and saves each individual fitted model object to an `.Rds` file. This
+function fits the same individual-level models as
+[`FitVARMxID()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md),
+but saves each individual fit to disk. For each unique value of `id`,
+the model is fit using the corresponding subset of `data`. The fitted
+object for that ID is saved to `path` with file name `prefix_id.Rds`,
+where `id` is replaced by the unit ID value. The value added by
+`FitVARMxIDSave()` is that the individual fits are persisted to disk
+while the function still returns a collated object of class `varmxid`,
+similar to the object returned by
+[`FitVARMxID()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md).
 
 ## Usage
 
 ``` r
-FitVARMxID(
+FitVARMxIDSave(
   data,
   observed,
   id,
   time = NULL,
   ct = FALSE,
   center = TRUE,
+  path = getwd(),
+  prefix = "fitvarmx",
+  overwrite = TRUE,
   mu_fixed = FALSE,
   mu_free = NULL,
   mu_values = NULL,
@@ -117,6 +130,22 @@ FitVARMxID(
   equation. When `center = TRUE`, `alpha` is implied and the set-point
   `mu` is estimated. When `center = FALSE`, `alpha` is estimated and
   `mu` is implied.
+
+- path:
+
+  Character string. Path to the directory where the individual fitted
+  model objects are saved. The directory must already exist.
+
+- prefix:
+
+  Character string. Prefix used for the saved file names. Files are
+  saved as `prefix_id.Rds`.
+
+- overwrite:
+
+  Logical. If `TRUE`, existing saved fitted model objects from a
+  previous run are overwritten. If `FALSE`, existing files are left
+  unchanged and are read from disk instead.
 
 - mu_fixed:
 
@@ -465,8 +494,9 @@ FitVARMxID(
 
 ## Value
 
-Returns an object of class `varmxid` which is a list with the following
-elements:
+Returns an object of class `varmxid`, with the same general structure as
+[`FitVARMxID()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md).
+The object collates the individual saved fits and contains:
 
 - call:
 
@@ -474,11 +504,12 @@ elements:
 
 - args:
 
-  List of function arguments.
+  List of function arguments, including `path`, `prefix`, and
+  `overwrite`.
 
 - fun:
 
-  Function used ("FitVARMxID").
+  Function used (`"FitVARMxIDSave"`).
 
 - model:
 
@@ -490,82 +521,19 @@ elements:
 
 - converged:
 
-  A logical vector indicating converged cases.
+  A named logical vector indicating converged cases.
 
 - robust:
 
   A list of output from
   [`OpenMx::imxRobustSE()`](https://rdrr.io/pkg/OpenMx/man/imxRobustSE.html)
-  with argument `details = TRUE` for each `id` if `robust = TRUE`.
+  with argument `details = TRUE` for each `id` if `robust = TRUE`;
+  otherwise `NULL`.
 
-## Details
-
-### Measurement Model
-
-By default, the measurement model is given by \$\$ \mathbf{y}\_{i, t} =
-\boldsymbol{\eta}\_{i, t} . \$\$ However, the full measurement model can
-be parameterized as follows \$\$ \mathbf{y}\_{i, t} =
-\boldsymbol{\nu}\_{i} + \boldsymbol{\Lambda} \boldsymbol{\eta}\_{i, t} +
-\boldsymbol{\varepsilon}\_{i, t}, \quad \mathrm{with} \quad
-\boldsymbol{\varepsilon}\_{i, t} \sim \mathcal{N} \left( \mathbf{0},
-\boldsymbol{\Theta}\_{i} \right) \$\$ where \\\mathbf{y}\_{i, t}\\,
-\\\boldsymbol{\eta}\_{i, t}\\, and \\\boldsymbol{\varepsilon}\_{i, t}\\
-are random variables and \\\boldsymbol{\nu}\_{i}\\,
-\\\boldsymbol{\Lambda}\\, and \\\boldsymbol{\Theta}\_{i}\\ are model
-parameters. \\\mathbf{y}\_{i, t}\\ represents a vector of observed
-random variables, \\\boldsymbol{\eta}\_{i, t}\\ a vector of latent
-random variables, and \\\boldsymbol{\varepsilon}\_{i, t}\\ a vector of
-random measurement errors, at time \\t\\ and individual \\i\\.
-\\\boldsymbol{\nu}\_{i}\\, denotes a vector of intercepts (fixed to a
-null vector by default), \\\boldsymbol{\Lambda}\\ a matrix of factor
-loadings, and \\\boldsymbol{\Theta}\_{i}\\ the covariance matrix of
-\\\boldsymbol{\varepsilon}\\. In this model, \\\boldsymbol{\Lambda}\\ is
-an identity matrix and \\\boldsymbol{\Theta}\_{i}\\ is a diagonal
-matrix.
-
-### Discrete-Time Dynamic Structure
-
-The dynamic structure is given by \$\$ \boldsymbol{\eta}\_{i, t} =
-\boldsymbol{\alpha}\_{i} + \boldsymbol{\beta}\_{i}
-\boldsymbol{\eta}\_{i, t - 1} + \boldsymbol{\zeta}\_{i, t}, \quad
-\mathrm{with} \quad \boldsymbol{\zeta}\_{i, t} \sim \mathcal{N} \left(
-\mathbf{0}, \boldsymbol{\Psi}\_{i} \right) \$\$ where
-\\\boldsymbol{\eta}\_{i, t}\\, \\\boldsymbol{\eta}\_{i, t - 1}\\, and
-\\\boldsymbol{\zeta}\_{i, t}\\ are random variables, and
-\\\boldsymbol{\alpha}\_{i}\\, \\\boldsymbol{\beta}\_{i}\\, and
-\\\boldsymbol{\Psi}\_{i}\\ are model parameters. Here,
-\\\boldsymbol{\eta}\_{i, t}\\ is a vector of latent variables at time
-\\t\\ and individual \\i\\, \\\boldsymbol{\eta}\_{i, t - 1}\\ represents
-a vector of latent variables at time \\t - 1\\ and individual \\i\\, and
-\\\boldsymbol{\zeta}\_{i, t}\\ represents a vector of dynamic noise at
-time \\t\\ and individual \\i\\. \\\boldsymbol{\alpha}\_{i}\\ denotes a
-vector of intercepts, \\\boldsymbol{\beta}\_{i}\\ a matrix of
-autoregression and cross regression coefficients, and
-\\\boldsymbol{\Psi}\_{i}\\ the covariance matrix of
-\\\boldsymbol{\zeta}\_{i, t}\\.
-
-If `center = TRUE`, the dynamic structure is parameterized as follows
-\$\$ \boldsymbol{\eta}\_{i, t} = \boldsymbol{\mu}\_{i} +
-\boldsymbol{\beta}\_{i} \left( \boldsymbol{\eta}\_{i, t - 1} -
-\boldsymbol{\mu}\_{i} \right) + \boldsymbol{\zeta}\_{i, t} \$\$ where
-\\\boldsymbol{\mu}\_{i}\\ is equilibrium level of the latent state
-toward which the system is pulled over time.
-
-### Continuous-Time Dynamic Structure
-
-The continuous-time parameterization, when `ct = TRUE`, for the dynamic
-structure is given by \$\$ \mathrm{d} \boldsymbol{\eta}\_{i, t} = \left(
-\boldsymbol{\alpha}\_{i} + \boldsymbol{\beta}\_{i}
-\boldsymbol{\eta}\_{i, t} \right) \mathrm{d} t +
-\boldsymbol{\Psi}\_{i}^{\frac{1}{2}} \mathrm{d} \mathbf{W}\_{i, t} \$\$
-note that \\\mathrm{d}\boldsymbol{W}\\ is a Wiener process or Brownian
-motion, which represents random fluctuations.
-
-If `center = TRUE`, the dynamic structure is parameterized as follows
-\$\$ \mathrm{d} \boldsymbol{\eta}\_{i, t} = \boldsymbol{\beta}\_{i}
-\left( \boldsymbol{\eta}\_{i, t} - \boldsymbol{\mu}\_{i} \right)
-\mathrm{d} t + \boldsymbol{\Psi}\_{i}^{\frac{1}{2}} \mathrm{d}
-\mathbf{W}\_{i, t} \$\$
+In addition, each individual fit is saved to disk as an `.Rds` file. If
+a model fails for a given ID, an error object is saved as
+`prefix_id_error.Rds`, and that ID is omitted from the returned collated
+`varmxid` object.
 
 ## References
 
@@ -574,7 +542,7 @@ structural equation modeling environment. *Structural Equation Modeling:
 A Multidisciplinary Journal*, *25*(2), 307–324.
 [doi:10.1080/10705511.2017.1369354](https://doi.org/10.1080/10705511.2017.1369354)
 
-Neale, M. C., Hunter, M. D., Pritikin, J. N., Zahery, M., Brick, T. R.,
+Neale, M. C., Hunter, M. D., Pritikin, S. M., Zahery, M., Brick, T. R.,
 Kirkpatrick, R. M., Estabrook, R., Bates, T. C., Maes, H. H., & Boker,
 S. M. (2015). OpenMx 2.0: Extended structural equation and statistical
 modeling. *Psychometrika*, *81*(2), 535–549.
@@ -583,20 +551,15 @@ modeling. *Psychometrika*, *81*(2), 535–549.
 ## See also
 
 Other VAR Functions:
-[`FitVARMxIDSave()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxIDSave.md),
+[`FitVARMxID()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md),
 [`LDL()`](https://github.com/jeksterslab/fitVARMxID/reference/LDL.md),
 [`Softplus()`](https://github.com/jeksterslab/fitVARMxID/reference/Softplus.md)
-
-## Author
-
-Ivan Jacob Agaloos Pesigan
 
 ## Examples
 
 ``` r
 # \donttest{
-# Generate data using the simStateSpace package-------------------------
-library(simStateSpace)
+# Generate data using the simStateSpace package ----------------------
 set.seed(42)
 n <- 5
 time <- 100
@@ -605,16 +568,16 @@ alpha <- rep(x = 0, times = p)
 beta <- 0.50 * diag(p)
 psi <- 0.001 * diag(p)
 psi_l <- t(chol(psi))
-mu0 <- SSMMeanEta(
+mu0 <- simStateSpace::SSMMeanEta(
   beta = beta,
   alpha = alpha
 )
-sigma0 <- SSMCovEta(
+sigma0 <- simStateSpace::SSMCovEta(
   beta = beta,
   psi = psi
 )
 sigma0_l <- t(chol(sigma0))
-sim <- SimSSMVARFixed(
+sim <- simStateSpace::SimSSMVARFixed(
   n = n,
   time = time,
   mu0 = mu0,
@@ -625,14 +588,17 @@ sim <- SimSSMVARFixed(
 )
 data <- as.data.frame(sim)
 
-# Fit the model---------------------------------------------------------
-# center = TRUE
-library(fitVARMxID)
-fit <- FitVARMxID(
+# Save results to a temporary directory ------------------------------
+path <- tempdir()
+
+# Fit the model with person-mean centering ---------------------------
+fit <- FitVARMxIDSave(
   data = data,
   observed = paste0("y", seq_len(p)),
   id = "id",
-  center = TRUE
+  center = TRUE,
+  path = path,
+  prefix = "fitvarmx_centered"
 )
 #> Running DTVAR_ID1 with 9 parameters
 #> 
@@ -699,10 +665,12 @@ fit <- FitVARMxID(
 #>  Solution found!  Final fit=-832.35455 (started at 367.7976)  (1 attempt(s): 1 valid, 0 errors)
 #>  Start values from best fit:
 #> 0.299055985152669,0.0348621727088368,-0.0801687055865619,0.465890390856868,-0.00111115045695215,0.00331563195705935,-0.166419668597626,-6.91180267781828,-7.08999323366805
+#> 
+#> See /tmp/Rtmp3iAC0v for the saved results.
 print(fit)
 #> Call:
-#> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", 
-#>     center = TRUE)
+#> FitVARMxIDSave(data = data, observed = paste0("y", seq_len(p)), 
+#>     id = "id", center = TRUE, path = path, prefix = "fitvarmx_centered")
 #> 
 #> Convergence:
 #> 100.0%
@@ -722,8 +690,8 @@ print(fit)
 #> 5   0.0009
 summary(fit)
 #> Call:
-#> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", 
-#>     center = TRUE)
+#> FitVARMxIDSave(data = data, observed = paste0("y", seq_len(p)), 
+#>     id = "id", center = TRUE, path = path, prefix = "fitvarmx_centered")
 #> 
 #> Convergence:
 #> 100.0%
@@ -996,439 +964,6 @@ confint(fit)
 #> psi[1,1]  0.0012714367
 #> psi[2,1]  0.0000186406
 #> psi[2,2]  0.0010992187
-#> 
-plot(fit)
-
-
-
-
-
-
-
-
-
-
-# Fit the model---------------------------------------------------------
-# center = FALSE
-library(fitVARMxID)
-fit <- FitVARMxID(
-  data = data,
-  observed = paste0("y", seq_len(p)),
-  id = "id",
-  center = FALSE
-)
-#> Running DTVAR_ID1 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running DTVAR_ID1 with 9 parameters
-#> 
-#>  Lowest minimum so far:  -822.060942313204
-#> 
-#> Solution found
-#> 
-#> 
-#>  Solution found!  Final fit=-822.06094 (started at 367.82482)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.331612810420896,-0.0197631306798523,0.027018148758157,0.539260047061468,0.00368111266356549,0.00338863296810361,0.0623714148367602,-6.9119567442846,-6.98806613376272
-#> Running DTVAR_ID2 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running DTVAR_ID2 with 9 parameters
-#> 
-#>  Lowest minimum so far:  -834.035953636483
-#> 
-#> Solution found
-#> 
-#> 
-#>  Solution found!  Final fit=-834.03595 (started at 367.84346)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.546679083679444,-0.0201029544964559,-0.0487573560553898,0.29745045841592,-0.0022590347266253,-0.0140464530832986,0.176135728656938,-7.14253888427364,-6.87719774329376
-#> Running DTVAR_ID3 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running DTVAR_ID3 with 9 parameters
-#> 
-#>  Lowest minimum so far:  -808.550007472284
-#> 
-#> Solution found
-#> 
-#> 
-#>  Solution found!  Final fit=-808.55001 (started at 367.87017)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.52810552384264,-0.332501184944442,0.0108536588742205,0.361419710176755,-0.00199256396304628,-0.00252307444345536,-0.213878020138358,-6.9657199385558,-6.80024241140314
-#> Running DTVAR_ID4 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running DTVAR_ID4 with 9 parameters
-#> 
-#>  Lowest minimum so far:  -845.339407101152
-#> 
-#> Solution found
-#> 
-#> 
-#>  Solution found!  Final fit=-845.33941 (started at 367.80199)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.160844825671735,-0.121822547746862,-0.0298910806237062,0.481816258706521,-0.0108917261651341,9.44597699330245e-05,0.00601786289000614,-7.23151852202068,-6.89984834600342
-#> Running DTVAR_ID5 with 9 parameters
-#> 
-#> Beginning initial fit attempt
-#> Running DTVAR_ID5 with 9 parameters
-#> 
-#>  Lowest minimum so far:  -832.354548096109
-#> 
-#> Solution found
-#> 
-#> 
-#>  Solution found!  Final fit=-832.35455 (started at 367.7976)  (1 attempt(s): 1 valid, 0 errors)
-#>  Start values from best fit:
-#> 0.299056714950255,0.0348620015095441,-0.080168388399385,0.465889962011985,-0.0005130370000419,0.00180964949230418,-0.166419692672795,-6.91180279386919,-7.08999354610295
-print(fit)
-#> Call:
-#> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", 
-#>     center = FALSE)
-#> 
-#> Convergence:
-#> 100.0%
-#> 
-#> Estimated paramaters per individual.
-#>   alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1]
-#> 1     0.0037     0.0034    0.3316   -0.0198    0.0270    0.5393    1e-03
-#> 2    -0.0023    -0.0140    0.5467   -0.0201   -0.0488    0.2975    8e-04
-#> 3    -0.0020    -0.0025    0.5281   -0.3325    0.0109    0.3614    9e-04
-#> 4    -0.0109     0.0001    0.1608   -0.1218   -0.0299    0.4818    7e-04
-#> 5    -0.0005     0.0018    0.2991    0.0349   -0.0802    0.4659    1e-03
-#>   psi[2,1] psi[2,2]
-#> 1    1e-04   0.0009
-#> 2    1e-04   0.0011
-#> 3   -2e-04   0.0012
-#> 4    0e+00   0.0010
-#> 5   -2e-04   0.0009
-summary(fit)
-#> Call:
-#> FitVARMxID(data = data, observed = paste0("y", seq_len(p)), id = "id", 
-#>     center = FALSE)
-#> 
-#> Convergence:
-#> 100.0%
-#> 
-#> Estimated paramaters per individual.
-#>   alpha[1,1] alpha[2,1] beta[1,1] beta[2,1] beta[1,2] beta[2,2] psi[1,1]
-#> 1     0.0037     0.0034    0.3316   -0.0198    0.0270    0.5393    1e-03
-#> 2    -0.0023    -0.0140    0.5467   -0.0201   -0.0488    0.2975    8e-04
-#> 3    -0.0020    -0.0025    0.5281   -0.3325    0.0109    0.3614    9e-04
-#> 4    -0.0109     0.0001    0.1608   -0.1218   -0.0299    0.4818    7e-04
-#> 5    -0.0005     0.0018    0.2991    0.0349   -0.0802    0.4659    1e-03
-#>   psi[2,1] psi[2,2]
-#> 1    1e-04   0.0009
-#> 2    1e-04   0.0011
-#> 3   -2e-04   0.0012
-#> 4    0e+00   0.0010
-#> 5   -2e-04   0.0009
-coef(fit)
-#> $`1`
-#>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] 
-#>  3.681113e-03  3.388633e-03  3.316128e-01 -1.976313e-02  2.701815e-02 
-#>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] 
-#>  5.392600e-01  9.953219e-04  6.207963e-05  9.262859e-04 
-#> 
-#> $`2`
-#>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] 
-#> -0.0022590347 -0.0140464531  0.5466790837 -0.0201029545 -0.0487573561 
-#>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] 
-#>  0.2974504584  0.0007904395  0.0001392246  0.0010550305 
-#> 
-#> $`3`
-#>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] 
-#> -0.0019925640 -0.0025230744  0.5281055238 -0.3325011849  0.0108536589 
-#>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] 
-#>  0.3614197102  0.0009432483 -0.0002017401  0.0011560435 
-#> 
-#> $`4`
-#>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] 
-#> -1.089173e-02  9.445977e-05  1.608448e-01 -1.218225e-01 -2.989108e-02 
-#>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] 
-#>  4.818163e-01  7.231700e-04  4.351938e-06  1.007467e-03 
-#> 
-#> $`5`
-#>    alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]     beta[1,2] 
-#> -0.0005130370  0.0018096495  0.2990567150  0.0348620015 -0.0801683884 
-#>     beta[2,2]      psi[1,1]      psi[2,1]      psi[2,2] 
-#>  0.4658899620  0.0009954750 -0.0001656666  0.0008606358 
-#> 
-vcov(fit)
-#> $`1`
-#>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]
-#> alpha[1,1]  1.041603e-05  6.394386e-07 -5.052813e-05  1.065411e-06
-#> alpha[2,1]  6.394386e-07  9.499927e-06 -2.801871e-06 -4.336068e-05
-#> beta[1,1]  -5.052813e-05 -2.801871e-06  8.856580e-03  5.015575e-04
-#> beta[2,1]   1.065411e-06 -4.336068e-05  5.015575e-04  8.222857e-03
-#> beta[1,2]  -4.233847e-05 -5.314284e-06 -6.329150e-04 -5.463914e-05
-#> beta[2,2]  -2.535518e-06 -3.652708e-05 -3.563574e-05 -5.710657e-04
-#> psi[1,1]    3.362529e-10  1.975913e-10 -6.466855e-08 -2.573362e-09
-#> psi[2,1]    1.039750e-09  9.398095e-10 -1.334551e-08 -4.606274e-08
-#> psi[2,2]    2.105697e-10  4.622880e-10 -2.154239e-09  1.310655e-09
-#>                beta[1,2]     beta[2,2]      psi[1,1]      psi[2,1]
-#> alpha[1,1] -4.233847e-05 -2.535518e-06  3.362529e-10  1.039750e-09
-#> alpha[2,1] -5.314284e-06 -3.652708e-05  1.975913e-10  9.398095e-10
-#> beta[1,1]  -6.329150e-04 -3.563574e-05 -6.466855e-08 -1.334551e-08
-#> beta[2,1]  -5.463914e-05 -5.710657e-04 -2.573362e-09 -4.606274e-08
-#> beta[1,2]   7.838493e-03  4.374482e-04 -2.271557e-09 -4.256298e-08
-#> beta[2,2]   4.374482e-04  7.234741e-03  3.353554e-09  1.101489e-08
-#> psi[1,1]   -2.271557e-09  3.353554e-09  1.981856e-08  1.237235e-09
-#> psi[2,1]   -4.256298e-08  1.101489e-08  1.237235e-09  9.257335e-09
-#> psi[2,2]   -6.485253e-09 -1.024456e-07  7.716120e-11  1.150882e-09
-#>                 psi[2,2]
-#> alpha[1,1]  2.105697e-10
-#> alpha[2,1]  4.622880e-10
-#> beta[1,1]  -2.154239e-09
-#> beta[2,1]   1.310655e-09
-#> beta[1,2]  -6.485253e-09
-#> beta[2,2]  -1.024456e-07
-#> psi[1,1]    7.716120e-11
-#> psi[2,1]    1.150882e-09
-#> psi[2,2]    1.716566e-08
-#> 
-#> $`2`
-#>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]
-#> alpha[1,1]  1.032520e-05  1.895363e-06  4.491604e-06 -4.439589e-07
-#> alpha[2,1]  1.895363e-06  1.388419e-05  4.954290e-07  3.218983e-06
-#> beta[1,1]   4.491604e-06  4.954290e-07  7.020108e-03  1.240217e-03
-#> beta[2,1]  -4.439589e-07  3.218983e-06  1.240217e-03  9.418247e-03
-#> beta[1,2]   1.328065e-04  2.597512e-05 -7.461932e-04 -1.528260e-04
-#> beta[2,2]   2.323419e-05  1.760379e-04 -1.316317e-04 -9.990625e-04
-#> psi[1,1]   -1.467923e-10  2.928268e-10 -8.315922e-08 -4.779164e-09
-#> psi[2,1]   -5.798542e-10  6.511350e-10 -1.399162e-09 -2.990968e-08
-#> psi[2,2]   -1.336522e-10 -1.333107e-09 -1.481766e-10 -4.862756e-10
-#>                beta[1,2]     beta[2,2]      psi[1,1]      psi[2,1]
-#> alpha[1,1]  1.328065e-04  2.323419e-05 -1.467923e-10 -5.798542e-10
-#> alpha[2,1]  2.597512e-05  1.760379e-04  2.928268e-10  6.511350e-10
-#> beta[1,1]  -7.461932e-04 -1.316317e-04 -8.315922e-08 -1.399162e-09
-#> beta[2,1]  -1.528260e-04 -9.990625e-04 -4.779164e-09 -2.990968e-08
-#> beta[1,2]   6.909674e-03  1.212584e-03 -5.267598e-10 -4.155880e-08
-#> beta[2,2]   1.212584e-03  9.204365e-03 -6.247447e-10 -4.119408e-09
-#> psi[1,1]   -5.267598e-10 -6.247447e-10  1.249911e-08  2.199620e-09
-#> psi[2,1]   -4.155880e-08 -4.119408e-09  2.199620e-09  8.528063e-09
-#> psi[2,2]   -4.896433e-09 -6.155999e-08  3.881269e-10  2.938828e-09
-#>                 psi[2,2]
-#> alpha[1,1] -1.336522e-10
-#> alpha[2,1] -1.333107e-09
-#> beta[1,1]  -1.481766e-10
-#> beta[2,1]  -4.862756e-10
-#> beta[1,2]  -4.896433e-09
-#> beta[2,2]  -6.155999e-08
-#> psi[1,1]    3.881269e-10
-#> psi[2,1]    2.938828e-09
-#> psi[2,2]    2.226711e-08
-#> 
-#> $`3`
-#>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]
-#> alpha[1,1]  9.428506e-06 -2.010191e-06  3.931285e-05 -8.901042e-06
-#> alpha[2,1] -2.010191e-06  1.178478e-05 -1.526270e-05  5.685430e-05
-#> beta[1,1]   3.931285e-05 -1.526270e-05  8.624447e-03 -1.818927e-03
-#> beta[2,1]  -8.901042e-06  5.685430e-05 -1.818927e-03  1.025298e-02
-#> beta[1,2]   2.713936e-05 -1.585628e-05  2.783340e-03 -5.998268e-04
-#> beta[2,2]  -6.234640e-06  3.202370e-05 -6.213590e-04  3.311956e-03
-#> psi[1,1]   -1.087323e-09  5.406398e-10 -8.823624e-08  6.928668e-08
-#> psi[2,1]   -1.890360e-09 -3.577258e-09  1.364448e-07 -6.764901e-08
-#> psi[2,2]    1.632746e-09  1.092380e-09 -8.091549e-08  6.958967e-09
-#>                beta[1,2]     beta[2,2]      psi[1,1]      psi[2,1]
-#> alpha[1,1]  2.713936e-05 -6.234640e-06 -1.087323e-09 -1.890360e-09
-#> alpha[2,1] -1.585628e-05  3.202370e-05  5.406398e-10 -3.577258e-09
-#> beta[1,1]   2.783340e-03 -6.213590e-04 -8.823624e-08  1.364448e-07
-#> beta[2,1]  -5.998268e-04  3.311956e-03  6.928668e-08 -6.764901e-08
-#> beta[1,2]   6.799025e-03 -1.494191e-03 -1.226517e-08  2.847862e-08
-#> beta[2,2]  -1.494191e-03  8.032890e-03  3.724920e-09  4.538555e-09
-#> psi[1,1]   -1.226517e-08  3.724920e-09  1.776846e-08 -3.803147e-09
-#> psi[2,1]    2.847862e-08  4.538555e-09 -3.803147e-09  1.136256e-08
-#> psi[2,2]   -5.258376e-09 -7.606566e-08  8.298031e-10 -4.702820e-09
-#>                 psi[2,2]
-#> alpha[1,1]  1.632746e-09
-#> alpha[2,1]  1.092380e-09
-#> beta[1,1]  -8.091549e-08
-#> beta[2,1]   6.958967e-09
-#> beta[1,2]  -5.258376e-09
-#> beta[2,2]  -7.606566e-08
-#> psi[1,1]    8.298031e-10
-#> psi[2,1]   -4.702820e-09
-#> psi[2,2]    2.676429e-08
-#> 
-#> $`4`
-#>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]
-#> alpha[1,1]  9.037944e-06  5.971385e-08  1.324679e-04 -9.195905e-07
-#> alpha[2,1]  5.971385e-08  1.220647e-05  1.226437e-06  1.729198e-04
-#> beta[1,1]   1.324679e-04  1.226437e-06  9.866100e-03  3.402501e-05
-#> beta[2,1]  -9.195905e-07  1.729198e-04  3.402501e-05  1.342181e-02
-#> beta[1,2]  -1.461605e-05  3.635078e-06  2.405932e-04 -2.785645e-05
-#> beta[2,2]  -8.980359e-08 -2.074502e-05 -3.676591e-06  3.344239e-04
-#> psi[1,1]   -1.140286e-10  5.653372e-10 -1.928848e-08  1.710657e-08
-#> psi[2,1]    3.124039e-10 -2.321308e-09  6.868227e-09 -4.763686e-08
-#> psi[2,2]   -3.243453e-10 -1.735596e-10 -6.826949e-09  3.194079e-10
-#>                beta[1,2]     beta[2,2]      psi[1,1]      psi[2,1]
-#> alpha[1,1] -1.461605e-05 -8.980359e-08 -1.140286e-10  3.124039e-10
-#> alpha[2,1]  3.635078e-06 -2.074502e-05  5.653372e-10 -2.321308e-09
-#> beta[1,1]   2.405932e-04 -3.676591e-06 -1.928848e-08  6.868227e-09
-#> beta[2,1]  -2.785645e-05  3.344239e-04  1.710657e-08 -4.763686e-08
-#> beta[1,2]   5.470059e-03  1.493185e-05  1.079037e-08 -6.126221e-08
-#> beta[2,2]   1.493185e-05  7.419103e-03 -1.708817e-09  1.861242e-08
-#> psi[1,1]    1.079037e-08 -1.708817e-09  1.046046e-08  6.374499e-11
-#> psi[2,1]   -6.126221e-08  1.861242e-08  6.374499e-11  7.297141e-09
-#> psi[2,2]   -7.529354e-09 -9.163166e-08  1.154333e-12  9.071773e-11
-#>                 psi[2,2]
-#> alpha[1,1] -3.243453e-10
-#> alpha[2,1] -1.735596e-10
-#> beta[1,1]  -6.826949e-09
-#> beta[2,1]   3.194079e-10
-#> beta[1,2]  -7.529354e-09
-#> beta[2,2]  -9.163166e-08
-#> psi[1,1]    1.154333e-12
-#> psi[2,1]    9.071773e-11
-#> psi[2,2]    2.030681e-08
-#> 
-#> $`5`
-#>               alpha[1,1]    alpha[2,1]     beta[1,1]     beta[2,1]
-#> alpha[1,1]  9.968760e-06 -1.649475e-06  3.243225e-06 -5.834209e-06
-#> alpha[2,1] -1.649475e-06  8.582750e-06 -5.982085e-07  3.749137e-06
-#> beta[1,1]   3.243225e-06 -5.982085e-07  9.208669e-03 -1.527171e-03
-#> beta[2,1]  -5.834209e-06  3.749137e-06 -1.527171e-03  8.067261e-03
-#> beta[1,2]  -2.883141e-05  4.306912e-06  1.910692e-03 -3.230196e-04
-#> beta[2,2]   4.101270e-06 -2.945464e-05 -3.156739e-04  1.665135e-03
-#> psi[1,1]   -1.883995e-10 -2.257554e-12 -6.106649e-08  1.085567e-08
-#> psi[2,1]   -6.860031e-10 -2.637887e-10  1.350304e-08 -2.491736e-08
-#> psi[2,2]    3.083962e-10  3.770891e-10 -6.765003e-10 -7.777452e-09
-#>                beta[1,2]     beta[2,2]      psi[1,1]      psi[2,1]
-#> alpha[1,1] -2.883141e-05  4.101270e-06 -1.883995e-10 -6.860031e-10
-#> alpha[2,1]  4.306912e-06 -2.945464e-05 -2.257554e-12 -2.637887e-10
-#> beta[1,1]   1.910692e-03 -3.156739e-04 -6.106649e-08  1.350304e-08
-#> beta[2,1]  -3.230196e-04  1.665135e-03  1.085567e-08 -2.491736e-08
-#> beta[1,2]   9.374112e-03 -1.545459e-03 -2.321767e-09 -2.714276e-08
-#> beta[2,2]  -1.545459e-03  8.177319e-03  1.768581e-09  1.092935e-08
-#> psi[1,1]   -2.321767e-09  1.768581e-09  1.982437e-08 -3.299070e-09
-#> psi[2,1]   -2.714276e-08  1.092935e-08 -3.299070e-09  8.842287e-09
-#> psi[2,2]    2.269641e-08 -8.223520e-08  5.501767e-10 -2.854173e-09
-#>                 psi[2,2]
-#> alpha[1,1]  3.083962e-10
-#> alpha[2,1]  3.770891e-10
-#> beta[1,1]  -6.765003e-10
-#> beta[2,1]  -7.777452e-09
-#> beta[1,2]   2.269641e-08
-#> beta[2,2]  -8.223520e-08
-#> psi[1,1]    5.501767e-10
-#> psi[2,1]   -2.854173e-09
-#> psi[2,2]    1.481758e-08
-#> 
-converged(fit)
-#>    1    2    3    4    5 
-#> TRUE TRUE TRUE TRUE TRUE 
-confint(fit)
-#> $`1`
-#>                      est           se          z            p          2.5%
-#> alpha[1,1]  3.681113e-03 3.227387e-03  1.1405860 2.540422e-01 -0.0026444498
-#> alpha[2,1]  3.388633e-03 3.082195e-03  1.0994219 2.715841e-01 -0.0026523586
-#> beta[1,1]   3.316128e-01 9.410940e-02  3.5236948 4.255741e-04  0.1471617720
-#> beta[2,1]  -1.976313e-02 9.067997e-02 -0.2179437 8.274730e-01 -0.1974926059
-#> beta[1,2]   2.701815e-02 8.853526e-02  0.3051682 7.602380e-01 -0.1465077784
-#> beta[2,2]   5.392600e-01 8.505728e-02  6.3399635 2.298197e-10  0.3725508417
-#> psi[1,1]    9.953219e-04 1.407784e-04  7.0701309 1.547877e-12  0.0007194012
-#> psi[2,1]    6.207963e-05 9.621504e-05  0.6452175 5.187862e-01 -0.0001264984
-#> psi[2,2]    9.262859e-04 1.310178e-04  7.0699254 1.550170e-12  0.0006694958
-#>                   97.5%
-#> alpha[1,1] 0.0100066751
-#> alpha[2,1] 0.0094296245
-#> beta[1,1]  0.5160638489
-#> beta[2,1]  0.1579663445
-#> beta[1,2]  0.2005440759
-#> beta[2,2]  0.7059692524
-#> psi[1,1]   0.0012712425
-#> psi[2,1]   0.0002506577
-#> psi[2,2]   0.0011830760
-#> 
-#> $`2`
-#>                      est           se          z            p          2.5%
-#> alpha[1,1] -0.0022590347 3.213285e-03 -0.7030297 4.820373e-01 -8.556958e-03
-#> alpha[2,1] -0.0140464531 3.726150e-03 -3.7696965 1.634462e-04 -2.134957e-02
-#> beta[1,1]   0.5466790837 8.378609e-02  6.5247002 6.813769e-11  3.824614e-01
-#> beta[2,1]  -0.0201029545 9.704765e-02 -0.2071452 8.358965e-01 -2.103129e-01
-#> beta[1,2]  -0.0487573561 8.312445e-02 -0.5865585 5.575002e-01 -2.116783e-01
-#> beta[2,2]   0.2974504584 9.593938e-02  3.1004000 1.932594e-03  1.094127e-01
-#> psi[1,1]    0.0007904395 1.117994e-04  7.0701559 1.547597e-12  5.713166e-04
-#> psi[2,1]    0.0001392246 9.234751e-05  1.5076165 1.316527e-01 -4.177317e-05
-#> psi[2,2]    0.0010550305 1.492217e-04  7.0702232 1.546847e-12  7.625614e-04
-#>                    97.5%
-#> alpha[1,1]  0.0040388883
-#> alpha[2,1] -0.0067433341
-#> beta[1,1]   0.7108967927
-#> beta[2,1]   0.1701069507
-#> beta[1,2]   0.1141635705
-#> beta[2,2]   0.4854881895
-#> psi[1,1]    0.0010095623
-#> psi[2,1]    0.0003202224
-#> psi[2,2]    0.0013474996
-#> 
-#> $`3`
-#>                      est           se          z            p          2.5%
-#> alpha[1,1] -0.0019925640 0.0030705872 -0.6489195 5.163904e-01 -0.0080108043
-#> alpha[2,1] -0.0025230744 0.0034328963 -0.7349696 4.623580e-01 -0.0092514276
-#> beta[1,1]   0.5281055238 0.0928679012  5.6866314 1.295697e-08  0.3460877822
-#> beta[2,1]  -0.3325011849 0.1012569899 -3.2837356 1.024410e-03 -0.5309612384
-#> beta[1,2]   0.0108536589 0.0824562004  0.1316294 8.952774e-01 -0.1507575243
-#> beta[2,2]   0.3614197102 0.0896263936  4.0325143 5.518327e-05  0.1857552067
-#> psi[1,1]    0.0009432483 0.0001332984  7.0762167 1.481432e-12  0.0006819883
-#> psi[2,1]   -0.0002017401 0.0001065953 -1.8925797 5.841379e-02 -0.0004106630
-#> psi[2,2]    0.0011560435 0.0001635980  7.0663682 1.590410e-12  0.0008353973
-#>                    97.5%
-#> alpha[1,1]  4.025676e-03
-#> alpha[2,1]  4.205279e-03
-#> beta[1,1]   7.101233e-01
-#> beta[2,1]  -1.340411e-01
-#> beta[1,2]   1.724648e-01
-#> beta[2,2]   5.370842e-01
-#> psi[1,1]    1.204508e-03
-#> psi[2,1]    7.182852e-06
-#> psi[2,2]    1.476690e-03
-#> 
-#> $`4`
-#>                      est           se           z            p          2.5%
-#> alpha[1,1] -1.089173e-02 3.006317e-03 -3.62294619 2.912664e-04 -0.0167840000
-#> alpha[2,1]  9.445977e-05 3.493776e-03  0.02703659 9.784306e-01 -0.0067532148
-#> beta[1,1]   1.608448e-01 9.932825e-02  1.61932616 1.053771e-01 -0.0338349576
-#> beta[2,1]  -1.218225e-01 1.158526e-01 -1.05153098 2.930148e-01 -0.3488893766
-#> beta[1,2]  -2.989108e-02 7.395985e-02 -0.40415282 6.861003e-01 -0.1748497150
-#> beta[2,2]   4.818163e-01 8.613422e-02  5.59378461 2.221725e-08  0.3129962951
-#> psi[1,1]    7.231700e-04 1.022764e-04  7.07074165 1.541078e-12  0.0005227119
-#> psi[2,1]    4.351938e-06 8.542331e-05  0.05094555 9.593689e-01 -0.0001630747
-#> psi[2,2]    1.007467e-03 1.425020e-04  7.06984484 1.551070e-12  0.0007281681
-#>                    97.5%
-#> alpha[1,1] -0.0049994523
-#> alpha[2,1]  0.0069421344
-#> beta[1,1]   0.3555246089
-#> beta[2,1]   0.1052442811
-#> beta[1,2]   0.1150675538
-#> beta[2,2]   0.6506362223
-#> psi[1,1]    0.0009236280
-#> psi[2,1]    0.0001717785
-#> psi[2,2]    0.0012867656
-#> 
-#> $`5`
-#>                      est           se          z            p          2.5%
-#> alpha[1,1] -0.0005130370 3.157334e-03 -0.1624906 8.709196e-01 -0.0067012986
-#> alpha[2,1]  0.0018096495 2.929633e-03  0.6177052 5.367697e-01 -0.0039323259
-#> beta[1,1]   0.2990567150 9.596181e-02  3.1164138 1.830652e-03  0.1109750209
-#> beta[2,1]   0.0348620015 8.981793e-02  0.3881408 6.979119e-01 -0.1411779084
-#> beta[1,2]  -0.0801683884 9.682000e-02 -0.8280148 4.076621e-01 -0.2699320934
-#> beta[2,2]   0.4658899620 9.042853e-02  5.1520240 2.576900e-07  0.2886532997
-#> psi[1,1]    0.0009954750 1.407990e-04  7.0701840 1.547283e-12  0.0007195140
-#> psi[2,1]   -0.0001656666 9.403343e-05 -1.7617845 7.810571e-02 -0.0003499688
-#> psi[2,2]    0.0008606358 1.217275e-04  7.0701858 1.547264e-12  0.0006220544
-#>                   97.5%
-#> alpha[1,1] 5.675225e-03
-#> alpha[2,1] 7.551625e-03
-#> beta[1,1]  4.871384e-01
-#> beta[2,1]  2.109019e-01
-#> beta[1,2]  1.095953e-01
-#> beta[2,2]  6.431266e-01
-#> psi[1,1]   1.271436e-03
-#> psi[2,1]   1.863549e-05
-#> psi[2,2]   1.099217e-03
 #> 
 plot(fit)
 
