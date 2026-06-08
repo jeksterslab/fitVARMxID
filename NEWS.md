@@ -2,7 +2,7 @@
 
 ## Patch
 
-* Added a plot method.
+* Added `confint()` and `plot()` methods.
 * Added the `FitVARMxIDSave()` function.
 
 # fitVARMxID 1.0.3
