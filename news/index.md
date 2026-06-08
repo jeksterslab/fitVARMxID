@@ -4,7 +4,8 @@
 
 ### Patch
 
-- Added a plot method.
+- Added [`confint()`](https://rdrr.io/r/stats/confint.html) and
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) methods.
 - Added the
   [`FitVARMxIDSave()`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxIDSave.md)
   function.
