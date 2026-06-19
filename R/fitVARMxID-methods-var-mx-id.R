@@ -867,6 +867,7 @@ confint.varmxid <- function(object,
 #' @author Ivan Jacob Agaloos Pesigan
 #'
 #' @param x Object of class `varmxid`.
+#' @param drop Optional vector of unique IDs to drop.
 #' @inheritParams confint.varmxid
 #'
 #' @return Displays plots of point estimates and confidence intervals.
@@ -883,6 +884,7 @@ plot.varmxid <- function(x,
                          psi = TRUE,
                          theta = TRUE,
                          robust = FALSE,
+                         drop = NULL,
                          ncores = NULL,
                          ...) {
   .PlotCoefForest(
@@ -898,6 +900,7 @@ plot.varmxid <- function(x,
       theta = theta,
       robust = robust,
       ncores = ncores
-    )
+    ),
+    drop = drop
   )
 }
