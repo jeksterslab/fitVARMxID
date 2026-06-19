@@ -1,5 +1,24 @@
-.PlotCoefForest <- function(x) {
+.PlotCoefForest <- function(x,
+                            drop = NULL) {
+  id <- names(x)
+  if (is.null(id)) {
+    stop("`x` must be a named list. The names are used as IDs.")
+  }
+  if (!is.null(drop)) {
+    drop <- as.character(drop)
+    drop_not_found <- setdiff(drop, id)
+    if (length(drop_not_found) > 0L) {
+      stop(
+        "The following IDs in `drop` were not found in `names(x)`: ",
+        paste(drop_not_found, collapse = ", ")
+      )
+    }
+    x <- x[!id %in% drop]
+  }
   n <- length(x)
+  if (n < 1L) {
+    stop("No cases remain after applying `drop`.")
+  }
   dims <- dim(x[[1]])
   p <- dims[1]
   q <- dims[2]
