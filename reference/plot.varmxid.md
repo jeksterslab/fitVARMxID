@@ -16,6 +16,7 @@ plot(
   psi = TRUE,
   theta = TRUE,
   robust = FALSE,
+  drop = NULL,
   ncores = NULL,
   ...
 )
@@ -68,6 +69,10 @@ plot(
   Logical. If `TRUE`, use robust (sandwich) sampling variance-covariance
   matrix. If `FALSE`, use normal theory sampling variance-covariance
   matrix.
+
+- drop:
+
+  Optional vector of unique IDs to drop.
 
 - ncores:
 
