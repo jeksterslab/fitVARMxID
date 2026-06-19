@@ -14,6 +14,7 @@
   psi = TRUE,
   theta = TRUE,
   robust = FALSE,
+  drop = NULL,
   ncores = NULL,
   ...
 )
@@ -62,6 +63,8 @@ exclude estimates of the \code{theta} matrix.}
 \item{robust}{Logical.
 If \code{TRUE}, use robust (sandwich) sampling variance-covariance matrix.
 If \code{FALSE}, use normal theory sampling variance-covariance matrix.}
+
+\item{drop}{Optional vector of unique IDs to drop.}
 
 \item{ncores}{Positive integer.
 Number of cores to use.}
