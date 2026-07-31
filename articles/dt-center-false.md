@@ -165,45 +165,7 @@ Let the dynamic process noise $`\boldsymbol{\Psi}`$ be given by
 
 ### R Function Arguments
 
-``` r
-
-n
-#> [1] 100
-time
-#> [1] 1000
-mu0
-#> [1] 3.049353 6.154380 4.885913
-sigma0
-#>            [,1]      [,2]       [,3]
-#> [1,] 0.19607843 0.1183232 0.02985385
-#> [2,] 0.11832319 0.3437711 0.13818551
-#> [3,] 0.02985385 0.1381855 0.26638284
-sigma0_l # sigma0_l <- t(chol(sigma0))
-#>            [,1]      [,2]     [,3]
-#> [1,] 0.44280744 0.0000000 0.000000
-#> [2,] 0.26721139 0.5218900 0.000000
-#> [3,] 0.06741949 0.2302597 0.456966
-alpha
-#> [1] 0.9148060 0.9370754 0.2861395
-beta
-#>      [,1] [,2] [,3]
-#> [1,]  0.7  0.0  0.0
-#> [2,]  0.5  0.6  0.0
-#> [3,] -0.1  0.4  0.5
-psi
-#>      [,1] [,2] [,3]
-#> [1,]  0.1  0.0  0.0
-#> [2,]  0.0  0.1  0.0
-#> [3,]  0.0  0.0  0.1
-psi_l # psi_l <- t(chol(psi))
-#>           [,1]      [,2]      [,3]
-#> [1,] 0.3162278 0.0000000 0.0000000
-#> [2,] 0.0000000 0.3162278 0.0000000
-#> [3,] 0.0000000 0.0000000 0.3162278
-# set-point
-mu
-#> [1] 3.049353 6.154380 4.885913
-```
+`n`` ``#> [1] 100`` ``time`` ``#> [1] 1000`` ``mu0`` ``#> [1] 3.049353 6.154380 4.885913`` ``sigma0`` ``#> [,1] [,2] [,3]`` ``#> [1,] 0.19607843 0.1183232 0.02985385`` ``#> [2,] 0.11832319 0.3437711 0.13818551`` ``#> [3,] 0.02985385 0.1381855 0.26638284`` ``sigma0_l`` ``# sigma0_l <- t(chol(sigma0))`` ``#> [,1] [,2] [,3]`` ``#> [1,] 0.44280744 0.0000000 0.000000`` ``#> [2,] 0.26721139 0.5218900 0.000000`` ``#> [3,] 0.06741949 0.2302597 0.456966`` ``alpha`` ``#> [1] 0.9148060 0.9370754 0.2861395`` ``beta`` ``#> [,1] [,2] [,3]`` ``#> [1,] 0.7 0.0 0.0`` ``#> [2,] 0.5 0.6 0.0`` ``#> [3,] -0.1 0.4 0.5`` ``psi`` ``#> [,1] [,2] [,3]`` ``#> [1,] 0.1 0.0 0.0`` ``#> [2,] 0.0 0.1 0.0`` ``#> [3,] 0.0 0.0 0.1`` ``psi_l`` ``# psi_l <- t(chol(psi))`` ``#> [,1] [,2] [,3]`` ``#> [1,] 0.3162278 0.0000000 0.0000000`` ``#> [2,] 0.0000000 0.3162278 0.0000000`` ``#> [3,] 0.0000000 0.0000000 0.3162278`` ``# set-point`` ``mu`` ``#> [1] 3.049353 6.154380 4.885913`
 
 ### Visualizing the Dynamics Without Process Noise (n = 5 with Different Initial Condition)
 
@@ -211,95 +173,24 @@ mu
 
 ### Using the `SimSSMVARFixed` Function from the `simStateSpace` Package to Simulate Data
 
-``` r
-
-library(simStateSpace)
-sim <- SimSSMVARFixed(
-  n = n,
-  time = time,
-  mu0 = mu0,
-  sigma0_l = sigma0_l,
-  alpha = alpha,
-  beta = beta,
-  psi_l = psi_l
-)
-data <- as.data.frame(sim)
-head(data)
-#>   id time       y1       y2       y3
-#> 1  1    0 3.375463 5.964917 3.883475
-#> 2  1    1 3.136727 5.909374 3.866987
-#> 3  1    2 3.215198 6.462812 3.995227
-#> 4  1    3 3.427307 6.408953 4.408847
-#> 5  1    4 3.108728 6.717274 5.303110
-#> 6  1    5 3.885159 7.141896 5.024148
-summary(data)
-#>        id              time             y1              y2       
-#>  Min.   :  1.00   Min.   :  0.0   Min.   :1.169   Min.   :3.552  
-#>  1st Qu.: 25.75   1st Qu.:249.8   1st Qu.:2.755   1st Qu.:5.767  
-#>  Median : 50.50   Median :499.5   Median :3.054   Median :6.160  
-#>  Mean   : 50.50   Mean   :499.5   Mean   :3.055   Mean   :6.163  
-#>  3rd Qu.: 75.25   3rd Qu.:749.2   3rd Qu.:3.356   3rd Qu.:6.558  
-#>  Max.   :100.00   Max.   :999.0   Max.   :5.029   Max.   :8.619  
-#>        y3       
-#>  Min.   :2.460  
-#>  1st Qu.:4.544  
-#>  Median :4.893  
-#>  Mean   :4.895  
-#>  3rd Qu.:5.245  
-#>  Max.   :7.672
-plot(sim)
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`simStateSpace`](https://github.com/jeksterslab/simStateSpace)`)`` ``sim`` ``<-`` `[`SimSSMVARFixed`](https://github.com/jeksterslab/simStateSpace/reference/SimSSMVARFixed.html)`(`` `` n ``=`` ``n``,`` `` time ``=`` ``time``,`` `` mu0 ``=`` ``mu0``,`` `` sigma0_l ``=`` ``sigma0_l``,`` `` alpha ``=`` ``alpha``,`` `` beta ``=`` ``beta``,`` `` psi_l ``=`` ``psi_l`` ``)`` ``data`` ``<-`` `[`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(``sim``)`` `[`head`](https://rdrr.io/r/utils/head.html)`(``data``)`` ``#> id time y1 y2 y3`` ``#> 1 1 0 3.375463 5.964917 3.883475`` ``#> 2 1 1 3.136727 5.909374 3.866987`` ``#> 3 1 2 3.215198 6.462812 3.995227`` ``#> 4 1 3 3.427307 6.408953 4.408847`` ``#> 5 1 4 3.108728 6.717274 5.303110`` ``#> 6 1 5 3.885159 7.141896 5.024148`` `[`summary`](https://rdrr.io/r/base/summary.html)`(``data``)`` ``#> id time y1 y2 `` ``#> Min. : 1.00 Min. : 0.0 Min. :1.169 Min. :3.552 `` ``#> 1st Qu.: 25.75 1st Qu.:249.8 1st Qu.:2.755 1st Qu.:5.767 `` ``#> Median : 50.50 Median :499.5 Median :3.054 Median :6.160 `` ``#> Mean : 50.50 Mean :499.5 Mean :3.055 Mean :6.163 `` ``#> 3rd Qu.: 75.25 3rd Qu.:749.2 3rd Qu.:3.356 3rd Qu.:6.558 `` ``#> Max. :100.00 Max. :999.0 Max. :5.029 Max. :8.619 `` ``#> y3 `` ``#> Min. :2.460 `` ``#> 1st Qu.:4.544 `` ``#> Median :4.893 `` ``#> Mean :4.895 `` ``#> 3rd Qu.:5.245 `` ``#> Max. :7.672`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``sim``)`
 
 ![](fig-vignettes-dt-center-false-error-ssm-1.png)![](fig-vignettes-dt-center-false-error-ssm-2.png)![](fig-vignettes-dt-center-false-error-ssm-3.png)
 
 ## Model Fitting
 
-``` r
-
-library(OpenMx)
-library(fitVARMxID)
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`OpenMx`](https://openmx.ssri.psu.edu/)`)`` `[`library`](https://rdrr.io/r/base/library.html)`(`[`fitVARMxID`](https://github.com/jeksterslab/fitVARMxID)`)`
 
 The `FitVARMxID` function fits a DT-VAR model on each individual $`i`$.
 
 > **Note:** Consider using the argument `ncores` to use multiple cores
 > for parallel processing.
 
-``` r
-
-fit <- FitVARMxID(
-  data = data,
-  observed = c("y1", "y2", "y3"),
-  id = "id",
-  center = FALSE,
-  ncores = parallel::detectCores()
-)
-```
+`fit`` ``<-`` `[`FitVARMxID`](https://github.com/jeksterslab/fitVARMxID/reference/FitVARMxID.md)`(`` `` data ``=`` ``data``,`` `` observed ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"y1"``, ``"y2"``, ``"y3"``)``,`` `` id ``=`` ``"id"``,`` `` center ``=`` ``FALSE``,`` `` ncores ``=`` ``parallel``::`[`detectCores`](https://rdrr.io/r/parallel/detectCores.html)`(``)`` ``)`
 
 #### Parameter estimates
 
-``` r
-
-summary(
-  fit,
-  means = TRUE,
-  ncores = parallel::detectCores()
-)
-#> Call:
-#> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", 
-#>     center = FALSE, ncores = parallel::detectCores())
-#> 
-#> Convergence:
-#> 100.0%
-#> 
-#> Means of the estimated paramaters per individual.
-#> alpha[1,1] alpha[2,1] alpha[3,1]  beta[1,1]  beta[2,1]  beta[3,1]  beta[1,2] 
-#>     0.9544     0.9524     0.2701     0.7001     0.4990    -0.0991    -0.0022 
-#>  beta[2,2]  beta[3,2]  beta[1,3]  beta[2,3]  beta[3,3]   psi[1,1]   psi[2,1] 
-#>     0.5998     0.4038    -0.0051    -0.0022     0.4982     0.0997     0.0004 
-#>   psi[3,1]   psi[2,2]   psi[3,2]   psi[3,3] 
-#>    -0.0003     0.0990     0.0005     0.0994
-```
+[`summary`](https://rdrr.io/r/base/summary.html)`(`` `` ``fit``,`` `` means ``=`` ``TRUE``,`` `` ncores ``=`` ``parallel``::`[`detectCores`](https://rdrr.io/r/parallel/detectCores.html)`(``)`` ``)`` ``#> Call:`` ``#> FitVARMxID(data = data, observed = c("y1", "y2", "y3"), id = "id", `` ``#> center = FALSE, ncores = parallel::detectCores())`` ``#> `` ``#> Convergence:`` ``#> 100.0%`` ``#> `` ``#> Means of the estimated paramaters per individual.`` ``#> alpha[1,1] alpha[2,1] alpha[3,1] beta[1,1] beta[2,1] beta[3,1] beta[1,2] `` ``#> 0.9544 0.9524 0.2701 0.7001 0.4990 -0.0991 -0.0022 `` ``#> beta[2,2] beta[3,2] beta[1,3] beta[2,3] beta[3,3] psi[1,1] psi[2,1] `` ``#> 0.5998 0.4038 -0.0051 -0.0022 0.4982 0.0997 0.0004 `` ``#> psi[3,1] psi[2,2] psi[3,2] psi[3,3] `` ``#> -0.0003 0.0990 0.0005 0.0994`
 
 ## References
 

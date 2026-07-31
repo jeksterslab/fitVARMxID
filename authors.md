@@ -14,9 +14,6 @@ Pesigan, I. J. A. (2026). fitVARMxID: Fit the Vector Autoregressive
 Model for Multiple Individuals. R package version 1.0.4.
 https://github.com/jeksterslab/fitVARMxID
 
-    @Manual{,
-      author = {Ivan Jacob Agaloos Pesigan},
-      title = {fitVARMxID: Fit the Vector Autoregressive Model for Multiple Individuals},
-      year = {2026},
-      note = {R package version 1.0.4},
-    }
+@Manual{, author = {Ivan Jacob Agaloos Pesigan}, title = {fitVARMxID:
+Fit the Vector Autoregressive Model for Multiple Individuals}, year =
+{2026}, note = {R package version 1.0.4}, }
