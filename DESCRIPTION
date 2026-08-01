@@ -1,6 +1,6 @@
 Package: fitVARMxID
 Title: Fit the Vector Autoregressive Model for Multiple Individuals
-Version: 1.0.4
+Version: 1.0.5
 Authors@R: 
     person(given = "Ivan Jacob Agaloos",
            family = "Pesigan",
