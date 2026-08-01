@@ -1,4 +1,4 @@
-# fitVARMxID 1.0.4
+# fitVARMxID 1.0.5
 
 ## Patch
 
