@@ -1,6 +1,6 @@
 # fitVARMxID
 
-Ivan Jacob Agaloos Pesigan 2026-08-01
+Ivan Jacob Agaloos Pesigan 2026-09-02
 
 ## Description
 
@@ -11,12 +11,15 @@ Fit the vector autoregressive model for multiple individuals using the
 
 You can install the CRAN release of `fitVARMxID` with:
 
+\
 [`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"fitVARMxID"``)`
 
 You can install the development version of `fitVARMxID` from
 [GitHub](https://github.com/jeksterslab/fitVARMxID) with:
 
-`if`` ``(``!`[`require`](https://rdrr.io/r/base/library.html)`(`[`"pak"`](https://pak.r-lib.org/)`)``)`` `[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"pak"``)`` ``pak``::`[`pkg_install`](https://pak.r-lib.org/reference/pkg_install.html)`(``"jeksterslab/fitVARMxID"``)`
+\
+`if`` ``(``!`[`require`](https://rdrr.io/r/base/library.html)`(`[`"pak"`](https://pak.r-lib.org/)`)``)`` `[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"pak"``)`\
+`pak``::`[`pkg_install`](https://pak.r-lib.org/reference/pkg_install.html)`(``"jeksterslab/fitVARMxID"``)`
 
 ## More Information
 
@@ -24,17 +27,6 @@ See [GitHub Pages](https://jeksterslab.github.io/fitVARMxID) for package
 documentation.
 
 ## References
-
-Hunter, M. D. (2017). State space modeling in an open source, modular,
-structural equation modeling environment. *Structural Equation Modeling:
-A Multidisciplinary Journal*, *25*(2), 307–324.
-<https://doi.org/10.1080/10705511.2017.1369354>
-
-Neale, M. C., Hunter, M. D., Pritikin, J. N., Zahery, M., Brick, T. R.,
-Kirkpatrick, R. M., Estabrook, R., Bates, T. C., Maes, H. H., & Boker,
-S. M. (2015). OpenMx 2.0: Extended structural equation and statistical
-modeling. *Psychometrika*, *81*(2), 535–549.
-<https://doi.org/10.1007/s11336-014-9435-8>
 
 R Core Team. (2026). *R: A language and environment for statistical
 computing*. R Foundation for Statistical Computing.

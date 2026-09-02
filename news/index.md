@@ -1,6 +1,12 @@
 # Changelog
 
+## fitVARMxID 1.0.5.9000
+
+- Latest development version.
+
 ## fitVARMxID 1.0.5
+
+CRAN release: 2026-08-02
 
 ### Patch
 
