@@ -81,6 +81,7 @@
     ),
     add = TRUE
   )
+
   grad_tol <- 1e-2
   hess_tol_abs <- 1e-8
   hess_tol_rel <- 1e-10
@@ -97,6 +98,7 @@
   rerun_code6 <- TRUE
   relax_streak <- 3
   relax_min_attempt <- 3
+
   if (is.null(ncores)) {
     ncores <- 1L
   } else {
@@ -106,14 +108,18 @@
       length(unique(data[, id]))
     )
   }
+
   fork <- FALSE
+
   if (ncores > 1) {
     # nocov start
     OpenMx::mxOption(
       key = "Number of Threads",
       value = 1
     )
+
     os_type <- Sys.info()["sysname"]
+
     if (os_type == "Darwin") {
       fork <- TRUE
     } else if (os_type == "Linux") {
@@ -123,6 +129,7 @@
     }
     # nocov end
   }
+
   model <- .FitVARMxIDBuildModelID(
     data = data,
     observed = observed,
@@ -193,19 +200,43 @@
     ncores = ncores,
     fork = fork
   )
+
+  # Softplus diagonal parameters underlying directly
+  # estimated covariance matrices.
+  #
+  # Their lower bounds are admissible boundary solutions
+  # corresponding to effectively zero variance components.
+  free_parameters <- OpenMx::omxGetParameters(
+    model[[1L]]
+  )
+
+  covariance_d_labels <- grep(
+    pattern = "^(psi_d|theta_d|sigma0_d)(_|$)",
+    x = names(free_parameters),
+    value = TRUE
+  )
+
+  allowed_bounds <- list(
+    lower = covariance_d_labels,
+    upper = character(0)
+  )
+
   model_names <- names(model)
+
   if (isTRUE(ncores > 1)) {
     # nocov start
     if (isTRUE(fork)) {
       if (!is.null(seed)) {
         set.seed(seed)
       }
+
       # first pass
       if (isFALSE(silent) && interactive()) {
         # nocov start
         cat("\nModel fitting...\n")
         # nocov end
       }
+
       fit <- parallel::mclapply(
         X = model,
         FUN = .MxHelperRun,
@@ -219,6 +250,7 @@
         silent = silent,
         mc.cores = ncores
       )
+
       # second pass
       refit <- vapply(
         X = fit,
@@ -232,14 +264,17 @@
         cond_max = cond_max,
         abs_bnd_tol = abs_bnd_tol,
         rel_bnd_tol = rel_bnd_tol,
+        allowed_bounds = allowed_bounds,
         FUN.VALUE = logical(1)
       )
+
       if (any(refit)) {
         if (isFALSE(silent) && interactive()) {
           # nocov start
           cat("\nChecking Hessian...\n")
           # nocov end
         }
+
         fit[refit] <- parallel::mclapply(
           X = fit[refit],
           FUN = .MxHelperEnsureGoodHessian,
@@ -253,6 +288,7 @@
           cond_max = cond_max,
           abs_bnd_tol = abs_bnd_tol,
           rel_bnd_tol = rel_bnd_tol,
+          allowed_bounds = allowed_bounds,
           factor = factor,
           relax_on_last = relax_on_last,
           relax_exclude = relax_exclude,
@@ -266,6 +302,7 @@
           mc.cores = ncores
         )
       }
+
       still_bad <- vapply(
         X = fit,
         FUN = .MxHelperNeedsRescue,
@@ -278,14 +315,17 @@
         cond_max = cond_max,
         abs_bnd_tol = abs_bnd_tol,
         rel_bnd_tol = rel_bnd_tol,
+        allowed_bounds = allowed_bounds,
         FUN.VALUE = logical(1)
       )
+
       if (any(still_bad)) {
         if (isFALSE(silent) && interactive()) {
           # nocov start
           cat("\nChecking Hessian for a second time...\n")
           # nocov end
         }
+
         fit[still_bad] <- parallel::mclapply(
           X = fit[still_bad],
           FUN = .MxHelperEnsureGoodHessian,
@@ -299,6 +339,7 @@
           cond_max = cond_max,
           abs_bnd_tol = abs_bnd_tol,
           rel_bnd_tol = rel_bnd_tol,
+          allowed_bounds = allowed_bounds,
           factor = factor,
           relax_on_last = TRUE,
           relax_exclude = relax_exclude,
@@ -312,6 +353,7 @@
           mc.cores = ncores
         )
       }
+
       if (robust) {
         sandwich <- parallel::mclapply(
           X = fit,
@@ -324,23 +366,33 @@
       }
     } else {
       cl <- parallel::makeCluster(ncores)
-      parallel::clusterEvalQ(cl = cl, library(OpenMx))
+
+      parallel::clusterEvalQ(
+        cl = cl,
+        library(OpenMx)
+      )
+
       if (!is.null(seed)) {
         parallel::clusterSetRNGStream(
           cl = cl,
           iseed = seed
         )
       }
+
       on.exit(
-        parallel::stopCluster(cl = cl),
+        parallel::stopCluster(
+          cl = cl
+        ),
         add = TRUE
       )
+
       # first pass
       if (isFALSE(silent) && interactive()) {
         # nocov start
         cat("\nModel fitting...\n")
         # nocov end
       }
+
       fit <- parallel::parLapply(
         cl = cl,
         X = model,
@@ -354,6 +406,7 @@
         cond_max = cond_max,
         silent = silent
       )
+
       # second pass
       refit <- vapply(
         X = fit,
@@ -367,14 +420,17 @@
         cond_max = cond_max,
         abs_bnd_tol = abs_bnd_tol,
         rel_bnd_tol = rel_bnd_tol,
+        allowed_bounds = allowed_bounds,
         FUN.VALUE = logical(1)
       )
+
       if (any(refit)) {
         if (isFALSE(silent) && interactive()) {
           # nocov start
           cat("\nChecking Hessian...\n")
           # nocov end
         }
+
         fit[refit] <- parallel::parLapply(
           cl = cl,
           X = fit[refit],
@@ -389,6 +445,7 @@
           cond_max = cond_max,
           abs_bnd_tol = abs_bnd_tol,
           rel_bnd_tol = rel_bnd_tol,
+          allowed_bounds = allowed_bounds,
           factor = factor,
           relax_on_last = relax_on_last,
           relax_exclude = relax_exclude,
@@ -401,6 +458,7 @@
           silent = silent
         )
       }
+
       still_bad <- vapply(
         X = fit,
         FUN = .MxHelperNeedsRescue,
@@ -413,14 +471,17 @@
         cond_max = cond_max,
         abs_bnd_tol = abs_bnd_tol,
         rel_bnd_tol = rel_bnd_tol,
+        allowed_bounds = allowed_bounds,
         FUN.VALUE = logical(1)
       )
+
       if (any(still_bad)) {
         if (isFALSE(silent) && interactive()) {
           # nocov start
           cat("\nChecking Hessian for a second time...\n")
           # nocov end
         }
+
         fit[still_bad] <- parallel::parLapply(
           cl = cl,
           X = fit[still_bad],
@@ -435,6 +496,7 @@
           cond_max = cond_max,
           abs_bnd_tol = abs_bnd_tol,
           rel_bnd_tol = rel_bnd_tol,
+          allowed_bounds = allowed_bounds,
           factor = factor,
           relax_on_last = TRUE,
           relax_exclude = relax_exclude,
@@ -447,6 +509,7 @@
           silent = silent
         )
       }
+
       if (robust) {
         sandwich <- parallel::parLapply(
           cl = cl,
@@ -463,12 +526,14 @@
     if (!is.null(seed)) {
       set.seed(seed)
     }
+
     # first pass
     if (isFALSE(silent) && interactive()) {
       # nocov start
       cat("\nModel fitting...\n")
       # nocov end
     }
+
     fit <- lapply(
       X = model,
       FUN = .MxHelperRun,
@@ -481,6 +546,7 @@
       cond_max = cond_max,
       silent = silent
     )
+
     # second pass
     refit <- vapply(
       X = fit,
@@ -494,14 +560,17 @@
       cond_max = cond_max,
       abs_bnd_tol = abs_bnd_tol,
       rel_bnd_tol = rel_bnd_tol,
+      allowed_bounds = allowed_bounds,
       FUN.VALUE = logical(1)
     )
+
     if (any(refit)) {
       if (isFALSE(silent) && interactive()) {
         # nocov start
         cat("\nChecking Hessian...\n")
         # nocov end
       }
+
       fit[refit] <- lapply(
         X = fit[refit],
         FUN = .MxHelperEnsureGoodHessian,
@@ -515,6 +584,7 @@
         cond_max = cond_max,
         abs_bnd_tol = abs_bnd_tol,
         rel_bnd_tol = rel_bnd_tol,
+        allowed_bounds = allowed_bounds,
         factor = factor,
         relax_on_last = relax_on_last,
         relax_exclude = relax_exclude,
@@ -527,6 +597,7 @@
         silent = silent
       )
     }
+
     still_bad <- vapply(
       X = fit,
       FUN = .MxHelperNeedsRescue,
@@ -539,14 +610,17 @@
       cond_max = cond_max,
       abs_bnd_tol = abs_bnd_tol,
       rel_bnd_tol = rel_bnd_tol,
+      allowed_bounds = allowed_bounds,
       FUN.VALUE = logical(1)
     )
+
     if (any(still_bad)) {
       if (isFALSE(silent) && interactive()) {
         # nocov start
         cat("\nChecking Hessian for a second time...\n")
         # nocov end
       }
+
       fit[still_bad] <- lapply(
         X = fit[still_bad],
         FUN = .MxHelperEnsureGoodHessian,
@@ -560,6 +634,7 @@
         cond_max = cond_max,
         abs_bnd_tol = abs_bnd_tol,
         rel_bnd_tol = rel_bnd_tol,
+        allowed_bounds = allowed_bounds,
         factor = factor,
         relax_on_last = TRUE,
         relax_exclude = relax_exclude,
@@ -572,6 +647,7 @@
         silent = silent
       )
     }
+
     if (robust) {
       sandwich <- lapply(
         X = fit,
@@ -582,6 +658,7 @@
       sandwich <- NULL
     }
   }
+
   converged <- vapply(
     X = fit,
     FUN = function(x) {
@@ -598,14 +675,17 @@
           check_condition = check_condition,
           cond_max = cond_max,
           abs_bnd_tol = abs_bnd_tol,
-          rel_bnd_tol = rel_bnd_tol
+          rel_bnd_tol = rel_bnd_tol,
+          allowed_bounds = allowed_bounds
         )
       }
     },
     FUN.VALUE = logical(1)
   )
+
   names(fit) <- model_names
   names(converged) <- model_names
+
   list(
     model = model,
     fit = fit,
