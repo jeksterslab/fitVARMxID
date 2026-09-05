@@ -30,7 +30,7 @@
 `#> [1] stats     graphics  grDevices utils     datasets  methods   base     `\
 `#> `\
 `#> other attached packages:`\
-`#> [1] fitVARMxID_1.0.5.9000 OpenMx_2.22.11        simStateSpace_1.2.16 `\
+`#> [1] fitVARMxID_1.0.6     OpenMx_2.22.11       simStateSpace_1.2.16`\
 `#> `\
 `#> loaded via a namespace (and not attached):`\
 `#>  [1] digest_0.6.39      xfun_0.60          Matrix_1.7-5       lattice_0.22-9    `\
@@ -72,7 +72,7 @@
 `#> evaluate          "evaluate"          "1.0.5"     `\
 `#> fansi             "fansi"             "1.0.7"     `\
 `#> fastmap           "fastmap"           "1.2.0"     `\
-`#> fitVARMxID        "fitVARMxID"        "1.0.5.9000"`\
+`#> fitVARMxID        "fitVARMxID"        "1.0.6"     `\
 `#> fontawesome       "fontawesome"       "0.5.3"     `\
 `#> fs                "fs"                "2.1.0"     `\
 `#> generics          "generics"          "0.1.4"     `\
@@ -84,7 +84,7 @@
 `#> htmltools         "htmltools"         "0.5.9"     `\
 `#> htmlwidgets       "htmlwidgets"       "1.6.4"     `\
 `#> httpuv            "httpuv"            "1.6.17"    `\
-`#> httr              "httr"              "1.4.8"     `\
+`#> httr              "httr"              "1.4.9"     `\
 `#> httr2             "httr2"             "1.3.0"     `\
 `#> ini               "ini"               "0.3.1"     `\
 `#> jquerylib         "jquerylib"         "0.1.4"     `\
@@ -130,7 +130,7 @@
 `#> remotes           "remotes"           "2.5.0"     `\
 `#> rex               "rex"               "1.2.2"     `\
 `#> rlang             "rlang"             "1.3.0"     `\
-`#> rmarkdown         "rmarkdown"         "2.31"      `\
+`#> rmarkdown         "rmarkdown"         "2.32"      `\
 `#> roxygen2          "roxygen2"          "8.1.0"     `\
 `#> rProject          "rProject"          "0.0.25"    `\
 `#> rprojroot         "rprojroot"         "2.1.1"     `\
@@ -185,7 +185,7 @@
 `#> BiocManager       "BiocManager"       "1.30.27"   `\
 `#> BiocVersion       "BiocVersion"       "3.23.1"    `\
 `#> bit               "bit"               "4.6.0"     `\
-`#> bit64             "bit64"             "4.8.4"     `\
+`#> bit64             "bit64"             "4.8.6"     `\
 `#> bitops            "bitops"            "1.1-0"     `\
 `#> blob              "blob"              "1.3.0"     `\
 `#> bootStateSpace    "bootStateSpace"    "1.0.3.9000"`\
@@ -259,7 +259,7 @@
 `#> fdrtool           "fdrtool"           "1.2.18"    `\
 `#> fds               "fds"               "1.9"       `\
 `#> filelock          "filelock"          "1.0.3"     `\
-`#> fitVARMxID        "fitVARMxID"        "1.0.5"     `\
+`#> fitVARMxID        "fitVARMxID"        "1.0.5.9000"`\
 `#> FNN               "FNN"               "1.1.4.1"   `\
 `#> fontawesome       "fontawesome"       "0.5.3"     `\
 `#> forcats           "forcats"           "1.0.1"     `\
@@ -352,7 +352,7 @@
 `#> matrixStats       "matrixStats"       "1.5.0"     `\
 `#> mclust            "mclust"            "6.1.3"     `\
 `#> memoise           "memoise"           "2.0.1"     `\
-`#> metaDyn           "metaDyn"           "1.0.3"     `\
+`#> metaDyn           "metaDyn"           "1.0.3.9000"`\
 `#> metaSEM           "metaSEM"           "1.5.0"     `\
 `#> mice              "mice"              "3.19.0"    `\
 `#> microbenchmark    "microbenchmark"    "1.5.0"     `\
@@ -383,11 +383,11 @@
 `#> parallelly        "parallelly"        "1.48.0"    `\
 `#> parsnip           "parsnip"           "1.6.0"     `\
 `#> patchwork         "patchwork"         "1.3.2"     `\
-`#> pbapply           "pbapply"           "1.7-4"     `\
+`#> pbapply           "pbapply"           "1.7-5"     `\
 `#> pbivnorm          "pbivnorm"          "0.6.0"     `\
 `#> pbkrtest          "pbkrtest"          "0.5.5"     `\
 `#> pcaPP             "pcaPP"             "2.0-5"     `\
-`#> pdftools          "pdftools"          "3.9.0"     `\
+`#> pdftools          "pdftools"          "3.9.1"     `\
 `#> pillar            "pillar"            "1.11.1"    `\
 `#> pkgbuild          "pkgbuild"          "1.4.8"     `\
 `#> pkgconfig         "pkgconfig"         "2.0.3"     `\
@@ -457,7 +457,7 @@
 `#> rjags             "rjags"             "4-17"      `\
 `#> rlang             "rlang"             "1.3.0"     `\
 `#> RMariaDB          "RMariaDB"          "1.3.5"     `\
-`#> rmarkdown         "rmarkdown"         "2.31"      `\
+`#> rmarkdown         "rmarkdown"         "2.32"      `\
 `#> roxygen2          "roxygen2"          "8.1.0.9000"`\
 `#> rpf               "rpf"               "1.0.15"    `\
 `#> RPostgres         "RPostgres"         "1.4.10"    `\
@@ -586,7 +586,7 @@
     #> Core(s) per socket:                      6
     #> Socket(s):                               1
     #> Stepping:                                10
-    #> BogoMIPS:                                6384.02
+    #> BogoMIPS:                                6383.99
     #> Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm arch_perfmon rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pdcm pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch pti ssbd ibrs ibpb stibp tpr_shadow ept vpid ept_ad fsgsbase bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap clflushopt xsaveopt xsavec xgetbv1 xsaves vnmi md_clear flush_l1d arch_capabilities
     #> Virtualization:                          VT-x
     #> Hypervisor vendor:                       Microsoft
@@ -620,6 +620,6 @@
 ## Memory
 
     #>                total        used        free      shared  buff/cache   available
-    #> Mem:           7.7Gi       1.8Gi       4.8Gi        28Mi       1.3Gi       5.9Gi
-    #> Swap:          2.0Gi       106Mi       1.9Gi
-    #> Total:         9.7Gi       1.9Gi       6.7Gi
+    #> Mem:           7.7Gi       1.4Gi       4.5Gi        11Mi       1.9Gi       6.2Gi
+    #> Swap:          2.0Gi          0B       2.0Gi
+    #> Total:         9.7Gi       1.4Gi       6.5Gi

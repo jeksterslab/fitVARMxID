@@ -1,8 +1,15 @@
 # Changelog
 
-## fitVARMxID 1.0.5.9000
+## fitVARMxID 1.0.6
 
-- Latest development version.
+### Patch
+
+- Improved convergence assessment and Hessian-rescue behavior, including
+  more robust selection of the best candidate fit.
+- Treats lower-bound solutions for softplus covariance-diagonal
+  parameters as admissible rather than automatically classifying them as
+  convergence failures.
+- Hardened parameter-bound detection, nudging, and bound relaxation.
 
 ## fitVARMxID 1.0.5
 
