@@ -28,6 +28,10 @@ The dynamic structure is given by
   \right)
   +
   \boldsymbol{\zeta}_{i, t}
+  \quad
+  \mathrm{with}
+  \quad
+  \boldsymbol{\zeta}_{i, t}
   \sim
   \mathcal{N}
   \left(

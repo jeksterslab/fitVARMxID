@@ -620,6 +620,6 @@
 ## Memory
 
     #>                total        used        free      shared  buff/cache   available
-    #> Mem:           7.7Gi       1.4Gi       4.5Gi        11Mi       1.9Gi       6.2Gi
-    #> Swap:          2.0Gi          0B       2.0Gi
-    #> Total:         9.7Gi       1.4Gi       6.5Gi
+    #> Mem:           7.7Gi       1.4Gi       4.8Gi        11Mi       1.7Gi       6.2Gi
+    #> Swap:          2.0Gi       920Ki       2.0Gi
+    #> Total:         9.7Gi       1.4Gi       6.8Gi
