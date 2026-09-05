@@ -8,7 +8,7 @@ message: 'To cite package "fitVARMxID" in publications use:'
 type: software
 license: MIT
 title: 'fitVARMxID: Fit the Vector Autoregressive Model for Multiple Individuals'
-version: 1.0.5.9000
+version: 1.0.6
 identifiers:
 - type: doi
   value: 10.32614/CRAN.package.fitVARMxID
@@ -28,7 +28,7 @@ preferred-citation:
     email: jeksterslab@gmail.com
     orcid: https://orcid.org/0000-0003-4818-8420
   year: '2026'
-  notes: R package version 1.0.5.9000
+  notes: R package version 1.0.6
 repository: https://CRAN.R-project.org/package=fitVARMxID
 repository-code: https://github.com/jeksterslab/fitVARMxID
 url: https://jeksterslab.github.io/fitVARMxID/
